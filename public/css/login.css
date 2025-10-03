@@ -13,7 +13,7 @@ body {
 
 .left {
   flex: 1;
-  background-image: url(../Site-institucional/imagens/background_vermelho_cadastro_login.png);
+  background-image: url(../assets/imgs/background_vermelho_cadastro_login.png);
   color: #fff;
   display: flex;
   flex-direction: column;
