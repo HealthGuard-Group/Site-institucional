@@ -4,18 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
-    <img src="../HealthGuard/imagens/HealthGuard.png" alt=""><h1>HEALTHGUARD</h1>
-    <h3>Acessar sua conta!</h3>
-    <h5>Muito bom ter você de volta, acesse sua conta e tenha acesso aos dados monitorados</h5>
+    <div class="left">
+    <img src="../Site-institucional/imagens/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard Logo">
+    <h1>Acessar conta!</h1>
+    <p>Muito bom ter você de volta, acesse sua conta e tenha acesso aos dados monitorados.</p>
+  </div>
+  <div class="right">
+    <div class="container">
+      <h2>Bem-vindo à HealthGuard!</h2>
+      <p>Ainda não possui uma conta? <a href="#">Clique aqui</a></p>
 
-    <h2>Bem-vindo a HealthGuard</h2>
-    <p>Ainda não possui conta?</p><button onclick="">Clique aqui</button>
-    <span>E-mail</span>
-    <input id="email" type="text"  placeholder="exemplo: healthguard@sptech.school">
-    <span>Senha</span>
-    <input id="senha" type="password">
-    <button onclick="">Esqueceu a senha?</button>
+      <label for="email">E-mail</label>
+      <input id="email" type="text" placeholder="exemplo: healthguard@sptech.school">
+
+      <label for="senha">Senha</label>
+      <input id="senha" type="password">
+
+      <button>ENTRAR</button>
+
+      <div class="link">
+        <a href="#">Esqueceu a senha?</a>
+      </div>
+    </div>
+  </div>
 </body>
 </html>
