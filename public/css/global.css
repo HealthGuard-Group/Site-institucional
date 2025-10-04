@@ -13,4 +13,6 @@ CSS Global: estilos e configurações padrão usados em várias telas
   font-family: 'Inter', sans-serif;
 }
 
-
+html {
+    scroll-behavior: smooth;
+}
