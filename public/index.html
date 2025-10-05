@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +9,16 @@
     <link rel="stylesheet" type="text/css" href="./css/index.css" media="screen" />
     <title>HealthGuard</title>
 </head>
+
 <body>
     <div class="camada-escura"></div>
 
     <!-- Seção de Início -->
-    <header>
+    <header id="inicio">
         <nav>
             <div id="nav-logomarca">
-                <img id="logomarca-healthguard" src="./assets/imgs/HealthGuard_Logomarca_VERMELHA_fundo_transparente.png" alt="HealthGuard">
+                <img id="logomarca-healthguard"
+                    src="./assets/imgs/HealthGuard_Logomarca_VERMELHA_fundo_transparente.png" alt="HealthGuard">
             </div>
             <div class="menu-mobile">
                 <div class="linha1"></div>
@@ -25,16 +28,49 @@
             <div id="nav-list">
                 <ul>
                     <li><a href="#inicio">Início</a></li>
-                    <li><a href="#nossa-solucao">Sobre nós</a></li>
-                    <li><a href="#integrantes">Simulador</a></li>
-                    <li><a href="#fale-conosco">Contato</a></li>
+                    <li><a href="#section-sobre-nos">Sobre nós</a></li>
+                    <li><a href="#section-membros">Simulador</a></li>
+                    <li><a href="#section-contato">Contato</a></li>
                 </ul>
                 <div id="div-buttons">
-                    <button id="button-login" class="button-contorno" onclick="window.location.href='login.html'">Login</button>
-                    <button id="button-cadastro" class="button-preenchido" onclick="window.location.href='cadastro.html'">Cadastre-se</button>
+                    <button id="button-login" class="button-contorno"
+                        onclick="window.location.href='login.html'">Login</button>
+                    <button id="button-cadastro" class="button-preenchido"
+                        onclick="window.location.href='cadastro.html'">Cadastre-se</button>
                 </div>
             </div>
         </nav>
+
+        <div id="container-inicio">
+
+            <div id="esquerda-inicio">
+                <div id="div-slogan">
+                    <span class="slogan-txt">
+                        Nós nos <!--<span><img src="./assets/imgs/batimento_cardiaco_icone.png" alt=""></span> -->
+                    </span>
+                    <span class="slogan-txt">importamos</span>
+                    <span class="slogan-txt">
+                        com <span>&nbsp;vidas!</span>
+                    </span>
+                </div>
+
+                <div id="div-descricao-inicio">
+                    <p>
+                        Salvando vidas através da Tecnologia.
+                        Garantindo que o SAMU esteja sempre pronto para salvar.
+                    </p>
+                </div>
+
+                <div id="div-button-saiba-mais">
+                    <a id="button-saiba-mais" class="falso-button-padrao" href="#section-healthguard">Saiba mais</a>
+                </div>
+            </div>
+
+            <div id="direita-inicio">
+                <img src="./assets/imgs/atendente_samu_banner_inicial.png" alt="">
+            </div>
+        </div>
+
     </header>
     <section id="section-healthguard"></section>
     <section id="section-sobre-nos"></section>
@@ -42,8 +78,15 @@
     <section id="section-nossos-servicos"></section>
     <section id="section-simulador"></section>
     <section id="section-beneficios"></section>
-    <section id="secao-contato"></section>
+    <section id="section-contato"></section>
 </body>
+
 </html>
 
 <script src="./js/navbar-mobile.js"></script>
+<script>
+    //Faz com que o site faça a mudança de foma manual
+    //Assim quando a pagina atualizar ele voltará ao topo do site
+    //IMPEDINDO O SCROLL AUTOMÁTICO PARA AS DEMAIS SEÇÕES
+    history.scrollRestoration = 'manual';
+</script>
