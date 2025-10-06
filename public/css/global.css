@@ -16,3 +16,7 @@ CSS Global: estilos e configurações padrão usados em várias telas
 html {
   scroll-behavior: smooth;
 }
+
+body {
+  overflow-x: hidden;
+}

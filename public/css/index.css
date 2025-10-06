@@ -11,7 +11,7 @@ section {
     height: 100vh;
     background-color: #000;
     opacity: 50%;
-    z-index: 2;
+    z-index: -1;
 }
 
 header {
@@ -153,7 +153,7 @@ nav {
     .camada-escura {
         display: block;
         opacity: 0;
-        z-index: 3;
+        z-index: 2;
     }
 
     .camada-escura.active {
@@ -183,8 +183,7 @@ nav {
         transform: translateX(100%);
         transition: transform 0.45s ease, opacity 0.1s ease;
         opacity: 0;
-        pointer-events: none;
-        /* não interpreta cliques */
+        pointer-events: none;  /* não interpreta cliques */
     }
 
     #nav-list.active {
@@ -235,10 +234,9 @@ nav {
 
 #container-inicio {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 50% 55%;
     grid-template-rows: 90vh 90vh;
     margin-top: 10vh;
-    background-color: #dfdfdf00;
 }
 
 #esquerda-inicio {
@@ -246,8 +244,6 @@ nav {
     flex-direction: column;
     font-size: 5rem;
     font-weight: 700;
-    background-color: rgba(0, 255, 255, 0);
-    z-index: 2;
 }
 
 #esquerda-inicio img {
@@ -319,9 +315,10 @@ nav {
 }
 
 #direita-inicio {
-    background-color: rgba(0, 255, 81, 0);
+    position: relative;
     display: flex;
     justify-content: center;
+    z-index: -1;
 }
 
 #direita-inicio img {
@@ -332,6 +329,9 @@ nav {
 }
 
 @media (max-width: 910px) {
+    #inicio {
+        height: 110vh;
+    }
     #container-inicio {
         grid-template-columns: 100%;
         grid-template-rows: 55vh 55vh;
