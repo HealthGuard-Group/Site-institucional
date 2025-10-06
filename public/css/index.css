@@ -183,7 +183,8 @@ nav {
         transform: translateX(100%);
         transition: transform 0.45s ease, opacity 0.1s ease;
         opacity: 0;
-        pointer-events: none;  /* não interpreta cliques */
+        pointer-events: none;
+        /* não interpreta cliques */
     }
 
     #nav-list.active {
@@ -332,6 +333,7 @@ nav {
     #inicio {
         height: 110vh;
     }
+
     #container-inicio {
         grid-template-columns: 100%;
         grid-template-rows: 55vh 55vh;
@@ -374,5 +376,85 @@ section {
 }
 
 #section-healthguard {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 75vh 75vh;
+    height: 75vh;
+    width: 100%;
+}
+
+#div-conteudo-healthguard {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 6%;
+    line-height: 1.5;
+    width: 77%;
+    height: 85%;
+    margin-left: 19%;
+}
+
+.titulo-healthguard {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #860b19;
+}
+
+#texto-healthguard {
+    text-align: justify;
+}
+
+#direita-healthguard {
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+
+#direita-healthguard img {
+    width: 500px;
+    margin-right: 5%;
+}
+
+@media (max-width: 910px) {
+    #section-healthguard {
+        grid-template-columns: 100%;
+        grid-template-rows: 45vh 30vh;
+        height: 75vh;
+        width: 100%;
+    }
+
+    #div-conteudo-healthguard {
+        display: flex;
+        flex-direction: column;
+        gap: 6%;
+        width: 80%;
+        height: 100%;
+        margin-left: 10%;
+    }
+
+    .titulo-healthguard {
+        font-size: 1.5rem;
+        font-weight: 750;
+        color: #860b19;
+    }
+
+    #texto-healthguard {
+        text-align: justify;
+    }
+
+    #direita-healthguard {
+        display: flex;
+        justify-content: center;
+        align-items: end;
+    }
+
+    #direita-healthguard img {
+        width: 300px;
+        margin-right: 0;
+    }
+}
+
+/* SECTION - SOBRE NÓS --------------------------------------------- */
+#section-sobre-nos {
     background-color: whitesmoke;
 }
