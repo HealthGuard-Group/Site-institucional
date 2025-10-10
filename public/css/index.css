@@ -477,6 +477,7 @@ section {
 
 /* SECTION - NOSSOS SERVIÇOS --------------------------------------------- */
 #section-nossos-servicos {
+    scroll-margin-top: 70px;
     display: flex;
     flex-direction: column;
     gap: 6%;
