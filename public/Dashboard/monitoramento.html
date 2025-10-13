@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Monitoramento</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+</head>
+
+<body>
+    <section class="tela">
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de usuários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+        <div class="tela-dashboard">
+            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo molestias dicta quod minus, praesentium
+            maiores quam obcaecati sit voluptas reprehenderit provident quia nulla, excepturi exercitationem nesciunt
+            debitis, vel recusandae repellendus.
+        </div>
+    </section>
+</body>
+
+</html>
+<script>
+    document.querySelector('.menu-lateral').addEventListener('mouseover', () => {
+        const texto_icone = document.querySelectorAll('.texto-icone')
+        const box_icone = document.querySelectorAll('.icone-box')
+        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
+        texto_icone.forEach(a => {
+            a.classList.remove('oculto')
+        })
+        box_icone.forEach(a => {
+            a.classList.add('extendido')
+        })
+        box_icone_inferior.forEach(a => {
+            a.classList.add('extendido')
+        })
+        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard"
+                    class="icone-logomarca">`
+
+    })
+    document.querySelector('.menu-lateral').addEventListener('mouseleave', () => {
+        const texto_icone = document.querySelectorAll('.texto-icone')
+        const box_icone = document.querySelectorAll('.icone-box')
+        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
+        texto_icone.forEach(a => {
+            a.classList.add('oculto')
+        })
+        box_icone.forEach(a => {
+            a.classList.remove('extendido')
+        })
+        box_icone_inferior.forEach(a => {
+            a.classList.remove('extendido')
+        })
+        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png"" alt="HealthGuard"
+                        class="icone-logo-pequena">`
+    })
+</script>
