@@ -5,6 +5,7 @@
     background-color: #860B19;
     position: fixed;
     transition: 0.3s;
+    z-index: 999;
 
     display: flex;
     flex-direction: column;
@@ -15,12 +16,12 @@
     width: 20%;
     transition: 0.5s;
 }
-.tela-dashboard{
+/* .tela-dashboard{
     height: 1000vh;
     width: 94%;
     margin-left: 6%;
     background-color: #F8F8F8;
-}
+} */
 .pai-icones-superiores{
     height: 70%;
     width: 100%;

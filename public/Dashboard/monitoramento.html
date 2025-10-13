@@ -8,6 +8,7 @@
     <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/monitoramento.css">
 </head>
 
 <body>
@@ -54,16 +55,152 @@
             </div>
         </div>
         <!-- Fim do Menu -->
-        <div class="tela-dashboard">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quo molestias dicta quod minus, praesentium
-            maiores quam obcaecati sit voluptas reprehenderit provident quia nulla, excepturi exercitationem nesciunt
-            debitis, vel recusandae repellendus.
+        <div class="kpis-box">
+            <div class="texto-organizacao" id="div_nome_empresa">
+                Nome da Unidade de Atendimento
+            </div>
+            <div class="texto-topico">
+                Resumo das Máquinas:
+            </div>
+            <div class="kpis-flexbox">
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas em configuração</div>
+                        <div class="numero-kpi-vermelho">1</div>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas cadastradas</div>
+                        <div class="numero-kpi-preta">3</div>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas inativas</div>
+                        <div class="numero-kpi-vermelho">1</div>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas ativas / Máquinas em alerta</div>
+                        <div class=""><span class="numero-kpi-verde">2</span> <span class="numero-kpi-preta">/</span> <span class="numero-kpi-vermelho">1</span></div>
+                    </div>
+                </div>
+                <!-- <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas em alerta</div>
+                        <div class="numero-kpi-vermelho">1</div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="texto-topico alinhamento-centralizar-vertical">
+                Situação das máquinas:
+            </div>
+            <div class="box-filtro">
+                <div class="filtro-esquerda">
+                    <div class="texto-funcionalidade">
+                        Filtro:
+                    </div>
+                    <select name="" id="" class="select-filtro">
+                        <option value="">Todas as máquinas</option>
+                        <option value="">Apenas máquinas em alerta</option>
+                        <option value="">Apenas máquinas Inativas</option>
+                        <option value="">Apenas máquinas Ativas</option>
+                        <option value="">Apenas máquinas em configuração</option>
+                    </select>
+                </div>
+                <div class="filtro-direita">
+                    <button class="botao-codigo">
+                        Ver códigos gerados
+                    </button>
+                    <div class="div-botao-adicionar">
+                        <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
+                        <div class="barra-vertical-botao"></div>
+                        <div class="texto-botao-adicionar">
+                            Adicionar máquina
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pai-maquinas" id="div_maquinas">
+            <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 1
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina verde">
+                        Ok
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                </div>
+            </div>
+            <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 2
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Inativo
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone inativo.png" alt="Status" class="imagem-status">
+                </div>
+            </div>
+            <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 3
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Alerta CPU
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone Alerta.png" alt="Status" class="imagem-status">
+                </div>
+            </div>
+            <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 4
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Em configuração
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone configuracao.png" alt="Status" class="imagem-status">
+                </div>
+            </div>
         </div>
     </section>
 </body>
 
 </html>
 <script>
+
     document.querySelector('.menu-lateral').addEventListener('mouseover', () => {
         const texto_icone = document.querySelectorAll('.texto-icone')
         const box_icone = document.querySelectorAll('.icone-box')
