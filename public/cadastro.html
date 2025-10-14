@@ -147,18 +147,17 @@ let listaEmpresasCadastradas = [];
         console.log("resposta: ", resposta);
 
         if (resposta.ok) {
-          
-          mensagem.innerHTML =
-            "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
-
-      
-            window.location = "login.html";
-          "2000"
+            mensagem.innerHTML =
+            `Cadastro realizado com sucesso! Redirecionando para tela de Login...`;
+            
+            setTimeout(() => {
+              window.location = "login.html";
+            }, 5000);
 
           limparFormulario();
           finalizarAguardar();
         } else {
-          throw "Houve um erro ao tentar realizar o cadastro!";
+          mensagem.innerHTML = `Houve um erro ao tentar realizar o cadastro! <br><br> Verifique se todos os campos estão corretos`;
         }
       })
       .catch(function (resposta) {
