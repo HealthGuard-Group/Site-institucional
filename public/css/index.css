@@ -4,14 +4,6 @@ section {
     scroll-margin-top: 70px;
 }
 
-#container {
-    max-width: 1500px;
-    min-width: 320px;
-    margin: 0 auto;     /* Centraliza horizontalmente */
-    padding: 0 20px;    /* Espaço nas laterais em mobile */
-    width: 100%;
-}
-
 /* SECTION - INÍCIO --------------------------------------------- */
 .camada-escura {
     display: none;
@@ -349,10 +341,6 @@ nav {
         grid-template-rows: 55vh 55vh;
     }
 
-    #esquerda-inicio {
-        /* font-size: 3rem; */
-    }
-
     #div-slogan {
         margin-top: 3vh;
         margin-left: 12%;
@@ -471,9 +459,7 @@ section {
 }
 
 /* SECTION - MEMBROS --------------------------------------------- */
-#section-membros {
-    
-}
+#section-membros {}
 
 /* SECTION - NOSSOS SERVIÇOS --------------------------------------------- */
 #section-nossos-servicos {
@@ -508,7 +494,7 @@ section {
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     transition: 0.3s ease-in-out;
-    
+
 }
 
 .card-servico:hover {
@@ -543,7 +529,7 @@ section {
     border-bottom-right-radius: 10px;
 }
 
-.bottom-card p{
+.bottom-card p {
     font-size: 0.8rem;
     text-align: center;
     width: 80%;
@@ -581,7 +567,6 @@ section {
     display: flex;
     flex-direction: column;
     gap: 6%;
-    /* background-color: whitesmoke; */
     width: 100%;
 }
 
@@ -613,7 +598,7 @@ section {
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     transition: 0.3s ease-in-out;
-    
+
 }
 
 .card-red {
@@ -657,7 +642,7 @@ section {
     border-bottom-right-radius: 10px;
 }
 
-.bottom-card p{
+.bottom-card p {
     font-size: 0.8rem;
     text-align: center;
     width: 80%;
@@ -665,7 +650,7 @@ section {
 
 @media (max-width: 910px) {
     #section-beneficios {
-        height: 225vh;
+        height: 340vh;
         gap: 3%;
     }
 
@@ -675,7 +660,7 @@ section {
 
     #container-cards-beneficios {
         grid-template-columns: 100%;
-        grid-template-rows: 50vh 50vh 50vh 50vh;
+        grid-template-rows: 50vh 50vh 50vh 50vh 50vh 50vh;
         justify-items: center;
         height: 205vh;
         gap: 1%;
@@ -686,6 +671,160 @@ section {
         width: 80%;
         height: 100%;
         border-radius: 10px;
+    }
+
+}
+
+/* SECTION - CONTATO --------------------------------------------- */
+#rodape-contato {
+    background-color: rgb(237, 237, 237);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 50vh;
+}
+
+#container-rodape {
+    height: 95%;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 100% 100%;
+}
+
+#esquerda-rodape {
+    /* background-color: #424649; */
+    display: flex;
+    flex-direction: column;
+    gap: 5%
+}
+
+#logo-rodape {
+    /* background-color: #1d2f3f; */
+    width: 45%;
+    margin-left: 40%;
+    margin-top: 5%;
+}
+
+#logo-rodape img {
+    width: 100%;
+}
+
+#rodape-links {
+    margin-left: 40%;
+}
+
+#rodape-links ul {
+    list-style: none;
+    line-height: 2;
+}
+
+#rodape-links a {
+    text-decoration: none;
+    color: black;
+}
+
+#rodape-links a:hover {
+    text-decoration: underline;
+}
+
+#direita-rodape {
+    /* background-color: #3d3d3d; */
+    display: flex;
+    flex-direction: column;
+    gap: 5%
+}
+
+#div-contato {
+    margin-top: 7%;
+    margin-bottom: 2%;
+    margin-left: 20%;
+}
+
+#div-email-rodape {
+    /* background-color: #00000072; */
+    display: flex;
+    align-items: center;
+    gap: 1.5%;
+    width: 80%;
+    height: 15%;
+    margin-left: 20%;
+}
+
+#div-email-rodape img {
+    width: 32px;
+}
+
+
+#div-telefone-rodape {
+    /* background-color: #00000072; */
+    display: flex;
+    align-items: center;
+    gap: 1.5%;
+    width: 80%;
+    height: 15%;
+    margin-left: 20%;
+}
+
+
+#div-email-rodape img {
+    width: 32px;
+}
+
+#direitos-rodape {
+    background-color: rgb(237, 237, 237);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    grid-column: 1 / -1;
+    width: 100%;
+    height: 10%;
+}
+
+@media (max-width: 910px) {
+    #rodape-contato {
+        height: 100vh;
+    }
+
+    #container-rodape {
+        display: grid;
+        grid-template-columns: 100%;
+        grid-template-rows: 40% 50% 100%;
+    }
+
+    #logo-rodape {
+        width: 70%;
+        margin-left: 10%;
+        margin-top: 5%;
+    }
+
+    #logo-rodape img {
+        width: 100%;
+    }
+
+    #rodape-links {
+        margin-left: 10%;
+    }
+
+    #direita-rodape {
+        gap: 0%
+    }
+
+    #div-contato {
+        margin-left: 10%;
+        margin-bottom: 5%;
+    }
+
+    #div-email-rodape {
+        gap: 1.5%;
+        height: 10%;
+        margin-left: 10%;
+    }
+
+    #div-telefone-rodape {
+        gap: 1.5%;
+        height: 15%;
+        margin-left: 10%;
     }
 
 }
