@@ -630,6 +630,11 @@ section {
     border-top-right-radius: 10px;
 }
 
+.icone-grande {
+    width: 65% !important;
+    height: 65% !important;
+}
+
 .bottom-card {
     display: flex;
     flex-direction: column;
