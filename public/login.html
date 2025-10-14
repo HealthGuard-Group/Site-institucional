@@ -73,14 +73,22 @@
                 resposta.json().then(json => {
                     console.log(json);
                     console.log(JSON.stringify(json));
-                    sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.ID_USUARIO = json.id;
-                    sessionStorage.AQUARIOS = JSON.stringify(json.aquarios)
+                    sessionStorage.ID_USUARIO = json.idUsuario;
+                    sessionStorage.NOME_USUARIO = json.nomeUsuario;
+                    sessionStorage.ID_PERMISSAO = json.idPermissoes;
+                    sessionStorage.FK_UNIDADE = json.fkUnidadeDeAtendimento;
+                    
+                    mensagem.innerHTML = `Carregando...`;
 
+                    
                     setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
+                        mensagem.innerHTML = `Login realizado com sucesso!`;
+                    }, 2000);
+
+                    
+                    setTimeout(function () {
+                        window.location = "Dashboard/monitoramento.html";
+                    }, 3000);
 
                 });
 
