@@ -11,95 +11,237 @@
 </head>
 
 <body>
-    <div class="camada-escura"></div>
+    <div id="container">
+        <div class="camada-escura"></div>
 
-    <!-- Seção de Início -->
-    <header id="inicio">
-        <nav>
-            <div id="nav-logomarca">
-                <img id="logomarca-healthguard"
-                    src="./assets/imgs/HealthGuard_Logomarca_VERMELHA_fundo_transparente.png" alt="HealthGuard">
-            </div>
-            <div class="menu-mobile">
-                <div class="linha1"></div>
-                <div class="linha2"></div>
-                <div class="linha3"></div>
-            </div>
-            <div id="nav-list">
-                <ul>
-                    <li><a href="#inicio">Início</a></li>
-                    <li><a href="#section-sobre-nos">Sobre nós</a></li>
-                    <li><a href="#section-membros">Simulador</a></li>
-                    <li><a href="#section-contato">Contato</a></li>
-                </ul>
-                <div id="div-buttons">
-                    <button id="button-login" class="button-contorno"
-                        onclick="window.location.href='login.html'">Login</button>
-                    <button id="button-cadastro" class="button-preenchido"
-                        onclick="window.location.href='cadastro.html'">Cadastre-se</button>
+        <!-- Seção de Início -->
+        <header id="inicio">
+            <nav>
+                <div id="nav-logomarca">
+                    <img id="logomarca-healthguard"
+                        src="./assets/imgs/HealthGuard_Logomarca_VERMELHA_fundo_transparente.png" alt="HealthGuard">
+                </div>
+                <div class="menu-mobile">
+                    <div class="linha1"></div>
+                    <div class="linha2"></div>
+                    <div class="linha3"></div>
+                </div>
+                <div id="nav-list">
+                    <ul>
+                        <li><a href="#inicio">Início</a></li>
+                        <li><a href="#section-sobre-nos">Sobre nós</a></li>
+                        <li><a href="#section-nossos-servicos">Nossos serviços</a></li>
+                        <li><a href="#section-contato">Contato</a></li>
+                    </ul>
+                    <div id="div-buttons">
+                        <button id="button-login" class="button-contorno"
+                            onclick="window.location.href='login.html'">Login</button>
+                        <button id="button-cadastro" class="button-preenchido"
+                            onclick="window.location.href='cadastro.html'">Cadastre-se</button>
+                    </div>
+                </div>
+            </nav>
+
+            <div id="container-inicio">
+
+                <div id="esquerda-inicio">
+                    <div id="div-slogan">
+                        <h1 class="slogan-txt">
+                            Nós nos
+                        </h1>
+                        <h1 class="slogan-txt">importamos</h1>
+                        <h1 class="slogan-txt">
+                            com <span>&nbsp;vidas!</span>
+                        </h1>
+                    </div>
+
+                    <div id="div-descricao-inicio">
+                        <p>
+                            Salvando vidas através da Tecnologia.
+                            Garantindo que o SAMU esteja sempre pronto para salvar.
+                        </p>
+                    </div>
+
+                    <div id="div-button-saiba-mais">
+                        <a id="button-saiba-mais" class="falso-button-padrao" href="#section-healthguard">Saiba mais</a>
+                    </div>
+                </div>
+
+                <div id="direita-inicio">
+                    <img src="./assets/imgs/atendente_samu_banner_inicial.png" alt="">
                 </div>
             </div>
-        </nav>
+        </header>
 
-        <div id="container-inicio">
-
-            <div id="esquerda-inicio">
-                <div id="div-slogan">
-                    <span class="slogan-txt">
-                        Nós nos <!--<span><img src="./assets/imgs/batimento_cardiaco_icone.png" alt=""></span> -->
-                    </span>
-                    <span class="slogan-txt">importamos</span>
-                    <span class="slogan-txt">
-                        com <span>&nbsp;vidas!</span>
-                    </span>
-                </div>
-
-                <div id="div-descricao-inicio">
-                    <p>
-                        Salvando vidas através da Tecnologia.
-                        Garantindo que o SAMU esteja sempre pronto para salvar.
+        <section id="section-healthguard">
+            <div id="esquerda-healthguard">
+                <div id="div-conteudo-healthguard">
+                    <h1 class="titulo-padrao">
+                        O que é a HealthGuard?
+                    </h1>
+                    <p id="texto-healthguard">
+                        Somos uma solução de monitoramento em tempo real e gestão proativa dos
+                        computadores essenciais do SAMU. Assegurando performance máxima,
+                        estabilidade operacional e prevenção de falhas, permitimos que
+                        médicos, enfermeiros e socorristas dediquem toda sua atenção
+                        ao que realmente importa: preservar vidas com eficiência
+                        e segurança.
                     </p>
                 </div>
+            </div>
 
-                <div id="div-button-saiba-mais">
-                    <a id="button-saiba-mais" class="falso-button-padrao" href="#section-healthguard">Saiba mais</a>
+            <div id="direita-healthguard">
+                <img src="./assets/imgs/imagem_medicos.png" alt="">
+            </div>
+        </section>
+
+        <!-- <section id="section-sobre-nos"></section> -->
+        <section id="section-membros"></section>
+
+        <section id="section-nossos-servicos">
+            <div class="div-titulo">
+                <h1 class="titulo-padrao">Nossos serviços</h1>
+            </div>
+            <div id="container-cards-servicos">
+                <div class="card-servico">
+                    <div class="top-card">
+                        <img src="./assets/imgs/img-card1.jpg">
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Monitoramento</h3>
+                        <p>
+                            Monitoramento contínuo do desempenho dos computadores,
+                            garantindo que o sistema CAD funcione sem interrupções.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-servico">
+                    <div class="top-card">
+                        <img src="./assets/imgs/img-card2.jpg">
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Gestão de Hardware</h3>
+                        <p>
+                            Gestão completa dos componentes das máquinas,
+                            prevenindo falhas e prolongando a vida útil do equipamento.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-servico">
+                    <div class="top-card">
+                        <img src="./assets/imgs/img-card3.jpg">
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Alertas inteligentes</h3>
+                        <p>
+                            Notificações automáticas sobre riscos ou
+                            irregularidades, permitindo ação rápida antes que o atendimento seja impactado.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-servico">
+                    <div class="top-card">
+                        <img src="./assets/imgs/img-card4.jpg">
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Histórico e relatórios</h3>
+                        <p>
+                            Armazenamento detalhado de dados, histórico de alertas e relatórios claros,
+                            auxiliando gestores na tomada de decisão.
+                        </p>
+                    </div>
                 </div>
             </div>
+        </section>
 
-            <div id="direita-inicio">
-                <img src="./assets/imgs/atendente_samu_banner_inicial.png" alt="">
+        <section id="section-beneficios">
+            <div class="div-titulo">
+                <h1 class="titulo-padrao color-black">Benefícios</h1>
             </div>
-        </div>
-    </header>
+            <div id="container-cards-beneficios">
+                <div class="card-beneficio card-red">
+                    <div class="top-card-beneficio">
+                        <img src="./assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png">
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Agilidade no atendimento</h3>
+                        <p>
+                           Redução de riscos de lentidão nas máquinas, 
+                           assegurando agilidade ao responder chamados de emergência.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-beneficio">
+                    <div class="top-card-beneficio">
+                        <img src="./assets/imgs/HealthGuard _icone_VERMELHO_fundo_transparente.png">
 
-    <section id="section-healthguard">
-        <div id="esquerda-healthguard">
-            <div id="div-conteudo-healthguard">
-                <span class="titulo-healthguard">
-                    O que é a HealthGuard?
-                </span>
-                <p id="texto-healthguard">
-                    Somos uma solução de monitoramento em tempo real e gestão proativa dos 
-                    computadores essenciais do SAMU. Assegurando performance máxima, 
-                    estabilidade operacional e prevenção de falhas, permitimos que 
-                    médicos, enfermeiros e socorristas dediquem toda sua atenção 
-                    ao que realmente importa: preservar vidas com eficiência 
-                    e segurança.
-                </p>
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Impacto na vida humana</h3>
+                        <p>
+                            Com sistemas funcionando bem, o tempo de resposta do SAMU 
+                            é otimizado, ajudando a salvar mais vidas.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-beneficio card-red">
+                    <div class="top-card-beneficio">
+                        <img src="./assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png">
+
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Previsão de problemas</h3>
+                        <p>
+                            Com análise preditiva, identificamos sinais de desgaste antecipadamente, 
+                            prevenindo falhas no processo atendimento.
+                            
+                        </p>
+                    </div>
+                </div>
+                <div class="card-beneficio">
+                    <div class="top-card-beneficio">
+                        <img src="./assets/imgs/HealthGuard _icone_VERMELHO_fundo_transparente.png">
+
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Confiabilidade operacional</h3>
+                        <p>
+                            Garantimos que os computadores do sistema CAD funcionem 
+                            sem falhas, assegurando o atendimento das urgências.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-beneficio card-red">
+                    <div class="top-card-beneficio">
+                        <img src="./assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png">
+
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Gestão estratégica</h3>
+                        <p>
+                            Relatórios e métricas ajudam a planejar melhorias, 
+                            otimizar recursos e garantir a disponibilidade.
+                        </p>
+                    </div>
+                </div>
+                <div class="card-beneficio">
+                    <div class="top-card-beneficio">
+                        <img src="./assets/imgs/HealthGuard _icone_VERMELHO_fundo_transparente.png">
+
+                    </div>
+                    <div class="bottom-card">
+                        <h3>Redução de custos</h3>
+                        <p>
+                            A prevenção de falhas das máquinas diminui a necessidade de 
+                            reparos emergenciais e reduz gastos inesperados.
+                        </p>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+        <section id="section-contato"></section>
+    </div>
 
-        <div id="direita-healthguard">
-            <img src="./assets/imgs/imagem_medicos.png" alt="">
-        </div>
-    </section>
-
-    <section id="section-sobre-nos"></section>
-    <section id="section-membros"></section>
-    <section id="section-nossos-servicos"></section>
-    <section id="section-simulador"></section>
-    <section id="section-beneficios"></section>
-    <section id="section-contato"></section>
 </body>
 
 </html>

@@ -1,0 +1,245 @@
+.kpis-box {
+    margin-left: 6%;
+    width: 100%;
+    height: 50vh;
+    background-color: transparent;
+    position: fixed;
+    z-index: 998;
+    background-color: #f8f8f8;
+
+    padding-left: 2vw;
+    padding-top: 2vh;
+}
+
+.texto-organizacao {
+    font-size: 2vw;
+    font-weight: bold;
+    height: 8vh;
+}
+
+.texto-topico {
+    font-size: 1.5vw;
+    font-weight: bold;
+    height: 6vh;
+}
+
+.kpis-flexbox {
+    width: 100%;
+    height: 15vh;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2vw;
+}
+
+.kpi-box {
+    width: auto;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.8vw;
+}
+
+.barra-vertical {
+    height: 100%;
+    width: 0.3vw;
+
+    background-color: #59010C;
+}
+
+.kpi-flexbox {
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 2vh;
+}
+
+.texto-kpi {
+    font-size: 1.5vw;
+    font-weight: bolder;
+}
+
+.numero-kpi-preta {
+    color: #000;
+    font-size: 2vw;
+    font-weight: bolder;
+}
+
+.numero-kpi-verde {
+    color: #0AA40A;
+    font-size: 2vw;
+    font-weight: bolder;
+}
+
+.numero-kpi-vermelho {
+    color: #D30808;
+    font-size: 2vw;
+    font-weight: bolder;
+}
+
+.alinhamento-centralizar-vertical {
+    display: flex;
+    align-items: center;
+}
+
+.box-filtro {
+    width: 100%;
+    height: 13vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.filtro-esquerda {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1vw;
+}
+
+.filtro-direita {
+    width: 50%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2vw;
+}
+
+.texto-funcionalidade {
+    font-size: 1.3vw;
+}
+
+.select-filtro {
+    border-radius: 1vh;
+    height: 4vh;
+    font-size: 1vw;
+    font-weight: 400;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+.botao-codigo {
+    background-color: #D9D9D9;
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    height: 4vh;
+    width: 12vw;
+    border-radius: 1vh;
+    font-size: 1vw;
+    font-weight: 500;
+}
+
+.botao-codigo:hover {
+    cursor: pointer;
+}
+
+.div-botao-adicionar{
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    height: 4vh;
+    width: auto;
+    min-width: 12vw;
+    background-color: #1E2A38;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 1vh;
+    color: #fff;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5vw;
+}
+.icone-mais{
+    height: 2.2vh;
+}
+.barra-vertical-botao{
+    height: 60%;
+    width: 0.1vw;
+    border: none;
+    background-color: #fff;
+}
+.texto-botao-adicionar{
+    font-size: 1vw;
+}
+.div-botao-adicionar:hover{
+    cursor: pointer;
+}
+.pai-maquinas{
+    padding-top: 50vh;
+    margin-left: 6%;
+    padding-left: 2vw;
+    background-color: #f8f8f8;
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 3vw;
+}
+.maquina-box{
+    background-color: #fff;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 2vh;
+    width: 20%;
+    height: 15vh;
+    display: flex;
+    padding: 0vw 1vw;
+}
+.coluna-informacoes{
+    width: 80%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5vh;
+}
+.nome-maquina{
+    font-size: 1.5vw;
+    font-weight: bold;
+    padding-bottom: 3vh;
+}
+.texto-marcacao-maquina{
+    font-size: 1vw;
+    font-weight: bold;
+}
+.texto-status-maquina{
+    font-size: 1vw;
+    font-weight: bold;
+}
+.div-imagem-status{
+    height: 100%;
+    width: 20%;
+    padding-top: 1vh;
+    padding-left: 1.5vw;
+
+    display: flex;
+    justify-content: center;
+}
+.imagem-status{
+    height: 4vh;
+}
+.verde{
+    color: #0AA40A;
+}
+.vermelho{
+    color: #D30808;
+}
+.maquina-box:hover{
+    cursor: pointer;
+}

@@ -1,0 +1,150 @@
+.menu-lateral{
+    height: 100%;
+    width: 6%;
+    min-height: 100vh;
+    background-color: #860B19;
+    position: fixed;
+    transition: 0.3s;
+    z-index: 999;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.menu-lateral:hover{
+    width: 20%;
+    transition: 0.5s;
+}
+/* .tela-dashboard{
+    height: 1000vh;
+    width: 94%;
+    margin-left: 6%;
+    background-color: #F8F8F8;
+} */
+.pai-icones-superiores{
+    height: 70%;
+    width: 100%;
+    background-color: #860B19;
+    padding-top: 2.5vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2vh;
+}
+.pai-icones-inferiores{
+    height: 30%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+.icone-logo-pequena{
+    height: 6vh;
+}
+.icone-logomarca{
+    padding-left: 1vw;
+    width: 15vw;
+}
+.icone-box{
+    height: 10%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icone-box:hover{
+    cursor: pointer;
+}
+.icone-box-inferior{
+    height: 25%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icone-box-inferior:hover{
+    cursor: pointer;
+}
+.separador{
+    width: 100%;
+    height: 0.8vh;
+    border: none;
+    background-color: #fdf2f31a;
+}
+.separador-forte{
+    width: 100%;
+    height: 0.8vh;
+    border: none;
+    background-color: #fdf2f39a;
+}
+.icone-menu-1{
+    height: 3.5vh;
+    width: 3.5vh;
+}
+.icone-menu-2{
+    height: 3.5vh;
+    width: 3.5vh;
+}
+.icone-menu-3{
+   height: 3.5vh;
+    width: 3.5vh;
+}
+.icone-menu-4{
+    height: 3.5vh;
+    width: 3.5vh;
+}
+.icone-menu-5{
+    height: 3.5vh;
+    width: 3.5vh;
+}
+.icone-menu-6{
+    height: 3.5vh;
+    width: 3.5vh;
+}
+.texto-icone{
+    color: #fff;
+    font-size: 1vw;
+    font-weight: bold;
+    padding-left: 1vw;
+    padding-bottom: 5px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+.texto-icone::after {
+    margin-left: 1vw;
+    content: '';
+    position: absolute;
+    height: 2px;
+    background-color: #dc3545; 
+    bottom: 0;
+    left: 0;
+    right: 0; 
+    transform: scaleX(0); 
+    transform-origin: bottom left; 
+    transition: transform 0.3s ease-out; 
+}
+.texto-icone:hover{
+    color: #ff0000;
+}
+.texto-icone:hover::after {
+    transform: scaleX(1); 
+}
+.extendido{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding-left: 1.5vw;
+}
+/* Deixar por último */
+.oculto{
+    transition: 1s;
+    display: none;
+}
