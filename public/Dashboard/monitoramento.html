@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/menu_bar.css">
     <link rel="stylesheet" href="../css/monitoramento.css">
+    <!-- Link JavaScript -->
 </head>
 
-<body>
+<body onload="validarSessao()">
     <section class="tela">
         <!-- Começo do Menu -->
         <div class="menu-lateral">
@@ -21,12 +22,12 @@
                         class="icone-logo-pequena">
                 </div>
                 <br>
-                <div class="icone-box">
+                <div class="icone-box" id="monitoramento_redirecionamento">
                     <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
                     <div class="texto-icone oculto">Monitoramento</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box">
+                <div class="icone-box" id="gestao_redirecionamento">
                     <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
                     <div class="texto-icone oculto">Gestão de usuários</div>
                 </div>
@@ -48,7 +49,7 @@
                     <div class="texto-icone oculto">Perfil</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box-inferior">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
                     <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
                     <div class="texto-icone oculto">Sair da conta</div>
                 </div>
@@ -67,28 +68,31 @@
                     <div class="barra-vertical"></div>
                     <div class="kpi-flexbox">
                         <div class="texto-kpi">Máquinas em configuração</div>
-                        <div class="numero-kpi-vermelho">1</div>
+                        <div class="numero-kpi-vermelho" id="kpi_configuracao">1</div>
                     </div>
                 </div>
                 <div class="kpi-box">
                     <div class="barra-vertical"></div>
                     <div class="kpi-flexbox">
                         <div class="texto-kpi">Máquinas cadastradas</div>
-                        <div class="numero-kpi-preta">3</div>
+                        <div class="numero-kpi-preta" id="kpi_cadastradas">3</div>
                     </div>
                 </div>
                 <div class="kpi-box">
                     <div class="barra-vertical"></div>
                     <div class="kpi-flexbox">
                         <div class="texto-kpi">Máquinas inativas</div>
-                        <div class="numero-kpi-vermelho">1</div>
+                        <div class="numero-kpi-vermelho" id="kpi_inativas">1</div>
                     </div>
                 </div>
                 <div class="kpi-box">
                     <div class="barra-vertical"></div>
                     <div class="kpi-flexbox">
                         <div class="texto-kpi">Máquinas ativas / Máquinas em alerta</div>
-                        <div class=""><span class="numero-kpi-verde">2</span> <span class="numero-kpi-preta">/</span> <span class="numero-kpi-vermelho">1</span></div>
+                        <div class=""><span class="numero-kpi-verde" id="kpi_ativas">2</span> <span
+                                class="numero-kpi-preta">/</span>
+                            <span class="numero-kpi-vermelho" id="kpi_alerta">1</span>
+                        </div>
                     </div>
                 </div>
                 <!-- <div class="kpi-box">
@@ -107,12 +111,13 @@
                     <div class="texto-funcionalidade">
                         Filtro:
                     </div>
-                    <select name="" id="" class="select-filtro">
-                        <option value="">Todas as máquinas</option>
-                        <option value="">Apenas máquinas em alerta</option>
-                        <option value="">Apenas máquinas Inativas</option>
-                        <option value="">Apenas máquinas Ativas</option>
-                        <option value="">Apenas máquinas em configuração</option>
+                    <select name="" id="filtro_maquinas" class="select-filtro">
+                        <option value="todas">Todas as máquinas</option>
+                        <option value="alerta">Apenas máquinas em alerta</option>
+                        <option value="inativas">Apenas máquinas Inativas</option>
+                        <option value="ativas">Apenas máquinas Ativas(Sem Alerta)</option>
+                        <option value="ativas_alerta">Apenas máquinas Ativas(Com Alerta)</option>
+                        <option value="configuração">Apenas máquinas em configuração</option>
                     </select>
                 </div>
                 <div class="filtro-direita">
@@ -199,43 +204,248 @@
 </body>
 
 </html>
+<script src="../js/validarSessao.js"></script>
+<script src="../js/menu-lateral.js"></script>
 <script>
-    // Começo configuração Menu
-    document.querySelector('.menu-lateral').addEventListener('mouseover', () => {
-        const texto_icone = document.querySelectorAll('.texto-icone')
-        const box_icone = document.querySelectorAll('.icone-box')
-        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
-        texto_icone.forEach(a => {
-            a.classList.remove('oculto')
-        })
-        box_icone.forEach(a => {
-            a.classList.add('extendido')
-        })
-        box_icone_inferior.forEach(a => {
-            a.classList.add('extendido')
-        })
-        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard"
-                    class="icone-logomarca">`
-
-    })
-    document.querySelector('.menu-lateral').addEventListener('mouseleave', () => {
-        const texto_icone = document.querySelectorAll('.texto-icone')
-        const box_icone = document.querySelectorAll('.icone-box')
-        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
-        texto_icone.forEach(a => {
-            a.classList.add('oculto')
-        })
-        box_icone.forEach(a => {
-            a.classList.remove('extendido')
-        })
-        box_icone_inferior.forEach(a => {
-            a.classList.remove('extendido')
-        })
-        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png"" alt="HealthGuard"
-                        class="icone-logo-pequena">`
-    })
-    // Fim configuração Menu
-    document.querySelector('.maquina-box').addEventListener('click',() => {
+    document.querySelector('.maquina-box').addEventListener('click', () => {
         window.location.href = "dashboard.html"
     })
+    // Redirecionador Dash
+    document.addEventListener('click', function (elemento) {
+        if (elemento.target.closest('.maquina-box')) {
+            var maquina = event.target.closest('.maquina-box');
+            sessionStorage.ID_DAC = maquina.id;
+            window.location.href = "dashboard.html"
+        }
+    });
+    // Buscar nome da central
+    function trocarNomeUnidade() {
+        fetch(`/dashboard/buscarNomeDaUnidade/${fkUnidade}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                if (resposta[0].nomeFantasia == null) {
+                    div_nome_empresa.innerHTML = resposta[0].razaoSocial
+                } else {
+                    div_nome_empresa.innerHTML = resposta[0].nomeFantasia
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    function atualizarkpismonitoramento() {
+        console.log("Entrei")
+        fetch(`/dashboard/buscarKpisMonitoramento/${fkUnidade}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                kpi_configuracao.innerHTML = resposta[0].configuracao
+                kpi_cadastradas.innerHTML = resposta[0].cadastradas
+                kpi_inativas.innerHTML = resposta[0].inativo
+                kpi_ativas.innerHTML = resposta[0].ativo
+                kpi_alerta.innerHTML = resposta[0].alerta
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    function atualizarMaquinas() {
+        fetch(`/dashboard/buscarMaquina/${fkUnidade}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                vetor_maquinas = resposta
+                var filtro = filtro_maquinas.value
+                if (filtro == "todas") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Ativo") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina verde">
+                        Ok
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                        }
+                        if (vetor_maquinas[i].statusDac == "Inativo") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Inativo
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone inativo.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                        }
+                        if (vetor_maquinas[i].statusDac == "Alerta") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Alerta 
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone Alerta.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                        }
+                        if (vetor_maquinas[i].statusDac == "Em configuração") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Em configuração
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone configuracao.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                        }
+
+                    }
+                }
+                if (filtro == "alerta" || filtro == "ativas_alerta") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Alerta") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Alerta 
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone Alerta.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                        }
+                    }
+                }
+                if (filtro == "inativas") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Inativo") {
+                            if (vetor_maquinas[i].statusDac == "Inativo") {
+                                div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Inativo
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone inativo.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                            }
+                        }
+                    }
+                }
+                if (filtro == "ativas" || filtro == "ativas_alerta") {
+                    if (filtro == "ativas") {
+                        div_maquinas.innerHTML = ``
+                    }
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Ativo") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina verde">
+                        Ok
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                        }
+                    }
+
+                }
+                if (filtro == "configuração") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Em configuração") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        ${vetor_maquinas[i].nomeDeIdentificacao}
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Em configuração
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone configuracao.png" alt="Status" class="imagem-status">
+                </div>
+            </div>`
+                        }
+                    }
+                }
+
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
 </script>

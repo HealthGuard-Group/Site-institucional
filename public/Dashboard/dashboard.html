@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/dashboard.css">
     <link rel="stylesheet" href="../css/menu_bar.css">
+    <script src="../js/validarSessao.js"></script>
 </head>
 
-<body>
+<body onload="validarSessao()">
     <section class="tela">
         <!-- Começo do Menu -->
         <div class="menu-lateral">
@@ -48,7 +49,7 @@
                     <div class="texto-icone oculto">Perfil</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box-inferior">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
                     <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
                     <div class="texto-icone oculto">Sair da conta</div>
                 </div>
@@ -84,50 +85,10 @@
 </body>
 
 </html>
+<script src="../js/menu-lateral.js"></script>
 <script>
-    // Começo configuração Menu
-    document.querySelector('.menu-lateral').addEventListener('mouseover', () => {
-        const texto_icone = document.querySelectorAll('.texto-icone')
-        const box_icone = document.querySelectorAll('.icone-box')
-        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
-        texto_icone.forEach(a => {
-            a.classList.remove('oculto')
-        })
-        box_icone.forEach(a => {
-            a.classList.add('extendido')
-        })
-        box_icone_inferior.forEach(a => {
-            a.classList.add('extendido')
-        })
-        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard"
-                    class="icone-logomarca">`
-
-    })
-    document.querySelector('.menu-lateral').addEventListener('mouseleave', () => {
-        const texto_icone = document.querySelectorAll('.texto-icone')
-        const box_icone = document.querySelectorAll('.icone-box')
-        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
-        texto_icone.forEach(a => {
-            a.classList.add('oculto')
-        })
-        box_icone.forEach(a => {
-            a.classList.remove('extendido')
-        })
-        box_icone_inferior.forEach(a => {
-            a.classList.remove('extendido')
-        })
-        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png"" alt="HealthGuard"
-                        class="icone-logo-pequena">`
-    })
-    // Fim configuração Menu
     // Redirecionamento para o monitoramento
     document.querySelector('.icon-seta').addEventListener('click', () => {
-        window.location.href = "monitoramento.html"
-    })
-    document.querySelector('.icon-seta').addEventListener('click', () => {
-        window.location.href = "monitoramento.html"
-    })
-    document.getElementById("monitoramento_redirecionamento").addEventListener('click', () => {
         window.location.href = "monitoramento.html"
     })
     //Funcionalidade observação

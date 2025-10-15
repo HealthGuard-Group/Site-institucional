@@ -16,12 +16,12 @@
     width: 20%;
     transition: 0.5s;
 }
-/* .tela-dashboard{
-    height: 1000vh;
-    width: 94%;
-    margin-left: 6%;
+.tela{
+    height: auto;
+    width: 100%;
+    min-height: 100vh;
     background-color: #F8F8F8;
-} */
+}
 .pai-icones-superiores{
     height: 70%;
     width: 100%;

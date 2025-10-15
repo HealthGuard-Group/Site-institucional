@@ -42,9 +42,6 @@ function cadastrar(req, res) {
 function InserirLogAcesso(req, res) {
   var fkUsuario = req.body.fkUsuario;
   var fkUnidadeDeAtendimento = req.body.fkUnidadeDeAtendimento;
-  console.log("Entrei no Fetch do Log")
-  console.log("Id Usuário na controller:", fkUsuario)
-  console.log("Id Unidade na controller:", fkUnidadeDeAtendimento)
 
   if (fkUsuario == undefined) {
     res.status(400).send("Seu fkUsuario está undefined!");
