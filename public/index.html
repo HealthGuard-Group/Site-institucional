@@ -5,6 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="imagex/png" href="./assets/icon/healthguard_icone.png">
+    
+    <!-- Link SwiperJS - CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css">
+
     <link rel="stylesheet" type="text/css" href="./css/global.css" media="screen" />
     <link rel="stylesheet" type="text/css" href="./css/index.css" media="screen" />
     <title>HealthGuard</title>
@@ -109,8 +113,8 @@
                 <div class="div-missao-visao-sobre-nos">
                     <h3>Missão</h3>
                     <p>
-                        Assegurar que a infraestrutura tecnológica responsável pelo 
-                        salvamento de vidas opere de forma eficiente e ininterrupta, 
+                        Assegurar que a infraestrutura tecnológica responsável pelo
+                        salvamento de vidas opere de forma eficiente e ininterrupta,
                         oferecendo ferramentas de monitoramento inteligente e preditivo.
                     </p>
                 </div>
@@ -118,15 +122,15 @@
                 <div class="div-missao-visao-sobre-nos">
                     <h3>Visão</h3>
                     <p>
-                        Ser referência no desenvolvimento de soluções de monitoramento 
-                        de hardware para sistemas críticos, ampliando a segurança digital 
+                        Ser referência no desenvolvimento de soluções de monitoramento
+                        de hardware para sistemas críticos, ampliando a segurança digital
                         e física em instituições de saúde.
                     </p>
                 </div>
             </div>
 
             <div id="container-cards-sobre-nos">
-                
+
                 <div class="card-sobre-nos">
                     <div class="esquerda-card-sobre-nos">
                         <div class="fundo-icone-card-sobre-nos">
@@ -179,7 +183,116 @@
         </section>
 
 
-        <section id="section-membros"></section>
+        <section id="section-membros">
+            <div class="div-titulo">
+                <h1 class="titulo-padrao">Membros</h1>
+            </div>
+
+            <p>
+                Nosso time reúne profissionais dedicados a criar soluções tecnológicas
+                confiáveis para a saúde, unindo conhecimento, inovação e compromisso.
+            </p>
+
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="foto-membro">
+                            
+                        </div>
+
+                        <div class="contato-membro">
+
+                        </div>
+
+                        <div class="div-informacoes-membro">
+                            <h5>André Leão</h5>
+                            <p>Analista e Dev Full Stack</p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="foto-membro">
+                            
+                        </div>
+
+                        <div class="contato-membro">
+
+                        </div>
+
+                        <div class="div-informacoes-membro">
+                            <h5>Arthur F. Amaral</h5>
+                            <p>DBA e Dev Full Stack</p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="foto-membro">
+                            
+                        </div>
+
+                        <div class="contato-membro">
+
+                        </div>
+
+                        <div class="div-informacoes-membro">
+                            <h5>Davi Escudero</h5>
+                            <p>Analista e Dev Full Stack</p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="foto-membro">
+                            
+                        </div>
+
+                        <div class="contato-membro">
+
+                        </div>
+
+                        <div class="div-informacoes-membro">
+                            <h5>Giovanna Andrade</h5>
+                            <p>Analista e Dev Full Stack</p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="foto-membro">
+                            
+                        </div>
+
+                        <div class="contato-membro">
+
+                        </div>
+
+                        <div class="div-informacoes-membro">
+                            <h5>Marcela Bastos</h5>
+                            <p>Analista e Dev Full Stack</p>
+                        </div>
+                    </div>
+
+                    <div class="swiper-slide">
+                        <div class="foto-membro">
+                            
+                        </div>
+
+                        <div class="contato-membro">
+
+                        </div>
+
+                        <div class="div-informacoes-membro">
+                            <h5>Rafael Fratini</h5>
+                            <p>Dev Back-end e Infraestrutura</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="swiper-pagination"></div>
+    
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+
+        </section>
 
         <section id="section-nossos-servicos">
             <div class="div-titulo">
@@ -349,20 +462,28 @@
                         <img src="./assets/imgs/icone_phone.png"> <span>+55 (11) 97345-9842</span>
                     </div>
                 </div>
-                
+
                 <div id="direitos-rodape">
                     © 2025 HealthGuard. Todos os direitos reservados.
                 </div>
             </div>
-            
+
         </footer>
     </div>
+
+
+    <!-- Link SwiperJS - script.js -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+
+    <!-- Script de customização do carrossel -->
+    <script src="./js/script-carrossel.js"></script>
 
 </body>
 
 </html>
 
 <script src="./js/navbar-mobile.js"></script>
+
 <script>
     //Faz com que o site faça a mudança de foma manual
     //Assim quando a pagina atualizar ele voltará ao topo do site
