@@ -200,7 +200,7 @@
 
 </html>
 <script>
-
+    // Começo configuração Menu
     document.querySelector('.menu-lateral').addEventListener('mouseover', () => {
         const texto_icone = document.querySelectorAll('.texto-icone')
         const box_icone = document.querySelectorAll('.icone-box')
@@ -233,5 +233,9 @@
         })
         logo.innerHTML = `<img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png"" alt="HealthGuard"
                         class="icone-logo-pequena">`
+    })
+    // Fim configuração Menu
+    document.querySelector('.maquina-box').addEventListener('click',() => {
+        window.location.href = "dashboard.html"
     })
 </script>

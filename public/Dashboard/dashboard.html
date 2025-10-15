@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Maquina 01</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+</head>
+
+<body>
+    <section class="tela">
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de usuários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+        <div class="tela-dashboard">
+            <div class="box-informacaoes">
+                <div class="maquina-box-info">
+                    <div class="div-indetificao">
+                        <img src="../assets/imgs/seta-esquerda.png" alt="" class="icon-seta">
+                        <div class="texto-maquina">Maquina 01</div>
+                    </div>
+                    <div class="div-observacoes">
+                        <div class="box-observacoes-superior">
+                            <div class="texto-fixo">
+                                Observações:
+                            </div>
+                            <div class="box-icon-editar">
+                                <img src="../assets/imgs/icone editar.png" alt="Editar observação" class="icon-editar">
+                                <button class="button-cinza oculto" id="button_observacaoes_cancelar">Cancelar edição</button>
+                                <button class="button-azul oculto" id="button_observacaoes_salvar">Salvar alterações</button>
+                            </div>
+                        </div>
+                        <div class="texto-editavel" id="texto_observacao">Configuração: Processador i5 - 11970, 8 GB RAM, 2 TB Disco.Operadores: Arthur, Sabrina, Yuri</div>
+                        <textarea name="Observações" maxlength="500" rows="10"
+                        placeholder="Escreva sua observação" class="input-observacao oculto" id="input_observacaoes"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+
+</html>
+<script>
+    // Começo configuração Menu
+    document.querySelector('.menu-lateral').addEventListener('mouseover', () => {
+        const texto_icone = document.querySelectorAll('.texto-icone')
+        const box_icone = document.querySelectorAll('.icone-box')
+        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
+        texto_icone.forEach(a => {
+            a.classList.remove('oculto')
+        })
+        box_icone.forEach(a => {
+            a.classList.add('extendido')
+        })
+        box_icone_inferior.forEach(a => {
+            a.classList.add('extendido')
+        })
+        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard"
+                    class="icone-logomarca">`
+
+    })
+    document.querySelector('.menu-lateral').addEventListener('mouseleave', () => {
+        const texto_icone = document.querySelectorAll('.texto-icone')
+        const box_icone = document.querySelectorAll('.icone-box')
+        const box_icone_inferior = document.querySelectorAll('.icone-box-inferior')
+        texto_icone.forEach(a => {
+            a.classList.add('oculto')
+        })
+        box_icone.forEach(a => {
+            a.classList.remove('extendido')
+        })
+        box_icone_inferior.forEach(a => {
+            a.classList.remove('extendido')
+        })
+        logo.innerHTML = `<img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png"" alt="HealthGuard"
+                        class="icone-logo-pequena">`
+    })
+    // Fim configuração Menu
+    // Redirecionamento para o monitoramento
+    document.querySelector('.icon-seta').addEventListener('click', () => {
+        window.location.href = "monitoramento.html"
+    })
+    document.querySelector('.icon-seta').addEventListener('click', () => {
+        window.location.href = "monitoramento.html"
+    })
+    document.getElementById("monitoramento_redirecionamento").addEventListener('click', () => {
+        window.location.href = "monitoramento.html"
+    })
+    //Funcionalidade observação
+    document.querySelector('.icon-editar').addEventListener('click',() => {
+        document.querySelector('.icon-editar').classList.add('oculto')
+        document.querySelector('.texto-editavel').classList.add('oculto')
+        document.querySelector('.button-cinza').classList.remove('oculto')
+        document.querySelector('.button-azul').classList.remove('oculto')
+        document.querySelector('.input-observacao').classList.remove('oculto')
+        input_observacaoes.value = texto_observacao.textContent
+    })
+    document.getElementById("button_observacaoes_cancelar").addEventListener('click',() => {
+        document.querySelector('.icon-editar').classList.remove('oculto')
+        document.querySelector('.texto-editavel').classList.remove('oculto')
+        document.querySelector('.button-cinza').classList.add('oculto')
+        document.querySelector('.button-azul').classList.add('oculto')
+        document.querySelector('.input-observacao').classList.add('oculto')
+    })
+    document.getElementById("button_observacaoes_salvar").addEventListener('click',() => {
+        texto_observacao.innerHTML = input_observacaoes.value
+        // Ação no Banco
+
+        // Fim ação no Banco
+        document.querySelector('.icon-editar').classList.remove('oculto')
+        document.querySelector('.texto-editavel').classList.remove('oculto')
+        document.querySelector('.button-cinza').classList.add('oculto')
+        document.querySelector('.button-azul').classList.add('oculto')
+        document.querySelector('.input-observacao').classList.add('oculto')
+    })
+</script>

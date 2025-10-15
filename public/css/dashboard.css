@@ -1,0 +1,114 @@
+.tela-dashboard{
+    margin-left: 6%;
+    width: 94%;
+    height: 100%;
+    min-height: 100vh;
+    background-color: #f8f8f8;
+    padding: 2vh 2vw;
+}
+.box-informacaoes{
+    background-color: #fff;
+    border-radius: 1vh;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    height: 30vh;
+    width: 100%;
+    margin-right: 2vw;
+    padding: 2vh 2vw;
+}
+.maquina-box-info{
+    width: 70%;
+    height: 100%;
+    background-color: transparent;
+
+    display: flex;
+    flex-direction: column;
+}
+.div-indetificao{
+    height: 30%;
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2vw;
+}
+.icon-seta{
+    height: 50%;
+}
+.icon-seta:hover{
+    cursor: pointer;
+}
+.texto-maquina{
+    font-size: 1.8vw;
+    font-weight: bold;
+}
+.div-observacoes{
+    padding: 1vh 0vw;
+    height: 70%;
+    width: auto;
+    max-width: 60%;
+}
+.box-observacoes-superior{
+    height: 4vh;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+}
+.texto-fixo{
+    width: 50%;
+    font-size: 1.2vw;
+    font-weight: bold;
+}
+.texto-editavel {
+    font-size: 0.9vw;
+}
+.box-icon-editar{
+    width: 50%;
+    height: 100%;
+    
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1vw;
+}
+.icon-editar{
+    height: 3vh;
+}
+.icon-editar:hover{
+    cursor: pointer;
+}
+.input-observacao{
+    width: 100%;
+    height: 80%;
+    resize: none;
+
+    display: flex;
+}
+.button-cinza{
+    background-color: #D9D9D9;
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    height: 3vh;
+    width: 6vw;
+    border-radius: 1vh;
+    font-size: 0.6vw;
+    font-weight: 600;
+}
+.button-azul {
+    height: 3vh;
+    width: 6vw;
+    background-color: #1E2A38;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 1vh;
+    border: none;
+    color: #fff;
+    font-size: 0.6vw;
+    font-weight: 600;
+}
+.button-cinza:hover{
+    cursor: pointer;
+}
+.button-azul:hover{
+    cursor: pointer;
+}
