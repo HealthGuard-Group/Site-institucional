@@ -20,4 +20,7 @@ router.get("/listar", function (req, res) {
   empresaController.listar(req, res);
 });
 
+router.post("/InserirLogAcesso", function (req, res) {
+    empresaController.InserirLogAcesso(req, res);
+})
 module.exports = router;

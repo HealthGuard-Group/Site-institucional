@@ -39,9 +39,42 @@ function cadastrar(req, res) {
   });
 }
 
+function InserirLogAcesso(req, res) {
+  var fkUsuario = req.body.fkUsuario;
+  var fkUnidadeDeAtendimento = req.body.fkUnidadeDeAtendimento;
+  console.log("Entrei no Fetch do Log")
+  console.log("Id Usuário na controller:", fkUsuario)
+  console.log("Id Unidade na controller:", fkUnidadeDeAtendimento)
+
+  if (fkUsuario == undefined) {
+    res.status(400).send("Seu fkUsuario está undefined!");
+  }
+  else if (fkUnidadeDeAtendimento == undefined) {
+    res.status(400).send("Seu fkUnidadeDeAtendimento está undefined!");
+  } else {
+
+    empresaModel.InserirLogAcesso(fkUsuario, fkUnidadeDeAtendimento)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao inserir log! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
+
 module.exports = {
   buscarPorCnpj,
   buscarPorId,
   cadastrar,
   listar,
+  InserirLogAcesso
 };
