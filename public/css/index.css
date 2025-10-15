@@ -459,7 +459,7 @@ section {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100vh;
+    height: 170vh;
 }
 
 #container-texto-sobre-nos {
@@ -469,7 +469,7 @@ section {
     grid-template-rows: 1fr;
     justify-content: center;
     align-items: center;
-    height: 40%;
+    height: 25%;
     gap: 3%;
 }
 
@@ -491,19 +491,17 @@ section {
     gap: 1.5vh;
     width: 92%;
 }
-/* 
-#div-visao-sobre-nos {
-    width: 85%;
-} */
 
 #container-cards-sobre-nos {
+    /* background-color: #111c28; */
     display: grid;
     grid-template-columns: 20% 20% 21% 21%;
     grid-template-rows: 1fr;
     justify-content: center;
     justify-items: center;
-    align-items: center;
-    height: 30%;
+    align-items: start;
+    margin-top: 2%;
+    height: 20%;
     gap: 2%;
 }
 
@@ -512,7 +510,7 @@ section {
     display: flex;
     border-radius: 20px;
     width: 100%;
-    height: 50%;
+    height: 45%;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
 }
 
@@ -550,6 +548,20 @@ section {
 
 .direita-card-sobre-nos p {
     font-size: 0.8rem;
+}
+
+#container-imagem-sobre-nos {
+    /* background-color: #1d2f3f; */
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    width: 100%;
+    height: 40%;
+}
+
+#container-imagem-sobre-nos img {
+    width: 70%;
+    height: 80%;
 }
 
 /* SECTION - MEMBROS --------------------------------------------- */
