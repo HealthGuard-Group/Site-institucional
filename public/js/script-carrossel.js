@@ -1,10 +1,16 @@
 var swiper = new Swiper(".swiper", {
     loop: true,
     grabCursor: true,
+    // navigation: {
+    //     nextEl: ".swiper-button-next",
+    //     prevEl: ".swiper-button-prev",
+    // },
+
     navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev",
+        nextEl: ".custom-next-btn",  // Sua classe personalizada
+        prevEl: ".custom-prev-btn",  // Sua classe personalizada
     },
+    
     pagination: {
         el: ".swiper-pagination",
         clickable: true
