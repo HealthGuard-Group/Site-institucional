@@ -4,7 +4,7 @@
     min-height: 100vh;
     background-color: #860B19;
     position: fixed;
-    transition: 0.3s;
+    transition: 0.3s ease;
     z-index: 999;
 
     display: flex;
@@ -32,10 +32,9 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 2vh;
 }
 .pai-icones-inferiores{
-    height: 30%;
+    height: 35%;
     width: 100%;
 
     display: flex;
@@ -43,22 +42,26 @@
     align-items: center;
     justify-content: flex-end;
 }
+#logo {
+    margin-top: 1vh;
+    margin-bottom: 7vh;
+}
 .icone-logo-pequena{
     height: 6vh;
 }
 .icone-logomarca{
-    padding-left: 1vw;
     width: 15vw;
 }
 .icone-box{
-    height: 10%;
+    height: 15%;
     width: 100%;
-
+    
     display: flex;
     justify-content: center;
     align-items: center;
 }
 .icone-box:hover{
+    background-color: #9a1522;
     cursor: pointer;
 }
 .icone-box-inferior{
@@ -70,19 +73,21 @@
     align-items: center;
 }
 .icone-box-inferior:hover{
+    background-color: #9a1522;
     cursor: pointer;
 }
 .separador{
     width: 100%;
-    height: 0.8vh;
+    height: 0.0vh;
     border: none;
-    background-color: #fdf2f31a;
+    background-color: #6f0606;
+
 }
 .separador-forte{
     width: 100%;
-    height: 0.8vh;
+    height: 0.5vh;
     border: none;
-    background-color: #fdf2f39a;
+    background-color: #6f0606;
 }
 .icone-menu-1{
     height: 3.5vh;
@@ -116,13 +121,14 @@
     padding-bottom: 5px;
     position: relative;
     transition: color 0.3s ease;
+    white-space: nowrap;
 }
 .texto-icone::after {
     margin-left: 1vw;
     content: '';
     position: absolute;
     height: 2px;
-    background-color: #dc3545; 
+    background-color: #fff; 
     bottom: 0;
     left: 0;
     right: 0; 
@@ -131,7 +137,7 @@
     transition: transform 0.3s ease-out; 
 }
 .texto-icone:hover{
-    color: #ff0000;
+    color: #fff;
 }
 .texto-icone:hover::after {
     transform: scaleX(1); 
@@ -141,7 +147,7 @@
     justify-content: flex-start;
     align-items: center;
 
-    padding-left: 1.5vw;
+    padding-left: 2.3vw;
 }
 /* Deixar por último */
 .oculto{
