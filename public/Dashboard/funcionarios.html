@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Funcionários</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/funcionarios.css">
+    <!-- Link JavaScript -->
+</head>
+
+<body onload="validarSessao()">
+    <section class="tela">
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_redirecionamento">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de usuários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+        <div class="filtros-box">
+            <div class="texto-organizacao" id="div_nome_empresa">
+                Nome da Unidade de Atendimento
+            </div>
+            <div class="texto-topico">
+                Lista de Funcionários:
+            </div>
+            <div class="area-filtros">
+                <!-- ÁREA DESTINADA AOS FILTROS -->
+
+            </div>
+            <div class="box-filtro">
+                <div class="texto-funcionalidade alinhamento-centralizar-vertical">
+                    Selecione um usuário:
+                </div>
+
+                <div class="filtro-direita">
+                    <button class="botao-codigo">
+                        Ver ações do funcionário
+                    </button>
+                    <div class="div-botao-adicionar">
+                        <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
+                        <div class="barra-vertical-botao"></div>
+                        <div class="texto-botao-adicionar">
+                            Novo convite
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="container-tabela">
+                <table id="tabela-funcionarios">
+                    <tr id="titulo-tabela">
+                        <td id="tr-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td id="tr-cod-convite">Cód. Convite</td>
+                        <td id="tr-nome-completo">Nome Completo</td>
+                        <td id="tr-cpf-funcionario">CPF</td>
+                        <td id="tr-data-criacao-convite">Data de criação</td>
+                        <td id="tr-data-expiracao-convite">Data de expiração</td>
+                        <td id="tr-status-funcionario">Status</td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Arthur Felipe Amaral da Silva</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Davi Escudero Caproni</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Giovanna Prado Andrade</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Marcela Bastos Vicente</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Rafael Fratini Dal Corso</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+    </section>
+</body>
+
+</html>
+<script src="../js/validarSessao.js"></script>
+<script src="../js/menu-lateral.js"></script>
+<script>
+    
+</script>
