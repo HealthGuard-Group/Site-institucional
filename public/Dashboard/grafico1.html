@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard - Monitoramento de Máquina</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="../css/grafico1.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/menu_bar.css">
+</head>
+<body>
+ <section class="tela">
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_redirecionamento">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de usuários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+  <main class="dashboard">
+
+    <section class="left-side">
+
+      <header>
+        <h2>Máquina 01</h2>
+        <div class="info">
+          <p><strong>Observações da máquina:</strong></p>
+          <p>Processador i5 - 11TH, 8 GB RAM, 2 TB Disco</p>
+          <p><strong>Operadores:</strong> Arthur, Sabrina, Yuri</p>
+          <p><strong>Status:</strong> <span class="status ok"> Ok</span></p>
+          <p><strong>Data de configuração:</strong> 09/10/2025</p>
+        </div>
+      </header>
+
+      <div class="grafico">
+        <h3>
+          Monitoramento selecionado
+          <select id="monitoramentoSelect" title="Escolha o monitoramento">
+            <option value="cpu">Uso de CPU (%)</option>
+            <option value="ram">Uso de RAM (GB)</option>
+          </select>
+        </h3>
+        <canvas id="graficoLinha"></canvas>
+      </div>
+
+
+    </section>
+
+    <section class="right-side">
+       
+
+       <div class="monitoramento">
+        <h3>Monitoramento em tempo real</h3>
+        <ul id="listaMonitoramento">
+          <li>Uso CPU(%): <span>95%</span> <span class="alerta-severo"> Alerta Severo</span></li>
+          <li>Uso memória RAM(GB): <span>13.2 GB</span> <span class="alerta"> Alerta</span></li>
+          <li>Disco (%): <span>45%</span> <span class="ok"> Normal</span></li>
+        </ul>
+        <div class="acoes-monitoramento">
+          <button onclick="alert('Função para adicionar medições')"> Adicionar Medição</button>
+          <button onclick="alert('Função para configurar métricas')"> Configurar Métricas</button>
+        </div>
+      </div>
+
+      <div class="kpis">
+        <div class="uptime">
+          <h3>Tempo ativo da máquina na semana</h3>
+          <p class="verde">14h 36m</p>
+        </div>
+
+        <div class="alertas">
+          <h3>Alertas na semana</h3>
+          <p class="vermelho">7</p>
+        </div>
+
+        <div class="normalizacao">
+          <h3>Tempo médio de estabilização</h3>
+          <p class="tempo">3h 20m</p>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</section>
+ 
+<script src="../js/menu-lateral.js"></script>
+<script>
+  const ctx = document.getElementById('graficoLinha').getContext('2d');
+  const monitoramentoSelect = document.getElementById('monitoramentoSelect');
+
+ const dadosCPU = {
+  labels:  ['08h32min10s', '08h32min15s', '8h32min20s', '8h32min25s', '8h32min30s', '8h32min35s', '8h32min40s'],
+  datasets: [{
+    label: 'Uso de CPU (%)',
+    data: [ 60, 69, 85, 90, 95, 70, 50],
+    tension: 0.3,
+    fill: false,
+    borderWidth: 3,
+    pointBackgroundColor: 'white',
+    pointBorderColor: 'black',
+    segment: {
+      borderColor: function(context) {
+        const valor = context.p1.raw;
+        if (valor > 90) {
+          return 'red';
+        } else if (valor > 70) {
+          return 'orange';
+        } else {
+          return 'green';
+        }
+      },
+    },
+  }],
+};
+
+
+  const dadosRAM = {
+    labels: ['08h32min10s', '08h32min15s', '8h32min20s', '8h32min25s', '8h32min30s', '8h32min35s', '8h32min40s'],
+    datasets: [{
+      label: 'Uso de RAM (GB)',
+      data: [5, 7, 2, 6, 3, 8, 5],
+      tension: 0.3,
+      fill: false,
+      borderWidth: 3,
+      pointBackgroundColor: 'white',
+      pointBorderColor: 'black',
+      segment: {
+      borderColor: function(context) {
+        const valor = context.p1.raw;
+        if (valor > 7) {
+          return 'red';
+        } else if (valor > 5) {
+          return 'orange';
+        } else {
+          return 'green';
+        }
+      },
+    },
+  }],
+};   
+
+  const config = {
+    type: 'line',
+    data: dadosCPU,
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          beginAtZero: true,
+          title: {
+            display: true,
+            text: 'Uso (%)'
+          },
+          max: 100
+        },
+        x: {
+          title: {
+            display: true,
+            text: 'Tempo (horas)'
+          }
+        }
+      },
+      plugins: {
+        legend: { position: 'top' },
+        title: { display: true, text: 'Monitoramento em Tempo Real' }
+      }
+    }
+  };
+
+
+
+  const grafico = new Chart(ctx, config);
+
+  monitoramentoSelect.addEventListener('change', () => {
+    const tipo = monitoramentoSelect.value;
+    grafico.data = tipo === 'cpu' ? dadosCPU : dadosRAM;
+    grafico.options.scales.y.title.text = tipo === 'cpu' ? 'Uso (%)' : 'Uso (GB)';
+    grafico.options.scales.y.max = tipo === 'cpu' ? 100 : 8;
+    grafico.update();
+  });
+    // Redirecionamento para o monitoramento
+    document.querySelector('.icon-seta').addEventListener('click', () => {
+        window.location.href = "monitoramento.html"
+    })
+    //Funcionalidade observação
+    document.querySelector('.icon-editar').addEventListener('click',() => {
+        document.querySelector('.icon-editar').classList.add('oculto')
+        document.querySelector('.texto-editavel').classList.add('oculto')
+        document.querySelector('.button-cinza').classList.remove('oculto')
+        document.querySelector('.button-azul').classList.remove('oculto')
+        document.querySelector('.input-observacao').classList.remove('oculto')
+        input_observacaoes.value = texto_observacao.textContent
+    })
+    document.getElementById("button_observacaoes_cancelar").addEventListener('click',() => {
+        document.querySelector('.icon-editar').classList.remove('oculto')
+        document.querySelector('.texto-editavel').classList.remove('oculto')
+        document.querySelector('.button-cinza').classList.add('oculto')
+        document.querySelector('.button-azul').classList.add('oculto')
+        document.querySelector('.input-observacao').classList.add('oculto')
+    })
+    document.getElementById("button_observacaoes_salvar").addEventListener('click',() => {
+        texto_observacao.innerHTML = input_observacaoes.value
+        // Ação no Banco
+
+        // Fim ação no Banco
+        document.querySelector('.icon-editar').classList.remove('oculto')
+        document.querySelector('.texto-editavel').classList.remove('oculto')
+        document.querySelector('.button-cinza').classList.add('oculto')
+        document.querySelector('.button-azul').classList.add('oculto')
+        document.querySelector('.input-observacao').classList.add('oculto')
+    })
+</script>
+
+</body>
+</html>
+
