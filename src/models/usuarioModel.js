@@ -10,7 +10,7 @@ function autenticar(email, senha) {
     FROM Usuario u
     JOIN Permissoes p 
     ON u.fkPermissoes = p.idPermissoes
-    LEFT JOIN CodigoValidacao cv 
+    LEFT JOIN CodigoValidacaoUsuario cv 
     ON cv.fkPermissoes = p.idPermissoes
     LEFT JOIN LogAcesso la 
     ON la.fkUsuario = u.idUsuario
@@ -91,7 +91,7 @@ function cadastrar(nome, email, senha, cpf, codigo) {
                         })
                         .then(() => {
                             var atualizarCodigo = `
-                                UPDATE CodigoValidacao
+                                UPDATE CodigoValidacaoUsuario
                                 SET statusCodigo = 'Aceito'
                                 WHERE codigo = '${codigo}';
                             `;
