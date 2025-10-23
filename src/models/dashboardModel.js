@@ -10,15 +10,15 @@ function buscarNomeDaUnidade(fkUnidade) {
   return database.executar(instrucaoSql);
 }
 function buscarMaquina(fkUnidade) {
-  var instrucaoSql = `SELECT nomeDeIdentificacao,statusDac,idDac FROM Dac WHERE fkUnidadeDeAtendimento = ${fkUnidade};`;
+  var instrucaoSql = `SELECT nomeIdentificacao,statusDac,idDac FROM Dac WHERE fkUnidadeDeAtendimento = ${fkUnidade};`;
   return database.executar(instrucaoSql);
 }
 function buscarKpisMonitoramento(fkUnidade) {
   var instrucaoSql = `select (select COUNT(idDac) FROM Dac WHERE statusDac = "Em configuração") as "configuracao",
-	(select COUNT(idDac) FROM Dac WHERE statusDac = "Ativo") as "ativo",
+	(select count(idDac) from Dac where statusDac = 'Ativo' or statusDac = 'Alerta') as "ativo",
 	(select COUNT(idDac) FROM Dac WHERE statusDac = "Inativo") as "inativo",
 	(select COUNT(idDac) FROM Dac WHERE statusDac = "Alerta") as "alerta",
-	(select COUNT(idDac) FROM Dac WHERE statusDac != "Em configuração") as "cadastradas"
+	(select count(idDac) from Dac where statusDac != "Em configuração" and statusDac != "Excluído") as "cadastradas"
     FROM Dac WHERE fkUnidadeDeAtendimento = ${fkUnidade} limit 1;`;
   return database.executar(instrucaoSql);
 }

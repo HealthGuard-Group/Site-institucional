@@ -31,10 +31,10 @@ function cadastrar(nome, email, senha, cpf, codigo) {
 
         var consultaPermissao = `
         SELECT fkUnidadeDeAtendimento, fkPermissoes
-        FROM codigovalidacao
+        FROM CodigoValidacaoUsuario
         WHERE codigo like '${codigo}'
         AND dataExpiracao >= NOW()
-        AND statusCodigo like 'Pendente';  
+        AND statusCodigoValidacaoUsuario like 'Pendente';  
     `
 ;
 
@@ -82,7 +82,7 @@ function cadastrar(nome, email, senha, cpf, codigo) {
                             var idLogAcesso = resultadoLog[0].idLogAcesso;
 
                             var inserirLogAcoes = `
-                                INSERT INTO LogAcoes (fkUnidadeDeAtendimento, fkUsuario, fkLogAcesso, acao)
+                                INSERT INTO LogAcoes (fkUnidadeAtendimento, fkUsuario, fkLogAceso, acao)
                                 VALUES (${fkUnidadeDeAtendimento}, ${idUsuario}, ${idLogAcesso}, 'Criando Conta');
                             `;
                             console.log("Executando LogAcoes:\n" + inserirLogAcoes);
@@ -92,7 +92,7 @@ function cadastrar(nome, email, senha, cpf, codigo) {
                         .then(() => {
                             var atualizarCodigo = `
                                 UPDATE CodigoValidacaoUsuario
-                                SET statusCodigo = 'Aceito'
+                                SET statusCodigoValidacaoUsuario = 'Aceito'
                                 WHERE codigo = '${codigo}';
                             `;
                             console.log("Atualizando status do código...");
