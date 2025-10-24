@@ -65,9 +65,53 @@
             </div>
             <div class="area-filtros">
                 <!-- ÁREA DESTINADA AOS FILTROS -->
+                <div class="texto-funcionalidade alinhamento-centralizar-vertical">
+                    Filtros:
+                </div>
+
+                <div class="box-filtros">
+                    <div class="componente-filtro" id="campo-cpf">
+                        Buscar por CPF: <input type="text" placeholder="Ex: 000.000.000-00">
+                    </div>
+
+                    <div class="componente-filtro" id="campo-status-convite">
+                        Status do convite: 
+                        <select name="viagem">
+                            <option value="todos">Todos</option>
+                            <option value="aceito">Aceito</option>
+                            <option value="pendente">Pendente</option>
+                            <option value="expirado">Expirado</option>
+                        </select>
+                    </div>
+
+                    <div class="componente-filtro" id="campo-data-convite-gerado">
+                        Convite gerado entre: <input type="date"> e: <input type="date">
+                    </div>
+                </div>
+
+                <div class="box-filtros">
+                    <div class="componente-filtro" id="campo-data-convite-gerado">
+                        Convite expirado entre: <input type="date"> e: <input type="date">
+                    </div>
+                    <button class="botao-aplicar-filtros">
+                        Aplicar filtros
+                    </button>
+                </div>
+
+                <div class="box-filtros-aplicados">
+                    <div class="filtro-aplicado">
+                        Status Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                    </div>
+                    <div class="filtro-aplicado">
+                        Gerado entre: 10/10/1025 - 15/10/2025 &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                    </div>
+                    <div class="filtro-aplicado">
+                        Expirado entre: 25/10/1025 - 27/10/2025 &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                    </div>
+                </div>
 
             </div>
-            <div class="box-filtro">
+            <div class="box-selecao-funcionario">
                 <div class="texto-funcionalidade alinhamento-centralizar-vertical">
                     Selecione um usuário:
                 </div>
