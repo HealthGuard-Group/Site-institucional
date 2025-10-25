@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html_fonte">
 
 <head>
     <meta charset="UTF-8">
@@ -14,6 +14,114 @@
 
 <body onload="validarSessao()">
     <section class="tela">
+        <!-- Começo modais -->
+        <div class="tela-escurecida oculto">
+            <div id="popupFundo" class="popup-fundo oculto">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2>Códigos de configuração gerados</h2>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="area-filtros">
+                        <!-- ÁREA DESTINADA AOS FILTROS -->
+                        <div class="texto-funcionalidade alinhamento-centralizar-vertical">
+                            Filtros:
+                        </div>
+
+                        <div class="box-filtros">
+
+                            <div class="componente-filtro" id="campo-status-codigo">
+                                Status do código:
+                                <select name="status-codigo">
+                                    <option value="todos">Todos</option>
+                                    <option value="aceito">Ativo</option>
+                                    <option value="pendente">Inativo</option>
+                                </select>
+                            </div>
+
+                            <div class="componente-filtro" id="campo-data-codigo-gerado">
+                                Gerado entre: <input type="date"> e: <input type="date">
+                            </div>
+                        </div>
+
+                        <div class="box-filtros">
+                            <div class="componente-filtro" id="campo-data-codigo-gerado">
+                                Expirado entre: <input type="date"> e: <input type="date">
+                            </div>
+                            <button class="botao-aplicar-filtros">
+                                Aplicar filtros
+                            </button>
+                        </div>
+
+                        <div class="box-filtros-aplicados">
+                            <div class="filtro-aplicado">
+                                Status: Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                            </div>
+                            <div class="filtro-aplicado">
+                                Gerado entre: 10/10/1025 - 15/10/2025 &nbsp <img
+                                    src="../assets/imgs/iconeFecharFiltro.png">
+                            </div>
+                            <div class="filtro-aplicado">
+                                Expirado entre: 25/10/1025 - 27/10/2025 &nbsp <img
+                                    src="../assets/imgs/iconeFecharFiltro.png">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- TABELA DE CÓDIGOS GERADOS -->
+                    <div id="container-tabela">
+                        <table id="tabela-codigos">
+                            <tr id="titulo-tabela">
+                                <td id="tr-cod-codigo">Código de Configuração</td>
+                                <td id="tr-data-criacao-codigo">Data de criação</td>
+                                <td id="tr-data-expiracao-codigo">Data de expiração</td>
+                                <td id="tr-status-codigo">Status</td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
+                                <td class="td-data-criacao-codigo">10/10/2025</td>
+                                <td class="td-data-expiracao-codigo">15/10/2025</td>
+                                <td class="td-status-codigo"><span style="color: rgb(0, 170, 40);">Ativo</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
+                                <td class="td-data-criacao-codigo">10/10/2025</td>
+                                <td class="td-data-expiracao-codigo">15/10/2025</td>
+                                <td class="td-status-codigo"><span style="color: rgb(214, 36, 36);">Inativo</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
+                                <td class="td-data-criacao-codigo">10/10/2025</td>
+                                <td class="td-data-expiracao-codigo">15/10/2025</td>
+                                <td class="td-status-codigo"><span style="color: rgb(214, 36, 36);">Inativo</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
+                                <td class="td-data-criacao-codigo">10/10/2025</td>
+                                <td class="td-data-expiracao-codigo">15/10/2025</td>
+                                <td class="td-status-codigo"><span style="color: rgb(0, 170, 40);">Ativo</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
+                                <td class="td-data-criacao-codigo">10/10/2025</td>
+                                <td class="td-data-expiracao-codigo">15/10/2025</td>
+                                <td class="td-status-codigo"><span style="color: rgb(0, 170, 40);">Ativo</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
+                                <td class="td-data-criacao-codigo">10/10/2025</td>
+                                <td class="td-data-expiracao-codigo">15/10/2025</td>
+                                <td class="td-status-codigo"><span style="color: rgb(214, 36, 36);">Inativo</span></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fim modais -->
         <!-- Começo do Menu -->
         <div class="menu-lateral">
             <div class="pai-icones-superiores">
@@ -121,127 +229,13 @@
                     </select>
                 </div>
                 <div class="filtro-direita-acoes">
-                    <button class="botao-codigo-cinza">
+                    <button class="botao-codigo-cinza" id="botao_codigos_gerados">
                         Ver códigos de configuração gerados
                     </button>
                     <div class="div-botao-adicionar">
                         <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
                         <div class="texto-botao-adicionar">
                             Adicionar máquina
-                        </div>
-                    </div>
-
-                    <!-- POP-UP DE CÓDIGOS GERADOS -->
-                    <div class="tela-escurecida oculto">
-                        <div id="popupFundo" class="popup-fundo oculto">
-                            <div class="popup">
-                                <div class="popup-header">
-                                    <h2>Códigos de configuração gerados</h2>
-                                    <button class="fechar" onclick="fecharPop()"><img class="fechar"
-                                            src="../assets/imgs/iconeFechar.png"></button>
-                                </div>
-                                <div class="line"></div>
-                                <div class="area-filtros">
-                                    <!-- ÁREA DESTINADA AOS FILTROS -->
-                                    <div class="texto-funcionalidade alinhamento-centralizar-vertical">
-                                        Filtros:
-                                    </div>
-
-                                    <div class="box-filtros">
-
-                                        <div class="componente-filtro" id="campo-status-codigo">
-                                            Status do código:
-                                            <select name="status-codigo">
-                                                <option value="todos">Todos</option>
-                                                <option value="aceito">Ativo</option>
-                                                <option value="pendente">Inativo</option>
-                                            </select>
-                                        </div>
-
-                                        <div class="componente-filtro" id="campo-data-codigo-gerado">
-                                            Gerado entre: <input type="date"> e: <input type="date">
-                                        </div>
-                                    </div>
-
-                                    <div class="box-filtros">
-                                        <div class="componente-filtro" id="campo-data-codigo-gerado">
-                                            Expirado entre: <input type="date"> e: <input type="date">
-                                        </div>
-                                        <button class="botao-aplicar-filtros">
-                                            Aplicar filtros
-                                        </button>
-                                    </div>
-
-                                    <div class="box-filtros-aplicados">
-                                        <div class="filtro-aplicado">
-                                            Status: Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
-                                        </div>
-                                        <div class="filtro-aplicado">
-                                            Gerado entre: 10/10/1025 - 15/10/2025 &nbsp <img
-                                                src="../assets/imgs/iconeFecharFiltro.png">
-                                        </div>
-                                        <div class="filtro-aplicado">
-                                            Expirado entre: 25/10/1025 - 27/10/2025 &nbsp <img
-                                                src="../assets/imgs/iconeFecharFiltro.png">
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <!-- TABELA DE CÓDIGOS GERADOS -->
-                                <div id="container-tabela">
-                                    <table id="tabela-codigos">
-                                        <tr id="titulo-tabela">
-                                            <td id="tr-cod-codigo">Código de Configuração</td>
-                                            <td id="tr-data-criacao-codigo">Data de criação</td>
-                                            <td id="tr-data-expiracao-codigo">Data de expiração</td>
-                                            <td id="tr-status-codigo">Status</td>
-                                        </tr>
-                                        <tr class="dados-tabela">
-                                            <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
-                                            <td class="td-data-criacao-codigo">10/10/2025</td>
-                                            <td class="td-data-expiracao-codigo">15/10/2025</td>
-                                            <td class="td-status-codigo"><span
-                                                    style="color: rgb(0, 170, 40);">Ativo</span></td>
-                                        </tr>
-                                        <tr class="dados-tabela">
-                                            <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
-                                            <td class="td-data-criacao-codigo">10/10/2025</td>
-                                            <td class="td-data-expiracao-codigo">15/10/2025</td>
-                                            <td class="td-status-codigo"><span
-                                                    style="color: rgb(214, 36, 36);">Inativo</span></td>
-                                        </tr>
-                                        <tr class="dados-tabela">
-                                            <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
-                                            <td class="td-data-criacao-codigo">10/10/2025</td>
-                                            <td class="td-data-expiracao-codigo">15/10/2025</td>
-                                            <td class="td-status-codigo"><span
-                                                    style="color: rgb(214, 36, 36);">Inativo</span></td>
-                                        </tr>
-                                        <tr class="dados-tabela">
-                                            <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
-                                            <td class="td-data-criacao-codigo">10/10/2025</td>
-                                            <td class="td-data-expiracao-codigo">15/10/2025</td>
-                                            <td class="td-status-codigo"><span
-                                                    style="color: rgb(0, 170, 40);">Ativo</span></td>
-                                        </tr>
-                                        <tr class="dados-tabela">
-                                            <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
-                                            <td class="td-data-criacao-codigo">10/10/2025</td>
-                                            <td class="td-data-expiracao-codigo">15/10/2025</td>
-                                            <td class="td-status-codigo"><span
-                                                    style="color: rgb(0, 170, 40);">Ativo</span></td>
-                                        </tr>
-                                        <tr class="dados-tabela">
-                                            <td class="td-cod-codigo">0123456789ABC@!0ablo</td>
-                                            <td class="td-data-criacao-codigo">10/10/2025</td>
-                                            <td class="td-data-expiracao-codigo">15/10/2025</td>
-                                            <td class="td-status-codigo"><span
-                                                    style="color: rgb(214, 36, 36);">Inativo</span></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -563,40 +557,14 @@
     }
 
     // POP-UP DE CÓDIGOS GERADOS
-    window.onload = function () {
-
-        document.querySelector('.botao-codigo-cinza').addEventListener('click', () => {
-            document.querySelector('.tela-escurecida').classList.remove('oculto')
-        })
-        const popupFundo = document.getElementById("popupFundo");
-        const botaoAbrir = document.querySelector(".botao-codigo-cinza");
-        const telaEscurecida = document.querySelector(".tela-escurecida");
-
-
-
-        botaoAbrir.addEventListener("click", () => {
-            popupFundo.style.display = "flex";
-        });
-
-        window.fecharPop = function () {
-            popupFundo.style.display = "none";
-            telaEscurecida.classList.add("oculto");
-        }
-
-        window.convidar = function () {
-            const nome = document.getElementById("nome").value.trim()
-            const email = document.getElementById("email").value.trim()
-            const permissao = document.getElementById("permissao").value
-            const data = document.getElementById("data").value
-
-            if (!nome || !email || !data) {
-                alert("Preencha todos os campos!")
-                return;
-            }
-
-            alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-            popupFundo.style.display = "none"
-            telaEscurecida.classList.add("oculto");
-        }
+    document.getElementById("botao_codigos_gerados").addEventListener('click', () => {
+        document.querySelector('.tela-escurecida').classList.remove('oculto')
+        document.getElementById("popupFundo").style.display = "flex";
+        document.getElementById('html_fonte').style.overflowY = "hidden"
+    })
+    function fecharPop() {
+        document.querySelector('.tela-escurecida').classList.add('oculto')
+        document.getElementById("popupFundo").style.display = "none";
+        document.getElementById('html_fonte').style.overflowY = "auto"
     }
 </script>

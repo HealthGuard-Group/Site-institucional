@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" id="html_fonte">
 
 <head>
     <meta charset="UTF-8">
@@ -13,12 +13,36 @@
 </head>
 
 <body onload="validarSessao()">
-
-
     <section class="tela">
-
         <!-- Começo modais -->
+        <div class="tela-escurecida oculto">
+            <div id="popupFundo" class="popup-fundo oculto">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2>Novo Convite</h2>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFecharFiltro.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
+                    <input type="text" id="nome" placeholder="Ex: Arthur Felipe">
 
+                    <label for="email">Email da pessoa<span style="color: red">*</span>:</label>
+                    <input type="email" id="email" placeholder="Ex: example@example.com">
+
+                    <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
+                    <select class="select-cargo" id="permissao">
+                        <option value="tecnico">Técnico de TI</option>
+                        <option value="gestor">Gestor de TI</option>
+                    </select>
+
+                    <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
+                    <input type="date" id="data">
+
+                    <button class="btn-convidar" onclick="convidar()">Convidar</button>
+                </div>
+            </div>
+        </div>
         <!-- Fim modais -->
 
         <!-- Começo do Menu -->
@@ -129,43 +153,13 @@
                     </button>
 
 
-                    <div class="div-botao-adicionar">
+                    <div class="div-botao-adicionar" id="botao_novo_convite">
                         <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
                         <div class="barra-vertical-botao"></div>
                         <div class="texto-botao-adicionar">
                             Novo convite
                         </div>
                     </div>
-
-                    <div class="tela-escurecida oculto">
-                        <div id="popupFundo" class="popup-fundo oculto">
-                            <div class="popup">
-                                <div class="popup-header">
-                                    <h2>Novo Convite</h2>
-                                    <button class="fechar" onclick="fecharPop()"><img class="fechar"
-                                            src="../assets/imgs/iconeFecharFiltro.png"></button>
-                                </div>
-                                <div class="line"></div>
-                                <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
-                                <input type="text" id="nome" placeholder="Ex: Arthur Felipe">
-
-                                <label for="email">Email da pessoa<span style="color: red">*</span>:</label>
-                                <input type="email" id="email" placeholder="Ex: example@example.com">
-
-                                <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
-                                <select class="select-cargo" id="permissao">
-                                    <option value="tecnico">Técnico de TI</option>
-                                    <option value="gestor">Gestor de TI</option>
-                                </select>
-
-                                <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
-                                <input type="date" id="data">
-
-                                <button class="btn-convidar" onclick="convidar()">Convidar</button>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
             <div id="container-tabela">
@@ -236,37 +230,22 @@
                 </table>
             </div>
         </div>
-
-
     </section>
-</body>
-
-</html>
-<script src="../js/validarSessao.js"></script>
-<script src="../js/menu-lateral.js"></script>
-<script>
-
-    window.onload = function () {
-
-        document.querySelector('.div-botao-adicionar').addEventListener('click', () => {
+    <script src="../js/validarSessao.js"></script>
+    <script src="../js/menu-lateral.js"></script>
+    <script>
+        // POP-UP DE CÓDIGOS GERADOS
+        document.getElementById("botao_novo_convite").addEventListener('click', () => {
             document.querySelector('.tela-escurecida').classList.remove('oculto')
+            document.getElementById("popupFundo").style.display = "flex";
+            document.getElementById('html_fonte').style.overflowY = "hidden"
         })
-        const popupFundo = document.getElementById("popupFundo");
-        const botaoAbrir = document.querySelector(".div-botao-adicionar");
-        const telaEscurecida = document.querySelector(".tela-escurecida");
-
-
-
-        botaoAbrir.addEventListener("click", () => {
-            popupFundo.style.display = "flex";
-        });
-
-        window.fecharPop = function () {
-            popupFundo.style.display = "none";
-            telaEscurecida.classList.add("oculto");
+        function fecharPop() {
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupFundo").style.display = "none";
+            document.getElementById('html_fonte').style.overflowY = "auto"
         }
-
-        window.convidar = function () {
+        function convidar() {
             const nome = document.getElementById("nome").value.trim()
             const email = document.getElementById("email").value.trim()
             const permissao = document.getElementById("permissao").value
@@ -281,7 +260,6 @@
             popupFundo.style.display = "none"
             telaEscurecida.classList.add("oculto");
         }
-    }
-
-
-</script>
+    </script>
+</body>
+</html>
