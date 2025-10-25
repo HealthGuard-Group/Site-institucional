@@ -35,6 +35,15 @@ document.querySelector('.menu-lateral').addEventListener('mouseleave', () => {
 document.getElementById("monitoramento_redirecionamento").addEventListener('click', () => {
     window.location.href = "monitoramento.html"
 })
+document.getElementById("gestao_redirecionamento").addEventListener('click', () => {
+    window.location.href = "funcionarios.html"
+})
+document.getElementById("alertas_redirecionamento").addEventListener('click', () => {
+    console.log("Redirecionando para histórico de alertas")
+})
+document.getElementById("suporte_redirecionamento").addEventListener('click', () => {
+    console.log("Redirecionando para suporte")
+})
 document.getElementById("sair_conta_redirecionamento").addEventListener('click', () => {
     sessionStorage.clear()
     window.location.href = "../index.html"
