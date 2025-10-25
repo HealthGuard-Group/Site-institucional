@@ -14,11 +14,11 @@
 
 <body onload="validarSessao()">
 
-    
+
     <section class="tela">
 
         <!-- Começo modais -->
-         
+
         <!-- Fim modais -->
 
         <!-- Começo do Menu -->
@@ -82,7 +82,7 @@
                     </div>
 
                     <div class="componente-filtro" id="campo-status-convite">
-                        Status do convite: 
+                        Status do convite:
                         <select name="viagem">
                             <option value="todos">Todos</option>
                             <option value="aceito">Aceito</option>
@@ -127,44 +127,45 @@
                     <button class="botao-codigo">
                         Ver ações do funcionário
                     </button>
-                    
-                    
-                            <div class="div-botao-adicionar">
-                                <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
-                                <div class="barra-vertical-botao"></div>
-                                <div class="texto-botao-adicionar">
-                                    Novo convite
-                                </div>
-                            </div>
-                    
-                    <div class="tela-escurecida oculto">
-                    <div id="popupFundo" class="popup-fundo oculto">
-                        <div class="popup">
-                            <div class="popup-header">
-                                <h2>Novo Convite</h2>
-                                <button class="fechar" onclick="fecharPop()"><img class="fechar" src="../assets/imgs/iconeFecharFiltro.png"></button>
-                            </div>
-                            <div class="line"></div>
-                            <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
-                            <input type="text" id="nome" placeholder="Ex: Arthur Felipe">
 
-                            <label for="email">Email da pessoa<span style="color: red">*</span>:</label>
-                            <input type="email" id="email" placeholder="Ex: example@example.com">
 
-                            <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
-                            <select class = "select-cargo" id="permissao">
-                                <option value="tecnico">Técnico de TI</option>
-                                <option value="gestor">Gestor de TI</option>
-                            </select>
-
-                            <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
-                            <input type="date" id="data">
-
-                            <button class="btn-convidar" onclick="convidar()">Convidar</button>
+                    <div class="div-botao-adicionar">
+                        <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
+                        <div class="barra-vertical-botao"></div>
+                        <div class="texto-botao-adicionar">
+                            Novo convite
                         </div>
                     </div>
+
+                    <div class="tela-escurecida oculto">
+                        <div id="popupFundo" class="popup-fundo oculto">
+                            <div class="popup">
+                                <div class="popup-header">
+                                    <h2>Novo Convite</h2>
+                                    <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                            src="../assets/imgs/iconeFecharFiltro.png"></button>
+                                </div>
+                                <div class="line"></div>
+                                <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
+                                <input type="text" id="nome" placeholder="Ex: Arthur Felipe">
+
+                                <label for="email">Email da pessoa<span style="color: red">*</span>:</label>
+                                <input type="email" id="email" placeholder="Ex: example@example.com">
+
+                                <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
+                                <select class="select-cargo" id="permissao">
+                                    <option value="tecnico">Técnico de TI</option>
+                                    <option value="gestor">Gestor de TI</option>
+                                </select>
+
+                                <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
+                                <input type="date" id="data">
+
+                                <button class="btn-convidar" onclick="convidar()">Convidar</button>
+                            </div>
+                        </div>
                     </div>
-                
+
                 </div>
             </div>
             <div id="container-tabela">
@@ -245,42 +246,42 @@
 <script src="../js/menu-lateral.js"></script>
 <script>
 
-   window.onload = function() {
+    window.onload = function () {
 
-    document.querySelector('.div-botao-adicionar').addEventListener('click',() => {
-    document.querySelector('.tela-escurecida').classList.remove('oculto')
-    })
-    const popupFundo = document.getElementById("popupFundo");
-    const botaoAbrir = document.querySelector(".div-botao-adicionar");
-    const telaEscurecida = document.querySelector(".tela-escurecida");
+        document.querySelector('.div-botao-adicionar').addEventListener('click', () => {
+            document.querySelector('.tela-escurecida').classList.remove('oculto')
+        })
+        const popupFundo = document.getElementById("popupFundo");
+        const botaoAbrir = document.querySelector(".div-botao-adicionar");
+        const telaEscurecida = document.querySelector(".tela-escurecida");
 
-    
 
-    botaoAbrir.addEventListener("click", () => {
-        popupFundo.style.display = "flex";
-    });
 
-     window.fecharPop = function() {
-        popupFundo.style.display = "none";
-        telaEscurecida.classList.add("oculto");
+        botaoAbrir.addEventListener("click", () => {
+            popupFundo.style.display = "flex";
+        });
+
+        window.fecharPop = function () {
+            popupFundo.style.display = "none";
+            telaEscurecida.classList.add("oculto");
+        }
+
+        window.convidar = function () {
+            const nome = document.getElementById("nome").value.trim()
+            const email = document.getElementById("email").value.trim()
+            const permissao = document.getElementById("permissao").value
+            const data = document.getElementById("data").value
+
+            if (!nome || !email || !data) {
+                alert("Preencha todos os campos!")
+                return;
+            }
+
+            alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
+            popupFundo.style.display = "none"
+            telaEscurecida.classList.add("oculto");
+        }
     }
-
-    window.convidar = function(){
-    const nome = document.getElementById("nome").value.trim()
-    const email = document.getElementById("email").value.trim()
-    const permissao = document.getElementById("permissao").value
-    const data = document.getElementById("data").value
-
-    if (!nome || !email || !data){
-        alert("Preencha todos os campos!")
-        return;
-    }
-
-    alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-    popupFundo.style.display = "none"
-    telaEscurecida.classList.add("oculto");
-    }
-}
 
 
 </script>
