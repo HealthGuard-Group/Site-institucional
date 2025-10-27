@@ -257,8 +257,9 @@
             }
 
             alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-            popupFundo.style.display = "none"
-            telaEscurecida.classList.add("oculto");
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupFundo").style.display = "none";
+            document.getElementById('html_fonte').style.overflowY = "auto"
         }
     </script>
 </body>
