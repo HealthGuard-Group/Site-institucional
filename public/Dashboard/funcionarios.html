@@ -15,13 +15,16 @@
 <body onload="validarSessao()">
     <section class="tela">
         <!-- Começo modais -->
-        <div class="tela-escurecida oculto">
-            <div id="popupFundo" class="popup-fundo oculto">
+
+        <!-- Modal Novo Convite -->
+        <div class="tela-escurecida oculto" id="telaConvite">
+            <div class="popup-fundo">
                 <div class="popup">
                     <div class="popup-header">
                         <h2>Novo Convite</h2>
-                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
-                                src="../assets/imgs/iconeFecharFiltro.png"></button>
+                        <button class="fechar" onclick="fecharPop()">
+                            <img class="fechar" src="../assets/imgs/iconeFecharFiltro.png">
+                        </button>
                     </div>
                     <div class="line"></div>
                     <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
@@ -43,6 +46,27 @@
                 </div>
             </div>
         </div>
+
+        <!-- Modal Código Gerado -->
+        <div class="tela-escurecida oculto" id="telaCodigo">
+            <div class="popup-fundo">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2>Máquina Cadastrada</h2>
+                        <button class="fechar" onclick="fecharCodigo()">
+                            <img class="fechar" src="../assets/imgs/iconeFecharFiltro.png">
+                        </button>
+                    </div>
+                    <div class="line"></div>
+                    <center>
+                    <p>Utilize o código de configuração gerado para iniciar o monitoramento da máquina <br><br> Código para configuração:</p>
+                    </center>
+                    <input type="text" id="codigoGerado" readonly>
+                    <button class="btn-convidar" onclick="copiarCodigo()">Copiar Código</button>
+                </div>
+            </div>
+        </div>
+
         <!-- Fim modais -->
 
         <!-- Começo do Menu -->
@@ -234,17 +258,55 @@
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
     <script>
-        // POP-UP DE CÓDIGOS GERADOS
-        document.getElementById("botao_novo_convite").addEventListener('click', () => {
-            document.querySelector('.tela-escurecida').classList.remove('oculto')
-            document.getElementById("popupFundo").style.display = "flex";
-            document.getElementById('html_fonte').style.overflowY = "hidden"
-        })
+
+            document.getElementById("botao_novo_convite").addEventListener('click', () => {
+            const convite = document.getElementById("telaConvite")
+            if (convite) {
+                convite.classList.remove('oculto')
+                document.getElementById('html_fonte').style.overflowY = "hidden"
+            }
+        });
+
         function fecharPop() {
-            document.querySelector('.tela-escurecida').classList.add('oculto')
-            document.getElementById("popupFundo").style.display = "none";
-            document.getElementById('html_fonte').style.overflowY = "auto"
+            const convite = document.getElementById("telaConvite")
+            if (convite) {
+                convite.classList.add('oculto')
+                document.getElementById('html_fonte').style.overflowY = "auto"
+            }
         }
+
+        function abrirCodigo(codigo) {
+            document.getElementById("codigoGerado").value = codigo
+            const codigoModal = document.getElementById("telaCodigo")
+            if (codigoModal) {
+                codigoModal.classList.remove('oculto')
+                document.getElementById('html_fonte').style.overflowY = "hidden"
+            }
+        }
+
+        function fecharCodigo() {
+            const codigoModal = document.getElementById("telaCodigo")
+            if (codigoModal) {
+                codigoModal.classList.add('oculto')
+                document.getElementById('html_fonte').style.overflowY = "auto"
+            }
+        }
+
+        function gerarCodigo() {
+            const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+            const numeros = '0123456789'
+            let codigo = ''
+
+            for (let i = 0; i < 7; i++) {
+                codigo += letras[Math.floor(Math.random() * letras.length)]
+            }
+            for (let i = 0; i < 10; i++) {
+                codigo += numeros[Math.floor(Math.random() * numeros.length)]
+            }
+
+            return codigo.split('').sort(() => Math.random() - 0.5).join('')
+        }
+
         function convidar() {
             const nome = document.getElementById("nome").value.trim()
             const email = document.getElementById("email").value.trim()
@@ -257,10 +319,24 @@
             }
 
             alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-            document.querySelector('.tela-escurecida').classList.add('oculto')
-            document.getElementById("popupFundo").style.display = "none";
-            document.getElementById('html_fonte').style.overflowY = "auto"
+
+            fecharPop()
+            
+            const codigo = gerarCodigo()
+
+            document.getElementById("codigoGerado").value = codigo
+            document.getElementById("telaCodigo").classList.remove('oculto')
+            document.getElementById('html_fonte').style.overflowY = "hidden"
         }
+
+        function copiarCodigo() {
+            const codigo = document.getElementById("codigoGerado")
+            codigo.select()
+            document.execCommand("copy")
+            alert("Código copiado: " + codigo.value)
+        }
+
+        
     </script>
 </body>
 
