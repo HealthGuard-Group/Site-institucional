@@ -1,254 +1,167 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!DOCTYPE<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Dashboard - Monitoramento de Máquina</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link rel="stylesheet" href="../css/grafico1.css">
-  <link rel="stylesheet" href="../css/global.css">
-  <link rel="stylesheet" href="../css/menu_bar.css">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard </title>
+ <link rel="stylesheet" href="../css/global.css">
+<link rel="stylesheet" href="../css/menu_bar.css">
+<link rel="stylesheet" href="../css/grafico1.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 <body>
- <section class="tela">
-        <!-- Começo do Menu -->
-        <div class="menu-lateral">
-            <div class="pai-icones-superiores">
-                <div id="logo">
-                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
-                        class="icone-logo-pequena">
-                </div>
-                <br>
-                <div class="icone-box" id="monitoramento_redirecionamento">
-                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
-                    <div class="texto-icone oculto">Monitoramento</div>
-                </div>
-                <hr class="separador">
-                <div class="icone-box" id="gestao_redirecionamento">
-                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
-                    <div class="texto-icone oculto">Gestão de usuários</div>
-                </div>
-                <hr class="separador">
-                <div class="icone-box">
-                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
-                    <div class="texto-icone oculto">Histórico de Alertas</div>
-                </div>
-                <hr class="separador">
-                <div class="icone-box">
-                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
-                    <div class="texto-icone oculto">Suporte</div>
-                </div>
-            </div>
-            <div class="pai-icones-inferiores">
-                <hr class="separador-forte">
-                <div class="icone-box-inferior">
-                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
-                    <div class="texto-icone oculto">Perfil</div>
-                </div>
-                <hr class="separador">
-                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
-                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
-                    <div class="texto-icone oculto">Sair da conta</div>
-                </div>
-            </div>
-        </div>
-        <!-- Fim do Menu -->
-  <main class="dashboard">
 
-    <section class="left-side">
-
-      <header>
-        <h2>Máquina 01</h2>
-        <div class="info">
-          <p><strong>Observações da máquina:</strong></p>
-          <p>Processador i5 - 11TH, 8 GB RAM, 2 TB Disco</p>
-          <p><strong>Operadores:</strong> Arthur, Sabrina, Yuri</p>
-          <p><strong>Status:</strong> <span class="status ok"> Ok</span></p>
-          <p><strong>Data de configuração:</strong> 09/10/2025</p>
-        </div>
-      </header>
-
-      <div class="grafico">
-        <h3>
-          Monitoramento selecionado
-          <select id="monitoramentoSelect" title="Escolha o monitoramento">
-            <option value="cpu">Uso de CPU (%)</option>
-            <option value="ram">Uso de RAM (GB)</option>
-          </select>
-        </h3>
-        <canvas id="graficoLinha"></canvas>
-      </div>
-
-
-    </section>
-
-    <section class="right-side">
-       
-
-       <div class="monitoramento">
-        <h3>Monitoramento em tempo real</h3>
-        <ul id="listaMonitoramento">
-          <li>Uso CPU(%): <span>95%</span> <span class="alerta-severo"> Alerta Severo</span></li>
-          <li>Uso memória RAM(GB): <span>13.2 GB</span> <span class="alerta"> Alerta</span></li>
-          <li>Disco (%): <span>45%</span> <span class="ok"> Normal</span></li>
-        </ul>
-        <div class="acoes-monitoramento">
-          <button onclick="alert('Função para adicionar medições')"> Adicionar Medição</button>
-          <button onclick="alert('Função para configurar métricas')"> Configurar Métricas</button>
-        </div>
-      </div>
-
-      <div class="kpis">
-        <div class="uptime">
-          <h3>Tempo ativo da máquina na semana</h3>
-          <p class="verde">14h 36m</p>
-        </div>
-
-        <div class="alertas">
-          <h3>Alertas na semana</h3>
-          <p class="vermelho">7</p>
-        </div>
-
-        <div class="normalizacao">
-          <h3>Tempo médio de estabilização</h3>
-          <p class="tempo">3h 20m</p>
-        </div>
-      </div>
-
-    </section>
-
-  </main>
-</section>
+<div class="container">
  
-<script src="../js/menu-lateral.js"></script>
+
+ 
+  <div class="main-content">
+    <div class="header">
+      <div class="header-left">
+        <span>&larr;</span>
+        <span>Máquina 01</span>
+        <span class="status alerta">Status: Alerta grave (Disco)</span>
+      </div>
+      <div class="link-descricao" onclick="alert('Descrição')">Exibir descrição</div>
+    </div>
+
+
+    <div class="dashboard-cards">
+      <div class="card">
+        <div class="title">Monitoramento em tempo real <span>ℹ</span></div>
+        <div><span class="icon green">✔</span>Uso de CPU: <strong>70%</strong></div>
+        <div><span class="icon green">✔</span>Uso de Memória: <strong>85%</strong></div>
+        <div><span class="icon red">▲</span>Uso de Disco: <strong>99%</strong></div>
+        <div><span class="icon green">✔</span>Status da Rede: <strong>CONECTADA</strong></div>
+        <button class="btn-editar">Editar</button>
+      </div>
+
+      <div class="card alerta-card">
+        <div class="title">Componente com mais alertas <span>ℹ</span></div>
+        <div class="text" style="color:#b30000; font-weight: 900;">Memória</div>
+      </div>
+
+      <div class="card">
+        <div class="title">Tempo de Atividade <span>ℹ</span></div>
+        <div class="tempo-atividade">15h30min</div>
+      </div>
+
+      <div class="card">
+        <div class="title">Qtd. de alertas <span>ℹ</span></div>
+        <div class="number">3</div>
+      </div>
+
+      <div class="card">
+        <div class="title">Média de alertas diários <span>ℹ</span></div>
+        <div class="number">2</div>
+      </div>
+
+      <div class="card">
+        <div class="title">Alertas <span>ℹ</span></div>
+        <div class="alerts-list">
+          <div class="alerta-grave">Alerta Grave (CPU) <span>1</span></div>
+          <div class="alerta-critico">Alerta Crítico (CPU) <span>5</span></div>
+        </div>
+        <button class="btn-historico">Histórico de Alertas &rarr;</button>
+      </div>
+    </div>
+
+ 
+    <div class="bottom-section">
+      <div class="config-alerta">
+        <div class="config-left">
+          <select id="componentSelect">
+            <option value="CPU" selected>CPU</option>
+            <option value="Memória">Memória</option>
+          </select>
+
+          <div class="config-alertas-status">
+            <span class="status-dot alerta-grave">●</span> Alerta Grave
+            <span class="status-dot alerta-critico">●</span> Alerta Crítico
+            <span class="status-dot ok">●</span> OK
+          </div>
+
+          <div class="metric-box">
+            <div class="metric-label">Tempo de Inatividade</div>
+            <div class="number" id="inatividade">30min</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Quantidade de alertas</div>
+            <div class="number" id="qtdAlertas">5</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Tempo médio entre alertas</div>
+            <div class="number" id="tempoMedio">30min</div>
+          </div>
+        </div>
+        <div class="vertical-bar" aria-hidden="true"></div>
+      </div>
+
+      <div class="chart-area">
+        <div class="chart-header">
+          <div>Alertas emitidos nos últimos 7 dias <span>ℹ</span></div>
+        </div>
+        <canvas id="alertChart"></canvas>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="../js/menu-lateral.js"></script>
 <script>
-  const ctx = document.getElementById('graficoLinha').getContext('2d');
-  const monitoramentoSelect = document.getElementById('monitoramentoSelect');
 
- const dadosCPU = {
-  labels:  ['08h32min10s', '08h32min15s', '8h32min20s', '8h32min25s', '8h32min30s', '8h32min35s', '8h32min40s'],
-  datasets: [{
-    label: 'Uso de CPU (%)',
-    data: [ 60, 69, 85, 90, 95, 70, 50],
-    tension: 0.3,
-    fill: false,
-    borderWidth: 3,
-    pointBackgroundColor: 'white',
-    pointBorderColor: 'black',
-    segment: {
-      borderColor: function(context) {
-        const valor = context.p1.raw;
-        if (valor > 90) {
-          return 'red';
-        } else if (valor > 70) {
-          return 'orange';
-        } else {
-          return 'green';
-        }
-      },
+  const alertData = {
+    CPU: {
+      grave: [8, 10, 18, 24, 2, 3, 5],
+      critico: [7, 12, 16, 20, 5, 10, 2]
     },
-  }],
-};
-
-
-  const dadosRAM = {
-    labels: ['08h32min10s', '08h32min15s', '8h32min20s', '8h32min25s', '8h32min30s', '8h32min35s', '8h32min40s'],
-    datasets: [{
-      label: 'Uso de RAM (GB)',
-      data: [5, 7, 2, 6, 3, 8, 5],
-      tension: 0.3,
-      fill: false,
-      borderWidth: 3,
-      pointBackgroundColor: 'white',
-      pointBorderColor: 'black',
-      segment: {
-      borderColor: function(context) {
-        const valor = context.p1.raw;
-        if (valor > 7) {
-          return 'red';
-        } else if (valor > 5) {
-          return 'orange';
-        } else {
-          return 'green';
-        }
-      },
-    },
-  }],
-};   
-
-  const config = {
-    type: 'line',
-    data: dadosCPU,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          beginAtZero: true,
-          title: {
-            display: true,
-            text: 'Uso (%)'
-          },
-          max: 100
-        },
-        x: {
-          title: {
-            display: true,
-            text: 'Tempo (horas)'
-          }
-        }
-      },
-      plugins: {
-        legend: { position: 'top' },
-        title: { display: true, text: 'Monitoramento em Tempo Real' }
-      }
+    Memória: {
+      grave: [5, 8, 10, 15, 3, 1, 0],
+      critico: [4, 10, 15, 18, 4, 7, 1]
     }
   };
 
+  const configAlertas = {
+    CPU: { inatividade: '30min', qtdAlertas: 5, tempoMedio: '30min' },
+    Memória: { inatividade: '25min', qtdAlertas: 3, tempoMedio: '25min' }
+  };
 
+  const labels = ['10/10', '11/10', '12/10', '13/10', '14/10', '15/10', '17/10'];
+  const ctx = document.getElementById('alertChart').getContext('2d');
 
-  const grafico = new Chart(ctx, config);
-
-  monitoramentoSelect.addEventListener('change', () => {
-    const tipo = monitoramentoSelect.value;
-    grafico.data = tipo === 'cpu' ? dadosCPU : dadosRAM;
-    grafico.options.scales.y.title.text = tipo === 'cpu' ? 'Uso (%)' : 'Uso (GB)';
-    grafico.options.scales.y.max = tipo === 'cpu' ? 100 : 8;
-    grafico.update();
+  let alertChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [
+        { label: 'Grave', data: alertData.CPU.grave, backgroundColor: '#b30000', stack: 'Stack 0' },
+        { label: 'Crítico', data: alertData.CPU.critico, backgroundColor: '#daa520', stack: 'Stack 0' },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: true,
+      scales: {
+        x: { stacked: true },
+        y: { stacked: true, beginAtZero: true }
+      },
+      plugins: { legend: { display: false } }
+    }
   });
-    // Redirecionamento para o monitoramento
-    document.querySelector('.icon-seta').addEventListener('click', () => {
-        window.location.href = "monitoramento.html"
-    })
-    //Funcionalidade observação
-    document.querySelector('.icon-editar').addEventListener('click',() => {
-        document.querySelector('.icon-editar').classList.add('oculto')
-        document.querySelector('.texto-editavel').classList.add('oculto')
-        document.querySelector('.button-cinza').classList.remove('oculto')
-        document.querySelector('.button-azul').classList.remove('oculto')
-        document.querySelector('.input-observacao').classList.remove('oculto')
-        input_observacaoes.value = texto_observacao.textContent
-    })
-    document.getElementById("button_observacaoes_cancelar").addEventListener('click',() => {
-        document.querySelector('.icon-editar').classList.remove('oculto')
-        document.querySelector('.texto-editavel').classList.remove('oculto')
-        document.querySelector('.button-cinza').classList.add('oculto')
-        document.querySelector('.button-azul').classList.add('oculto')
-        document.querySelector('.input-observacao').classList.add('oculto')
-    })
-    document.getElementById("button_observacaoes_salvar").addEventListener('click',() => {
-        texto_observacao.innerHTML = input_observacaoes.value
-        // Ação no Banco
 
-        // Fim ação no Banco
-        document.querySelector('.icon-editar').classList.remove('oculto')
-        document.querySelector('.texto-editavel').classList.remove('oculto')
-        document.querySelector('.button-cinza').classList.add('oculto')
-        document.querySelector('.button-azul').classList.add('oculto')
-        document.querySelector('.input-observacao').classList.add('oculto')
-    })
+  const componentSelect = document.getElementById('componentSelect');
+  componentSelect.addEventListener('change', function() {
+    const comp = this.value;
+    alertChart.data.datasets[0].data = alertData[comp].grave;
+    alertChart.data.datasets[1].data = alertData[comp].critico;
+    alertChart.update();
+
+    document.getElementById('inatividade').textContent = configAlertas[comp].inatividade;
+    document.getElementById('qtdAlertas').textContent = configAlertas[comp].qtdAlertas;
+    document.getElementById('tempoMedio').textContent = configAlertas[comp].tempoMedio;
+  });
 </script>
-
 </body>
 </html>
 
