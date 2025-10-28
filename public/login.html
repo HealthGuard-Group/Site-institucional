@@ -106,6 +106,7 @@
                         })
                         .catch(function (resposta) {
                             console.log(`#ERRO: ${resposta}`);
+                            mensagem.innerHTML = `Email ou senha inválido!`
                         });
                 });
 
@@ -113,7 +114,13 @@
             } else {
 
                 console.log("Houve um erro ao tentar realizar o login!");
-
+                
+                mensagem.innerHTML = `Carregando...`;
+                
+                setTimeout(function () {
+                mensagem.innerHTML = `Email ou senha inválido!`   
+                }, 2000);
+                
                 resposta.text().then(texto => {
                     console.error(texto);
                     finalizarAguardar(texto);
