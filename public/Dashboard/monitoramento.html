@@ -19,7 +19,7 @@
             <div id="popupFundo" class="popup-fundo oculto">
                 <div class="popup">
                     <div class="popup-header">
-                        <h2>Códigos de configuração gerados</h2>
+                        <div class="titulo_modal">Códigos de configuração gerados</div>
                         <button class="fechar" onclick="fecharPop()"><img class="fechar"
                                 src="../assets/imgs/iconeFechar.png"></button>
                     </div>
@@ -120,6 +120,156 @@
                     </div>
                 </div>
             </div>
+            <div class="popup-fundo oculto" id="modal_adicionarmaquina">
+                <div class="popup reduzido">
+                    <div class="popup-header">
+                        <div class="titulo_modal">Adicionar nova máquina</div>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="texto-marcacao-modal">Indentificação da máquina:</div>
+                    <div class="box-input-modal">
+                        <div class="texto-modal">Apelido da máquina<span class="texto-modal"
+                                style="color: red;">*</span>:</div>
+                        <div class="coluna-erro-modal">
+                            <input type="text" class="input-modal" id="nome_indetificao_maquina" maxlength="45"
+                                oninput="validacaoNomeIndetificao()" placeholder="Ex: Máquina 01">
+                            <div class="texto-erro oculto" id="texto_erro_nome_indentificao">Preencha o campo</div>
+                        </div>
+                    </div>
+                    <div class="texto-marcacao-modal">Seleção dos serviços de monitoramento:</div>
+                    <div class="box-selecao-servicos">
+                        <div class="box-colunas-selecao">
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de CPU(%)</div>
+                                <label for="uso_cpu_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_cpu_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de RAM(%)</div>
+                                <label for="uso_ram_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_ram_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="barra-vertical-modal"></div>
+                        <div class="box-colunas-selecao">
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de Disco(%)</div>
+                                <label for="uso_disco_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_disco_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de RAM(%)</div>
+                                <label for="uso_rede" class="switch">
+                                    <input type="checkbox" id="uso_rede" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-botao-modal">
+                        <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
+                        </div>
+                        <button class="botao-modal" onclick="adicionandoServicos()">Próximo</button>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-fundo oculto" id="modal_adicionarmaquina_config">
+                <div class="popup-header">
+                    <div class="popup">
+                        <div class="popup-header">
+                            <div class="titulo_modal">Adicionar nova máquina</div>
+                            <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                    src="../assets/imgs/iconeFechar.png"></button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
+                        </div>
+                        <div class="texto-marcacao-modal">Intervalo de operação ideal:</div>
+                        <div class="box-input-modal">
+                            <div class="texto-modal">Valor mínimo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_minimo_ideal"
+                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_valor_minimo">Preencha o campo</div>
+                            </div>
+                            <div class="texto-modal">Valor máximo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_maximo_ideal"
+                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_valor_maximo">Preencha o campo</div>
+                            </div>
+                        </div>
+                        <div class="texto-marcacao-modal">Definições dos alertas:</div>
+                        <div class="box-input-modal">
+                            <div class="texto-modal">Nome do Alerta:</div>
+                            <div class="coluna-erro-modal-input">
+                                <input type="text" class="input-modal" id="valor_nome_alerta"
+                                    oninput="validarnumero(this)" placeholder="Ex: Severo,Alerta" maxlength="45">
+                                <div class="texto-erro oculto" id="texto_erro_nome_alerta">Preencha o campo </div>
+                            </div>
+                            <div class="texto-modal">Cor do alerta:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="color" class="input-modal-number" id="valor_cor_alerta"
+                                    placeholder="Ex: 90%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_cor_alerta">Preencha o campo </div>
+                            </div>
+                        </div>
+                        <div class="box-input-modal">
+                            <div class="texto-modal">Valor mínimo(%):</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_minimo_alerta"
+                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_valor_minimo_alerta">Preencha o campo
+                                </div>
+                            </div>
+                            <div class="texto-modal">Valor máximo(%):</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_maximo_alerta"
+                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_valor_maximo_alerta">Preencha o campo
+                                </div>
+                            </div>
+                            <button class="botao-modal-reduzido" onclick="adicionandoAlerta()">Adicionar
+                                alerta</button>
+                        </div>
+                        <div class="barra-grafico-modal-pai">
+                            <div class="div-grafico-modal" style="width: 74%;">
+                                <div class="texto-grafico-modal">0% - 74%</div>
+                                <div class="preencher" style="background-color: lawngreen;"></div>
+                            </div>
+                            <div class="div-grafico-modal" style="width: 12%;">
+                                <div class="texto-grafico-modal">75% - 86%</div>
+                                <div class="preencher" style="background-color: yellow;"></div>
+                            </div>
+                            <div class="div-grafico-modal" style="width: 14%;">
+                                <div class="texto-grafico-modal">87% - 100%</div>
+                                <div class="preencher" style="background-color: red;"></div>
+                            </div>
+                        </div>
+                        <div class="box-botao-modal">
+                            <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
+                                serviço
+                            </div>
+                            <div class="box-botao-modal">
+                                <div class="texto-erro oculto" id="texto_erro_configuracao_alerta">Configure a operação
+                                    ideal</div>
+                                <button class="botao-modal" onclick="salvandoAlerta()">Próximo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
         <!--Fim modais -->
         <!-- Começo do Menu -->
@@ -232,7 +382,7 @@
                     <button class="botao-codigo-cinza" id="botao_codigos_gerados">
                         Ver códigos de configuração gerados
                     </button>
-                    <div class="div-botao-adicionar">
+                    <div class="div-botao-adicionar" id="botao_adicionar_maquina">
                         <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
                         <div class="texto-botao-adicionar">
                             Adicionar máquina
@@ -314,6 +464,12 @@
 <script src="../js/validarSessao.js"></script>
 <script src="../js/menu-lateral.js"></script>
 <script>
+    // Criação de váriaveis
+    var adicionando_nova_maquina = {
+        nome: "",
+        servicos: [],
+        alertas: [[], [], [], []]
+    }
     document.querySelector('.maquina-box').addEventListener('click', () => {
         window.location.href = "dashboard.html"
     })
@@ -555,16 +711,193 @@
                 console.log(`Erro no catch: ${resposta}`);
             });
     }
+    // Modal Adicionar máquina
+    function validacaoNomeIndetificao() {
+        var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
+        if (nome_indetificao_maquina.value.length > 0) {
+            nomeIndetificao.style.border = '0.2vh solid #0AA40A'
+            nomeIndetificao.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+        } else {
+            nomeIndetificao.style.border = '0.2vh solid #D30808'
+            nomeIndetificao.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+        }
+    }
+    function adicionandoServicos() {
+        adicionando_nova_maquina = {
+            nome: "",
+            servicos: [],
+            alertas: [[], [], [], []]
+        }
+        // Declarando variavéis
+        var input_nome_indentificao = nome_indetificao_maquina.value
+        var uso_cpu_porcentagem = document.getElementById('uso_cpu_porcentagem').checked
+        var uso_ram_porcentagem = document.getElementById('uso_ram_porcentagem').checked
+        var uso_disco_porcentagem = document.getElementById('uso_disco_porcentagem').checked
+        var uso_rede = document.getElementById('uso_rede').checked
+        if (input_nome_indentificao.length == 0) {
+            document.getElementById("texto_erro_nome_indentificao").classList.remove('oculto')
+        } else {
+            document.getElementById("texto_erro_nome_indentificao").classList.add('oculto')
+        }
+        if (uso_cpu_porcentagem == false && uso_ram_porcentagem == false && uso_disco_porcentagem == false && uso_rede == false) {
+            document.getElementById("texto_erro_selecao_servicos").classList.remove('oculto')
+        } else {
+            document.getElementById("texto_erro_selecao_servicos").classList.add('oculto')
+        }
+        if (input_nome_indentificao.length > 0 && (uso_cpu_porcentagem == true || uso_ram_porcentagem == true || uso_disco_porcentagem == true || uso_rede == true)) {
+            adicionando_nova_maquina.nome = input_nome_indentificao
+            adicionando_nova_maquina.servicos[0] = uso_cpu_porcentagem
+            adicionando_nova_maquina.servicos[1] = uso_ram_porcentagem
+            adicionando_nova_maquina.servicos[2] = uso_disco_porcentagem
+            adicionando_nova_maquina.servicos[3] = uso_rede
+            if (uso_cpu_porcentagem == true) {
+                parametro_a_configurar.innerHTML = `Definição das métricas de uso de CPU(%):`
+            } else if (uso_ram_porcentagem == true) {
+                parametro_a_configurar.innerHTML = `Definição das métricas de uso de RAM(%):`
+            } else if (uso_disco_porcentagem == true) {
+                parametro_a_configurar.innerHTML = `Definição das métricas de uso de disco(%):`
+            }
 
+            document.getElementById("modal_adicionarmaquina_config").classList.remove("oculto")
+            document.getElementById("modal_adicionarmaquina").classList.add('oculto')
+        }
+    }
+    function adicionandoAlerta() {
+        if (valor_nome_alerta.value == "") {
+            document.getElementById("texto_erro_nome_alerta").classList.remove("oculto")
+        } else {
+            document.getElementById("texto_erro_nome_alerta").classList.add("oculto")
+        } if (valor_minimo_alerta.value == '') {
+            texto_erro_valor_minimo_alerta.innerHTML = `Preencha o campo`
+            document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+        } else {
+            document.getElementById("texto_erro_valor_minimo_alerta").classList.add("oculto")
+        } if (valor_maximo_alerta.value == '') {
+            texto_erro_valor_maximo_alerta.innerHTML = `Preencha o campo`
+            document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+        } else {
+            document.getElementById("texto_erro_valor_maximo_alerta").classList.add("oculto")
+        } if (valor_minimo_alerta.value > valor_maximo_alerta.value) {
+            document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+            document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+            texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
+            texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+        }
+        if (valor_minimo_alerta.value < valor_maximo_alerta.value && valor_nome_alerta.value != "" && valor_minimo_alerta.value != '' && valor_maximo_alerta.value != '') {
+            if (adicionando_nova_maquina.servicos[0] == true && adicionando_nova_maquina.alertas[1] == "") {
+                for (let i = 0; i < adicionando_nova_maquina.alertas[0].length; i++) {
+                    if (valor_minimo_alerta.value > adicionando_nova_maquina.alertas[0][i].valor_minimo && valor_minimo_alerta.value < adicionando_nova_maquina.alertas[0][i].valor_maximo) {
+                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
+                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+                        return
+                    }
+                    if (valor_maximo_alerta.value > adicionando_nova_maquina.alertas[0][i].valor_minimo && valor_maximo_alerta.value < adicionando_nova_maquina.alertas[0][i].valor_maximo) {
+                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
+                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+                        return
+                    }
+                }
+                adicionando_nova_maquina.alertas[0].push({
+                    nome_alerta: valor_nome_alerta.value,
+                    cor: valor_cor_alerta.value,
+                    valor_minimo: valor_minimo_alerta.value,
+                    valor_maximo: valor_maximo_alerta.value
+                })
+            } else if (adicionando_nova_maquina.servicos[1] == true && adicionando_nova_maquina.alertas[1] == "") {
+                for (let i = 0; i < adicionando_nova_maquina.alertas[1].length; i++) {
+                    if (valor_minimo_alerta.value > adicionando_nova_maquina.alertas[1][i].valor_minimo && valor_minimo_alerta.value < adicionando_nova_maquina.alertas[1][i].valor_maximo) {
+                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
+                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+                        return
+                    }
+                    if (valor_maximo_alerta.value > adicionando_nova_maquina.alertas[1][i].valor_minimo && valor_maximo_alerta.value < adicionando_nova_maquina.alertas[1][i].valor_maximo) {
+                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
+                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+                        return
+                    }
+                }
+                adicionando_nova_maquina.alertas[1].push({
+                    nome_alerta: valor_nome_alerta.value,
+                    cor: valor_cor_alerta.value,
+                    valor_minimo: valor_minimo_alerta.value,
+                    valor_maximo: valor_maximo_alerta.value
+                })
+            } else if (adicionando_nova_maquina.servicos[2] == true && adicionando_nova_maquina.alertas[2] == "") {
+                for (let i = 0; i < adicionando_nova_maquina.alertas[2].length; i++) {
+                    if (valor_minimo_alerta.value > adicionando_nova_maquina.alertas[2][i].valor_minimo && valor_minimo_alerta.value < adicionando_nova_maquina.alertas[2][i].valor_maximo) {
+                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
+                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+                        return
+                    }
+                    if (valor_maximo_alerta.value > adicionando_nova_maquina.alertas[2][i].valor_minimo && valor_maximo_alerta.value < adicionando_nova_maquina.alertas[2][i].valor_maximo) {
+                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
+                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
+                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
+                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+                        return
+                    }
+                }
+                adicionando_nova_maquina.alertas[2].push({
+                    nome_alerta: valor_nome_alerta.value,
+                    cor: valor_cor_alerta.value,
+                    valor_minimo: valor_minimo_alerta.value,
+                    valor_maximo: valor_maximo_alerta.value
+                })
+            }
+        }
+    }
+    function salvandoAlerta() {
+        if (valor_minimo_ideal.value == "" || valor_maximo_ideal.value == "") {
+            texto_erro_configuracao_alerta.classList.remove("oculto")
+        } else {
+            texto_erro_configuracao_alerta.classList.add("oculto")
+        }
+        if (adicionando_nova_maquina.servicos[1] == true && adicionando_nova_maquina.alertas[1] == "") {
+            parametro_a_configurar.innerHTML = `Definição das métricas de uso de RAM(%):`
+            adicionando_nova_maquina.alertas[1] = "Hello World"
+        } else if (adicionando_nova_maquina.servicos[2] == true && adicionando_nova_maquina.alertas[2] == "") {
+            parametro_a_configurar.innerHTML = `Definição das métricas de uso de disco(%):`
+        }
+    }
+    function validarnumero(input) {
+        if (input.value < 0) {
+            input.value = 0
+        } if (input.value > 100) {
+            input.value = 100
+        }
+    }
     // POP-UP DE CÓDIGOS GERADOS
     document.getElementById("botao_codigos_gerados").addEventListener('click', () => {
         document.querySelector('.tela-escurecida').classList.remove('oculto')
-        document.getElementById("popupFundo").style.display = "flex";
+        document.getElementById("popupFundo").classList.remove('oculto')
         document.getElementById('html_fonte').style.overflowY = "hidden"
     })
     function fecharPop() {
         document.querySelector('.tela-escurecida').classList.add('oculto')
-        document.getElementById("popupFundo").style.display = "none";
+        document.getElementById("popupFundo").classList.add('oculto')
+        document.getElementById("modal_adicionarmaquina").classList.add('oculto')
+        document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
         document.getElementById('html_fonte').style.overflowY = "auto"
+        nome_indetificao_maquina.value = ""
+        validacaoNomeIndetificao()
+        document.getElementById('uso_cpu_porcentagem').checked = false
+        document.getElementById('uso_ram_porcentagem').checked = false
+        document.getElementById('uso_disco_porcentagem').checked = false
+        document.getElementById('uso_rede').checked = false
     }
+    document.getElementById("botao_adicionar_maquina").addEventListener('click', () => {
+        document.querySelector('.tela-escurecida').classList.remove('oculto')
+        document.getElementById("modal_adicionarmaquina").classList.remove('oculto')
+        document.getElementById('html_fonte').style.overflowY = "hidden"
+    })
 </script>

@@ -166,10 +166,6 @@
     z-index: 100;
 }
 
-.oculto {
-    display: none;
-}
-
 .popup {
     background: #fff;
     border-radius: 10px;
@@ -529,7 +525,7 @@ td {
     cursor: pointer;
 }
 .pai-maquinas{
-    padding-top: 50vh;
+    padding-top: 52vh;
     margin-left: 6%;
     padding-left: 2vw;
     background-color: #f8f8f8;
@@ -551,6 +547,12 @@ td {
     height: 15vh;
     display: flex;
     padding: 0vw 1vw;
+    transition: .3s;
+}
+.maquina-box:hover{
+    transition: .3s;
+    transform: scale(1.1);
+    box-shadow: rgba(99, 99, 99, 0.432) 0px 2px 8px 0px;
 }
 .coluna-informacoes{
     width: 80%;
@@ -594,4 +596,176 @@ td {
 }
 .maquina-box:hover{
     cursor: pointer;
+}
+/* Modal adicionar máquina */
+.reduzido{
+    width: 35%;
+    height: 55%;
+}
+.titulo_modal{
+    font-size: 2vw;
+    font-weight: bold;
+}
+.texto-marcacao-modal{
+    font-size: 1.3vw;
+    font-weight: bold;
+}
+.texto-modal{
+    font-size: 1vw;
+}
+.box-input-modal{
+    height: 10%;
+    width: 100%;
+    padding-top: 1%;
+
+    display: flex;
+    gap: 0.6vw;
+}
+.coluna-erro-modal{
+    width: 60%;
+}
+.texto-erro{
+    font-size: 0.7vw;
+    color: red;
+}
+.input-modal{
+    border: 0.2vh solid #000;
+    height: 70%;
+    width: 100%;
+    border-radius: 0.4vw;
+    padding-left: 0.2vw;
+}
+.input-modal:focus{
+    outline: none;
+}
+/* Configuração Toggle Switch */
+.switch{
+    position: relative;
+    display: inline-block;
+    width: 4vw;
+    height: 3.5vh;
+}
+.input-checkbox{
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.slider{
+    cursor: pointer;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #D30808;
+    transition: 0.4s;
+    border-radius: 3vh; 
+}
+.slider:before{
+    position: absolute;
+    content: "";
+    height: 3vh; 
+    width: 3vh; 
+    bottom: 0.25vh;
+    left: 0.2vw;
+    background-color: #fff;
+    transition: 0.4s;
+    border-radius: 50%; 
+}
+.input-checkbox:checked + .slider{
+    background-color: #0AA40A;
+}
+.input-checkbox:checked + .slider:before{
+    transform: translateX(2vw);
+}
+.box-selecao-servicos{
+    height: 40%;
+    display: flex;
+}
+.barra-vertical-modal{
+    height: 100%;
+    width: 1%;
+    border-radius: 1vw;
+    background-color: #0000006b;
+}
+.box-colunas-selecao{
+    width: 49.5%;
+    height: 100%;
+    padding-left: 0.5vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.box-selecao-modal{
+    height: 50%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.8vh;
+}
+.box-botao-modal{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1vh;
+}
+.botao-modal{
+    cursor: pointer;
+    height: 4vh;
+    width: 7vw;
+    background-color: #1E2A38;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 1vh;
+    border: none;
+    color: #fff;
+    font-size: 1vw;
+    font-weight: 600;
+}
+.coluna-erro-modal-reduzido{
+    width: 15%;
+}
+.coluna-erro-modal-input{
+    width: 40%;
+}
+.botao-modal-reduzido{
+    cursor: pointer;
+    height: 3vh;
+    width: 6vw;
+    background-color: #1E2A38;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 1vh;
+    border: none;
+    color: #fff;
+    font-size: 0.6vw;
+    font-weight: 600;
+}
+.barra-grafico-modal-pai{
+    width: 100%;
+    height: 10%;
+
+    display: flex;
+}
+.div-grafico-modal{
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.preencher{
+    width: 100%;
+    height: 70%;
+}
+.texto-grafico-modal{
+    font-size: 0.8vw;
+}
+/* Deixar por ultímo */
+.oculto {
+    display: none;
 }
