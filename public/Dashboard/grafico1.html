@@ -3,16 +3,18 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dashboard </title>
- <link rel="stylesheet" href="../css/global.css">
+<title>Dashboard</title>
+<link rel="stylesheet" href="../css/global.css">
 <link rel="stylesheet" href="../css/menu_bar.css">
 <link rel="stylesheet" href="../css/grafico1.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-   <!-- Começo do Menu -->
+<!-- MENU -->
+<div class="menu-lateral">
+  <!-- Começo do Menu -->
         <div class="menu-lateral">
             <div class="pai-icones-superiores">
                 <div id="logo">
@@ -25,17 +27,17 @@
                     <div class="texto-icone oculto">Monitoramento</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box" id="gestao_redirecionamento">
+                <div class="icone-box">
                     <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
                     <div class="texto-icone oculto">Gestão de usuários</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box" id="alertas_redirecionamento">
+                <div class="icone-box">
                     <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
                     <div class="texto-icone oculto">Histórico de Alertas</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box" id="suporte_redirecionamento">
+                <div class="icone-box">
                     <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
                     <div class="texto-icone oculto">Suporte</div>
                 </div>
@@ -54,8 +56,11 @@
             </div>
         </div>
         <!-- Fim do Menu -->
+</div>
+
 <div class="container">
-   <div class="conteudo-principal">
+  <div class="conteudo-principal">
+
     <div class="header">
       <div class="header-esquerda">
         <span>Máquina 01</span>
@@ -64,48 +69,49 @@
       <div class="link-descricao" onclick="alert('Descrição')">Exibir descrição</div>
     </div>
 
-
     <div class="dashboard-cards">
       <div class="card-monitoramento">
         <div class="title">Monitoramento em tempo real <span>ℹ</span></div>
-        <div><span class="icon green">✔</span>Uso de CPU: <strong>70%</strong></div>
-        <div><span class="icon green">✔</span>Uso de Memória: <strong>85%</strong></div>
-        <div><span class="icon red">●</span>Uso de Disco: <strong>99%</strong></div>
-        <div><span class="icon green">✔</span>Status da Rede: <strong>CONECTADA</strong></div>
+        <div><span class="status-dot ok"></span>Uso de CPU: <strong>70%</strong></div>
+        <div><span class="status-dot ok"></span>Uso de Memória: <strong>85%</strong></div>
+        <div><span class="status-dot alerta-grave"></span>Uso de Disco: <strong>99%</strong></div>
+        <div><span class="status-dot ok"></span>Status da Rede: <strong>CONECTADA</strong></div>
         <button class="btn-editar">Editar</button>
       </div>
 
-      <div class="card alerta-card">
-        <div class="title">Componente com mais alertas <span>ℹ</span></div>
-        <div class="text" style="color:#b30000; font-weight: 900;">Memória</div>
-      </div>
+     
+      <div class="kpi-topo">
+        <div class="card alerta-card">
+          <div class="title">Componente com mais alertas <span>ℹ</span></div>
+          <div class="text" style="color:#b30000; font-weight: 900;">Memória</div>
+        </div>
 
-      <div class="card">
-        <div class="title">Tempo de Atividade <span>ℹ</span></div>
-        <div class="tempo-atividade">15h30min</div>
-      </div>
+        <div class="card">
+          <div class="title">Tempo de Atividade <span>ℹ</span></div>
+          <div class="tempo-atividade">15h30min</div>
+        </div>
 
-      <div class="card">
-        <div class="title">Qtd. de alertas <span>ℹ</span></div>
-        <div class="number">3</div>
-      </div>
+        <div class="card">
+          <div class="title">Qtd. de alertas <span>ℹ</span></div>
+          <div class="number">3</div>
+        </div>
 
-      <div class="card">
-        <div class="title">Média de alertas diários <span>ℹ</span></div>
-        <div class="number">2</div>
+        <div class="card">
+          <div class="title">Média de alertas diários <span>ℹ</span></div>
+          <div class="number">2</div>
+        </div>
       </div>
 
       <div class="card-alertas-totais">
         <div class="title">Alertas <span>ℹ</span></div>
         <div class="alerts-list">
-          <div class="alerta-grave">Alerta Grave (CPU) <span>1</span></div>
-          <div class="alerta-critico">Alerta Crítico (CPU) <span>5</span></div>
+          <div class="alerta-grave"> <span class="status-dot alerta-grave"> </span> Alerta Grave (CPU) <span>1</span></div>
+          <div class="alerta-critico">  <span class="status-dot alerta-critico"></span> Alerta Crítico (CPU) <span>5</span></div>
         </div>
         <button class="btn-historico">Histórico de Alertas &rarr;</button>
       </div>
     </div>
 
- 
     <div class="botao-sessao">
       <div class="config-alerta">
         <div class="config-left">
@@ -115,9 +121,9 @@
           </select>
 
           <div class="config-alertas-status">
-            <span class="status-dot alerta-grave">●</span> Alerta Grave
-            <span class="status-dot alerta-critico">●</span> Alerta Crítico
-            <span class="status-dot ok">●</span> OK
+            <span class="status-dot alerta-grave"></span> Alerta Grave
+            <span class="status-dot alerta-critico"></span> Alerta Crítico
+            <span class="status-dot ok"></span> OK
           </div>
 
           <div class="metrica">
@@ -146,20 +152,12 @@
   </div>
 </div>
 
-  <script src="../js/menu-lateral.js"></script>
+<script src="../js/menu-lateral.js"></script>
 <script>
-
   const alertData = {
-    CPU: {
-      grave: [8, 10, 18, 24, 2, 3, 5],
-      critico: [7, 12, 16, 20, 5, 10, 2]
-    },
-    Memória: {
-      grave: [5, 8, 10, 15, 3, 1, 0],
-      critico: [4, 10, 15, 18, 4, 7, 1]
-    }
+    CPU: { grave: [8, 10, 18, 24, 2, 3, 5], critico: [7, 12, 16, 20, 5, 10, 2] },
+    Memória: { grave: [5, 8, 10, 15, 3, 1, 0], critico: [4, 10, 15, 18, 4, 7, 1] }
   };
-
   const configAlertas = {
     CPU: { inatividade: '30min', qtdAlertas: 5, tempoMedio: '30min' },
     Memória: { inatividade: '25min', qtdAlertas: 3, tempoMedio: '25min' }
@@ -167,14 +165,13 @@
 
   const labels = ['10/10', '11/10', '12/10', '13/10', '14/10', '15/10', '17/10'];
   const ctx = document.getElementById('alertChart').getContext('2d');
-
   let alertChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [
-        { label: 'Grave', data: alertData.CPU.grave, backgroundColor: '#b30000', stack: 'Stack 0' },
-        { label: 'Crítico', data: alertData.CPU.critico, backgroundColor: '#daa520', stack: 'Stack 0' },
+        { label: 'Grave', data: alertData.CPU.grave, backgroundColor:  '#dc1717', stack: 'Stack 0' },
+        { label: 'Crítico', data: alertData.CPU.critico, backgroundColor: '#f3be3a', stack: 'Stack 0' },
       ],
     },
     options: {
@@ -202,4 +199,3 @@
 </script>
 </body>
 </html>
-
