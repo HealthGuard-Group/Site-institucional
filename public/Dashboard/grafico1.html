@@ -1,20 +1,19 @@
-<!DOCTYPE<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Dashboard</title>
-<link rel="stylesheet" href="../css/global.css">
+<title>Dashboard </title>
+ <link rel="stylesheet" href="../css/global.css">
 <link rel="stylesheet" href="../css/menu_bar.css">
 <link rel="stylesheet" href="../css/grafico1.css">
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+
 </head>
 <body>
 
-<!-- MENU -->
-<div class="menu-lateral">
-  <!-- Começo do Menu -->
+   <!-- Começo do Menu -->
         <div class="menu-lateral">
             <div class="pai-icones-superiores">
                 <div id="logo">
@@ -27,17 +26,17 @@
                     <div class="texto-icone oculto">Monitoramento</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box">
+                <div class="icone-box" id="gestao_redirecionamento">
                     <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
                     <div class="texto-icone oculto">Gestão de usuários</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box">
+                <div class="icone-box" id="alertas_redirecionamento">
                     <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
                     <div class="texto-icone oculto">Histórico de Alertas</div>
                 </div>
                 <hr class="separador">
-                <div class="icone-box">
+                <div class="icone-box" id="suporte_redirecionamento">
                     <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
                     <div class="texto-icone oculto">Suporte</div>
                 </div>
@@ -56,11 +55,8 @@
             </div>
         </div>
         <!-- Fim do Menu -->
-</div>
-
 <div class="container">
-  <div class="conteudo-principal">
-
+   <div class="conteudo-principal">
     <div class="header">
       <div class="header-esquerda">
         <span>Máquina 01</span>
@@ -69,49 +65,72 @@
       <div class="link-descricao" onclick="alert('Descrição')">Exibir descrição</div>
     </div>
 
+
     <div class="dashboard-cards">
       <div class="card-monitoramento">
-        <div class="title">Monitoramento em tempo real <span>ℹ</span></div>
-        <div><span class="status-dot ok"></span>Uso de CPU: <strong>70%</strong></div>
-        <div><span class="status-dot ok"></span>Uso de Memória: <strong>85%</strong></div>
-        <div><span class="status-dot alerta-grave"></span>Uso de Disco: <strong>99%</strong></div>
-        <div><span class="status-dot ok"></span>Status da Rede: <strong>CONECTADA</strong></div>
+        <div class="title">Monitoramento em tempo real <button class="info-btn" data-info="Exibe as leituras atuais dos componentes principais (CPU, Memória, Disco e Rede).">i
+            <div class="info-tooltip" aria-hidden="true"></div>
+          </button></div>
+        <div> <span class="status-dot ok"> </span>  de CPU: <strong>70%</strong></div>
+        <div> <span class="status-dot ok"></span>Uso de Memória: <strong>85%</strong></div>
+        <div> <span class="status-dot alerta-grave"> </span> Uso de Disco: <strong>99%</strong></div>
+        <div> <span class="status-dot ok"></span>Status da Rede: <strong>CONECTADA</strong></div>
         <button class="btn-editar">Editar</button>
       </div>
 
-     
       <div class="kpi-topo">
         <div class="card alerta-card">
-          <div class="title">Componente com mais alertas <span>ℹ</span></div>
+          <div class="title">Componente com mais alertas
+            <button class="info-btn" data-info="Mostra qual componente (CPU, Memória, Disco, Rede) registrou mais alertas recentemente.">i
+              <div class="info-tooltip" aria-hidden="true"></div>
+            </button>
+          </div>
           <div class="text" style="color:#b30000; font-weight: 900;">Memória</div>
         </div>
 
         <div class="card">
-          <div class="title">Tempo de Atividade <span>ℹ</span></div>
+          <div class="title">Tempo de Atividade
+            <button class="info-btn" data-info="Tempo total o serviço iniciou.">i
+              <div class="info-tooltip" aria-hidden="true"></div>
+            </button>
+          </div>
           <div class="tempo-atividade">15h30min</div>
         </div>
 
         <div class="card">
-          <div class="title">Qtd. de alertas <span>ℹ</span></div>
+          <div class="title">Qtd. de alertas
+            <button class="info-btn" data-info="Número total de alertas.">i
+              <div class="info-tooltip" aria-hidden="true"></div>
+            </button>
+          </div>
           <div class="number">3</div>
         </div>
 
         <div class="card">
-          <div class="title">Média de alertas diários <span>ℹ</span></div>
+          <div class="title">Média de alertas diários
+            <button class="info-btn" data-info="Média de alertas">i
+              <div class="info-tooltip" aria-hidden="true"></div>
+            </button>
+          </div>
           <div class="number">2</div>
         </div>
       </div>
 
       <div class="card-alertas-totais">
-        <div class="title">Alertas <span>ℹ</span></div>
+        <div class="title">Alertas
+          <button class="info-btn" data-info="Lista resumida dos alertas mais recentes, separados por gravidade.">i
+            <div class="info-tooltip" aria-hidden="true"></div>
+          </button>
+        </div>
         <div class="alerts-list">
-          <div class="alerta-grave"> <span class="status-dot alerta-grave"> </span> Alerta Grave (CPU) <span>1</span></div>
-          <div class="alerta-critico">  <span class="status-dot alerta-critico"></span> Alerta Crítico (CPU) <span>5</span></div>
+          <div class="alerta-grave">Alerta Grave (CPU) <span>1</span></div>
+          <div class="alerta-critico">Alerta Crítico (CPU) <span>5</span></div>
         </div>
         <button class="btn-historico">Histórico de Alertas &rarr;</button>
       </div>
     </div>
 
+ 
     <div class="botao-sessao">
       <div class="config-alerta">
         <div class="config-left">
@@ -144,20 +163,43 @@
 
       <div class="chart-area">
         <div class="chart-header">
-          <div>Alertas emitidos nos últimos 7 dias <span>ℹ</span></div>
+          <div class="chart-controls">
+            <div id="chartTitle">Alertas emitidos nos últimos 7 dias</div>
+     
+            <select id="tipoGraficoTopo" aria-label="Escolher tipo de gráfico">
+              <option value="alertas" selected>Gráfico de Alertas</option>
+              <option value="monitoramento">Monitoramento em Tempo Real</option>
+            </select>
+            <button class="info-btn" data-info="Escolha entre o gráfico de alertas (barras) e o gráfico de monitoramento (linha com dados mock).">
+              i
+              <div class="info-tooltip" aria-hidden="true"></div>
+            </button>
+          </div>
         </div>
+     
         <canvas id="alertChart"></canvas>
+       
+        <canvas id="monitorChart" class="canvas-hidden"></canvas>
       </div>
     </div>
   </div>
 </div>
 
-<script src="../js/menu-lateral.js"></script>
+  <script src="../js/menu-lateral.js"></script>
 <script>
+  
+
   const alertData = {
-    CPU: { grave: [8, 10, 18, 24, 2, 3, 5], critico: [7, 12, 16, 20, 5, 10, 2] },
-    Memória: { grave: [5, 8, 10, 15, 3, 1, 0], critico: [4, 10, 15, 18, 4, 7, 1] }
+    CPU: {
+      grave: [8, 10, 18, 24, 2, 3, 5],
+      critico: [7, 12, 16, 20, 5, 10, 2]
+    },
+    Memória: {
+      grave: [5, 8, 10, 15, 3, 1, 0],
+      critico: [4, 10, 15, 18, 4, 7, 1]
+    }
   };
+
   const configAlertas = {
     CPU: { inatividade: '30min', qtdAlertas: 5, tempoMedio: '30min' },
     Memória: { inatividade: '25min', qtdAlertas: 3, tempoMedio: '25min' }
@@ -165,13 +207,14 @@
 
   const labels = ['10/10', '11/10', '12/10', '13/10', '14/10', '15/10', '17/10'];
   const ctx = document.getElementById('alertChart').getContext('2d');
+
   let alertChart = new Chart(ctx, {
     type: 'bar',
     data: {
       labels: labels,
       datasets: [
-        { label: 'Grave', data: alertData.CPU.grave, backgroundColor:  '#dc1717', stack: 'Stack 0' },
-        { label: 'Crítico', data: alertData.CPU.critico, backgroundColor: '#f3be3a', stack: 'Stack 0' },
+        { label: 'Grave', data: alertData.CPU.grave, backgroundColor: '#b30000', stack: 'Stack 0' },
+        { label: 'Crítico', data: alertData.CPU.critico, backgroundColor: '#daa520', stack: 'Stack 0' },
       ],
     },
     options: {
@@ -188,14 +231,159 @@
   const componentSelect = document.getElementById('componentSelect');
   componentSelect.addEventListener('change', function() {
     const comp = this.value;
+ 
     alertChart.data.datasets[0].data = alertData[comp].grave;
     alertChart.data.datasets[1].data = alertData[comp].critico;
     alertChart.update();
 
+    
     document.getElementById('inatividade').textContent = configAlertas[comp].inatividade;
     document.getElementById('qtdAlertas').textContent = configAlertas[comp].qtdAlertas;
     document.getElementById('tempoMedio').textContent = configAlertas[comp].tempoMedio;
+
+    
+    if (typeof monitorInstance !== 'undefined' && monitorVisible) {
+      monitorInstance.data.datasets[0].label = comp === 'CPU' ? 'Uso de CPU (%)' : 'Uso de Memória (%)';
+      monitorInstance.update();
+      currentMonitorComponent = comp;
+    }
   });
+
+  
+  const tipoGraficoTopo = document.getElementById('tipoGraficoTopo');
+  const monitorCanvas = document.getElementById('monitorChart');
+  const alertCanvas = document.getElementById('alertChart');
+  let monitorInstance = undefined;
+  let monitorInterval = null;
+  let monitorVisible = false;
+  let currentMonitorComponent = componentSelect.value || 'CPU';
+
+  function criarMonitorChart() {
+    const ctxMon = monitorCanvas.getContext('2d');
+
+    if (monitorInstance) {
+      monitorInstance.destroy();
+    }
+
+    const labelsMon = [];
+    const dataMon = [];
+
+    monitorInstance = new Chart(ctxMon, {
+      type: 'line',
+      data: {
+        labels: labelsMon,
+        datasets: [{
+          label: currentMonitorComponent === 'CPU' ? 'Uso de CPU (%)' : 'Uso de Memória (%)',
+          data: dataMon,
+          borderColor: currentMonitorComponent === 'CPU' ? '#b30000' : '#36A2EB',
+          tension: 0.25,
+          fill: false,
+          pointRadius: 2,
+          pointHoverRadius: 4,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        scales: {
+          y: { min: 0, max: 100, ticks: { stepSize: 10 }, title: { display: true, text: 'Uso (%)' } },
+          x: { ticks: { autoSkip: true, maxTicksLimit: 10 } }
+        },
+        plugins: {
+          legend: { display: true },
+          title: { display: true, text: 'Monitoramento em Tempo Real' }
+        }
+      }
+    });
+
+
+    let contador = 0;
+    if (monitorInterval) clearInterval(monitorInterval);
+    monitorInterval = setInterval(() => {
+      contador++;
+      const nowLabel = `${contador}s`;
+
+      if (monitorInstance.data.labels.length >= 30) {
+        monitorInstance.data.labels.shift();
+        monitorInstance.data.datasets[0].data.shift();
+      }
+      monitorInstance.data.labels.push(nowLabel);
+
+ 
+      let mockValue;
+      if (currentMonitorComponent == 'CPU') {
+        mockValue = Math.max(0, Math.min(100, Math.round(30 + Math.random() * 65 + Math.sin(contador/5)*5)));
+      } else {
+        mockValue = Math.max(0, Math.min(100, Math.round(20 + Math.random() * 70 + Math.cos(contador/6)*4)));
+      }
+
+      monitorInstance.data.datasets[0].data.push(mockValue);
+      monitorInstance.update('none'); 
+    }, 1000);
+  }
+
+  function mostrarGrafico(tipo) {
+    if (tipo === 'alertas') {
+      monitorCanvas.classList.add('canvas-hidden');
+      alertCanvas.classList.remove('canvas-hidden');
+      if (monitorInterval) {
+        clearInterval(monitorInterval);
+        monitorInterval = null;
+      }
+      monitorVisible = false;
+      document.getElementById('chartTitle').textContent = 'Alertas emitidos nos últimos 7 dias';
+    } else if (tipo === 'monitoramento') {
+      alertCanvas.classList.add('canvas-hidden');
+      monitorCanvas.classList.remove('canvas-hidden');
+      currentMonitorComponent = componentSelect.value || 'CPU';
+      criarMonitorChart();
+      monitorVisible = true;
+      document.getElementById('chartTitle').textContent = 'Monitoramento em Tempo Real';
+    }
+  }
+
+  mostrarGrafico(tipoGraficoTopo.value);
+
+  tipoGraficoTopo.addEventListener('change', function() {
+    const tipo = this.value;
+    mostrarGrafico(tipo);
+  });
+
+ 
+  document.querySelectorAll('.info-btn').forEach(btn => {
+    const tooltip = btn.querySelector('.info-tooltip');
+    const text = btn.getAttribute('data-info') || '';
+
+   
+    if (tooltip) tooltip.textContent = text;
+
+    
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+     
+      document.querySelectorAll('.info-tooltip').forEach(t => {
+        if (t !== tooltip) t.classList.remove('show');
+      });
+      tooltip.classList.toggle('show');
+    });
+  });
+
+
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.info-tooltip').forEach(t => t.classList.remove('show'));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.info-tooltip').forEach(t => t.classList.remove('show'));
+    }
+  });
+
+  
+  window.addEventListener('beforeunload', () => {
+    if (monitorInterval) clearInterval(monitorInterval);
+  });
+
 </script>
 </body>
 </html>
