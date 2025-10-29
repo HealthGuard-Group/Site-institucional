@@ -59,8 +59,8 @@
    <div class="conteudo-principal">
     <div class="header">
       <div class="header-esquerda">
-        <span>Máquina 01</span>
-        <span class="status alerta">Status: Alerta grave (Disco)</span>
+        <span>Máquina A-08</span>
+        <span class="status alerta">Status: Alerta grave (RAM)</span>
       </div>
       <div class="link-descricao" onclick="alert('Descrição')">Exibir descrição</div>
     </div>
@@ -68,10 +68,10 @@
 
     <div class="dashboard-cards">
       <div class="card-monitoramento">
-        <div class="title">Monitoramento em tempo real <button class="info-btn" data-info="Exibe as leituras atuais dos componentes principais (CPU, Memória, Disco e Rede).">i
+        <div class="title"> <strong> Monitoramento em tempo real </strong> <button class="info-btn" data-info="Exibe as leituras atuais dos componentes principais (CPU, Memória, Disco e Rede).">i
             <div class="info-tooltip" aria-hidden="true"></div>
           </button></div>
-        <div> <span class="status-dot ok"> </span>  de CPU: <strong>70%</strong></div>
+        <div> <span class="status-dot ok"> </span> Uso de CPU: <strong>70%</strong></div>
         <div> <span class="status-dot ok"></span>Uso de Memória: <strong>85%</strong></div>
         <div> <span class="status-dot alerta-grave"> </span> Uso de Disco: <strong>99%</strong></div>
         <div> <span class="status-dot ok"></span>Status da Rede: <strong>CONECTADA</strong></div>
@@ -80,34 +80,36 @@
 
       <div class="kpi-topo">
         <div class="card alerta-card">
-          <div class="title">Componente com mais alertas
+          <div class="title">Componente com mais alertas (Nas últimas 24h)
             <button class="info-btn" data-info="Mostra qual componente (CPU, Memória, Disco, Rede) registrou mais alertas recentemente.">i
               <div class="info-tooltip" aria-hidden="true"></div>
             </button>
           </div>
-          <div class="text" style="color:#b30000; font-weight: 900;">Memória</div>
+          <div class="text" style="color:#b30000; font-weight: 900;">RAM</div>
         </div>
 
-        <div class="card">
-          <div class="title">Tempo de Atividade
+        
+        <div class="card alerta-card">
+          <div class="title">Tempo de Atividade (Nas últimas 24h)
             <button class="info-btn" data-info="Tempo total o serviço iniciou.">i
               <div class="info-tooltip" aria-hidden="true"></div>
             </button>
           </div>
           <div class="tempo-atividade">15h30min</div>
         </div>
+        
 
-        <div class="card">
-          <div class="title">Qtd. de alertas
+       <div class="card alerta-card">
+          <div class="title">Quantidade de alertas (Nas últimas 24h)
             <button class="info-btn" data-info="Número total de alertas.">i
               <div class="info-tooltip" aria-hidden="true"></div>
             </button>
           </div>
-          <div class="number">3</div>
+          <div class="number">8</div>
         </div>
 
-        <div class="card">
-          <div class="title">Média de alertas diários
+        <div class="card alerta-card">
+          <div class="title">Média de alertas (Nos útimos 7 dias)
             <button class="info-btn" data-info="Média de alertas">i
               <div class="info-tooltip" aria-hidden="true"></div>
             </button>
@@ -117,14 +119,16 @@
       </div>
 
       <div class="card-alertas-totais">
-        <div class="title">Alertas
+        <div class="title"> <strong>Alertas  </strong>
           <button class="info-btn" data-info="Lista resumida dos alertas mais recentes, separados por gravidade.">i
             <div class="info-tooltip" aria-hidden="true"></div>
           </button>
         </div>
         <div class="alerts-list">
-          <div class="alerta-grave">Alerta Grave (CPU) <span>1</span></div>
-          <div class="alerta-critico">Alerta Crítico (CPU) <span>5</span></div>
+          <div class="alerta-grave">
+              <span class="status-dot alerta-grave"></span>  Alerta Grave (CPU) <span>1</span></div>
+          <div class="alerta-critico">
+              <span class="status-dot alerta-critico"></span>Alerta Crítico (CPU) <span>5</span></div>
         </div>
         <button class="btn-historico">Histórico de Alertas &rarr;</button>
       </div>
@@ -134,29 +138,41 @@
     <div class="botao-sessao">
       <div class="config-alerta">
         <div class="config-left">
+          <span>
+             <strong> Componentes à monitorar: </strong>
+           
+          </span>
           <select id="componentSelect">
             <option value="CPU" selected>CPU</option>
             <option value="Memória">Memória</option>
           </select>
 
           <div class="config-alertas-status">
-            <span class="status-dot alerta-grave"></span> Alerta Grave
-            <span class="status-dot alerta-critico"></span> Alerta Crítico
-            <span class="status-dot ok"></span> OK
+            <span class="status-dot alerta-grave"></span> Alerta Grave 
+            <span class="status-dot alerta-critico"></span> Alerta Crítico 
+            <span class="status-dot ok"></span> OK 
           </div>
 
           <div class="metrica">
-            <div class="metric-lado">Tempo de Inatividade</div>
+            <div class="metric-lado">Tempo de Inatividade  (Nas últimas 24h)</div>
             <div class="number" id="inatividade">30min</div>
           </div>
           <div class="metrica">
-            <div class="metric-lado">Quantidade de alertas</div>
+            <div class="metric-lado">Quantidade de alertas  (Nas últimas 24h) </div>
             <div class="number" id="qtdAlertas">5</div>
           </div>
           <div class="metrica">
-            <div class="metrica-lado">Tempo médio entre alertas</div>
+            <div class="metrica-lado">Tempo médio entre alertas  (Nas últimas 24h)</div>
             <div class="number" id="tempoMedio">30min</div>
           </div>
+        </div>
+        <div class="metricas-valores">
+          <span>  <strong> 88% a 100%</strong></span> 
+          <span> <strong> 72% a 87% </strong></span>
+           <span><strong> 0% a 71%</strong></span>
+          
+       
+
         </div>
         <div class="barra-vertical" aria-hidden="true"></div>
       </div>
@@ -219,7 +235,7 @@
     },
     options: {
       responsive: true,
-      maintainAspectRatio: true,
+      maintainAspectRatio: false,
       scales: {
         x: { stacked: true },
         y: { stacked: true, beginAtZero: true }
@@ -284,7 +300,7 @@
       },
       options: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         scales: {
           y: { min: 0, max: 100, ticks: { stepSize: 10 }, title: { display: true, text: 'Uso (%)' } },
           x: { ticks: { autoSkip: true, maxTicksLimit: 10 } }
