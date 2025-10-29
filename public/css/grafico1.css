@@ -1,6 +1,6 @@
 body { 
   margin: 0;
-  background: #fff;
+  background:  #f8f8f8;
   overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
@@ -12,17 +12,20 @@ body {
 .conteudo-principal {
   padding: 15px;
   width: 100%;
-  margin-left: 110px;
+  margin-left: 6%;
   box-sizing: border-box;
 }
 
 .header {
+  background-color: #fff;
   display: flex;
   align-items: center;
   padding: 8px 5px;
   gap: 15px;
   margin-bottom: 12px;
   justify-content: space-between;
+  border-radius: 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
 .header-esquerda {
@@ -34,7 +37,13 @@ body {
 }
 
 .status.alerta { color: #b30000; }
-.link-descricao { font-size: 13px; cursor: pointer; color: #dc1717; font-weight: bold; }
+.link-descricao { 
+  font-size: 13px; 
+  cursor: pointer; 
+  color: #5b5b5b; 
+  font-weight: bold; 
+  margin-right: 1%;
+}
 
 .dashboard-cards {
   display: grid;
@@ -42,7 +51,8 @@ body {
   gap: 12px;
   margin-bottom: 14px;
   width: 100%;
-  box-sizing: border-box;
+  
+
 }
 
 .kpi-topo {
@@ -50,10 +60,14 @@ body {
   grid-template-columns: repeat(2, 1fr);
   gap: 12px;
   margin-bottom: 12px;
+  
+}
+ 
+.card-monitoramento{
+   line-height: 25px;
 }
 
 .card, .card-monitoramento, .card-alertas-totais {
-  border: 1px solid #ccc;
   border-radius: 8px;
   padding: 14px 16px;
   font-size: 13px;
@@ -65,16 +79,21 @@ body {
   word-wrap: break-word;
 }
 
+
+
 .card { height: 100px; width: 230px; }
-.card-monitoramento, .card-alertas-totais { height: 200px; width: 340px; }
+.card-monitoramento, .card-alertas-totais { 
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  height: 200px; width: 340px; }
 
 .card .title {
-  font-weight: 700;
+ font-weight: bold;
   margin-bottom: 4px;
   display: flex;
   align-items: center;
   gap: 5px;
 }
+
 
 .card .number,
 .card .tempo-atividade {
@@ -87,7 +106,11 @@ body {
 
 .tempo-atividade { color: #139B36; }
 .number { color: #b30000; }
-.alerta-card { border-color: #b30000; }
+.alerta-card { border-color: #b30000;
+  height: 95px;
+  width: 255px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
 
 .icon { font-weight: bold; margin-right: 4px; }
 .green { color: #139B36; }
@@ -111,8 +134,8 @@ body {
   justify-content: space-between;
 }
 
-.alerta-grave { background-color: #ffffff; color: rgb(234, 40, 40); }
-.alerta-critico { background-color: #ffffff; color: rgb(244, 191, 69); }
+.alerta-grave { background-color: #ffffff; color: rgb(0, 0, 0); }
+.alerta-critico { background-color: #ffffff; color: rgb(0, 0, 0); }
 
 .btn-editar,
 .btn-historico {
@@ -141,15 +164,16 @@ body {
 }
 
 .config-alerta {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   display: flex;
   justify-content: space-between;
-  align-items: stretch;
-  flex: 1 0 45%;
+  width: 500px;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 14px;
   background-color: #fff;
   gap: 10px;
+  font-size: 14px;
 }
 
 .config-left {
@@ -176,6 +200,19 @@ body {
   margin-bottom: 7px;
   width: 80%;
 }
+.card-alertas-totais{
+   line-height: 30px;
+  
+
+}
+
+.metricas-valores{
+  justify-content: space-between;
+  flex-direction: column;
+  display:flex;
+  height: 80%;
+  font-size: 12px;
+}
 
 .status-dot {
   display: inline-block;
@@ -196,6 +233,7 @@ body {
   padding: 8px 11px;
   font-weight: 700;
   font-size: 14px;
+  width: 300px;
 }
 
 .barra-vertical {
@@ -211,6 +249,7 @@ body {
 }
 
 .chart-area {
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   flex: 1 1 55%;
   border: 1px solid #ccc;
   border-radius: 8px;
