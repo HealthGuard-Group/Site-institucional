@@ -15,16 +15,13 @@
 <body onload="validarSessao()">
     <section class="tela">
         <!-- Começo modais -->
-
-        <!-- Modal Novo Convite -->
-        <div class="tela-escurecida oculto" id="telaConvite">
-            <div class="popup-fundo">
+        <div class="tela-escurecida oculto">
+            <div id="popupFundo" class="popup-fundo oculto">
                 <div class="popup">
                     <div class="popup-header">
                         <h2>Novo Convite</h2>
-                        <button class="fechar" onclick="fecharPop()">
-                            <img class="fechar" src="../assets/imgs/iconeFecharFiltro.png">
-                        </button>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFecharFiltro.png"></button>
                     </div>
                     <div class="line"></div>
                     <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
@@ -46,27 +43,6 @@
                 </div>
             </div>
         </div>
-
-        <!-- Modal Código Gerado -->
-        <div class="tela-escurecida oculto" id="telaCodigo">
-            <div class="popup-fundo">
-                <div class="popup">
-                    <div class="popup-header">
-                        <h2>Convite Gerado</h2>
-                        <button class="fechar" onclick="fecharCodigo()">
-                            <img class="fechar" src="../assets/imgs/iconeFecharFiltro.png">
-                        </button>
-                    </div>
-                    <div class="line"></div>
-                    <center>
-                    <p>Código para cadastro:</p>
-                    </center>
-                    <input type="text" id="codigoGerado" readonly>
-                    <button class="btn-convidar" onclick="copiarCodigo()">Copiar Código</button>
-                </div>
-            </div>
-        </div>
-
         <!-- Fim modais -->
 
         <!-- Começo do Menu -->
@@ -196,6 +172,7 @@
                         <td id="tr-data-criacao-convite">Data de criação</td>
                         <td id="tr-data-expiracao-convite">Data de expiração</td>
                         <td id="tr-status-funcionario">Status</td>
+                        <td id="tr-acoes-funcionario">Ações</td>
                     </tr>
                     <tr class="dados-tabela">
                         <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
@@ -205,6 +182,14 @@
                         <td class="td-data-criacao-convite">10/10/2025</td>
                         <td class="td-data-expiracao-convite">15/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                            </div>
+                            <div class="icone-excluir" >
+                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            </div>
+                        </td>
                     </tr>
                     <tr class="dados-tabela">
                         <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
@@ -214,6 +199,15 @@
                         <td class="td-data-criacao-convite">10/10/2025</td>
                         <td class="td-data-expiracao-convite">15/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                            </div>
+                            <div class="icone-excluir" >
+                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            </div>
+                            
+                        </td>
                     </tr>
                     <tr class="dados-tabela">
                         <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
@@ -223,6 +217,14 @@
                         <td class="td-data-criacao-convite">10/10/2025</td>
                         <td class="td-data-expiracao-convite">15/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                            </div>
+                            <div class="icone-excluir" >
+                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            </div>
+                        </td>
                     </tr>
                     <tr class="dados-tabela">
                         <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
@@ -232,6 +234,15 @@
                         <td class="td-data-criacao-convite">10/10/2025</td>
                         <td class="td-data-expiracao-convite">15/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar" style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                                ---
+                                <!-- <img src="../assets/imgs/user-edit.png" alt="Editar" > -->
+                            </div>
+                            <div class="icone-excluir" >
+                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            </div>
+                        </td>
                     </tr>
                     <tr class="dados-tabela">
                         <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
@@ -241,6 +252,14 @@
                         <td class="td-data-criacao-convite">10/10/2025</td>
                         <td class="td-data-expiracao-convite">15/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                            </div>
+                            <div class="icone-excluir" >
+                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            </div>
+                        </td>
                     </tr>
                     <tr class="dados-tabela">
                         <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
@@ -250,6 +269,15 @@
                         <td class="td-data-criacao-convite">10/10/2025</td>
                         <td class="td-data-expiracao-convite">15/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar" style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                                ---
+                                <!-- <img src="../assets/imgs/user-edit.png" alt="Editar" > -->
+                            </div>
+                            <div class="icone-excluir" >
+                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -258,55 +286,17 @@
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
     <script>
-
-            document.getElementById("botao_novo_convite").addEventListener('click', () => {
-            const convite = document.getElementById("telaConvite")
-            if (convite) {
-                convite.classList.remove('oculto')
-                document.getElementById('html_fonte').style.overflowY = "hidden"
-            }
-        });
-
+        // POP-UP DE CÓDIGOS GERADOS
+        document.getElementById("botao_novo_convite").addEventListener('click', () => {
+            document.querySelector('.tela-escurecida').classList.remove('oculto')
+            document.getElementById("popupFundo").style.display = "flex";
+            document.getElementById('html_fonte').style.overflowY = "hidden"
+        })
         function fecharPop() {
-            const convite = document.getElementById("telaConvite")
-            if (convite) {
-                convite.classList.add('oculto')
-                document.getElementById('html_fonte').style.overflowY = "auto"
-            }
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupFundo").style.display = "none";
+            document.getElementById('html_fonte').style.overflowY = "auto"
         }
-
-        function abrirCodigo(codigo) {
-            document.getElementById("codigoGerado").value = codigo
-            const codigoModal = document.getElementById("telaCodigo")
-            if (codigoModal) {
-                codigoModal.classList.remove('oculto')
-                document.getElementById('html_fonte').style.overflowY = "hidden"
-            }
-        }
-
-        function fecharCodigo() {
-            const codigoModal = document.getElementById("telaCodigo")
-            if (codigoModal) {
-                codigoModal.classList.add('oculto')
-                document.getElementById('html_fonte').style.overflowY = "auto"
-            }
-        }
-
-        function gerarCodigo() {
-            const letras = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-            const numeros = '0123456789'
-            let codigo = ''
-
-            for (let i = 0; i < 7; i++) {
-                codigo += letras[Math.floor(Math.random() * letras.length)]
-            }
-            for (let i = 0; i < 10; i++) {
-                codigo += numeros[Math.floor(Math.random() * numeros.length)]
-            }
-
-            return codigo.split('').sort(() => Math.random() - 0.5).join('')
-        }
-
         function convidar() {
             const nome = document.getElementById("nome").value.trim()
             const email = document.getElementById("email").value.trim()
@@ -319,24 +309,9 @@
             }
 
             alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-
-            fecharPop()
-            
-            const codigo = gerarCodigo()
-
-            document.getElementById("codigoGerado").value = codigo
-            document.getElementById("telaCodigo").classList.remove('oculto')
-            document.getElementById('html_fonte').style.overflowY = "hidden"
+            popupFundo.style.display = "none"
+            telaEscurecida.classList.add("oculto");
         }
-
-        function copiarCodigo() {
-            const codigo = document.getElementById("codigoGerado")
-            codigo.select()
-            document.execCommand("copy")
-            alert("Código copiado: " + codigo.value)
-        }
-
-        
     </script>
 </body>
 

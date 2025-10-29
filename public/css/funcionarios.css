@@ -64,7 +64,7 @@
 #campo-cpf {
     /* background-color: rgb(255, 0, 119); */
     height: 100%;
-    width: 23%;
+    width: 25%;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -102,7 +102,7 @@
 #campo-data-convite-gerado {
     /* background-color: rgb(255, 0, 119); */
     height: 100%;
-    width: 37%;
+    width: 43%;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -127,7 +127,7 @@
     border-radius: 1vh;
     font-size: 0.9vw;
     font-weight: 500;
-    margin-left: -1%;
+    margin-left: -4%;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
@@ -284,10 +284,10 @@ td {
     width: 25%;
 }
 #tr-seletor {
-    width: 10%;
+    width: 9%;
 }
 .td-seletor {
-    width: 10%;
+    width: 9%;
     text-align: center;
 }
 .checkbox-padrao {
@@ -302,10 +302,10 @@ td {
     width: 35%;
 }
 #tr-nome-completo {
-    width: 50%;
+    width: 42%;
 }
 .td-nome-completo {
-    width: 50%;
+    width: 42%;
 }
 #tr-cpf-funcionario {
     width: 25%;
@@ -331,6 +331,48 @@ td {
 .td-status-funcionario {
     width: 20%;
     font-weight: 750;
+}
+#tr-acoes-funcionario {
+    width: 20%;
+}
+.td-acoes-funcionario {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+.icone-editar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2vw; 
+    height: 2vw; 
+    background-color: rgb(116, 116, 116); 
+    border-radius: 5px;
+}
+.icone-editar img {
+    width: 70%;
+}
+.icone-editar:hover {
+    cursor: pointer;
+    background-color: #656464; 
+}
+.icone-excluir {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2vw; 
+    height: 2vw; 
+    background-color: rgb(203, 27, 27); 
+    border-radius: 5px;
+}
+.icone-excluir img {
+    width: 70%;
+}
+.icone-excluir:hover {
+    cursor: pointer;
+    background-color:  rgb(182, 19, 19); 
 }
 .dados-tabela {
     font-weight: 400;
