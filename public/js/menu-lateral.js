@@ -40,6 +40,7 @@ document.getElementById("gestao_redirecionamento").addEventListener('click', () 
 })
 document.getElementById("alertas_redirecionamento").addEventListener('click', () => {
     console.log("Redirecionando para histórico de alertas")
+    window.location.href = "alertasGerais.html"
 })
 document.getElementById("suporte_redirecionamento").addEventListener('click', () => {
     console.log("Redirecionando para suporte")

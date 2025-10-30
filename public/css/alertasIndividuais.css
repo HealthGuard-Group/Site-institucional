@@ -1,0 +1,233 @@
+.conteudo-principal {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header {
+  background-color: #fff;
+  width: 90%;
+  display: flex;
+  align-items: center;
+  padding: 8px 5px;
+  gap: 15px;
+  margin-bottom: 12px;
+  justify-content: space-between;
+  border-radius: 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.header-esquerda {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  font-size: 16px;
+  gap: 10px;
+}
+.header-esquerda a{
+    max-width: 20px !important;
+    display: flex;
+    align-items: center;
+    margin-left: 1%;
+}
+.icon-seta {
+    width: 100%;
+}
+
+.icon-seta:hover {
+    cursor: pointer;
+}
+
+.status.alerta { color: #b30000; }
+.link-descricao { 
+  font-size: 13px; 
+  cursor: pointer; 
+  color: #5b5b5b; 
+  font-weight: bold; 
+  margin-right: 1%;
+}
+
+.texto-organizacao {
+    font-size: 2vw;
+    font-weight: bold;
+    height: 8vh;
+}
+
+.texto-topico {
+    font-size: 1.1rem !important;
+    font-weight: bold;
+    height: 6vh;
+    margin-top: 2%;
+}
+
+.container {
+    margin-left: 6%;
+    width: 100%;
+    height: 50vh;
+    background-color: transparent;
+    position: fixed;
+    z-index: 998;
+    background-color: #f8f8f8;
+
+    padding-left: 2vw;
+    padding-top: 2vh;
+}
+
+.texto-organizacao {
+    font-size: 2vw;
+    font-weight: bold;
+    height: 8vh;
+}
+
+.texto-topico {
+    font-size: 1.5vw;
+    font-weight: bold;
+    height: 6vh;
+}
+
+.area-filtros {
+    display: flex;
+    /* background-color: white;      */
+    width: 90%;
+    height: 7vh;
+
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 1%;
+    gap: 1vw;
+}
+
+.alinhamento-centralizar-vertical {
+    display: flex;
+    align-items: center;
+}
+
+.texto-funcionalidade {
+    font-size: 1.3vw;
+}
+
+.select-filtro {
+    border-radius: 1vh;
+    width: 20vw;
+    height: 4vh;
+    font-size: 1vw;
+    font-weight: 400;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+#container-tabela {
+    background-color: #656464;
+    height: 66vh;
+    width: 90%;
+    overflow: auto;
+    background-color: rgb(255, 255, 255);
+    color: rgb(69, 69, 69);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+#titulo-tabela {
+    height: 6vh;
+    width: 100%;
+    background-color: #1E2A38;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+tr {
+    border-bottom: 2px solid #edecec;
+}
+tr:hover {
+    background-color: #f0f0f0;;
+}
+td {
+    text-align: center;
+    width: 25%;
+}
+#tr-tipo-alerta {
+    width: 25%;
+}
+.td-tipo-alerta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+}
+
+.status-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin: 0 10px;
+  /* vertical-align: middle; */
+}
+
+#tr-nome-maquina {
+    width: 30%;
+}
+.td-nome-maquina {
+    width: 30%;
+}
+
+.status-dot.alerta-grave { background-color: #b30000;}
+.status-dot.alerta-critico { background-color: #daa520; }
+.status-dot.ok { background-color: #139B36; }
+
+#tr-data-inicio-alerta {
+    width: 25%;
+}
+.td-data-inicio-alerta {
+    width: 25%;
+}
+#tr-data-expiracao-alerta {
+    width: 25%;
+}
+.td-data-expiracao-alerta {
+    width: 25%;
+}
+#tr-status-alerta {
+    width: 20%;
+}
+.td-status-alerta {
+    width: 20%;
+    font-weight: 750;
+}
+#tr-acoes-alerta {
+    width: 15%;
+}
+.td-acoes-alerta {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+}
+.icone-visualização {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 2.3vw; 
+    height: 2.3vw; 
+    background-color: rgba(116, 116, 116, 0); 
+}
+.icone-visualização img {
+    width: 70%;
+}
+.icone-visualização:hover {
+    cursor: pointer;
+}
+.dados-tabela {
+    font-weight: 400;
+    height: 10vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+}
