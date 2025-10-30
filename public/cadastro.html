@@ -93,11 +93,11 @@ let listaEmpresasCadastradas = [];
     }
 
 
-    if (isNaN(cpfVar) || cpfVar.length !== 11) {
+    else if (isNaN(cpfVar) || cpfVar.length !== 11) {
       mensagem.innerHTML += "CPF inválido<br>"
     }
 
-    if (
+    else if (
       !emailVar.includes("@") ||
       !emailVar.includes(".") ||
       emailVar.startsWith("@") ||
@@ -108,7 +108,7 @@ let listaEmpresasCadastradas = [];
       mensagem.innerHTML += "E-mail inválido<br>"
     }
 
-    if(nome_input.value == "") {
+    else if(nome_input.value == "") {
       mensagem.innerHTML += "Preencha o nome"
     }
     else{
