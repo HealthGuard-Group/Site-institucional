@@ -19,6 +19,7 @@
 .header-esquerda {
   display: flex;
   align-items: center;
+  width: 60%;
   font-weight: bold;
   font-size: 16px;
   gap: 10px;
