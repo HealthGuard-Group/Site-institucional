@@ -99,15 +99,15 @@ tr:hover {
 }
 td {
     text-align: center;
-    width: 25%;
+    width: 35%;
 }
 #tr-tipo-alerta {
-    width: 25%;
+    width: 35%;
 }
 .td-tipo-alerta {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     width: 25%;
 }
 

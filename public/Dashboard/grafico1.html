@@ -40,17 +40,17 @@
         <div class="texto-icone oculto">Histórico de Alertas</div>
       </div>
       <hr class="separador">
-      <div class="icone-box" id="suporte_redirecionamento">
+      <!-- <div class="icone-box" id="suporte_redirecionamento">
         <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
         <div class="texto-icone oculto">Suporte</div>
-      </div>
+      </div> -->
     </div>
     <div class="pai-icones-inferiores">
       <hr class="separador-forte">
-      <div class="icone-box-inferior">
+      <!-- <div class="icone-box-inferior">
         <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
         <div class="texto-icone oculto">Perfil</div>
-      </div>
+      </div> -->
       <hr class="separador">
       <div class="icone-box-inferior" id="sair_conta_redirecionamento">
         <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
@@ -134,13 +134,13 @@
           </div>
           <div class="alerts-list">
             <div class="alerta-grave">
-              Alerta Grave (CPU) <span class="bolinha-grave">1</span> </div>
+              Alerta Grave  <span class="bolinha-grave">1</span> </div>
             <div class="alerta-critico">
-              Alerta Crítico (CPU)
+              Em atenção 
               <span class="bolinha-critico">5</span>
             </div>
           </div>
-          <button class="btn-historico">Histórico de Alertas &rarr;</button>
+          <button class="btn-historico" id="link-historico-alertas" onclick="window.location.href='alertasIndividuais.html'">Histórico de Alertas &rarr;</button>
         </div>
       </div>
 
@@ -159,7 +159,7 @@
 
             <div class="config-alertas-status">
               <span class="status-dot alerta-grave"></span> Alerta Grave
-              <span class="status-dot alerta-critico"></span> Alerta Crítico
+              <span class="status-dot alerta-critico"></span> Em atenção
               <span class="status-dot ok"></span> OK
             </div>
 
@@ -190,7 +190,7 @@
         <div class="chart-area">
           <div class="chart-header">
             <div class="chart-controls">
-              <div>Alertas emitidos nos últimos 7 dias</div>
+              <div id="chartTitle">Alertas emitidos nos últimos 7   dias</div>
 
               <select id="tipoGraficoTopo" aria-label="Escolher tipo de gráfico">
                 <option value="alertas" selected>Gráfico de Alertas</option>
@@ -378,7 +378,7 @@
           monitorInterval = null;
         }
         monitorVisible = false;
-        document.getElementById('chartTitle').textContent = 'Alertas emitidos nos últimos 6 dias';
+        document.getElementById('chartTitle').textContent = 'Alertas emitidos nos últimos 7 dias';
       } else if (tipo === 'monitoramento') {
         alertCanvas.classList.add('canvas-hidden');
         monitorCanvas.classList.remove('canvas-hidden');
