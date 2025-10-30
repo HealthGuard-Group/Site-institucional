@@ -765,6 +765,48 @@ td {
 .texto-grafico-modal{
     font-size: 0.8vw;
 }
+.caixa-cinza{
+    height: 15%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+.caixa-codigo{
+    height: 100%;
+    width: 40%;
+    border-radius: 2vh;
+    background-color: #E7E7E7;
+
+    display: flex;
+}
+.texto-codigo{
+    width: 80%;
+    height: 100%;
+    font-size: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box-imagem-copy{
+    width: 20%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon-copiar{
+    width: 30%;
+    cursor: pointer;
+}
+.modal-reduzido{
+    width: 45vw;
+    height: 35vh;
+}
 /* Deixar por ultímo */
 .oculto {
     display: none;

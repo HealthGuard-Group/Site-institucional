@@ -166,7 +166,7 @@
                                 </label>
                             </div>
                             <div class="box-selecao-modal">
-                                <div class="texto-modal">Uso de RAM(%)</div>
+                                <div class="texto-modal">Uso de Rede</div>
                                 <label for="uso_rede" class="switch">
                                     <input type="checkbox" id="uso_rede" class="input-checkbox">
                                     <span class="slider"></span>
@@ -181,6 +181,28 @@
                     </div>
                 </div>
             </div>
+            <div class="popup-fundo oculto" id="modal_codigofinal">
+                <div class="popup modal-reduzido">
+                    <div class="popup-header">
+                        <div class="titulo_modal">Adicionar nova máquina</div>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="texto-marcacao-modal">Sua máquina foi configurada com sucesso!</div>
+                    <div class="texto-modal">Para começar a realizar os monitoramento dos componentes, inserir o código
+                        abaixo no aplicativo de captura:</div>
+                    <div class="caixa-cinza">
+                        <div class="caixa-codigo">
+                            <div class="texto-codigo" id="div_codigo_gerado">A1B2C3D4E5F6G7H</div>
+                            <div class="box-imagem-copy">
+                                <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copiar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal métricas alertas -->
             <div class="popup-fundo oculto" id="modal_adicionarmaquina_config">
                 <div class="popup-header">
                     <div class="popup">
@@ -470,15 +492,12 @@
         servicos: [],
         alertas: [[], [], [], []]
     }
-    document.querySelector('.maquina-box').addEventListener('click', () => {
-        window.location.href = "dashboard.html"
-    })
     // Redirecionador Dash
     document.addEventListener('click', function (elemento) {
         if (elemento.target.closest('.maquina-box')) {
             var maquina = event.target.closest('.maquina-box');
             sessionStorage.ID_DAC = maquina.id;
-            window.location.href = "dashboard.html"
+            window.location.href = "grafico1.html"
         }
     });
     // Buscar nome da central
@@ -859,6 +878,7 @@
     function salvandoAlerta() {
         if (valor_minimo_ideal.value == "" || valor_maximo_ideal.value == "") {
             texto_erro_configuracao_alerta.classList.remove("oculto")
+            return
         } else {
             texto_erro_configuracao_alerta.classList.add("oculto")
         }
@@ -867,6 +887,10 @@
             adicionando_nova_maquina.alertas[1] = "Hello World"
         } else if (adicionando_nova_maquina.servicos[2] == true && adicionando_nova_maquina.alertas[2] == "") {
             parametro_a_configurar.innerHTML = `Definição das métricas de uso de disco(%):`
+            adicionando_nova_maquina.alertas[2] = "Hello World"
+        } else {
+            document.getElementById("modal_codigofinal").classList.remove("oculto")
+            document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
         }
     }
     function validarnumero(input) {
@@ -883,6 +907,7 @@
         document.getElementById('html_fonte').style.overflowY = "hidden"
     })
     function fecharPop() {
+        document.getElementById("modal_codigofinal").classList.add("oculto")
         document.querySelector('.tela-escurecida').classList.add('oculto')
         document.getElementById("popupFundo").classList.add('oculto')
         document.getElementById("modal_adicionarmaquina").classList.add('oculto')
