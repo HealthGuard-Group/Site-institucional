@@ -108,7 +108,8 @@ td {
     display: flex;
     align-items: center;
     justify-content: start;
-    width: 25%;
+    width: 35%;
+    margin-left: 1%;
 }
 
 .status-dot {
