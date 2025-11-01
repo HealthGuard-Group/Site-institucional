@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-    <link rel="stylesheet" type="text/css" href="css/global.css">
-    <link rel="stylesheet" type="text/css" href="css/cadastro.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" type="text/css" href="css/global.css">
+  <link rel="stylesheet" type="text/css" href="css/cadastro.css">
 </head>
+
 <body>
-    <div class="left">
+  <div class="left">
     <img src="./assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard Logo">
     <h1>Crie sua conta!</h1>
     <p>Cada minuto é precioso, vamos mudar esse jogo! <br> Comece a monitorar suas máquinas.</p>
@@ -18,48 +20,114 @@
       <h2>Crie sua conta!</h2>
       <p>Você já possui conta? <a href="login.html">Clique aqui</a></p>
 
-        <div class="subcontainer">
+      <div class="subcontainer">
         <div>
-            <label>Cód. da Central</label>
-            <input id="codigo_input" type="text" placeholder="Digite o código">
+          <label>Cód. da Central</label>
+          <input id="codigo_input" type="text" placeholder="Digite o código">
         </div>
         <div>
-            <label>Nome Completo</label>
-            <input id="nome_input" type="text" placeholder="Ex: Marcelo da Silva">
+          <label>Nome Completo</label>
+          <input id="nome_input" type="text" placeholder="Ex: Marcelo da Silva" oninput="validarNome()">
         </div>
         <div>
-            <label>E-mail</label>
-            <input id="email_input" type="text" placeholder="healthguard@sptech.school">
+          <label>E-mail</label>
+          <input id="email_input" type="text" placeholder="healthguard@sptech.school" oninput="validarEmail()">
         </div>
         <div>
-            <label>Senha</label>
-            <input id="senha_input" type="password" placeholder="8+ caracteres">
+          <label>Senha</label>
+          <input id="senha_input" type="password" placeholder="8+ caracteres" oninput="validarSenha()">
         </div>
 
         <div>
-            <label>CPF</label>
-            <input id="cpf_input" type="text" placeholder="12345678912">
+          <label>CPF</label>
+          <input id="cpf_input" type="text" placeholder="123.456.789-12" onchange="validarCPF()" maxlength="14">
         </div>
         <div>
-            <label>Confirme a senha</label>
-            <input id="confirmacao_senha_input" type="password" placeholder="Digite novamente">
+          <label>Confirme a senha</label>
+          <input id="confirmacao_senha_input" type="password" placeholder="Digite novamente"
+            oninput="validarConfirmarSenha()">
         </div>
-        </div>
+      </div>
 
 
 
       <button onclick="cadastrar()">Criar!</button>
 
-    <br>
-    <div id="mensagem"></div>
+      <br>
+      <div id="mensagem"></div>
 
     </div>
   </div>
 </body>
+
 </html>
 <script>
+  var cpf = document.getElementById("cpf_input")
+  document.getElementById("cpf_input").addEventListener("input", () => mascaraCPF(cpf))
+  function validarNome() {
+    var nome = document.getElementById("nome_input")
 
-let listaEmpresasCadastradas = [];
+    if (nome.value.length > 0) {
+      nome.style.border = '0.2vh solid #0AA40A'
+      nome.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+    } else {
+      nome.style.border = '0.2vh solid #D30808'
+      nome.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+    }
+  }
+  function validarEmail() {
+    var email = document.getElementById("email_input")
+    if (email.value.includes("@") && !email.value.startsWith("@") && !email.value.endsWith("@")) {
+      email.style.border = '0.2vh solid #0AA40A'
+      email.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+    } else {
+      email.style.border = '0.2vh solid #D30808'
+      email.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+    }
+  }
+  function validarSenha() {
+    var senha = document.getElementById("senha_input")
+    if (senha.value.length > 8) {
+      senha.style.border = '0.2vh solid #0AA40A'
+      senha.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+    } else {
+      senha.style.border = '0.2vh solid #D30808'
+      senha.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+    }
+  }
+  function mascaraCPF(cpf) {
+    let value = cpf.value.replace(/\D/g, '');
+
+    if (value.length > 11) {
+      value = value.substring(0, 11);
+    }
+
+    value = value.replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+
+    cpf.value = value;
+  }
+  function validarCPF() {
+    if (cpf.value.length == 14) {
+      cpf.style.border = '0.2vh solid #0AA40A'
+      cpf.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+    } else {
+      cpf.style.border = '0.2vh solid #D30808'
+      cpf.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+    }
+  }
+  function validarConfirmarSenha() {
+    var senha = document.getElementById("senha_input")
+    var senha_confirmar = document.getElementById("confirmacao_senha_input")
+    if (senha.value == senha_confirmar.value) {
+      senha_confirmar.style.border = '0.2vh solid #0AA40A'
+      senha_confirmar.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+    } else {
+      senha_confirmar.style.border = '0.2vh solid #D30808'
+      senha_confirmar.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+    }
+  }
 
   function cadastrar() {
     var nomeVar = nome_input.value
@@ -67,11 +135,8 @@ let listaEmpresasCadastradas = [];
     var senhaVar = senha_input.value
     var confirmacaoSenhaVar = confirmacao_senha_input.value
     var codigoVar = codigo_input.value
-    var cpfVar = cpf_input.value
-  
-
-   mensagem.innerHTML = ``
-
+    var cpf_formatado = cpf.value.replace(/[./-]/g, "")
+    var cpfVar = cpf_formatado
 
     if (
       emailVar === "" ||
@@ -81,117 +146,71 @@ let listaEmpresasCadastradas = [];
       cpfVar === "" ||
       nomeVar === ""
     ) {
-      mensagem.innerHTML += "Por favor, preencha todos os campos<br>"
+      mensagem.innerHTML += `Por favor, preencha todos os campos<br>`
     }
 
-    else{
+    else {
 
-    if (senhaVar.length < 9) {
-      mensagem.innerHTML += "A senha deve ter no mínimo 9 caracteres<br>"
-    } else if (senhaVar !== confirmacaoSenhaVar) {
-      mensagem.innerHTML += "Erro ao confirmar a senha<br>"
-    }
+      if (senhaVar.length < 9) {
+        mensagem.innerHTML += `A senha deve ter no mínimo 9 caracteres<br>`
+      } else if (senhaVar !== confirmacaoSenhaVar) {
+        mensagem.innerHTML += `Erro ao confirmar a senha<br>`
+      }
 
 
-    else if (isNaN(cpfVar) || cpfVar.length !== 11) {
-      mensagem.innerHTML += "CPF inválido<br>"
-    }
+      else if (isNaN(cpfVar) || cpfVar.length !== 11) {
+        mensagem.innerHTML += `CPF inválido<br>`
+      }
 
-    else if (
-      !emailVar.includes("@") ||
-      !emailVar.includes(".") ||
-      emailVar.startsWith("@") ||
-      emailVar.endsWith("@") ||
-      emailVar.endsWith(".") ||
-      emailVar.indexOf("@") > emailVar.lastIndexOf(".")
-    ) {
-      mensagem.innerHTML += "E-mail inválido<br>"
-    }
+      else if (
+        !emailVar.includes("@") ||
+        !emailVar.includes(".") ||
+        emailVar.startsWith("@") ||
+        emailVar.endsWith("@") ||
+        emailVar.endsWith(".") ||
+        emailVar.indexOf("@") > emailVar.lastIndexOf(".")
+      ) {
+        mensagem.innerHTML += `E-mail inválido<br>`
+      }
 
-    else if(nome_input.value == "") {
-      mensagem.innerHTML += "Preencha o nome"
-    }
-    else{
-  
+      else if (nome_input.value == "") {
+        mensagem.innerHTML += `Preencha o nome`
+      }
+      else {
+        // Enviando o valor da nova input
+        fetch("/usuarios/cadastrar", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // crie um atributo que recebe o valor recuperado aqui
+            // Agora vá para o arquivo routes/usuario.js
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar,
+            cpfServer: cpfVar,
+            senhaServer: senhaVar,
+            codigoServer: codigoVar,
 
-    // Verificando se o código de ativação é de alguma empresa cadastrada
-    for (let i = 0; i < listaEmpresasCadastradas.length; i++) {
-      if (listaEmpresasCadastradas[i].codigo_ativacao == codigoVar) {
-        idEmpresaVincular = listaEmpresasCadastradas[i].id
-        console.log("Código de ativação válido.");
-        break;
-      } else {
-      
+          }),
+        })
+          .then(function (resposta) {
+            console.log("resposta: ", resposta);
+
+            if (resposta.ok) {
+              mensagem.innerHTML = `Cadastro realizado com sucesso! Redirecionando para tela de Login...`;
+              window.location = "login.html";
+            } else {
+              mensagem.innerHTML = `Houve um erro ao tentar realizar o cadastro!! <br><br> Verifique se todos os campos estão corretos`;
+            }
+          })
+          .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+          });
+
+        return false;
       }
     }
-
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nomeVar,
-        emailServer: emailVar,
-        senhaServer: senhaVar,
-        cpfServer: cpfVar,
-        senhaServer: senhaVar,
-        codigoServer: codigoVar,
-      
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-            mensagem.innerHTML =
-            `Cadastro realizado com sucesso! Redirecionando para tela de Login...`;
-            
-            setTimeout(() => {
-              window.location = "login.html";
-            }, 5000);
-
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          mensagem.innerHTML = `Houve um erro ao tentar realizar o cadastro!! <br><br> Verifique se todos os campos estão corretos`;
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-
-    return false;
   }
-  }
-}
-
-
-  // Listando empresas cadastradas 
-  function listar() {
-    fetch("/empresas/listar", {
-      method: "GET",
-    })
-      .then(function (resposta) {
-        resposta.json().then((empresas) => {
-          empresas.forEach((empresa) => {
-            listaEmpresasCadastradas.push(empresa);
-
-            console.log("listaEmpresasCadastradas")
-            console.log(listaEmpresasCadastradas[0].codigo_ativacao)
-          });
-        });
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-      });
-  }
-
-  function sumirMensagem() {
-    cardErro.style.display = "none";
-  }
-
 </script>

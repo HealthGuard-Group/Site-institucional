@@ -135,9 +135,9 @@ body {
 }
 
 .subcontainer input:focus {
-  border-color: #b30000;
+  border-color: #000;
   outline: none;
-  box-shadow: 0 0 5px rgba(179,0,0,0.3);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
 
