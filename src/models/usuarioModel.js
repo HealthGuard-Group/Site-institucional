@@ -14,7 +14,7 @@ function autenticar(email, senha) {
     ON cv.fkPermissoes = p.idPermissoes
     LEFT JOIN LogAcesso la 
     ON la.fkUsuario = u.idUsuario
-    WHERE u.email = '${email}' AND u.senha = '${senha}'
+    WHERE u.email = '${email}' AND u.senha = sha2('${senha}',256)
     LIMIT 1
     ;
     `;
@@ -48,7 +48,7 @@ function cadastrar(nome, email, senha, cpf, codigo) {
 
                 var inserirUsuario = `
                     INSERT INTO Usuario (nome, email, senha, cpf, fkPermissoes)
-                    VALUES ('${nome}', '${email}', '${senha}', '${cpf}', ${fkPermissoes});
+                    VALUES ('${nome}', '${email}', sha2('${senha}',256), '${cpf}', ${fkPermissoes});
                 `;
 
                 console.log("Executando a instrução SQL: \n" + inserirUsuario);
