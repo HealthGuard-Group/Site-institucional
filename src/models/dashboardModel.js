@@ -1,7 +1,7 @@
 var database = require("../database/config");
 
 function buscarLogAcesso(fkUnidade, fkUsuario) {
-  var instrucaoSql = `SELECT idLogAcesso FROM logAcesso WHERE fkUnidadeDeAtendimento = ${fkUnidade} AND fkUsuario = ${fkUsuario} ORDER BY idLogAcesso DESC LIMIT 1;`;
+  var instrucaoSql = `SELECT idLogAcesso FROM LogAcesso WHERE fkUnidadeDeAtendimento = ${fkUnidade} AND fkUsuario = ${fkUsuario} ORDER BY idLogAcesso DESC LIMIT 1;`;
 
   return database.executar(instrucaoSql);
 }

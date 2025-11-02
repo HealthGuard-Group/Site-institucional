@@ -41,6 +41,7 @@ function validarSessao() {
     sessionStorage.ID_PERMISSAO = null
     sessionStorage.ID_LOGACESSO = null
     sessionStorage.ID_DAC = null
+    nome_usuario.innerHTML = nomeUsuario
     validacaoPermissao()
     fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         method: "GET",

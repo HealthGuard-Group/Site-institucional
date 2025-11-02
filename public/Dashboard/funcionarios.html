@@ -26,10 +26,10 @@
                     <div class="line"></div>
                     <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
                     <input type="text" id="nome" placeholder="Ex: Arthur Felipe">
-
+                    <div class="texto-erro oculto" id="texto_erro_nome">Preencha o campo</div>
                     <label for="email">Email da pessoa<span style="color: red">*</span>:</label>
                     <input type="email" id="email" placeholder="Ex: example@example.com">
-
+                    <div class="texto-erro oculto" id="texto_erro_email">Preencha o campo</div>
                     <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
                     <select class="select-cargo" id="permissao">
                         <option value="tecnico">Técnico de TI</option>
@@ -38,7 +38,7 @@
 
                     <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
                     <input type="date" id="data">
-
+                    <div class="texto-erro oculto" id="texto_erro_data">Preencha o campo</div>
                     <button class="btn-convidar" onclick="convidar()">Convidar</button>
                 </div>
             </div>
@@ -75,10 +75,10 @@
             </div>
             <div class="pai-icones-inferiores">
                 <hr class="separador-forte">
-                <!-- <div class="icone-box-inferior">
+                <div class="icone-box-inferior">
                     <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
-                    <div class="texto-icone oculto">Perfil</div>
-                </div> -->
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+                </div>
                 <hr class="separador">
                 <div class="icone-box-inferior" id="sair_conta_redirecionamento">
                     <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
@@ -184,10 +184,10 @@
                         <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
                         <td class="td-acoes-funcionario">
                             <div class="icone-editar">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
                             </div>
-                            <div class="icone-excluir" >
-                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
                             </div>
                         </td>
                     </tr>
@@ -201,12 +201,12 @@
                         <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
                         <td class="td-acoes-funcionario">
                             <div class="icone-editar">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
                             </div>
-                            <div class="icone-excluir" >
-                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
                             </div>
-                            
+
                         </td>
                     </tr>
                     <tr class="dados-tabela">
@@ -219,10 +219,10 @@
                         <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
                         <td class="td-acoes-funcionario">
                             <div class="icone-editar">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
                             </div>
-                            <div class="icone-excluir" >
-                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
                             </div>
                         </td>
                     </tr>
@@ -235,12 +235,13 @@
                         <td class="td-data-expiracao-convite">13/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
                         <td class="td-acoes-funcionario">
-                            <div class="icone-editar" style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                            <div class="icone-editar"
+                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
                                 ---
                                 <!-- <img src="../assets/imgs/user-edit.png" alt="Editar" > -->
                             </div>
-                            <div class="icone-excluir" >
-                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
                             </div>
                         </td>
                     </tr>
@@ -254,10 +255,10 @@
                         <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
                         <td class="td-acoes-funcionario">
                             <div class="icone-editar">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar" >
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
                             </div>
-                            <div class="icone-excluir" >
-                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
                             </div>
                         </td>
                     </tr>
@@ -270,12 +271,13 @@
                         <td class="td-data-expiracao-convite">15/10/2025</td>
                         <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
                         <td class="td-acoes-funcionario">
-                            <div class="icone-editar" style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                            <div class="icone-editar"
+                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
                                 ---
                                 <!-- <img src="../assets/imgs/user-edit.png" alt="Editar" > -->
                             </div>
-                            <div class="icone-excluir" >
-                                <img src="../assets/imgs/contact.png" alt="Excluir" >
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
                             </div>
                         </td>
                     </tr>
@@ -298,19 +300,66 @@
             document.getElementById('html_fonte').style.overflowY = "auto"
         }
         function convidar() {
-            const nome = document.getElementById("nome").value.trim()
-            const email = document.getElementById("email").value.trim()
-            const permissao = document.getElementById("permissao").value
-            const data = document.getElementById("data").value
-
-            if (!nome || !email || !data) {
-                alert("Preencha todos os campos!")
-                return;
+            const nome = document.getElementById("nome")
+            const email = document.getElementById("email")
+            const permissao = document.getElementById("permissao")
+            const data = document.getElementById("data")
+            let hoje = new Date()
+            let dia_escolhido = new Date(data.value)
+            let ax_erro = false
+            if (nome.value.length == 0) {
+                texto_erro_nome.classList.remove("oculto")
+                texto_erro_nome.innerHTML = `Preencha o campo`
+                nome.style.border = '0.2vh solid #D30808'
+                nome.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else{
+                texto_erro_nome.classList.add("oculto")
+                nome.style.border = '1.5px solid #ccc'
+                nome.style.boxShadow = 'none'
+            } if (email.value.length == 0) {
+                texto_erro_email.classList.remove("oculto")
+                texto_erro_email.innerHTML = `Preencha o campo`
+                email.style.border = '0.2vh solid #D30808'
+                email.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else if (!email.value.includes("@") || !email.value.includes(".") || email.value.startsWith("@") || email.value.endsWith("@") || email.value.startsWith(".") || email.value.endsWith(".")) {
+                texto_erro_email.classList.remove("oculto")
+                texto_erro_email.innerHTML = `Email inválido`
+                email.style.border = '0.2vh solid #D30808'
+                email.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else {
+                texto_erro_email.classList.add("oculto")
+                email.style.border = '1.5px solid #ccc'
+                email.style.boxShadow = 'none'
+            }if (data.value.length == 0) {
+                texto_erro_data.classList.remove("oculto")
+                texto_erro_data.innerHTML = `Preencha o campo`
+                data.style.border = '0.2vh solid #D30808'
+                data.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else if (dia_escolhido <= hoje) {
+                texto_erro_data.classList.remove("oculto")
+                texto_erro_data.innerHTML = `Dia inválido`
+                data.style.border = '0.2vh solid #D30808'
+                data.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else {
+                texto_erro_data.classList.add("oculto")
+                data.style.border = '1.5px solid #ccc'
+                data.style.boxShadow = 'none'
             }
 
-            alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-            popupFundo.style.display = "none"
-            telaEscurecida.classList.add("oculto");
+            if (ax_erro) {
+                return
+            }
+
+            alert("Passou")
+
+            // alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
+            // popupFundo.style.display = "none"
+            // telaEscurecida.classList.add("oculto");
         }
     </script>
 </body>
