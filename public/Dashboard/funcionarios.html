@@ -313,7 +313,7 @@
                 nome.style.border = '0.2vh solid #D30808'
                 nome.style.boxShadow = '#d308082d 0px 2px 8px 0px'
                 ax_erro = true
-            } else{
+            } else {
                 texto_erro_nome.classList.add("oculto")
                 nome.style.border = '1.5px solid #ccc'
                 nome.style.boxShadow = 'none'
@@ -333,7 +333,7 @@
                 texto_erro_email.classList.add("oculto")
                 email.style.border = '1.5px solid #ccc'
                 email.style.boxShadow = 'none'
-            }if (data.value.length == 0) {
+            } if (data.value.length == 0) {
                 texto_erro_data.classList.remove("oculto")
                 texto_erro_data.innerHTML = `Preencha o campo`
                 data.style.border = '0.2vh solid #D30808'
@@ -354,12 +354,65 @@
             if (ax_erro) {
                 return
             }
+            if (permissao.value == "tecnico") {
+                var fkpermissao = 2
+            } else{
+                var fkpermissao = 1
+            }
+            let codigo_gerado = gerarTextoAleatorio(10)
+            var info_usuario = puxarVariaveis()
+            dia_escolhido = dia_escolhido.toISOString()
+            console.log(info_usuario.idUnidadeAtendimento)
+            console.log(codigo_gerado)
+            console.log(data.value)
+            console.log(fkpermissao)
+            fetch("/convites/criarconvite", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    fkUnidadeAtendimento: info_usuario.idUnidadeAtendimento,
+                    codigo: codigo_gerado,
+                    data: data.value,
+                    fkpermissao: fkpermissao
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
 
-            alert("Passou")
+                    if (resposta.ok) {
+                    } else {
+                        throw "Não foi possível mandar os dados para o banco";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    alert("Erro no catch");
+                });
 
-            // alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-            // popupFundo.style.display = "none"
-            // telaEscurecida.classList.add("oculto");
+                // alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
+                // popupFundo.style.display = "none"
+                // telaEscurecida.classList.add("oculto");
+        }
+        function gerarTextoAleatorio(tamanhoTexto) {
+            if (!Number.isInteger(tamanhoTexto)) {
+                console.log("Valor inválido")
+                return
+            }
+            if (tamanhoTexto < 0) {
+                console.log("Valor inválido")
+                return
+            }
+            var vetor_texto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+            let contador = 0;
+            let texto = ""
+            while (contador < tamanhoTexto) {
+                let posicao_vetor = Math.round(Math.random() * (vetor_texto.length - 1), 0)
+                texto += vetor_texto[posicao_vetor]
+                contador++
+            }
+            return texto
         }
     </script>
 </body>

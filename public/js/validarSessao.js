@@ -73,3 +73,14 @@ function telaMonitoramento() {
         atualizarMaquinas()
     })
 }
+function puxarVariaveis() {
+    let variaveis = {
+        idUsuario: fkUsuario,
+        idLogAcesso: fkLogAcesso,
+        idUnidadeAtendimento: fkUnidade,
+        nomeUsuario: nomeUsuario,
+        permissao: permissao,
+        idDac: fkDac
+    }
+    return variaveis
+}
