@@ -485,7 +485,27 @@ td {
     font-size: 0.7vw;
     color: red;
 }
-
+.box-codigo{
+    background-color: #ccc;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    border-radius: 1vw;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 5vh;
+}
+.texto-codigo{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon-copy{
+    cursor: pointer;
+    width: 10%;
+    height: 80%;
+}
 /* Deixar por último */
 .oculto{
     display: none;

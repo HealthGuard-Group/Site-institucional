@@ -42,6 +42,25 @@
                     <button class="btn-convidar" onclick="convidar()">Convidar</button>
                 </div>
             </div>
+            <div id="popupConviteGerado" class="popup-fundo oculto">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2>Convite enviado</h2>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFecharFiltro.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="texto-modal">O convite gerado com sucesso, e foi encaminhado para: <a
+                            href="mailto:arthur.amahals1000@gmail.com" style="text-decoration: none;"
+                            id="email_convite">arthur.amahals1000@gmail.com</a></div>
+                    <div class="texto-modal">Código de convite gerado:</div>
+                    <div class="box-codigo">
+                        <div class="texto-codigo" id="codigo_texto">AAAAAAYO</div>
+                        <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copy" onclick="copiartexto()">
+                    </div>
+                    <button class="btn-convidar" onclick="fecharPop()">Fechar</button>
+                </div>
+            </div>
         </div>
         <!-- Fim modais -->
 
@@ -289,14 +308,19 @@
     <script src="../js/menu-lateral.js"></script>
     <script>
         // POP-UP DE CÓDIGOS GERADOS
+        function copiartexto() {
+            var codigo = document.getElementById("codigo_texto").innerText
+            navigator.clipboard.writeText(codigo)
+        }
         document.getElementById("botao_novo_convite").addEventListener('click', () => {
             document.querySelector('.tela-escurecida').classList.remove('oculto')
-            document.getElementById("popupFundo").style.display = "flex";
+            document.getElementById("popupFundo").classList.remove("oculto")
             document.getElementById('html_fonte').style.overflowY = "hidden"
         })
         function fecharPop() {
             document.querySelector('.tela-escurecida').classList.add('oculto')
-            document.getElementById("popupFundo").style.display = "none";
+            document.getElementById("popupFundo").classList.add("oculto")
+            document.getElementById("popupConviteGerado").classList.add("oculto")
             document.getElementById('html_fonte').style.overflowY = "auto"
         }
         function convidar() {
@@ -356,16 +380,11 @@
             }
             if (permissao.value == "tecnico") {
                 var fkpermissao = 2
-            } else{
+            } else {
                 var fkpermissao = 1
             }
             let codigo_gerado = gerarTextoAleatorio(10)
             var info_usuario = puxarVariaveis()
-            dia_escolhido = dia_escolhido.toISOString()
-            console.log(info_usuario.idUnidadeAtendimento)
-            console.log(codigo_gerado)
-            console.log(data.value)
-            console.log(fkpermissao)
             fetch("/convites/criarconvite", {
                 method: "POST",
                 headers: {
@@ -380,7 +399,11 @@
             })
                 .then(function (resposta) {
                     console.log("resposta: ", resposta);
-
+                    document.getElementById("popupFundo").classList.add("oculto")
+                    document.getElementById("popupConviteGerado").classList.remove("oculto")
+                    codigo_texto.innerHTML = codigo_gerado
+                    email_convite.innerHTML = email.value
+                    email_convite.href = `mailto:${email.value}`
                     if (resposta.ok) {
                     } else {
                         throw "Não foi possível mandar os dados para o banco";
@@ -391,9 +414,9 @@
                     alert("Erro no catch");
                 });
 
-                // alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-                // popupFundo.style.display = "none"
-                // telaEscurecida.classList.add("oculto");
+            // alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
+            // popupFundo.style.display = "none"
+            // telaEscurecida.classList.add("oculto");
         }
         function gerarTextoAleatorio(tamanhoTexto) {
             if (!Number.isInteger(tamanhoTexto)) {
