@@ -86,15 +86,15 @@ function inseriracao(req, res) {
     var acao = req.body.acao
 
     if (idUnidade == undefined) {
-        res.status(400).send("Seu nome está undefined!");
+        res.status(400).send("Seu idUnidade está undefined!");
     } else if (idUsuario == undefined) {
-        res.status(400).send("Seu email está undefined!");
+        res.status(400).send("Seu idUsuario está undefined!");
     } else if (idLogAcesso == undefined) {
-        res.status(400).send("Sua senha está undefined!");
+        res.status(400).send("Sua idLogAcesso está undefined!");
     } else if (acao == undefined) {
-        res.status(400).send("Seu CPF está undefined!");
+        res.status(400).send("Seu acao está undefined!");
     } else {
-        usuarioModel.inseriracao(idUnidade,idUsuario,idLogAcesso,acao)
+        usuarioModel.inseriracao(idUnidade, idUsuario, idLogAcesso, acao)
             .then(
                 function (resultado) {
                     res.json(resultado);

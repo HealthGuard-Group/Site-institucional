@@ -506,6 +506,30 @@ td {
     width: 3vh;
     height: 3vh;
 }
+.tela-box-copiar{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+.box-copiar{
+    position: fixed;
+    z-index: 10000;
+    background-color: lightgreen;
+    margin-top: 5vh;
+    border-radius: 10px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    height: 8vh;
+    width: 300px;
+}
+.icon-ok{
+    height: 5vh;
+}
 /* Deixar por último */
 .oculto{
     display: none;

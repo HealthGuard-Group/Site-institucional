@@ -14,9 +14,13 @@
 
 <body onload="validarSessao()">
     <section class="tela">
-        <!-- <div class="box-copiar">
-            <div class="texto-copiar">Seu texto foi copiado com sucesso</div>
-        </div> -->
+        <div class="tela-box-copiar oculto">
+           <div class="box-copiar">
+            <img src="../assets/imgs/Icone ok.png" alt="" class="icon-ok">
+            <div class="texto-copiar">Código copiado com sucesso</div>
+        </div>  
+        </div>
+        
         <!-- Começo modais -->
         <div class="tela-escurecida oculto">
             <div id="popupFundo" class="popup-fundo oculto">
@@ -314,6 +318,10 @@
         function copiartexto() {
             var codigo = document.getElementById("codigo_texto").innerText
             navigator.clipboard.writeText(codigo)
+            document.querySelector(".tela-box-copiar").classList.remove("oculto")
+            setTimeout(() => {
+                document.querySelector(".tela-box-copiar").classList.add("oculto")
+            },3000)
         }
         document.getElementById("botao_novo_convite").addEventListener('click', () => {
             document.querySelector('.tela-escurecida').classList.remove('oculto')
@@ -388,6 +396,7 @@
             }
             let codigo_gerado = gerarTextoAleatorio(10)
             var info_usuario = puxarVariaveis()
+            console.log(nome.value,email.value)
             fetch("/convites/criarconvite", {
                 method: "POST",
                 headers: {
@@ -397,7 +406,9 @@
                     fkUnidadeAtendimento: info_usuario.idUnidadeAtendimento,
                     codigo: codigo_gerado,
                     data: data.value,
-                    fkpermissao: fkpermissao
+                    fkpermissao: fkpermissao,
+                    nome: nome.value,
+                    email: email.value
                 }),
             })
                 .then(function (resposta) {
@@ -407,7 +418,7 @@
                     codigo_texto.innerHTML = codigo_gerado
                     email_convite.innerHTML = email.value
                     email_convite.href = `mailto:${email.value}`
-                    inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
+                    //inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
                     if (resposta.ok) {
                     } else {
                         throw "Não foi possível mandar os dados para o banco";
