@@ -503,8 +503,8 @@ td {
 }
 .icon-copy{
     cursor: pointer;
-    width: 10%;
-    height: 80%;
+    width: 3vh;
+    height: 3vh;
 }
 /* Deixar por último */
 .oculto{

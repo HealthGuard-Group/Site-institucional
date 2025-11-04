@@ -14,6 +14,9 @@
 
 <body onload="validarSessao()">
     <section class="tela">
+        <!-- <div class="box-copiar">
+            <div class="texto-copiar">Seu texto foi copiado com sucesso</div>
+        </div> -->
         <!-- Começo modais -->
         <div class="tela-escurecida oculto">
             <div id="popupFundo" class="popup-fundo oculto">
@@ -404,6 +407,7 @@
                     codigo_texto.innerHTML = codigo_gerado
                     email_convite.innerHTML = email.value
                     email_convite.href = `mailto:${email.value}`
+                    inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
                     if (resposta.ok) {
                     } else {
                         throw "Não foi possível mandar os dados para o banco";

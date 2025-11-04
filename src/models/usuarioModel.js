@@ -108,8 +108,14 @@ function cadastrar(nome, email, senha, cpf, codigo) {
         throw erro;
     });
 }
+function inseriracao(idUnidade,idUsuario,idLogAcesso,acao) {
+  var instrucaoSql = `INSERT INTO LogAcoes(fkUnidadeAtendimento,fkLogAceso,fkUsuario,acao) VALUES (${idUnidade},${idLogAcesso},"${idUsuario}","${acao}")`;
+
+  return database.executar(instrucaoSql);
+}
 
 module.exports = {
     autenticar,
-    cadastrar
+    cadastrar,
+    inseriracao
 };

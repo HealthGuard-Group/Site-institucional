@@ -84,3 +84,28 @@ function puxarVariaveis() {
     }
     return variaveis
 }
+function inserirAcao(descricaoDaAcao) {
+    fetch("/usuarios/inseriracao", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idUnidade: fkUnidade,
+            idUsuario: fkUsuario,
+            idLogAcesso: fkLogAcesso,
+            acao: descricaoDaAcao
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+            } else {
+                throw "Não foi possível mandar os dados para o banco";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            alert("Erro no catch");
+        });
+}
