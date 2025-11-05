@@ -54,6 +54,9 @@ function validarSessao() {
             if (window.location.href.includes("monitoramento.html")) {
                 telaMonitoramento()
             }
+            if (window.location.href.includes("funcionarios.html")) {
+                puxarConvites()
+            }
         })
         .catch(function (resposta) {
             console.log(`Erro no catch: ${resposta}`);

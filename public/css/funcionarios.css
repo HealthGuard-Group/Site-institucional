@@ -527,6 +527,21 @@ td {
     height: 8vh;
     width: 300px;
 }
+.botao-recarregar{
+    cursor: pointer;
+    height: 5vh;
+    width: 5vh;
+    border: none;
+    background-color: #1E2A38;
+    border-radius: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icone-recarregar{
+    height: 70%;
+}
 .icon-ok{
     height: 5vh;
 }

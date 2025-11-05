@@ -15,12 +15,12 @@
 <body onload="validarSessao()">
     <section class="tela">
         <div class="tela-box-copiar oculto">
-           <div class="box-copiar">
-            <img src="../assets/imgs/Icone ok.png" alt="" class="icon-ok">
-            <div class="texto-copiar">Código copiado com sucesso</div>
-        </div>  
+            <div class="box-copiar">
+                <img src="../assets/imgs/Icone ok.png" alt="" class="icon-ok">
+                <div class="texto-copiar">Código copiado com sucesso</div>
+            </div>
         </div>
-        
+
         <!-- Começo modais -->
         <div class="tela-escurecida oculto">
             <div id="popupFundo" class="popup-fundo oculto">
@@ -39,7 +39,7 @@
                     <div class="texto-erro oculto" id="texto_erro_email">Preencha o campo</div>
                     <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
                     <select class="select-cargo" id="permissao">
-                        <option value="tecnico">Técnico de TI</option>
+                        <option value="tecnico" selected>Técnico de TI</option>
                         <option value="gestor">Gestor de TI</option>
                     </select>
 
@@ -128,7 +128,7 @@
 
                 <div class="box-filtros">
                     <div class="componente-filtro" id="campo-cpf">
-                        Buscar por CPF: <input type="text" placeholder="Ex: 000.000.000-00">
+                        Buscar por Nome: <input type="text" placeholder="Ex: Roberto">
                     </div>
 
                     <div class="componente-filtro" id="campo-status-convite">
@@ -178,7 +178,6 @@
                         Ver ações do funcionário
                     </button>
 
-
                     <div class="div-botao-adicionar" id="botao_novo_convite">
                         <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
                         <div class="barra-vertical-botao"></div>
@@ -186,15 +185,18 @@
                             Novo convite
                         </div>
                     </div>
+                    <button class="botao-recarregar" onclick="puxarConvites()">
+                        <img src="../assets/imgs/icone-recarregar.png" alt="" class="icone-recarregar">
+                    </button>
                 </div>
             </div>
             <div id="container-tabela">
-                <table id="tabela-funcionarios">
+                <table id="tabela_funcionarios">
                     <tr id="titulo-tabela">
                         <td id="tr-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                         <td id="tr-cod-convite">Cód. Convite</td>
                         <td id="tr-nome-completo">Nome Completo</td>
-                        <td id="tr-cpf-funcionario">CPF</td>
+                        <td id="tr-cpf-funcionario">Email</td>
                         <td id="tr-data-criacao-convite">Data de criação</td>
                         <td id="tr-data-expiracao-convite">Data de expiração</td>
                         <td id="tr-status-funcionario">Status</td>
@@ -321,12 +323,16 @@
             document.querySelector(".tela-box-copiar").classList.remove("oculto")
             setTimeout(() => {
                 document.querySelector(".tela-box-copiar").classList.add("oculto")
-            },3000)
+            }, 3000)
         }
         document.getElementById("botao_novo_convite").addEventListener('click', () => {
             document.querySelector('.tela-escurecida').classList.remove('oculto')
             document.getElementById("popupFundo").classList.remove("oculto")
             document.getElementById('html_fonte').style.overflowY = "hidden"
+            nome.value = ``
+            email.value = ``
+            document.getElementById("permissao").value = "tecnico"
+            data.value = ``
         })
         function fecharPop() {
             document.querySelector('.tela-escurecida').classList.add('oculto')
@@ -396,7 +402,7 @@
             }
             let codigo_gerado = gerarTextoAleatorio(10)
             var info_usuario = puxarVariaveis()
-            console.log(nome.value,email.value)
+            console.log(nome.value, email.value)
             fetch("/convites/criarconvite", {
                 method: "POST",
                 headers: {
@@ -451,6 +457,102 @@
                 contador++
             }
             return texto
+        }
+        function puxarConvites() {
+            var variaveis = puxarVariaveis()
+            variaveis = variaveis.idUnidadeAtendimento
+            tabela_funcionarios.innerHTML = `
+            <tr id="titulo-tabela">
+                        <td id="tr-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td id="tr-cod-convite">Cód. Convite</td>
+                        <td id="tr-nome-completo">Nome Completo</td>
+                        <td id="tr-cpf-funcionario">Email</td>
+                        <td id="tr-data-criacao-convite">Data de criação</td>
+                        <td id="tr-data-expiracao-convite">Data de expiração</td>
+                        <td id="tr-status-funcionario">Status</td>
+                        <td id="tr-acoes-funcionario">Ações</td>
+                    </tr>`
+            fetch(`/convites/buscarconvites/${variaveis}`, {
+                method: "GET",
+            })
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    atualizarTabela(resposta)
+                })
+                .catch(function (resposta) {
+                    console.log(`Erro no catch: ${resposta}`);
+                });
+        }
+        function atualizarTabela(dados) {
+            for (let i = 0; i < dados.length; i++) {
+                let data_criacao = new Date(dados[i].dataCriacao)
+                data_criacao = data_criacao.toLocaleDateString('pt-BR')
+                let data_expiracao = new Date(dados[i].dataExpiracao)
+                data_expiracao = data_expiracao.toLocaleDateString('pt-BR')
+                if (dados[i].statusCodigoValidacaoUsuario == "Expirado") {
+                    tabela_funcionarios.innerHTML += `
+                            <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">${dados[i].codigo}</td>
+                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
+                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
+                        <td class="td-data-criacao-convite">${data_criacao}</td>
+                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar"
+                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                                ---
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>`
+                } if (dados[i].statusCodigoValidacaoUsuario == "Pendente") {
+                    tabela_funcionarios.innerHTML += `
+                            <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">${dados[i].codigo}</td>
+                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
+                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
+                        <td class="td-data-criacao-convite">${data_criacao}</td>
+                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+
+                        </td>
+                    </tr>`
+                } if (dados[i].statusCodigoValidacaoUsuario == "Aceito") {
+                    tabela_funcionarios.innerHTML += `
+                            <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">${dados[i].codigo}</td>
+                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
+                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
+                        <td class="td-data-criacao-convite">${data_criacao}</td>
+                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>`
+                }
+            }
+
         }
     </script>
 </body>

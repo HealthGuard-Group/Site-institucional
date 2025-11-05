@@ -50,9 +50,12 @@ document.getElementById("sair_conta_redirecionamento").addEventListener('click',
     window.location.href = "../index.html"
 })
 function validacaoPermissao() {
-    if(permissao == "2"){
+    if (permissao == "2") {
         document.getElementById("gestao_redirecionamento").classList.add("oculto")
         document.querySelector('.separador').classList.add("oculto")
     }
     // Expulsar usuário tela de gestão usuários
+    if (window.location.href.includes("funcionarios.html") && permissao == "2") {
+        window.location.href = `monitoramento.html`
+    }
 }

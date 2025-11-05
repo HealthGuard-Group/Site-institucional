@@ -38,6 +38,30 @@ function criarconvite(req, res) {
             );
     }
 }
+function buscarconvites(req, res) {
+    var fkUnidade = req.params.variaveis;
+    if (fkUnidade == undefined) {
+        res.status(400).send("Seu idUsuario está undefined!");
+    } else {
+
+        convitesModel.buscarconvites(fkUnidade)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 module.exports = {
-    criarconvite
+    criarconvite,
+    buscarconvites
 }

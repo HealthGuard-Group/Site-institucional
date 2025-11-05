@@ -5,7 +5,13 @@ function criarconvite(fkUnidade, codigo, data, permissao, nome, email) {
 
   return database.executar(instrucaoSql);
 }
+function buscarconvites(fkUnidade) {
+  var instrucaoSql = `SELECT * FROM CodigoValidacaoUsuario WHERE fkUnidadeDeAtendimento = ${fkUnidade} ORDER BY idCodigoValidacao DESC`;
+
+  return database.executar(instrucaoSql);
+}
 
 module.exports = {
-    criarconvite
+    criarconvite,
+    buscarconvites
 };
