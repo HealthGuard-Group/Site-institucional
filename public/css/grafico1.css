@@ -89,11 +89,10 @@ body {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
-
   width: 45%;
 }
  
-.card-monitoramento{
+.div_componentes{
    line-height: 25px;
    
 }
@@ -118,12 +117,14 @@ body {
    width: 50%; 
 }
 
-.card .title {
+.title {
  font-weight: bold;
   margin-bottom: 4px;
   display: flex;
-  align-items: center;
   gap: 5px;
+  width: 100%;
+  height: 20%;
+  align-items: center;
 }
 
 
@@ -253,11 +254,7 @@ body {
   justify-content: center;
   gap: 20px;
 }
-.card-alertas-totais{
-   line-height: 30px;
 
-
-}
 
 .metricas-valores{
   flex-direction: column;
@@ -388,7 +385,7 @@ body {
     color: #000000;
     cursor: help;
     font-size: 12px;
-    font-weight: bold;    
+    font-weight: bold; 
 }
 
 .tooltip i{
@@ -398,7 +395,7 @@ body {
 .tooltip-text {
     visibility: hidden;
     width: 200px;
-    background-color: #333;
+    background-color: #333333c7;
     color: #fff;
     text-align:start;
     border-radius: 6px;
@@ -419,6 +416,11 @@ body {
 .tooltip:hover .tooltip-text {
     visibility: visible;
     opacity: 1;
+}
+
+.alerta-card {
+  position: relative;
+  overflow: visible !important; 
 }
 
 .lista-alerta{
