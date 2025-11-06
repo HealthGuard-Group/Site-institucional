@@ -10,62 +10,92 @@ body {
 }
 
 .conteudo-principal {
-  padding: 15px;
+  padding: 25px;
   width: 100%;
   margin-left: 6%;
   box-sizing: border-box;
 }
 
-.header {
-  width: 97%;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  padding: 8px 5px;
-  gap: 15px;
-  margin-bottom: 12px;
-  justify-content: space-between;
-  border-radius: 8px;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
+    .header {
+      width: 100%;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      padding: 10px 10px;
+      gap: 15px;
+      margin-bottom: 12px;
+      justify-content: space-between;
+      border-radius: 8px;
+      box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+      flex-wrap: wrap;
+    }
 
-.header-esquerda {
-  display: flex;
-  align-items: center;
-  font-weight: bold;
-  font-size: 16px;
-  gap: 10px;
-}
+    .header-esquerda {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      font-size: 16px;
+      gap: 14px;
+  
+    }
+
+    #btn_descricao {
+      display: none;
+    }
+
+    label.link-descricao {
+    font-size: 13px; 
+    cursor: pointer; 
+    color: #5b5b5b; 
+    font-weight: bold; 
+    margin-right: 1%;
+    }
+
+    label.link-descricao:hover {
+      color: #3a3a3a;
+    }
+
+    .descricao {
+      width: 100%;
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.4s ease;
+      font-size: 14px;
+      color: #333;
+      padding: 0 10px;
+    }
+
+    #btn_descricao:checked ~ .descricao {
+      max-height: 5%;
+      opacity: 1;
+      transform: translateY(0);
+      margin-top: 8px;
+      padding-bottom: 10px;
+    }
 
 .status.alerta { color: #b30000; }
-.link-descricao { 
-  font-size: 13px; 
-  cursor: pointer; 
-  color: #5b5b5b; 
-  font-weight: bold; 
-  margin-right: 1%;
-}
+
 
 .dashboard-cards {
-  display: grid;
-  grid-template-columns: 1.3fr 1fr 1fr 1fr 1fr 2fr;
-  gap: 12px;
+    display: flex;
+    width: 100%;
+   gap: 12px;
   margin-bottom: 14px;
-  width: 100%;
-  
-
 }
 
 .kpi-topo {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
-  margin-bottom: 12px;
-  
+
+  width: 45%;
 }
  
 .card-monitoramento{
    line-height: 25px;
+   
 }
 
 .card, .card-monitoramento, .card-alertas-totais {
@@ -85,7 +115,8 @@ body {
 .card { height: 100px; width: 230px; }
 .card-monitoramento, .card-alertas-totais { 
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  height: 205px; width: 340px; }
+   width: 50%; 
+}
 
 .card .title {
  font-weight: bold;
@@ -148,6 +179,14 @@ body {
   color: #ffffff;
   cursor: pointer;
   padding: 6px;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+}
+
+.btn-historico i{
+  font-size: 15px;
+
 }
 
 .btn-editar {
@@ -162,7 +201,8 @@ body {
   display: flex;
   align-items: stretch;
   background-color: #ffffff00; 
-  width: 97%;   
+  width: 100%;
+  
   border-radius: 10px;
   box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
@@ -173,11 +213,15 @@ body {
   border-bottom-left-radius: 10px;
   display: flex;
   justify-content: space-between;
-  width: 500px;
+  width: 40%;
   padding: 14px;
   background-color: #fff;
   gap: 10px;
   font-size: 14px;
+}
+
+.config-alerta .titulo_componentes{
+  margin-top: 5px;
 }
 
 .config-left {
@@ -187,6 +231,8 @@ body {
   flex: 1;
   gap: 10px;
 }
+
+
 
 .config-left select {
   width: 80%;
@@ -202,11 +248,14 @@ body {
   font-size: 12px;
   font-weight: 700;
   margin-bottom: 7px;
-  width: 80%;
+  width: 90%;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
 .card-alertas-totais{
    line-height: 30px;
-  
+
 
 }
 
@@ -271,10 +320,10 @@ body {
 .metrica {
   background-color: #f5f5f5;
   border-radius: 8px;
-  padding: 8px 11px;
+  padding: 15px 15px;
   font-weight: 700;
   font-size: 14px;
-  width: 300px;
+  width: 90%;
 }
 
 .barra-vertical {
@@ -296,7 +345,6 @@ body {
   flex: 1 1 55%;
   padding: 14px;
   background-color: #fff;
-  width: 100px;
 }
 
 .chart-header {
@@ -309,7 +357,7 @@ body {
 
 .chart-area canvas {
   width: 100% !important;
-  height: 250px !important;
+  height: 300px !important;
   display: block;
 }
 
@@ -340,8 +388,7 @@ body {
     color: #000000;
     cursor: help;
     font-size: 12px;
-    font-weight: bold;
-    
+    font-weight: bold;    
 }
 
 .tooltip i{
@@ -350,14 +397,14 @@ body {
 
 .tooltip-text {
     visibility: hidden;
-    width: 180px;
+    width: 200px;
     background-color: #333;
     color: #fff;
     text-align:start;
     border-radius: 6px;
     padding: 5px;
     position: absolute;
-    z-index: 100;
+    z-index: 800;
     top: 125%;
     left: 50%;
     transform: translateX(-50%);

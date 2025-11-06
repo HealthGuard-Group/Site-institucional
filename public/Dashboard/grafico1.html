@@ -62,12 +62,17 @@
   <div class="container">
     <div class="conteudo-principal">
       <div class="header">
-        <div class="header-esquerda">
-          <span>Máquina A-08</span>
-          <span class="status alerta">Status: Alerta grave (Mémoria RAM)</span>
-        </div>
-        <div class="link-descricao" onclick="alert('Descrição')">Exibir descrição</div>
+      <div class="header-esquerda">
+      <span>Máquina A-08</span>
+      <span class="status alerta">Status: Alerta grave (Memória RAM)</span>
       </div>
+
+    <input type="checkbox" id="btn_descricao">
+    <label class="link-descricao" for="btn_descricao">Exibir descrição</label>
+    <div class="descricao">
+        <p>Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</p>
+    </div>
+    </div>
 
 
       <div class="dashboard-cards">
@@ -140,7 +145,7 @@
               <span class="bolinha-critico">5</span>
             </div>
           </div>
-          <button class="btn-historico" id="link-historico-alertas" onclick="window.location.href='alertasIndividuais.html'">Histórico de Alertas &rarr;</button>
+          <button class="btn-historico" id="link-historico-alertas" onclick="window.location.href='alertasIndividuais.html'">Histórico de Alertas <i class='bxr  bx-arrow-right-stroke'    ></i> </button>
         </div>
       </div>
 
@@ -148,9 +153,8 @@
       <div class="botao-sessao">
         <div class="config-alerta">
           <div class="config-left">
-            <span>
+            <span class="titulo">
               <strong> Componentes à monitorar: </strong>
-
             </span>
             <select id="componentSelect">
               <option value="CPU" selected>CPU</option>
