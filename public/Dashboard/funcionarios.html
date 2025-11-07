@@ -125,39 +125,41 @@
                 <div class="texto-funcionalidade alinhamento-centralizar-vertical">
                     Filtros:
                 </div>
-
+                <!-- uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu -->
                 <div class="box-filtros">
                     <div class="componente-filtro" id="campo-cpf">
-                        Buscar por Nome: <input type="text" placeholder="Ex: Roberto">
+                        Buscar por Nome: <input type="text" placeholder="Ex: Roberto" id="campo_nome">
                     </div>
 
                     <div class="componente-filtro" id="campo-status-convite">
                         Status do convite:
-                        <select name="viagem">
-                            <option value="todos">Todos</option>
-                            <option value="aceito">Aceito</option>
-                            <option value="pendente">Pendente</option>
-                            <option value="expirado">Expirado</option>
+                        <select name="viagem" id="campo_status_convite">
+                            <option value="selecione">Selecione</option>
+                            <option value="Aceito">Aceito</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Expirado">Expirado</option>
                         </select>
                     </div>
 
                     <div class="componente-filtro" id="campo-data-convite-gerado">
-                        Convite gerado entre: <input type="date"> e: <input type="date">
+                        Convite gerado entre: <input type="date" id="campo_data_convite_gerado_min"> e: <input
+                            type="date" id="campo_data_convite_gerado_max">
                     </div>
                 </div>
 
                 <div class="box-filtros">
                     <div class="componente-filtro" id="campo-data-convite-gerado">
-                        Convite expirado entre: <input type="date"> e: <input type="date">
+                        Convite expirado entre: <input type="date" id="campo_data_convite_expirado_min"> e: <input
+                            type="date" id="campo_data_convite_expirado_max">
                     </div>
-                    <button class="botao-aplicar-filtros">
+                    <button class="botao-aplicar-filtros" onclick="adicionarFiltro()">
                         Aplicar filtros
                     </button>
                 </div>
 
-                <div class="box-filtros-aplicados">
+                <div class="box-filtros-aplicados" id="div_filtros">
                     <div class="filtro-aplicado">
-                        Status Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                        Status Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
                     </div>
                     <div class="filtro-aplicado">
                         Gerado entre: 10/10/1025 - 15/10/2025 &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
@@ -316,6 +318,155 @@
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
     <script>
+        // Configuração dos filtros
+        var filtrosAtivos = ["", "", ["",""], ["",""]]
+        function fecharFiltro(index){
+            if (index < 0 || index > 3) {
+                return
+            }
+            if (index < 2) {
+                filtrosAtivos[index] = ""
+            } else{
+                filtrosAtivos[index][0] = ""
+                filtrosAtivos[index][1] = ""
+            }
+            adicionarFiltro()
+        }
+        function adicionarFiltro() {
+            // Declaração de váriaveis
+            var input_buscar_nome = document.getElementById("campo_nome")
+            var select_tipo_convite = document.getElementById("campo_status_convite")
+            var input_data_criacao_min = document.getElementById("campo_data_convite_gerado_min")
+            var input_data_criacao_max = document.getElementById("campo_data_convite_gerado_max")
+            var input_data_expiracao_min = document.getElementById("campo_data_convite_expirado_min")
+            var input_data_expiracao_max = document.getElementById("campo_data_convite_expirado_max")
+            // Variveis para impedir a replotagem
+            var replotagem_nome = true
+            var replotagem_status = true
+            var replotagem_criacao = true
+            var replotagem_expiracao = true
+            div_filtros.innerHTML = "" // Limpa os filtros
+            // Faz a adição de filtros ou a sobrescrita
+            if (input_buscar_nome.value.length != 0) {
+                filtrosAtivos[0] = input_buscar_nome.value
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Nome: ${input_buscar_nome.value} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(0)">
+                </div>`
+                input_buscar_nome.value = ""
+                replotagem_nome = false
+            }
+            if (select_tipo_convite.value != "selecione") {
+                filtrosAtivos[1] = select_tipo_convite.value
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Status: ${select_tipo_convite.value} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                </div>`
+                select_tipo_convite.value = "selecione"
+                replotagem_status = false
+            }
+            if (input_data_criacao_min.value.length != 0 && input_data_criacao_max.value.length != 0) {
+                var data_criacao = new Date(input_data_criacao_min.value)
+                var data_expiracao = new Date(input_data_criacao_max.value)
+
+                if (data_criacao > data_expiracao) {
+                    filtrosAtivos[2][0] = data_expiracao
+                    filtrosAtivos[2][1] = data_criacao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Gerado entre: ${formatarData(data_expiracao)} - ${formatarData(data_criacao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                    </div>`
+                } else if (data_criacao <= data_expiracao) {
+                    filtrosAtivos[2][0] = data_criacao
+                    filtrosAtivos[2][1] = data_expiracao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Gerado entre: ${data_criacao} - ${data_expiracao} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                    </div>`
+                }
+                input_data_criacao_min.value = ""
+                input_data_criacao_max.value = ""
+                replotagem_criacao = false
+            }
+            if (input_data_expiracao_min.value.length != 0 && input_data_expiracao_max.value.length != 0) {
+                var data_criacao = formatarData(input_data_expiracao_min.value)
+                var data_expiracao = formatarData(input_data_expiracao_max.value)
+
+                if (data_criacao > data_expiracao) {
+                    filtrosAtivos[3][0] = data_expiracao
+                    filtrosAtivos[3][1] = data_criacao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Expirado entre: ${data_expiracao} - ${data_criacao} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                    </div>`
+                } else if (data_criacao <= data_expiracao) {
+                    filtrosAtivos[3][0] = data_criacao
+                    filtrosAtivos[3][1] = data_expiracao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Expirado entre: ${data_criacao} - ${data_expiracao} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                    </div>`
+                }
+                input_data_expiracao_min.value = ""
+                input_data_expiracao_max.value = ""
+                replotagem_expiracao = false
+            }
+            // Replota os filtros previamente selecionados
+            if (filtrosAtivos[0].length != 0 && replotagem_nome) {
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Nome: ${filtrosAtivos[0]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(0)">
+                </div>`
+            } if (filtrosAtivos[1].length != 0 && replotagem_status) {
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Status: ${filtrosAtivos[1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                </div>`
+            } if (filtrosAtivos[2][0].length != 0 && filtrosAtivos[2][1].length != 0 && replotagem_criacao) {
+                div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Gerado entre: ${filtrosAtivos[2][0]} - ${filtrosAtivos[2][1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                    </div>`
+            } if (filtrosAtivos[3][0].length != 0 && filtrosAtivos[3][1].length != 0 && replotagem_expiracao) {
+                div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Expirado entre: ${filtrosAtivos[3][0]} - ${filtrosAtivos[3][1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                    </div>`
+            } 
+            puxarConvites()
+        }
+        function filtrarConvites(dados){
+            var dados_filtrados = []
+            var vetor_auxiliar_nome = []
+            var vetor_auxiliar_status = []
+            var vetor_auxiliar_criacao = []
+            for(let i = 0; i < dados.length; i++){
+                if (formatarTextoParaComparacao(dados[i].nomeSugerido).includes(formatarTextoParaComparacao(filtrosAtivos[0]))) {
+                    vetor_auxiliar_nome.push(dados[i])
+                }
+            }
+            console.log("Dados filtrados após nome:", vetor_auxiliar_nome)
+            for(let i = 0; i < vetor_auxiliar_nome.length; i++){    
+                if ((filtrosAtivos[1] == vetor_auxiliar_nome[i].statusCodigoValidacaoUsuario) || filtrosAtivos[1] == "") {
+                    vetor_auxiliar_status.push(vetor_auxiliar_nome[i])
+                }
+            }
+            console.log("Dados filtrados após tipo:", vetor_auxiliar_status)
+            for(let i = 0; i < vetor_auxiliar_status.length; i++){
+                console.log("Data puxada:", formatarData(vetor_auxiliar_status[i].dataCriacao), " Data filtro", formatarData(filtrosAtivos[2][0]))
+                if ((formatarData(vetor_auxiliar_status[i].dataCriacao) >= filtrosAtivos[2][0] && formatarData(vetor_auxiliar_status[i].dataCriacao) <= filtrosAtivos[2][1]) || filtrosAtivos[2][0] == "") {
+                    vetor_auxiliar_criacao.push(vetor_auxiliar_status[i])
+                }
+            }
+            console.log("Dados filtrados após criacao:", vetor_auxiliar_criacao)
+            for(let i = 0; i < vetor_auxiliar_criacao.length; i++){
+                if ((formatarData(vetor_auxiliar_criacao[i].dataExpiracao) >= filtrosAtivos[3][0] || formatarData(vetor_auxiliar_criacao[i].dataExpiracao) <= filtrosAtivos[3][1]) || filtrosAtivos[3][0] == "") {
+                    dados_filtrados.push(vetor_auxiliar_criacao[i])
+                }
+            }
+            console.log("Dados filtrados após expiracao:", dados_filtrados)
+            return dados_filtrados
+        }
         // POP-UP DE CÓDIGOS GERADOS
         function copiartexto() {
             var codigo = document.getElementById("codigo_texto").innerText
@@ -426,7 +577,7 @@
                     email_convite.href = `mailto:${email.value}`
                     var data_formatada = new Date(data.value)
                     data_formatada = data_formatada.toLocaleDateString("pt-BR")
-                    mandaremail(email.value,codigo_gerado,data_formatada)
+                    mandaremail(email.value, codigo_gerado, data_formatada)
                     //inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
                     if (resposta.ok) {
                     } else {
@@ -482,7 +633,9 @@
                     return resposta.json();
                 })
                 .then(resposta => {
-                    atualizarTabela(resposta)
+                    console.log(resposta)
+                    var dados_filtrados = filtrarConvites(resposta)
+                    atualizarTabela(dados_filtrados)
                 })
                 .catch(function (resposta) {
                     console.log(`Erro no catch: ${resposta}`);
@@ -557,7 +710,7 @@
             }
 
         }
-        function mandaremail(email,codigo,dataExpiracao) {
+        function mandaremail(email, codigo, dataExpiracao) {
             // Exemplo de como o seu site (frontend.js) enviaria os dados
 
             // Supondo que você pegou os dados de um formulário
@@ -963,21 +1116,35 @@
 
 </html>`
             };
-            fetch('http://localhost:3000/enviar-email', { 
+            fetch('http://localhost:3000/enviar-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dadosDoFormulario) 
+                body: JSON.stringify(dadosDoFormulario)
             })
                 .then(response => response.text())
                 .then(data => {
-                    console.log(data); 
+                    console.log(data);
                 })
                 .catch(error => {
                     console.error('Erro:', error);
                     console.log('Ocorreu ao enviar o email.');
                 });
+        }
+        function formatarTextoParaComparacao(texto) {
+            var texto_formatado = "" + texto
+            texto_formatado = texto_formatado.toLowerCase()
+            texto_formatado = texto_formatado.replaceAll(" ", "")
+            return texto_formatado
+        }
+        function formatarData(data) {
+            const fuso = {
+                timeZone: 'UTC'
+            }
+            var data_formatada = new Date(data)
+            data_formatada = data_formatada.toLocaleDateString("pt-BR", fuso)
+            return data_formatada
         }
     </script>
 </body>
