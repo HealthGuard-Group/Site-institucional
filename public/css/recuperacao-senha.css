@@ -1,0 +1,167 @@
+body {
+  display: flex;
+  height: 100vh;
+  flex-direction: row;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
+
+#btn-voltar {
+  width: 5%;
+  margin-bottom: 80%;
+cursor: pointer;
+
+}
+
+.right {
+  flex: 1;
+  background-image: url(../assets/imgs/Background_vermelho_invertido.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 50px;
+}
+
+.right img {
+  width: 75%;
+  height: auto;
+  margin-bottom: 30px;
+}
+
+.right h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.right p {
+  font-size: 1rem;
+  line-height: 1.4;
+  max-width: 400px;
+}
+
+.left  {
+  flex: 1;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.left a {
+  color: #b30000;
+  text-decoration: none;
+}
+
+.container {
+  width: 100%;
+  max-width: 60%;
+}
+
+.container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.container p {
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.container label {
+  display: block;
+  font-size: 0.9rem;
+  margin: 10px 0 5px;
+  color: #333;
+}
+
+.container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+}
+
+.container button {
+  width: 50%;
+  padding: 12px;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+  display: block; 
+  margin: 0 auto; 
+}
+
+.container button:hover {
+  background: #333;
+}
+
+.container .link {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.container .link a {
+  color: #b30000;
+  text-decoration: none;
+}
+
+.container .link a:hover {
+  text-decoration: underline;
+}
+
+
+@media (max-width: 768px) {
+  body {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .right, .left {
+    flex: none;
+    width: 100%;
+    min-height: 40vh;
+    padding: 20px;
+  }
+
+  .right img {
+    width: 60%;
+    margin: 0 auto 20px;
+    
+  }
+
+  .right h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .right p {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .container {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .container button {
+    width: 100%;
+  }
+
+  .container .link {
+    text-align: center;
+  }
+}

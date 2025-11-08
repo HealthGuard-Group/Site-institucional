@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/recuperacao-senha.css">
+    <link rel="stylesheet" href="./css/global.css">
+    <title>Esqueci minha senha</title>
+</head>
+<body>
+    
+    <div class="left">
+       <!-- <div onclick="voltar()"> -->
+      <img id="btn-voltar" src="./assets/imgs/botão-voltar.png" alt="">
+     <!-- </div> -->
+        <div class="container">
+            <h2>Esqueceu a senha?</h2>
+            <p>Insira o e-mail no qual deseja redefinir a sua senha </p>
+
+            <label for="email">E-mail</label>
+            <input id="email_input" type="text" placeholder="exemplo: healthguard@sptech.school">
+
+            <button onclick="validar_redefinir()">REDEFINIR SENHA</button>
+
+    
+            <br>
+            <div id="mensagem"></div>
+
+        </div>
+    </div>
+     <div class="right">
+        
+        <img src="./assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard Logo">
+        <h1>Redefinir senha!</h1>
+        <p>Recupere seu acesso e volte a monitorar tudo com <br>
+tranquilidade e segurança.</p>
+    </div>
+</body>
+</html>
+<script>
+    function voltar() {
+        window.location.href ="./login.html"
+    }
+
+  function validar_redefinir() {
+    mensagem.innerHTML = ""
+    var email = email_input.value;
+    if (email == "") {
+        mensagem.innerHTML = "Preencha o campo e-mail..."
+        return;
+    }
+    var posArroba = email.indexOf('@');
+    if (posArroba <= 0) { 
+        mensagem.innerHTML = "Insira um e-mail válido!";
+        return;
+    }
+    var posPonto = email.indexOf('.', posArroba);
+    if (posPonto <= 0 || posPonto === email.length - 1) {
+        mensagem.innerHTML = "Insira um e-mail válido!";
+        return;
+    }
+
+
+mensagem.innerHTML = "Verificando email.";
+setTimeout(function() {
+    mensagem.innerHTML = "Verificando email..";
+}, 300);
+setTimeout(function() {
+    mensagem.innerHTML = "Verificando email...";
+}, 600);
+setTimeout(function() {
+    mensagem.innerHTML = "";
+}, 1000);
+
+// função abaixo não existe, só é uma representação de como continuar o desenvolvimento
+enviarRequisicao();
+    }
+</script>
