@@ -319,14 +319,14 @@
     <script src="../js/menu-lateral.js"></script>
     <script>
         // Configuração dos filtros
-        var filtrosAtivos = ["", "", ["",""], ["",""]]
-        function fecharFiltro(index){
+        var filtrosAtivos = ["", "", ["", ""], ["", ""]]
+        function fecharFiltro(index) {
             if (index < 0 || index > 3) {
                 return
             }
             if (index < 2) {
                 filtrosAtivos[index] = ""
-            } else{
+            } else {
                 filtrosAtivos[index][0] = ""
                 filtrosAtivos[index][1] = ""
             }
@@ -366,9 +366,8 @@
                 replotagem_status = false
             }
             if (input_data_criacao_min.value.length != 0 && input_data_criacao_max.value.length != 0) {
-                var data_criacao = new Date(input_data_criacao_min.value)
-                var data_expiracao = new Date(input_data_criacao_max.value)
-
+                var data_criacao = new Date(input_data_criacao_min.value + 'T00:00:00')
+                var data_expiracao = new Date(input_data_criacao_max.value + 'T00:00:00')
                 if (data_criacao > data_expiracao) {
                     filtrosAtivos[2][0] = data_expiracao
                     filtrosAtivos[2][1] = data_criacao
@@ -381,7 +380,7 @@
                     filtrosAtivos[2][1] = data_expiracao
                     div_filtros.innerHTML += `
                     <div class="filtro-aplicado">
-                        Gerado entre: ${data_criacao} - ${data_expiracao} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                        Gerado entre: ${formatarData(data_criacao)} - ${formatarData(data_expiracao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
                     </div>`
                 }
                 input_data_criacao_min.value = ""
@@ -389,22 +388,22 @@
                 replotagem_criacao = false
             }
             if (input_data_expiracao_min.value.length != 0 && input_data_expiracao_max.value.length != 0) {
-                var data_criacao = formatarData(input_data_expiracao_min.value)
-                var data_expiracao = formatarData(input_data_expiracao_max.value)
+                var data_criacao = new Date(input_data_expiracao_min.value + 'T00:00:00')
+                var data_expiracao = new Date(input_data_expiracao_max.value + 'T00:00:00')
 
                 if (data_criacao > data_expiracao) {
                     filtrosAtivos[3][0] = data_expiracao
                     filtrosAtivos[3][1] = data_criacao
                     div_filtros.innerHTML += `
                     <div class="filtro-aplicado">
-                        Expirado entre: ${data_expiracao} - ${data_criacao} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                        Expirado entre: ${formatarData(data_expiracao)} - ${formatarData(data_criacao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
                     </div>`
                 } else if (data_criacao <= data_expiracao) {
                     filtrosAtivos[3][0] = data_criacao
                     filtrosAtivos[3][1] = data_expiracao
                     div_filtros.innerHTML += `
                     <div class="filtro-aplicado">
-                        Expirado entre: ${data_criacao} - ${data_expiracao} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                        Expirado entre: ${formatarData(data_criacao)} - ${formatarData(data_expiracao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
                     </div>`
                 }
                 input_data_expiracao_min.value = ""
@@ -425,46 +424,60 @@
             } if (filtrosAtivos[2][0].length != 0 && filtrosAtivos[2][1].length != 0 && replotagem_criacao) {
                 div_filtros.innerHTML += `
                     <div class="filtro-aplicado">
-                        Gerado entre: ${filtrosAtivos[2][0]} - ${filtrosAtivos[2][1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                        Gerado entre: ${formatarData(filtrosAtivos[2][0])} - ${formatarData(filtrosAtivos[2][1])} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
                     </div>`
             } if (filtrosAtivos[3][0].length != 0 && filtrosAtivos[3][1].length != 0 && replotagem_expiracao) {
                 div_filtros.innerHTML += `
                     <div class="filtro-aplicado">
-                        Expirado entre: ${filtrosAtivos[3][0]} - ${filtrosAtivos[3][1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                        Expirado entre: ${formatarData(filtrosAtivos[3][0])} - ${formatarData(filtrosAtivos[3][1])} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
                     </div>`
-            } 
+            }
             puxarConvites()
         }
-        function filtrarConvites(dados){
+        function filtrarConvites(dados) {
             var dados_filtrados = []
             var vetor_auxiliar_nome = []
             var vetor_auxiliar_status = []
             var vetor_auxiliar_criacao = []
-            for(let i = 0; i < dados.length; i++){
-                if (formatarTextoParaComparacao(dados[i].nomeSugerido).includes(formatarTextoParaComparacao(filtrosAtivos[0]))) {
-                    vetor_auxiliar_nome.push(dados[i])
+            if (filtrosAtivos[0] == '') {
+                vetor_auxiliar_nome = dados
+            } else {
+                for (let i = 0; i < dados.length; i++) {
+                    if (formatarTextoParaComparacao(dados[i].nomeSugerido).includes(formatarTextoParaComparacao(filtrosAtivos[0]))) {
+                        vetor_auxiliar_nome.push(dados[i])
+                    }
                 }
             }
-            console.log("Dados filtrados após nome:", vetor_auxiliar_nome)
-            for(let i = 0; i < vetor_auxiliar_nome.length; i++){    
-                if ((filtrosAtivos[1] == vetor_auxiliar_nome[i].statusCodigoValidacaoUsuario) || filtrosAtivos[1] == "") {
-                    vetor_auxiliar_status.push(vetor_auxiliar_nome[i])
+            if (filtrosAtivos[1] == "") {
+                vetor_auxiliar_status = vetor_auxiliar_nome
+            } else {
+                for (let i = 0; i < vetor_auxiliar_nome.length; i++) {
+                    if ((filtrosAtivos[1] == vetor_auxiliar_nome[i].statusCodigoValidacaoUsuario)) {
+                        vetor_auxiliar_status.push(vetor_auxiliar_nome[i])
+                    }
                 }
             }
-            console.log("Dados filtrados após tipo:", vetor_auxiliar_status)
-            for(let i = 0; i < vetor_auxiliar_status.length; i++){
-                console.log("Data puxada:", formatarData(vetor_auxiliar_status[i].dataCriacao), " Data filtro", formatarData(filtrosAtivos[2][0]))
-                if ((formatarData(vetor_auxiliar_status[i].dataCriacao) >= filtrosAtivos[2][0] && formatarData(vetor_auxiliar_status[i].dataCriacao) <= filtrosAtivos[2][1]) || filtrosAtivos[2][0] == "") {
-                    vetor_auxiliar_criacao.push(vetor_auxiliar_status[i])
+            if (filtrosAtivos[2][0] == "") {
+                vetor_auxiliar_criacao = vetor_auxiliar_status
+            } else {
+                for (let i = 0; i < vetor_auxiliar_status.length; i++) {
+                    var data_criacao = new Date(vetor_auxiliar_status[i].dataCriacao)
+                    if (data_criacao >= filtrosAtivos[2][0] && data_criacao <= filtrosAtivos[2][1]) {
+                        vetor_auxiliar_criacao.push(vetor_auxiliar_status[i])
+                    }
                 }
             }
-            console.log("Dados filtrados após criacao:", vetor_auxiliar_criacao)
-            for(let i = 0; i < vetor_auxiliar_criacao.length; i++){
-                if ((formatarData(vetor_auxiliar_criacao[i].dataExpiracao) >= filtrosAtivos[3][0] || formatarData(vetor_auxiliar_criacao[i].dataExpiracao) <= filtrosAtivos[3][1]) || filtrosAtivos[3][0] == "") {
-                    dados_filtrados.push(vetor_auxiliar_criacao[i])
+
+            if (filtrosAtivos[3][0] == "") {
+                dados_filtrados = vetor_auxiliar_criacao
+            } else {
+                for (let i = 0; i < vetor_auxiliar_criacao.length; i++) {
+                    var data_expiracao = new Date(vetor_auxiliar_criacao[i].dataExpiracao)
+                    if (data_expiracao >= filtrosAtivos[3][0] && data_expiracao <= filtrosAtivos[3][1]) {
+                        dados_filtrados.push(vetor_auxiliar_criacao[i])
+                    }
                 }
             }
-            console.log("Dados filtrados após expiracao:", dados_filtrados)
             return dados_filtrados
         }
         // POP-UP DE CÓDIGOS GERADOS
@@ -578,7 +591,7 @@
                     var data_formatada = new Date(data.value)
                     data_formatada = data_formatada.toLocaleDateString("pt-BR")
                     mandaremail(email.value, codigo_gerado, data_formatada)
-                    //inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
+                    inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
                     if (resposta.ok) {
                     } else {
                         throw "Não foi possível mandar os dados para o banco";
