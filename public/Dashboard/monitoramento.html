@@ -36,24 +36,30 @@
                                 Status do código:
                                 <select name="status-codigo">
                                     <option value="todos">Todos</option>
-                                    <option value="aceito">Ativo</option>
-                                    <option value="pendente">Inativo</option>
+                                    <option value="aceito">Aceito</option>
+                                    <option value="pendente">Pendente</option>
+                                    <option value="expirado">Expirado</option>
                                 </select>
                             </div>
 
                             <div class="componente-filtro" id="campo-data-codigo-gerado">
-                                Gerado entre: <input type="date"> e: <input type="date">
-                            </div>
-                        </div>
+                                Gerado entre:
+                                <input type="date" id="data-gerado-min"> e:
+                                <input type="date" id="data-gerado-max">
+                                </div>
+                                </div>
 
-                        <div class="box-filtros">
-                            <div class="componente-filtro" id="campo-data-codigo-gerado">
-                                Expirado entre: <input type="date"> e: <input type="date">
-                            </div>
-                            <button class="botao-aplicar-filtros">
-                                Aplicar filtros
-                            </button>
-                        </div>
+                                <div class="box-filtros">
+                                <div class="componente-filtro" id="campo-data-codigo-expirado">
+                                    Expirado entre:
+                                    <input type="date" id="data-expirado-min"> e:
+                                    <input type="date" id="data-expirado-max">
+                                </div>
+
+                                <button onclick="adicionarFiltro()" class="botao-aplicar-filtros">
+                                    Aplicar filtros
+                                </button>
+                                </div>
 
                         <div class="box-filtros-aplicados">
                             <!-- <div class="filtro-aplicado">
@@ -919,4 +925,108 @@
         document.getElementById("modal_adicionarmaquina").classList.remove('oculto')
         document.getElementById('html_fonte').style.overflowY = "hidden"
     })
+
+    // FILTROS MODAL "CONVITES GERADOS"
+    var filtrosAtivos = {
+        status: "",
+        gerado: ["", ""],
+        expirado: ["", ""]
+    }
+
+
+    function montarExibicaoFiltros() {
+        const div = document.querySelector(".box-filtros-aplicados")
+        div.innerHTML = ""
+
+        if (filtrosAtivos.status) {
+            const texto = filtrosAtivos.status.charAt(0).toUpperCase() + filtrosAtivos.status.slice(1)
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Status: ${texto}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('status')">
+            </div>`
+        }
+
+        if (filtrosAtivos.gerado[0] && filtrosAtivos.gerado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Gerado entre: ${formatarData(filtrosAtivos.gerado[0])} - ${formatarData(filtrosAtivos.gerado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('gerado')">
+            </div>`
+        }
+
+        if (filtrosAtivos.expirado[0] && filtrosAtivos.expirado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Expirado entre: ${formatarData(filtrosAtivos.expirado[0])} - ${formatarData(filtrosAtivos.expirado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('expirado')">
+            </div>`
+        }
+    }
+
+    function adicionarFiltro() {
+        const sel = document.querySelector('select[name="status-codigo"]')
+        const gMin = document.getElementById("data-gerado-min")
+        const gMax = document.getElementById("data-gerado-max")
+        const eMin = document.getElementById("data-expirado-min")
+        const eMax = document.getElementById("data-expirado-max")
+
+        filtrosAtivos = { status: "", gerado: ["", ""], expirado: ["", ""] }
+
+        if (sel.value !== "todos") filtrosAtivos.status = sel.value
+
+        if (gMin.value && gMax.value) {
+            let [d1, d2] = [gMin.value, gMax.value]
+            if (new Date(d1) > new Date(d2)) [d1, d2] = [d2, d1]
+            filtrosAtivos.gerado = [d1, d2]
+        }
+
+        if (eMin.value && eMax.value) {
+            let [d1, d2] = [eMin.value, eMax.value]
+            if (new Date(d1) > new Date(d2)) [d1, d2] = [d2, d1]
+            filtrosAtivos.expirado = [d1, d2]
+        }
+
+        montarExibicaoFiltros()
+        filtrarTabela()
+    }
+
+    function parseDataTabela(texto) {
+        const partes = texto.split(" ")[0].split("/")
+        if (partes.length !== 3) return null
+        return new Date(`${partes[2]}-${partes[1]}-${partes[0]}T00:00:00`)
+    }
+
+    function filtrarTabela() {
+        const linhas = document.querySelectorAll("#tabela-codigos .dados-tabela")
+
+        for (const linha of linhas) {
+            const status = linha.querySelector(".td-status-codigo span")?.textContent.trim().toLowerCase() || ""
+            const criado = linha.querySelector(".td-data-criacao-codigo")?.textContent.trim() || ""
+            const expirado = linha.querySelector(".td-data-expiracao-codigo")?.textContent.trim() || ""
+
+            let mostrar = true
+
+            if (filtrosAtivos.status && status !== filtrosAtivos.status) mostrar = false
+
+            if (filtrosAtivos.gerado[0] && filtrosAtivos.gerado[1]) {
+                const d = parseDataTabela(criado)
+                const dMin = new Date(filtrosAtivos.gerado[0] + "T00:00:00")
+                const dMax = new Date(filtrosAtivos.gerado[1] + "T23:59:59")
+                if (!d || d < dMin || d > dMax) mostrar = false
+            }
+
+            if (filtrosAtivos.expirado[0] && filtrosAtivos.expirado[1]) {
+                const d = parseDataTabela(expirado)
+                const dMin = new Date(filtrosAtivos.expirado[0] + "T00:00:00")
+                const dMax = new Date(filtrosAtivos.expirado[1] + "T23:59:59")
+                if (!d || d < dMin || d > dMax) mostrar = false
+            }
+
+            linha.style.display = mostrar ? "" : "none"
+        }
+    }
+
+
+
 </script>
