@@ -161,6 +161,20 @@ body {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 }
 
+.btn-voltar {
+  position: fixed;
+  background-color: #ffffff;
+  color: #b30000;
+  border: none;
+  border-radius: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 1.5%;
+  margin-left: 1.5%;
+  width: 45px;
+  height: 45px;
+}
 
 
 @media (max-width: 768px) {
@@ -202,5 +216,12 @@ body {
 
   .container .link {
     text-align: center;
+  }
+  .btn-voltar{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
   }
 }

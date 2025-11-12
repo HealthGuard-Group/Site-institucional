@@ -10,12 +10,13 @@
 </head>
 
 <body>
-    <div class="left">
-        <button onclick="history.back()" class="btn-voltar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <button onclick="history.back()" class="btn-voltar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="13 16 9 12 13 8"></polyline>
         </svg>
-        </button>
+    </button>
+    <div class="left">
         <img src="./assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard Logo">
         <h1>Acessar conta!</h1>
         <p>Muito bom ter você de volta, acesse sua conta e tenha acesso aos dados monitorados.</p>
@@ -87,8 +88,8 @@
                     sessionStorage.FK_UNIDADE = json.fkUnidadeDeAtendimento;
                     mensagem.innerHTML = `Carregando...`;
                     console.log("Entrei no Fetch do Log")
-                    console.log("Id Usuário no Login:",sessionStorage.ID_USUARIO)
-                    console.log("Id Unidade no Login:",sessionStorage.FK_UNIDADE)
+                    console.log("Id Usuário no Login:", sessionStorage.ID_USUARIO)
+                    console.log("Id Unidade no Login:", sessionStorage.FK_UNIDADE)
                     fetch("/empresas/InserirLogAcesso", {
                         method: "POST",
                         headers: {
@@ -119,13 +120,13 @@
             } else {
 
                 console.log("Houve um erro ao tentar realizar o login!");
-                
+
                 mensagem.innerHTML = `Carregando...`;
-                
+
                 setTimeout(function () {
-                mensagem.innerHTML = `Email ou senha inválido!`   
+                    mensagem.innerHTML = `Email ou senha inválido!`
                 }, 2000);
-                
+
                 resposta.text().then(texto => {
                     console.error(texto);
                     finalizarAguardar(texto);

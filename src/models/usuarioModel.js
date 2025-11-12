@@ -114,9 +114,15 @@ function inseriracao(idUnidade, idUsuario, idLogAcesso, acao) {
 
   return database.executar(instrucaoSql);
 }
+function buscarconvite(codigo) {
+  var instrucaoSql = `SELECT nomeSugerido,emailSugerido FROM CodigoValidacaoUsuario WHERE codigo = '${codigo}' AND statusCodigoValidacaoUsuario = 'Pendente'`;
+
+  return database.executar(instrucaoSql);
+}
 
 module.exports = {
     autenticar,
     cadastrar,
-    inseriracao
+    inseriracao,
+    buscarconvite
 };

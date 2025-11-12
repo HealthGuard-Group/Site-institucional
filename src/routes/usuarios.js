@@ -15,5 +15,8 @@ router.post("/autenticar", function (req, res) {
 router.post("/inseriracao", function (req, res) {
     usuarioController.inseriracao(req, res);
 });
+router.get("/buscarconvite/:codigo", function (req, res) {
+    usuarioController.buscarconvite(req, res);
+});
 
 module.exports = router;

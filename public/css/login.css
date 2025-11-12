@@ -23,19 +23,18 @@ body {
 
 
 .btn-voltar {
-    background-color: #ffffff;
-    color: #b30000;
-    border: none;
-    border-radius: 300px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-    margin-top: -25%;
-    margin-bottom: 28% ;
-    margin-left: -5%;
-    width: 7%;
-    height: 8%;
-
+  position: fixed;
+  background-color: #ffffff;
+  color: #b30000;
+  border: none;
+  border-radius: 100%;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 1.5%;
+  margin-left: 1.5%;
+  width: 45px;
+  height: 45px;
 }
 
 .btn-voltar:hover {
@@ -175,5 +174,13 @@ body {
 
   .container .link {
     text-align: center;
+  }
+  
+  .btn-voltar{
+    height: 30px;
+    width: 30px;
+    display: flex;
+    justify-items: center;
+    align-items: center;
   }
 }

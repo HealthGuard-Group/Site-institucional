@@ -10,12 +10,14 @@
 </head>
 
 <body>
-  <div class="left">
-    <button onclick="history.back()" class="btn-voltar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+  <button onclick="history.back()" class="btn-voltar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="13 16 9 12 13 8"></polyline>
         </svg>
-        </button>
+    </button>
+  <div class="left">
+    
     <img src="./assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard Logo">
     <h1>Crie sua conta!</h1>
     <p>Cada minuto é precioso, vamos mudar esse jogo! <br> Comece a monitorar suas máquinas.</p>
@@ -28,15 +30,15 @@
       <div class="subcontainer">
         <div>
           <label>Cód. da Central</label>
-          <input id="codigo_input" type="text" placeholder="Digite o código">
+          <input id="codigo_input" type="text" placeholder="Digite o código" oninput="validarCodigo()">
         </div>
         <div>
           <label>Nome Completo</label>
-          <input id="nome_input" type="text" placeholder="Ex: Marcelo da Silva" oninput="validarNome()">
+          <input id="nome_input" type="text" placeholder="Ex: Marcelo da Silva" style="cursor: not-allowed;" disabled>
         </div>
         <div>
           <label>E-mail</label>
-          <input id="email_input" type="text" placeholder="healthguard@example.com" oninput="validarEmail()">
+          <input id="email_input" type="text" placeholder="healthguard@example.com" style="cursor: not-allowed;" disabled>
         </div>
         <div>
           <label>Senha</label>
@@ -69,25 +71,36 @@
 <script>
   var cpf = document.getElementById("cpf_input")
   document.getElementById("cpf_input").addEventListener("input", () => mascaraCPF(cpf))
-  function validarNome() {
+  function validarCodigo() {
+    var codigo = document.getElementById("codigo_input").value
     var nome = document.getElementById("nome_input")
-
-    if (nome.value.length > 0) {
-      nome.style.border = '0.2vh solid #0AA40A'
-      nome.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
-    } else {
-      nome.style.border = '0.2vh solid #D30808'
-      nome.style.boxShadow = '#d308082d 0px 2px 8px 0px'
-    }
-  }
-  function validarEmail() {
     var email = document.getElementById("email_input")
-    if (email.value.includes("@") && !email.value.startsWith("@") && !email.value.endsWith("@")) {
-      email.style.border = '0.2vh solid #0AA40A'
-      email.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+    email.value = ""
+    nome.value = ""
+    if (codigo.length != 10) {
+      return
     } else {
-      email.style.border = '0.2vh solid #D30808'
-      email.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+      fetch(`/usuarios/buscarconvite/${codigo}`, {
+        method: "GET",
+      })
+        .then(resposta => {
+          return resposta.json();
+        })
+        .then(resposta => {
+          console.log(resposta)
+
+          if (resposta.length == 0) {
+            nome.disabled = false
+            email.disabled = false
+          } else {
+            email.value = resposta[0].emailSugerido
+            nome.value = resposta[0].nomeSugerido
+          }
+
+        })
+        .catch(function (resposta) {
+          console.log(`Erro no catch: ${resposta}`);
+        });
     }
   }
   function validarSenha() {
