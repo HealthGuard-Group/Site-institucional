@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="en" id="html_fonte">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Funcionários</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/funcionariosOficial.css">
+    <!-- Link JavaScript -->
+</head>
+
+<body onload="validarSessao()">
+    <section class="tela">
+        <div class="tela-box-copiar oculto">
+            <div class="box-copiar">
+                <img src="../assets/imgs/Icone ok.png" alt="" class="icon-ok">
+                <div class="texto-copiar">Código copiado com sucesso</div>
+            </div>
+        </div>
+
+        <!-- Começo modais -->
+        <div class="tela-escurecida oculto">
+            <div id="popupFundo" class="popup-fundo oculto">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2>Novo Convite</h2>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
+                    <input type="text" id="nome" placeholder="Ex: Arthur Felipe">
+                    <div class="texto-erro oculto" id="texto_erro_nome">Preencha o campo</div>
+                    <label for="email">Email da pessoa<span style="color: red">*</span>:</label>
+                    <input type="email" id="email" placeholder="Ex: example@example.com">
+                    <div class="texto-erro oculto" id="texto_erro_email">Preencha o campo</div>
+                    <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
+                    <select class="select-cargo" id="permissao">
+                        <option value="tecnico" selected>Técnico de TI</option>
+                        <option value="gestor">Gestor de TI</option>
+                    </select>
+
+                    <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
+                    <input type="date" id="data">
+                    <div class="texto-erro oculto" id="texto_erro_data">Preencha o campo</div>
+                    <button class="btn-convidar" onclick="convidar()">Convidar</button>
+                </div>
+            </div>
+            <div id="popupConviteGerado" class="popup-fundo oculto">
+                <div class="popup">
+                    <div class="popup-header">
+                        <h2>Convite enviado</h2>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFecharFiltro.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="texto-modal">O convite gerado com sucesso, e foi encaminhado para: <a
+                            href="mailto:arthur.amahals1000@gmail.com" style="text-decoration: none;"
+                            id="email_convite">arthur.amahals1000@gmail.com</a></div>
+                    <div class="texto-modal">Código de convite gerado:</div>
+                    <div class="box-codigo">
+                        <div class="texto-codigo" id="codigo_texto">AAAAAAYO</div>
+                        <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copy" onclick="copiartexto()">
+                    </div>
+                    <button class="btn-convidar" onclick="fecharPop()">Fechar</button>
+                </div>
+            </div>
+        </div>
+        <!-- Fim modais -->
+
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_redirecionamento">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de usuários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="alertas_redirecionamento">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <!-- <div class="icone-box" id="suporte_redirecionamento">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div> -->
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+        <div class="filtros-box">
+            <div class="texto-organizacao" id="div_nome_empresa">
+                Central de regulação de urgências de Diadema
+            </div>
+            <div class="texto-topico">
+                Lista de Funcionários:
+            </div>
+            <div class="area-filtros">
+                <!-- ÁREA DESTINADA AOS FILTROS -->
+                <div class="texto-funcionalidade alinhamento-centralizar-vertical">
+                    Filtros:
+                </div>
+                <!-- uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu -->
+                <div class="box-filtros">
+                    <div class="componente-filtro" id="campo-cpf">
+                        Buscar por Nome: <input type="text" placeholder="Ex: Roberto" id="campo_nome">
+                    </div>
+
+                    <div class="componente-filtro" id="campo-status-convite">
+                        Cargo/Permissão:
+                        <select name="viagem" id="campo_status_convite">
+                            <option value="selecione">Selecione</option>
+                            <option value="Aceito">Gestor</option>
+                            <option value="Pendente">Técnico de TI</option>
+                        </select>
+                    </div>
+
+                    <div class="componente-filtro" id="campo-data-convite-gerado">
+                        Convite gerado entre: <input type="date" id="campo_data_convite_gerado_min"> e: <input
+                            type="date" id="campo_data_convite_gerado_max">
+                    </div>
+                </div>
+
+                <div class="box-filtros">
+                    <div class="componente-filtro" id="campo-data-convite-gerado">
+                        Convite expirado entre: <input type="date" id="campo_data_convite_expirado_min"> e: <input
+                            type="date" id="campo_data_convite_expirado_max">
+                    </div>
+                    <button class="botao-aplicar-filtros" onclick="adicionarFiltro()">
+                        Aplicar filtros
+                    </button>
+                </div>
+
+                <div class="box-filtros-aplicados" id="div_filtros">
+                    <div class="filtro-aplicado">
+                        Status Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                    </div>
+                    <div class="filtro-aplicado">
+                        Gerado entre: 10/10/1025 - 15/10/2025 &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                    </div>
+                    <div class="filtro-aplicado">
+                        Expirado entre: 25/10/1025 - 27/10/2025 &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                    </div>
+                </div>
+
+            </div>
+            <div class="box-selecao-funcionario">
+                <div class="texto-funcionalidade alinhamento-centralizar-vertical">
+                    Selecione um usuário:
+                </div>
+
+                <div class="filtro-direita">
+                    <button class="botao-codigo" onclick="mandaremail()">
+                        Ver ações do funcionário
+                    </button>
+
+                    <!-- <div class="div-botao-adicionar" id="botao_novo_convite">
+                        <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
+                        <div class="barra-vertical-botao"></div>
+                        <div class="texto-botao-adicionar">
+                            Novo convite
+                        </div>
+                    </div> -->
+                    <button class="botao-recarregar" onclick="puxarConvites()">
+                        <img src="../assets/imgs/icone-recarregar.png" alt="" class="icone-recarregar">
+                    </button>
+                </div>
+            </div>
+            <div id="container-tabela">
+                <table id="tabela_funcionarios">
+                    <tr id="titulo-tabela">
+                        <td id="tr-seletor"></td>
+                        <td id="tr-nome-completo">Nome Completo</td>
+                        <td id="tr-email">E-mail</td>
+                        <td id="tr-cpf-funcionario">CPF</td>
+                        <td id="tr-permissao">Cargo/Permissão</td>
+                        <td id="tr-acoes-funcionario">Ações</td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+    <script src="../js/validarSessao.js"></script>
+    <script src="../js/menu-lateral.js"></script>
+    <script>
+        // Configuração dos filtros
+        var filtrosAtivos = ["", "", ["", ""], ["", ""]]
+        function fecharFiltro(index) {
+            if (index < 0 || index > 3) {
+                return
+            }
+            if (index < 2) {
+                filtrosAtivos[index] = ""
+            } else {
+                filtrosAtivos[index][0] = ""
+                filtrosAtivos[index][1] = ""
+            }
+            adicionarFiltro()
+        }
+        function adicionarFiltro() {
+            // Declaração de váriaveis
+            var input_buscar_nome = document.getElementById("campo_nome")
+            var select_tipo_convite = document.getElementById("campo_status_convite")
+            var input_data_criacao_min = document.getElementById("campo_data_convite_gerado_min")
+            var input_data_criacao_max = document.getElementById("campo_data_convite_gerado_max")
+            var input_data_expiracao_min = document.getElementById("campo_data_convite_expirado_min")
+            var input_data_expiracao_max = document.getElementById("campo_data_convite_expirado_max")
+            // Variveis para impedir a replotagem
+            var replotagem_nome = true
+            var replotagem_status = true
+            var replotagem_criacao = true
+            var replotagem_expiracao = true
+            div_filtros.innerHTML = "" // Limpa os filtros
+            // Faz a adição de filtros ou a sobrescrita
+            if (input_buscar_nome.value.length != 0) {
+                filtrosAtivos[0] = input_buscar_nome.value
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Nome: ${input_buscar_nome.value} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(0)">
+                </div>`
+                input_buscar_nome.value = ""
+                replotagem_nome = false
+            }
+            if (select_tipo_convite.value != "selecione") {
+                filtrosAtivos[1] = select_tipo_convite.value
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Status: ${select_tipo_convite.value} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                </div>`
+                select_tipo_convite.value = "selecione"
+                replotagem_status = false
+            }
+            if (input_data_criacao_min.value.length != 0 && input_data_criacao_max.value.length != 0) {
+                var data_criacao = new Date(input_data_criacao_min.value + 'T00:00:00')
+                var data_expiracao = new Date(input_data_criacao_max.value + 'T00:00:00')
+                if (data_criacao > data_expiracao) {
+                    filtrosAtivos[2][0] = data_expiracao
+                    filtrosAtivos[2][1] = data_criacao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Gerado entre: ${formatarData(data_expiracao)} - ${formatarData(data_criacao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                    </div>`
+                } else if (data_criacao <= data_expiracao) {
+                    filtrosAtivos[2][0] = data_criacao
+                    filtrosAtivos[2][1] = data_expiracao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Gerado entre: ${formatarData(data_criacao)} - ${formatarData(data_expiracao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                    </div>`
+                }
+                input_data_criacao_min.value = ""
+                input_data_criacao_max.value = ""
+                replotagem_criacao = false
+            }
+            if (input_data_expiracao_min.value.length != 0 && input_data_expiracao_max.value.length != 0) {
+                var data_criacao = new Date(input_data_expiracao_min.value + 'T00:00:00')
+                var data_expiracao = new Date(input_data_expiracao_max.value + 'T00:00:00')
+
+                if (data_criacao > data_expiracao) {
+                    filtrosAtivos[3][0] = data_expiracao
+                    filtrosAtivos[3][1] = data_criacao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Expirado entre: ${formatarData(data_expiracao)} - ${formatarData(data_criacao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                    </div>`
+                } else if (data_criacao <= data_expiracao) {
+                    filtrosAtivos[3][0] = data_criacao
+                    filtrosAtivos[3][1] = data_expiracao
+                    div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Expirado entre: ${formatarData(data_criacao)} - ${formatarData(data_expiracao)} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                    </div>`
+                }
+                input_data_expiracao_min.value = ""
+                input_data_expiracao_max.value = ""
+                replotagem_expiracao = false
+            }
+            // Replota os filtros previamente selecionados
+            if (filtrosAtivos[0].length != 0 && replotagem_nome) {
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Nome: ${filtrosAtivos[0]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(0)">
+                </div>`
+            } if (filtrosAtivos[1].length != 0 && replotagem_status) {
+                div_filtros.innerHTML += `
+                <div class="filtro-aplicado">
+                        Status: ${filtrosAtivos[1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                </div>`
+            } if (filtrosAtivos[2][0].length != 0 && filtrosAtivos[2][1].length != 0 && replotagem_criacao) {
+                div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Gerado entre: ${formatarData(filtrosAtivos[2][0])} - ${formatarData(filtrosAtivos[2][1])} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(2)">
+                    </div>`
+            } if (filtrosAtivos[3][0].length != 0 && filtrosAtivos[3][1].length != 0 && replotagem_expiracao) {
+                div_filtros.innerHTML += `
+                    <div class="filtro-aplicado">
+                        Expirado entre: ${formatarData(filtrosAtivos[3][0])} - ${formatarData(filtrosAtivos[3][1])} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
+                    </div>`
+            }
+            puxarConvites()
+        }
+        function filtrarConvites(dados) {
+            var dados_filtrados = []
+            var vetor_auxiliar_nome = []
+            var vetor_auxiliar_status = []
+            var vetor_auxiliar_criacao = []
+            if (filtrosAtivos[0] == '') {
+                vetor_auxiliar_nome = dados
+            } else {
+                for (let i = 0; i < dados.length; i++) {
+                    if (formatarTextoParaComparacao(dados[i].nomeSugerido).includes(formatarTextoParaComparacao(filtrosAtivos[0]))) {
+                        vetor_auxiliar_nome.push(dados[i])
+                    }
+                }
+            }
+            if (filtrosAtivos[1] == "") {
+                vetor_auxiliar_status = vetor_auxiliar_nome
+            } else {
+                for (let i = 0; i < vetor_auxiliar_nome.length; i++) {
+                    if ((filtrosAtivos[1] == vetor_auxiliar_nome[i].statusCodigoValidacaoUsuario)) {
+                        vetor_auxiliar_status.push(vetor_auxiliar_nome[i])
+                    }
+                }
+            }
+            if (filtrosAtivos[2][0] == "") {
+                vetor_auxiliar_criacao = vetor_auxiliar_status
+            } else {
+                for (let i = 0; i < vetor_auxiliar_status.length; i++) {
+                    var data_criacao = new Date(vetor_auxiliar_status[i].dataCriacao)
+                    if (data_criacao >= filtrosAtivos[2][0] && data_criacao <= filtrosAtivos[2][1]) {
+                        vetor_auxiliar_criacao.push(vetor_auxiliar_status[i])
+                    }
+                }
+            }
+
+            if (filtrosAtivos[3][0] == "") {
+                dados_filtrados = vetor_auxiliar_criacao
+            } else {
+                for (let i = 0; i < vetor_auxiliar_criacao.length; i++) {
+                    var data_expiracao = new Date(vetor_auxiliar_criacao[i].dataExpiracao)
+                    if (data_expiracao >= filtrosAtivos[3][0] && data_expiracao <= filtrosAtivos[3][1]) {
+                        dados_filtrados.push(vetor_auxiliar_criacao[i])
+                    }
+                }
+            }
+            return dados_filtrados
+        }
+        // POP-UP DE CÓDIGOS GERADOS
+        function copiartexto() {
+            var codigo = document.getElementById("codigo_texto").innerText
+            navigator.clipboard.writeText(codigo)
+            document.querySelector(".tela-box-copiar").classList.remove("oculto")
+            setTimeout(() => {
+                document.querySelector(".tela-box-copiar").classList.add("oculto")
+            }, 3000)
+        }
+        document.getElementById("botao_novo_convite").addEventListener('click', () => {
+            document.querySelector('.tela-escurecida').classList.remove('oculto')
+            document.getElementById("popupFundo").classList.remove("oculto")
+            document.getElementById('html_fonte').style.overflowY = "hidden"
+            nome.value = ``
+            email.value = ``
+            document.getElementById("permissao").value = "tecnico"
+            data.value = ``
+        })
+        function fecharPop() {
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupFundo").classList.add("oculto")
+            document.getElementById("popupConviteGerado").classList.add("oculto")
+            document.getElementById('html_fonte').style.overflowY = "auto"
+        }
+        function convidar() {
+            const nome = document.getElementById("nome")
+            const email = document.getElementById("email")
+            const permissao = document.getElementById("permissao")
+            const data = document.getElementById("data")
+            let hoje = new Date()
+            let dia_escolhido = new Date(data.value)
+            let ax_erro = false
+            if (nome.value.length == 0) {
+                texto_erro_nome.classList.remove("oculto")
+                texto_erro_nome.innerHTML = `Preencha o campo`
+                nome.style.border = '0.2vh solid #D30808'
+                nome.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else {
+                texto_erro_nome.classList.add("oculto")
+                nome.style.border = '1.5px solid #ccc'
+                nome.style.boxShadow = 'none'
+            } if (email.value.length == 0) {
+                texto_erro_email.classList.remove("oculto")
+                texto_erro_email.innerHTML = `Preencha o campo`
+                email.style.border = '0.2vh solid #D30808'
+                email.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else if (!email.value.includes("@") || !email.value.includes(".") || email.value.startsWith("@") || email.value.endsWith("@") || email.value.startsWith(".") || email.value.endsWith(".")) {
+                texto_erro_email.classList.remove("oculto")
+                texto_erro_email.innerHTML = `Email inválido`
+                email.style.border = '0.2vh solid #D30808'
+                email.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else {
+                texto_erro_email.classList.add("oculto")
+                email.style.border = '1.5px solid #ccc'
+                email.style.boxShadow = 'none'
+            } if (data.value.length == 0) {
+                texto_erro_data.classList.remove("oculto")
+                texto_erro_data.innerHTML = `Preencha o campo`
+                data.style.border = '0.2vh solid #D30808'
+                data.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else if (dia_escolhido <= hoje) {
+                texto_erro_data.classList.remove("oculto")
+                texto_erro_data.innerHTML = `Dia inválido`
+                data.style.border = '0.2vh solid #D30808'
+                data.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+                ax_erro = true
+            } else {
+                texto_erro_data.classList.add("oculto")
+                data.style.border = '1.5px solid #ccc'
+                data.style.boxShadow = 'none'
+            }
+
+            if (ax_erro) {
+                return
+            }
+            if (permissao.value == "tecnico") {
+                var fkpermissao = 2
+            } else {
+                var fkpermissao = 1
+            }
+            let codigo_gerado = gerarTextoAleatorio(10)
+            var info_usuario = puxarVariaveis()
+            console.log(nome.value, email.value)
+            fetch("/convites/criarconvite", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    fkUnidadeAtendimento: info_usuario.idUnidadeAtendimento,
+                    codigo: codigo_gerado,
+                    data: data.value,
+                    fkpermissao: fkpermissao,
+                    nome: nome.value,
+                    email: email.value
+                }),
+            })
+                .then(function (resposta) {
+                    console.log("resposta: ", resposta);
+                    document.getElementById("popupFundo").classList.add("oculto")
+                    document.getElementById("popupConviteGerado").classList.remove("oculto")
+                    codigo_texto.innerHTML = codigo_gerado
+                    email_convite.innerHTML = email.value
+                    email_convite.href = `mailto:${email.value}`
+                    var data_formatada = new Date(data.value)
+                    data_formatada = data_formatada.toLocaleDateString("pt-BR")
+                    mandaremail(email.value, codigo_gerado, data_formatada)
+                    inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
+                    if (resposta.ok) {
+                    } else {
+                        throw "Não foi possível mandar os dados para o banco";
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`#ERRO: ${resposta}`);
+                    alert("Erro no catch");
+                });
+
+            // alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
+            // popupFundo.style.display = "none"
+            // telaEscurecida.classList.add("oculto");
+        }
+        function gerarTextoAleatorio(tamanhoTexto) {
+            if (!Number.isInteger(tamanhoTexto)) {
+                console.log("Valor inválido")
+                return
+            }
+            if (tamanhoTexto < 0) {
+                console.log("Valor inválido")
+                return
+            }
+            var vetor_texto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+            let contador = 0;
+            let texto = ""
+            while (contador < tamanhoTexto) {
+                let posicao_vetor = Math.round(Math.random() * (vetor_texto.length - 1), 0)
+                texto += vetor_texto[posicao_vetor]
+                contador++
+            }
+            return texto
+        }
+        function puxarConvites() {
+            var variaveis = puxarVariaveis()
+            variaveis = variaveis.idUnidadeAtendimento
+            tabela_funcionarios.innerHTML = `
+            <tr id="titulo-tabela">
+                        <td id="tr-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td id="tr-cod-convite">Cód. Convite</td>
+                        <td id="tr-nome-completo">Nome Completo</td>
+                        <td id="tr-cpf-funcionario">Email</td>
+                        <td id="tr-data-criacao-convite">Data de criação</td>
+                        <td id="tr-data-expiracao-convite">Data de expiração</td>
+                        <td id="tr-status-funcionario">Status</td>
+                        <td id="tr-acoes-funcionario">Ações</td>
+                    </tr>`
+            fetch(`/convites/buscarconvites/${variaveis}`, {
+                method: "GET",
+            })
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    console.log(resposta)
+                    var dados_filtrados = filtrarConvites(resposta)
+                    atualizarTabela(dados_filtrados)
+                })
+                .catch(function (resposta) {
+                    console.log(`Erro no catch: ${resposta}`);
+                });
+        }
+        function atualizarTabela(dados) {
+            for (let i = 0; i < dados.length; i++) {
+                let data_criacao = new Date(dados[i].dataCriacao)
+                data_criacao = data_criacao.toLocaleDateString('pt-BR')
+                let data_expiracao = new Date(dados[i].dataExpiracao)
+                data_expiracao = data_expiracao.toLocaleDateString('pt-BR')
+                if (dados[i].statusCodigoValidacaoUsuario == "Expirado") {
+                    tabela_funcionarios.innerHTML += `
+                            <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">${dados[i].codigo}</td>
+                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
+                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
+                        <td class="td-data-criacao-convite">${data_criacao}</td>
+                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar"
+                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                                ---
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>`
+                } if (dados[i].statusCodigoValidacaoUsuario == "Pendente") {
+                    tabela_funcionarios.innerHTML += `
+                            <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">${dados[i].codigo}</td>
+                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
+                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
+                        <td class="td-data-criacao-convite">${data_criacao}</td>
+                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+
+                        </td>
+                    </tr>`
+                } if (dados[i].statusCodigoValidacaoUsuario == "Aceito") {
+                    tabela_funcionarios.innerHTML += `
+                            <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">${dados[i].codigo}</td>
+                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
+                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
+                        <td class="td-data-criacao-convite">${data_criacao}</td>
+                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>`
+                }
+            }
+
+        }
+        function mandaremail(email, codigo, dataExpiracao) {
+            // Exemplo de como o seu site (frontend.js) enviaria os dados
+
+            // Supondo que você pegou os dados de um formulário
+            const dadosDoFormulario = {
+                email: email,
+                assunto: "Você recebeu um convite",
+                mensagem: `
+                <!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"><!--[if mso]>
+<xml><w:WordDocument xmlns:w="urn:schemas-microsoft-com:office:word"><w:DontUseAdvancedTypographyReadingMail/></w:WordDocument>
+<o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml>
+<![endif]--><!--[if !mso]><!--><!--<![endif]-->
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		a[x-apple-data-detectors] {
+			color: inherit !important;
+			text-decoration: inherit !important;
+		}
+
+		#MessageViewBody a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		p {
+			line-height: inherit
+		}
+
+		.desktop_hide,
+		.desktop_hide table {
+			mso-hide: all;
+			display: none;
+			max-height: 0px;
+			overflow: hidden;
+		}
+
+		.image_block img+div {
+			display: none;
+		}
+
+		sup,
+		sub {
+			font-size: 75%;
+			line-height: 0;
+		}
+
+		@media (max-width:500px) {
+			.desktop_hide table.icons-inner {
+				display: inline-block !important;
+			}
+
+			.icons-inner {
+				text-align: center;
+			}
+
+			.icons-inner td {
+				margin: 0 auto;
+			}
+
+			.mobile_hide {
+				display: none;
+			}
+
+			.row-content {
+				width: 100% !important;
+			}
+
+			.stack .column {
+				width: 100%;
+				display: block;
+			}
+
+			.mobile_hide {
+				min-height: 0;
+				max-height: 0;
+				max-width: 0;
+				overflow: hidden;
+				font-size: 0px;
+			}
+
+			.desktop_hide,
+			.desktop_hide table {
+				display: table !important;
+				max-height: none !important;
+			}
+		}
+	</style><!--[if mso ]><style>sup, sub { font-size: 100% !important; } sup { mso-text-raise:10% } sub { mso-text-raise:-10% }</style> <![endif]-->
+</head>
+
+<body class="body" style="background-color: #f8f8f8; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+	<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f8f8f8;">
+		<tbody>
+			<tr>
+				<td>
+					<table class="row row-1" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="75%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad" style="width:100%;">
+																<div class="alignment" align="center">
+																	<div style="max-width: 360px;"><img src="https://435775eb4f.imgdist.com/pub/bfra/te9h5y2x/vwe/k71/8jq/HealthGuard_Logomarca_VERMELHA_fundo_transparente_1.png" style="display: block; height: auto; border: 0; width: 100%;" width="360" alt title height="auto"></div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td class="column column-2" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="empty_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<div></div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="heading_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<h3 style="margin: 0; color: #1e0e4b; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 24px; font-weight: 700; letter-spacing: normal; line-height: 1.2; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 29px;"><span class="tinyMce-placeholder" style="word-break: break-word;">Olá,</span></h3>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="heading_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<h3 style="margin: 0; color: #1e0e4b; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: normal; line-height: 1.2; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 22px;"><span class="tinyMce-placeholder" style="word-break: break-word;">Insira este código para criar sua conta:</span></h3>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="heading_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<h2 style="margin: 0; color: #1e0e4b; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 30px; font-weight: 700; letter-spacing: normal; line-height: 1.2; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 36px;"><span class="tinyMce-placeholder" style="word-break: break-word;"><strong>${codigo}</strong></span></h2>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-5" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="heading_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<h3 style="margin: 0; color: #1e0e4b; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: normal; line-height: 1.2; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 22px;"><span class="tinyMce-placeholder" style="word-break: break-word;">Esse código é válido até ${dataExpiracao} e só pode ser usado uma vez. Ao inseri-lo, você também confirma o endereço de e‑mail associado à sua conta.</span></h3>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-6" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="heading_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<h3 style="margin: 0; color: #1e0e4b; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: normal; line-height: 1.2; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 22px;"><span class="tinyMce-placeholder" style="word-break: break-word;">Se você desconhece esse convite, favor ignore este e-mail.</span></h3>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-7" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="heading_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<h3 style="margin: 0; color: #1e0e4b; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: normal; line-height: 1.2; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 22px;"><span class="tinyMce-placeholder" style="word-break: break-word;">Atencionsamente,</span></h3>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-8" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="heading_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<h3 style="margin: 0; color: #1e0e4b; direction: ltr; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 18px; font-weight: 700; letter-spacing: normal; line-height: 1.2; text-align: left; margin-top: 0; margin-bottom: 0; mso-line-height-alt: 22px;"><span class="tinyMce-placeholder" style="word-break: break-word;">HealthGuard</span></h3>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-9" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="divider_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<div class="alignment" align="center">
+																	<table border="0" cellpadding="0" cellspacing="0" role="presentation" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+																		<tr>
+																			<td class="divider_inner" style="font-size: 1px; line-height: 1px; border-top: 1px solid #dddddd;"><span style="word-break: break-word;">&#8202;</span></td>
+																		</tr>
+																	</table>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-10" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad" style="width:100%;">
+																<div class="alignment" align="center">
+																	<div style="max-width: 120px;"><img src="https://435775eb4f.imgdist.com/pub/bfra/te9h5y2x/x83/glx/ps1/HealthGuard.png" style="display: block; height: auto; border: 0; width: 100%;" width="120" alt title height="auto"></div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td class="column column-2" width="75%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="paragraph_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class="pad">
+																<div style="color:#444a5b;direction:ltr;font-family:Arial, 'Helvetica Neue', Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:1.2;text-align:left;mso-line-height-alt:19px;">
+																	<p style="margin: 0; margin-bottom: 16px;"><strong>Contato:</strong></p>
+																	<p style="margin: 0;"><strong>Email:&nbsp;</strong>contatohealtguard@gmail.com</p>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-11" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; color: #000000; width: 480px; margin: 0 auto;" width="480">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="icons_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; text-align: center; line-height: 0;">
+														<tr>
+															<td class="pad" style="vertical-align: middle; color: #1e0e4b; font-family: 'Inter', sans-serif; font-size: 15px; padding-bottom: 5px; padding-top: 5px; text-align: center;"><!--[if vml]><table align="center" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
+																<!--[if !vml]><!-->
+																<table class="icons-inner" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; padding-left: 0px; padding-right: 0px;" cellpadding="0" cellspacing="0" role="presentation"><!--<![endif]-->
+																	<tr>
+																		<td style="vertical-align: middle; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;"><a href="https://designedwithbeefree.com/" target="_blank" style="text-decoration: none;"><img class="icon" alt="Beefree Logo" src="https://d1oco4z2z1fhwp.cloudfront.net/assets/Beefree-logo.png" height="auto" width="34" align="center" style="display: block; height: auto; margin: 0 auto; border: 0;"></a></td>
+																		<td style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: undefined; color: #1e0e4b; vertical-align: middle; letter-spacing: undefined; text-align: center; line-height: normal;"><a href="https://designedwithbeefree.com/" target="_blank" style="color: #1e0e4b; text-decoration: none;">Designed with Beefree</a></td>
+																	</tr>
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table><!-- End -->
+</body>
+
+</html>`
+            };
+            fetch('http://localhost:3000/enviar-email', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dadosDoFormulario)
+            })
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    console.log('Ocorreu ao enviar o email.');
+                });
+        }
+        function formatarTextoParaComparacao(texto) {
+            var texto_formatado = "" + texto
+            texto_formatado = texto_formatado.toLowerCase()
+            texto_formatado = texto_formatado.replaceAll(" ", "")
+            return texto_formatado
+        }
+        function formatarData(data) {
+            const fuso = {
+                timeZone: 'UTC'
+            }
+            var data_formatada = new Date(data)
+            data_formatada = data_formatada.toLocaleDateString("pt-BR", fuso)
+            return data_formatada
+        }
+    </script>
+</body>
+
+</html>
