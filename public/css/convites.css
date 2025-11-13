@@ -150,7 +150,7 @@
     margin-top: 0.7%;
 }
 
-.box-selecao-funcionario {
+.box-selecao-convite {
     /* background-color: #8484843e; */
     width: 90%;
     height: 10vh;
@@ -295,11 +295,17 @@ td {
     height: 15px;
     margin-top: 3px;
 }
+#tr-cod-convite {
+    width: 35%;
+}
+.td-cod-convite {
+    width: 35%;
+}
 #tr-nome-completo {
-    width: 40%;
+    width: 42%;
 }
 .td-nome-completo {
-    width: 40%;
+    width: 42%;
 }
 #tr-cpf-funcionario {
     width: 25%;
@@ -307,16 +313,16 @@ td {
 .td-cpf-funcionario {
     width: 25%;
 }
-#tr-email {
-    width: 30%
-}
-.td-email {
-    width: 30%;
-}
-#tr-permissao {
+#tr-data-criacao-convite {
     width: 25%;
 }
-.td-permissao {
+.td-data-criacao-convite {
+    width: 25%;
+}
+#tr-data-expiracao-convite {
+    width: 25%;
+}
+.td-data-expiracao-convite {
     width: 25%;
 }
 #tr-status-funcionario {

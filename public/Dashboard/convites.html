@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HealthGuard - Funcionários</title>
+    <title>HealthGuard - Convites</title>
     <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/menu_bar.css">
-    <link rel="stylesheet" href="../css/funcionariosOficial.css">
+    <link rel="stylesheet" href="../css/convites.css">
     <!-- Link JavaScript -->
 </head>
 
@@ -89,15 +89,20 @@
                     <div class="texto-icone oculto">Gestão de usuários</div>
                 </div>
                 <hr class="separador">
+                <div class="icone-box" id="gestao_convites">
+                    <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Convites</div>
+                </div>
+                <hr class="separador">
                 <div class="icone-box" id="alertas_redirecionamento">
                     <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
                     <div class="texto-icone oculto">Histórico de Alertas</div>
                 </div>
                 <hr class="separador">
-                <!-- <div class="icone-box" id="suporte_redirecionamento">
+                <div class="icone-box" id="suporte_redirecionamento">
                     <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
                     <div class="texto-icone oculto">Suporte</div>
-                </div> -->
+                </div>
             </div>
             <div class="pai-icones-inferiores">
                 <hr class="separador-forte">
@@ -118,7 +123,7 @@
                 Central de regulação de urgências de Diadema
             </div>
             <div class="texto-topico">
-                Lista de Funcionários:
+                Convites enviados:
             </div>
             <div class="area-filtros">
                 <!-- ÁREA DESTINADA AOS FILTROS -->
@@ -132,11 +137,12 @@
                     </div>
 
                     <div class="componente-filtro" id="campo-status-convite">
-                        Cargo/Permissão:
+                        Status do convite:
                         <select name="viagem" id="campo_status_convite">
                             <option value="selecione">Selecione</option>
-                            <option value="Aceito">Gestor</option>
-                            <option value="Pendente">Técnico de TI</option>
+                            <option value="Aceito">Aceito</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Expirado">Expirado</option>
                         </select>
                     </div>
 
@@ -169,52 +175,139 @@
                 </div>
 
             </div>
-            <div class="box-selecao-funcionario">
+            <div class="box-selecao-convite">
                 <div class="texto-funcionalidade alinhamento-centralizar-vertical">
                     Selecione um usuário:
                 </div>
 
                 <div class="filtro-direita">
-                    <button class="botao-codigo" onclick="mandaremail()">
+                    <!-- <button class="botao-codigo" onclick="mandaremail()">
                         Ver ações do funcionário
-                    </button>
+                    </button> -->
 
-                    <!-- <div class="div-botao-adicionar" id="botao_novo_convite">
+                    <div class="div-botao-adicionar" id="botao_novo_convite">
                         <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
                         <div class="barra-vertical-botao"></div>
                         <div class="texto-botao-adicionar">
                             Novo convite
                         </div>
-                    </div> -->
+                    </div>
                     <button class="botao-recarregar" onclick="puxarConvites()">
                         <img src="../assets/imgs/icone-recarregar.png" alt="" class="icone-recarregar">
                     </button>
                 </div>
             </div>
             <div id="container-tabela">
-                <table id="tabela_funcionarios">
+                <table id="tabela_convites">
                     <tr id="titulo-tabela">
-                        <td id="tr-seletor"></td>
+                        <td id="tr-cod-convite">Cód. Convite</td>
                         <td id="tr-nome-completo">Nome Completo</td>
-                        <td id="tr-email">E-mail</td>
-                        <td id="tr-cpf-funcionario">CPF</td>
-                        <td id="tr-permissao">Cargo/Permissão</td>
-                        <td id="tr-acoes-funcionario">Ações</td>
+                        <td id="tr-cpf-funcionario">Email</td>
+                        <td id="tr-data-criacao-convite">Data de criação</td>
+                        <td id="tr-data-expiracao-convite">Data de expiração</td>
+                        <td id="tr-status-funcionario">Status</td>
+                        <!-- <td id="tr-acoes-funcionario">Ações</td> -->
                     </tr>
                     <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
                         <td class="td-nome-completo">André Augusto Corado Leão</td>
-                        <td class="td-email">andre@gmail.com</td>
                         <td class="td-cpf-funcionario">000.000.000-00</td>
-                        <td class="td-permissao">Técnico de TI</td>
-                        <td class="td-acoes-funcionario">
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                        <!-- <td class="td-acoes-funcionario">
                             <div class="icone-editar">
                                 <img src="../assets/imgs/user-edit.png" alt="Editar">
                             </div>
                             <div class="icone-excluir">
                                 <img src="../assets/imgs/contact.png" alt="Excluir">
                             </div>
-                        </td>
+                        </td> -->
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Arthur Felipe Amaral da Silva</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">13/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                        <!-- <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+
+                        </td> -->
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Davi Escudero Caproni</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                        <!-- <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td> -->
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Giovanna Prado Andrade</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">13/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                        <!-- <td class="td-acoes-funcionario">
+                            <div class="icone-editar"
+                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                                ---
+                                
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td> -->
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Marcela Bastos Vicente</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">13/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                        <!-- <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td> -->
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-cod-convite">0123456789ABC@!0ablo</td>
+                        <td class="td-nome-completo">Rafael Fratini Dal Corso</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-data-criacao-convite">10/10/2025</td>
+                        <td class="td-data-expiracao-convite">15/10/2025</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                        <!-- <td class="td-acoes-funcionario">
+                            <div class="icone-editar"
+                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
+                                ---
+                            
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td> -->
                     </tr>
                 </table>
             </div>
@@ -535,14 +628,13 @@
             variaveis = variaveis.idUnidadeAtendimento
             tabela_funcionarios.innerHTML = `
             <tr id="titulo-tabela">
-                        <td id="tr-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                         <td id="tr-cod-convite">Cód. Convite</td>
                         <td id="tr-nome-completo">Nome Completo</td>
                         <td id="tr-cpf-funcionario">Email</td>
                         <td id="tr-data-criacao-convite">Data de criação</td>
                         <td id="tr-data-expiracao-convite">Data de expiração</td>
                         <td id="tr-status-funcionario">Status</td>
-                        <td id="tr-acoes-funcionario">Ações</td>
+                        // <td id="tr-acoes-funcionario">Ações</td>
                     </tr>`
             fetch(`/convites/buscarconvites/${variaveis}`, {
                 method: "GET",
@@ -568,7 +660,6 @@
                 if (dados[i].statusCodigoValidacaoUsuario == "Expirado") {
                     tabela_funcionarios.innerHTML += `
                             <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                         <td class="td-cod-convite">${dados[i].codigo}</td>
                         <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
                         <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
@@ -588,7 +679,6 @@
                 } if (dados[i].statusCodigoValidacaoUsuario == "Pendente") {
                     tabela_funcionarios.innerHTML += `
                             <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                         <td class="td-cod-convite">${dados[i].codigo}</td>
                         <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
                         <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
@@ -608,30 +698,26 @@
                 } if (dados[i].statusCodigoValidacaoUsuario == "Aceito") {
                     tabela_funcionarios.innerHTML += `
                             <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                         <td class="td-cod-convite">${dados[i].codigo}</td>
                         <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
                         <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
                         <td class="td-data-criacao-convite">${data_criacao}</td>
                         <td class="td-data-expiracao-convite">${data_expiracao}</td>
                         <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
-                        <td class="td-acoes-funcionario">
-                            <div class="icone-editar">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar">
-                            </div>
-                            <div class="icone-excluir">
-                                <img src="../assets/imgs/contact.png" alt="Excluir">
-                            </div>
-                        </td>
+                        // <td class="td-acoes-funcionario">
+                        //     <div class="icone-editar">
+                        //         <img src="../assets/imgs/user-edit.png" alt="Editar">
+                        //     </div>
+                        //     <div class="icone-excluir">
+                        //         <img src="../assets/imgs/contact.png" alt="Excluir">
+                        //     </div>
+                        // </td>
                     </tr>`
                 }
             }
 
         }
         function mandaremail(email, codigo, dataExpiracao) {
-            // Exemplo de como o seu site (frontend.js) enviaria os dados
-
-            // Supondo que você pegou os dados de um formulário
             const dadosDoFormulario = {
                 email: email,
                 assunto: "Você recebeu um convite",
@@ -986,35 +1072,6 @@
 																	<p style="margin: 0; margin-bottom: 16px;"><strong>Contato:</strong></p>
 																	<p style="margin: 0;"><strong>Email:&nbsp;</strong>contatohealtguard@gmail.com</p>
 																</div>
-															</td>
-														</tr>
-													</table>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-					<table class="row row-11" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff;">
-						<tbody>
-							<tr>
-								<td>
-									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #ffffff; color: #000000; width: 480px; margin: 0 auto;" width="480">
-										<tbody>
-											<tr>
-												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
-													<table class="icons_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; text-align: center; line-height: 0;">
-														<tr>
-															<td class="pad" style="vertical-align: middle; color: #1e0e4b; font-family: 'Inter', sans-serif; font-size: 15px; padding-bottom: 5px; padding-top: 5px; text-align: center;"><!--[if vml]><table align="center" cellpadding="0" cellspacing="0" role="presentation" style="display:inline-block;padding-left:0px;padding-right:0px;mso-table-lspace: 0pt;mso-table-rspace: 0pt;"><![endif]-->
-																<!--[if !vml]><!-->
-																<table class="icons-inner" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; display: inline-block; padding-left: 0px; padding-right: 0px;" cellpadding="0" cellspacing="0" role="presentation"><!--<![endif]-->
-																	<tr>
-																		<td style="vertical-align: middle; text-align: center; padding-top: 5px; padding-bottom: 5px; padding-left: 5px; padding-right: 6px;"><a href="https://designedwithbeefree.com/" target="_blank" style="text-decoration: none;"><img class="icon" alt="Beefree Logo" src="https://d1oco4z2z1fhwp.cloudfront.net/assets/Beefree-logo.png" height="auto" width="34" align="center" style="display: block; height: auto; margin: 0 auto; border: 0;"></a></td>
-																		<td style="font-family: 'Inter', sans-serif; font-size: 15px; font-weight: undefined; color: #1e0e4b; vertical-align: middle; letter-spacing: undefined; text-align: center; line-height: normal;"><a href="https://designedwithbeefree.com/" target="_blank" style="color: #1e0e4b; text-decoration: none;">Designed with Beefree</a></td>
-																	</tr>
-																</table>
 															</td>
 														</tr>
 													</table>

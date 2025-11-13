@@ -35,6 +35,11 @@
         <div class="texto-icone oculto">Gestão de usuários</div>
       </div>
       <hr class="separador">
+      <div class="icone-box" id="gestao_convites">
+        <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+        <div class="texto-icone oculto">Convites</div>
+      </div>
+      <hr class="separador">
       <div class="icone-box" id="alertas_redirecionamento">
         <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
         <div class="texto-icone oculto">Histórico de Alertas</div>
@@ -62,95 +67,106 @@
   <div class="container">
     <div class="conteudo-principal">
       <div class="header">
-      <div class="header-esquerda">
-      <span>Máquina A-08</span>
-      <span class="status alerta">Status: Alerta grave (Memória RAM)</span>
-      </div>
+        <div class="header-esquerda">
+          <span>Máquina A-08</span>
+          <span class="status alerta">Status: Alerta grave (Memória RAM)</span>
+        </div>
 
-    <input type="checkbox" id="btn_descricao">
-    <label class="link-descricao" for="btn_descricao">Exibir descrição</label>
-    <div class="descricao">
-        <p>Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica, permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de editoração eletrônica como Aldus PageMaker.</p>
-    </div>
-    </div>
+        <input type="checkbox" id="btn_descricao">
+        <label class="link-descricao" for="btn_descricao">Exibir descrição</label>
+        <div class="descricao">
+          <p>Lorem Ipsum sobreviveu não só a cinco séculos, como também ao salto para a editoração eletrônica,
+            permanecendo essencialmente inalterado. Se popularizou na década de 60, quando a Letraset lançou decalques
+            contendo passagens de Lorem Ipsum, e mais recentemente quando passou a ser integrado a softwares de
+            editoração eletrônica como Aldus PageMaker.</p>
+        </div>
+      </div>
 
 
       <div class="dashboard-cards">
         <div class="card-monitoramento">
-        
-          <div class="title"><p>Monitoramento em tempo real </p>
-              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-            <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados nessa
-              máquina e o seu
-              desempenho no momento atual</span>
-          </span>
+
+          <div class="title">
+            <p>Monitoramento em tempo real </p>
+            <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+              <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados nessa
+                máquina e o seu
+                desempenho no momento atual</span>
+            </span>
           </div>
-          
+
           <div class="div_componentes">
-          <div> <span class="status-dot ok"> </span> Uso de CPU: <strong>70%</strong></div>
-          <div> <span class="status-dot alerta-grave"></span>Uso de Memória RAM: <strong>89%</strong></div>
-          <div> <span class="status-dot ok"></span>Status da Rede: <strong>CONECTADA</strong></div>
+            <div> <span class="status-dot ok"> </span> Uso de CPU: <strong>70%</strong></div>
+            <div> <span class="status-dot alerta-grave"></span>Uso de Memória RAM: <strong>89%</strong></div>
+            <div> <span class="status-dot ok"></span>Status da Rede: <strong>CONECTADA</strong></div>
           </div>
           <button class="btn-editar">Editar</button>
         </div>
 
         <div class="kpi-topo">
           <div class="card alerta-card">
-            <div class="title"><p>Componente com mais alertas</p>
-               <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-              <span class="tooltip-text">Componente monitorado que mais apresentou falhas nas útltimas 24h</span>
-            </span>
-             </div>
+            <div class="title">
+              <p>Componente com mais alertas</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Componente monitorado que mais apresentou falhas nas útltimas 24h</span>
+              </span>
+            </div>
             <div class="text" style="color:#b30000; font-weight: 700;">Mémoria RAM</div>
           </div>
 
 
           <div class="card alerta-card">
-            <div class="title"><p>Tempo de Atividade</p>
-                          <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-              <span class="tooltip-text">Tempo ativo total do componente desde o momento que começou o
-                monitoramento </span>
-            </span>
+            <div class="title">
+              <p>Tempo de Atividade</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Tempo ativo total do componente desde o momento que começou o
+                  monitoramento </span>
+              </span>
             </div>
             <div class="tempo-atividade">15h30min</div>
           </div>
 
 
           <div class="card alerta-card">
-            <div class="title"><p>Quantidade de alertas</p>
-                          <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-              <span class="tooltip-text">Quantidade de alertas totais obtidos nas últimas 24h</span>
-            </span>
+            <div class="title">
+              <p>Quantidade de alertas</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Quantidade de alertas totais obtidos nas últimas 24h</span>
+              </span>
             </div>
             <div class="number">8</div>
           </div>
 
           <div class="card alerta-card">
-            <div class="title"> <p>Média de alertas por dia</p>
-                          <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-              <span class="tooltip-text">Calculo de média de todos os alertas diários obtidos nos últimos 6
-                dias</span>
-            </span>
+            <div class="title">
+              <p>Média de alertas por dia</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Calculo de média de todos os alertas diários obtidos nos últimos 6
+                  dias</span>
+              </span>
             </div>
             <div class="number">35</div>
           </div>
         </div>
 
         <div class="card-alertas-totais">
-          <div class="title"> <p>Alertas não vistos</p>
+          <div class="title">
+            <p>Alertas não vistos</p>
             <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
               <span class="tooltip-text">Lista com alertas recentes, agrupados por gravidade.</span>
             </span>
           </div>
           <div class="alerts-list">
             <div class="alerta-grave">
-              Alerta Grave  <span class="bolinha-grave">1</span> </div>
+              Alerta Grave <span class="bolinha-grave">1</span> </div>
             <div class="alerta-critico">
-              Em atenção 
+              Em atenção
               <span class="bolinha-critico">5</span>
             </div>
           </div>
-          <button class="btn-historico" id="link-historico-alertas" onclick="window.location.href='alertasIndividuais.html'">Histórico de Alertas <i class='bxr  bx-arrow-right-stroke'    ></i> </button>
+          <button class="btn-historico" id="link-historico-alertas"
+            onclick="window.location.href='alertasIndividuais.html'">Histórico de Alertas <i
+              class='bxr  bx-arrow-right-stroke'></i> </button>
         </div>
       </div>
 
@@ -199,7 +215,7 @@
         <div class="chart-area">
           <div class="chart-header">
             <div class="chart-controls">
-              <div id="chartTitle">Alertas emitidos nos últimos 7   dias</div>
+              <div id="chartTitle">Alertas emitidos nos últimos 7 dias</div>
 
               <select id="tipoGraficoTopo" aria-label="Escolher tipo de gráfico">
                 <option value="alertas" selected>Gráfico de Alertas</option>

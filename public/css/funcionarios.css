@@ -295,17 +295,11 @@ td {
     height: 15px;
     margin-top: 3px;
 }
-#tr-cod-convite {
-    width: 35%;
-}
-.td-cod-convite {
-    width: 35%;
-}
 #tr-nome-completo {
-    width: 42%;
+    width: 40%;
 }
 .td-nome-completo {
-    width: 42%;
+    width: 40%;
 }
 #tr-cpf-funcionario {
     width: 25%;
@@ -313,16 +307,16 @@ td {
 .td-cpf-funcionario {
     width: 25%;
 }
-#tr-data-criacao-convite {
+#tr-email {
+    width: 30%
+}
+.td-email {
+    width: 30%;
+}
+#tr-permissao {
     width: 25%;
 }
-.td-data-criacao-convite {
-    width: 25%;
-}
-#tr-data-expiracao-convite {
-    width: 25%;
-}
-.td-data-expiracao-convite {
+.td-permissao {
     width: 25%;
 }
 #tr-status-funcionario {

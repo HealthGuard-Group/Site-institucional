@@ -38,6 +38,9 @@ document.getElementById("monitoramento_redirecionamento").addEventListener('clic
 document.getElementById("gestao_redirecionamento").addEventListener('click', () => {
     window.location.href = "funcionarios.html"
 })
+document.getElementById("gestao_convites").addEventListener('click', () => {
+    window.location.href = "convites.html"
+})
 document.getElementById("alertas_redirecionamento").addEventListener('click', () => {
     console.log("Redirecionando para histórico de alertas")
     window.location.href = "alertasGerais.html"
@@ -52,10 +55,12 @@ document.getElementById("sair_conta_redirecionamento").addEventListener('click',
 function validacaoPermissao() {
     if (permissao == "2") {
         document.getElementById("gestao_redirecionamento").classList.add("oculto")
+        document.getElementById("gestao_convites").classList.add("oculto")
         document.querySelector('.separador').classList.add("oculto")
     }
     // Expulsar usuário tela de gestão usuários
-    if (window.location.href.includes("funcionarios.html") && permissao == "2") {
+    if ((window.location.href.includes("funcionarios.html") ||
+        window.location.href.includes("convites.html")) && permissao == "2") {
         window.location.href = `monitoramento.html`
     }
 }
