@@ -134,11 +134,145 @@ function buscarconvite(req, res) {
             );
     }
 }
+function verificarUsuario(req, res) {
+    var email = req.params.email
 
+    if (email == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else {
+        usuarioModel.verificarUsuario(email)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar a busca do usuario! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+function atualizarcodigorecuperacao(req, res) {
+    var codigo = req.body.codigo
+    var fkpermissoes = req.body.fkpermissoes
+    var idUsuario = req.body.idUsuario
+
+    if (codigo == undefined) {
+        res.status(400).send("Seu codigo está undefined!");
+    } else if (fkpermissoes == undefined) {
+        res.status(400).send("Seu fkpermissoes está undefined!");
+    } else if (idUsuario == undefined) {
+        res.status(400).send("Seu idUsuario está undefined!");
+    } else {
+        usuarioModel.atualizarcodigorecuperacao(codigo, fkpermissoes, idUsuario)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar ao atualizar o seu código de recuperação de senha! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+function inserircodigorecuperacao(req, res) {
+    var codigo = req.body.codigo
+    var fkpermissoes = req.body.fkpermissoes
+    var idUsuario = req.body.idUsuario
+
+    if (codigo == undefined) {
+        res.status(400).send("Seu codigo está undefined!");
+    } else if (fkpermissoes == undefined) {
+        res.status(400).send("Seu fkpermissoes está undefined!");
+    } else if (idUsuario == undefined) {
+        res.status(400).send("Seu idUsuario está undefined!");
+    } else {
+        usuarioModel.inserircodigorecuperacao(codigo, fkpermissoes, idUsuario)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar ao inserir o seu código de recuperação de senha! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+function verificarCodigo(req, res) {
+    var codigo = req.params.codigo
+
+    if (codigo == undefined) {
+        res.status(400).send("Seu codigo está undefined!");
+    } else {
+        usuarioModel.verificarCodigo(codigo)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar a busca do código! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+function atualizarsenha(req, res) {
+    var senha = req.body.senha
+    var idUsuario = req.body.idUsuario
+
+    if (senha == undefined) {
+        res.status(400).send("Seu senha está undefined!");
+    } else if (idUsuario == undefined) {
+        res.status(400).send("Seu idUsuario está undefined!");
+    } else {
+        usuarioModel.atualizarsenha(senha, idUsuario)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar a atualizar a senha! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 
 module.exports = {
     autenticar,
     cadastrar,
     inseriracao,
-    buscarconvite
+    buscarconvite,
+    verificarUsuario,
+    atualizarcodigorecuperacao,
+    inserircodigorecuperacao,
+    verificarCodigo,
+    atualizarsenha
 }

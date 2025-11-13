@@ -33,11 +33,12 @@
                 <input id="email_input" type="text" placeholder="exemplo: healthguard@sptech.school">
                 <button onclick="validar_redefinir()">Redefinir senha</button>
                 <br>
-                <div id="mensagem"></div>
+                <div id="mensagem_erro_email"></div>
             </div>
             <div id="tela_codigo" class="oculto">
                 <h2>Confirmação de conta</h2>
-                <p>Enviamos um código para seu email, para a recuperação da sua senha:</p>
+                <p>Enviamos um código para seu email <span id="email_escolhido"></span>, para a recuperação da sua
+                    senha:</p>
 
                 <label for="email">Código de recuperação:</label>
                 <div class="input-separada">
@@ -48,11 +49,12 @@
                     <input type="text" maxlength="1" class="input-caractere" style="width: 14%;" id="input5">
                     <input type="text" maxlength="1" class="input-caractere" style="width: 14%;" id="input6">
                 </div>
-                <div id="mensagem_erro"></div>
-                <p>Reenviar o email</p>
+                <a onclick="reenviarEmail()" style="cursor: pointer;">Reenviar o email</a>
+                <div id="mensagem_reenviaremail"></div>
                 <button onclick="validarUsuario()">Redefinir senha</button>
                 <br>
-                <div id="mensagem"></div>
+                <div id="mensagem_erro" style="text-align: center;"></div>
+
             </div>
             <div id="tela_senha" class="oculto">
                 <h2>Crie uma nova senha</h2>
@@ -77,6 +79,8 @@
 </html>
 <script>
     // Funcionamento da input separada
+    var idUsuario = []
+    var aux_reenviar_email = true;
     var inputs_caracteres = document.querySelectorAll(".input-caractere")
     inputs_caracteres.forEach((input, index) => {
 
@@ -144,43 +148,125 @@
         } if (aux_erro) {
             return
         }
+        fetch("/usuarios/atualizarsenha", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                senha: senha.value,
+                idUsuario: idUsuario[0]
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao atualizar");
+                }
+                return res.json();
+            })
+            .then(data => {
+                console.log("Atualizando com sucesso:", data);
+                mensagem_erro_confirmar_senha.innerHTML = `Senha trocada com sucesso. Redirecionando para tela de Login`
+                setTimeout(() => {
+                    mensagem_erro_confirmar_senha.innerHTML += `.`
+                },1000)
+                setTimeout(() => {
+                    mensagem_erro_confirmar_senha.innerHTML += `.`
+                },2000)
+                setTimeout(() => {
+                    window.location.href = "login.html"
+                },3000)
+            })
+            .catch(err => {
+                console.log("Erro:", err);
+                console.log("Oiiii")
+            })
+
     }
     function validar_redefinir() {
+        idUsuario = []
         mensagem.innerHTML = ""
         var email = email_input.value;
         if (email == "") {
-            mensagem.innerHTML = "Preencha o campo e-mail..."
+            mensagem_erro_email.innerHTML = `<span style="color:red">Preencha o campo e-mail</span>`
             return;
         }
         var posArroba = email.indexOf('@');
         if (posArroba <= 0) {
-            mensagem.innerHTML = "Insira um e-mail válido!";
+            mensagem_erro_email.innerHTML = `<span style="color:red">Insira um e-mail válido!</span>`;
             return;
         }
         var posPonto = email.indexOf('.', posArroba);
         if (posPonto <= 0 || posPonto === email.length - 1) {
-            mensagem.innerHTML = "Insira um e-mail válido!";
+            mensagem_erro_email.innerHTML = `<span style="color:red">Insira um e-mail válido!</span>`;
             return;
         }
 
-
-        // mensagem.innerHTML = "Verificando email.";
-        // setTimeout(function () {
-        //     mensagem.innerHTML = "Verificando email..";
-        // }, 300);
-        // setTimeout(function () {
-        //     mensagem.innerHTML = "Verificando email...";
-        // }, 600);
-        // setTimeout(function () {
-        //     mensagem.innerHTML = "";
-        // }, 1000);
-
-        // função abaixo não existe, só é uma representação de como continuar o desenvolvimento
         confirmarUsuario();
     }
     function confirmarUsuario() {
+        var email = email_input.value;
+        email_escolhido.innerHTML = email
         document.getElementById("tela_email").classList.add("oculto")
         document.getElementById("tela_codigo").classList.remove("oculto")
+        var codigo = gerarTextoAleatorio(6)
+        fetch(`/usuarios/verificarUsuario/${email}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+
+                if (resposta.length == 0 || resposta.length > 1) {
+                    return
+                }
+                idUsuario.push(resposta[0].idUsuario)
+                mandaremail(email, codigo)
+                inserirCodigoRecuperacao(codigo, (resposta[0].fkpermissoes), (resposta[0].idUsuario))
+                atulizarCodigoRecuperacao(codigo, (resposta[0].fkpermissoes), (resposta[0].idUsuario))
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    function stressReenviarEmail() {
+        setTimeout(() => {
+            aux_reenviar_email = true;
+        }, 90000)
+    }
+    function reenviarEmail() {
+        if (aux_reenviar_email) {
+            var email = email_input.value;
+            var codigo = gerarTextoAleatorio(6)
+            mensagem_reenviaremail.innerHTML = `<br>Email Reenviado<br>`
+            fetch(`/usuarios/verificarUsuario/${email}`, {
+                method: "GET",
+            })
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    if (resposta.length == 0 || resposta.length > 1) {
+                        return
+                    }
+                    mandaremail(email, codigo)
+                    atulizarCodigoRecuperacao(codigo, (resposta[0].fkpermissoes), (resposta[0].idUsuario))
+                })
+                .catch(function (resposta) {
+                    console.log(`Erro no catch: ${resposta}`);
+                });
+            aux_reenviar_email = false
+        } else {
+            stressReenviarEmail()
+            mensagem_reenviaremail.innerHTML = `<br>Aguarde um pouco para reenviar o email<br>`
+        }
+
+
+        setTimeout(() => {
+            mensagem_reenviaremail.innerHTML = ``
+        }, 5000)
     }
     function validarUsuario() {
         var input1 = document.getElementById("input1").value
@@ -196,8 +282,377 @@
         } else {
             mensagem_erro.innerHTML = ``
         }
-        document.getElementById("tela_codigo").classList.add("oculto")
-        document.getElementById("tela_senha").classList.remove("oculto")
+        fetch(`/usuarios/verificarCodigo/${codigo}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                if (resposta.length == 0) {
+                    mensagem_erro.innerHTML = `<span style="color:red">Código inválido</span>`
+                    return
+                } else {
+                    document.getElementById("tela_codigo").classList.add("oculto")
+                    document.getElementById("tela_senha").classList.remove("oculto")
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
     }
+    function gerarTextoAleatorio(tamanhoTexto) {
+        if (!Number.isInteger(tamanhoTexto)) {
+            console.log("Valor inválido")
+            return
+        }
+        if (tamanhoTexto < 0) {
+            console.log("Valor inválido")
+            return
+        }
+        var vetor_texto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0']
+        let contador = 0;
+        let texto = ""
+        while (contador < tamanhoTexto) {
+            let posicao_vetor = Math.round(Math.random() * (vetor_texto.length - 1), 0)
+            texto += vetor_texto[posicao_vetor]
+            contador++
+        }
+        return texto
+    }
+    function atulizarCodigoRecuperacao(codigo, fkpermissoes, idUsuario) {
+        console.log(fkpermissoes, idUsuario)
+        fetch("/usuarios/atualizarcodigorecuperacao", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                codigo: codigo,
+                fkpermissoes: fkpermissoes,
+                idUsuario: idUsuario
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao atualizar");
+                }
+                return res.json();
+            })
+            .then(data => {
+                console.log("Atualizando com sucesso:", data);
+            })
+            .catch(err => {
+                console.log("Erro:", err);
+                console.log("Oiiii")
+            })
+    }
+    function inserirCodigoRecuperacao(codigo, fkpermissoes, idUsuario) {
+        fetch("/usuarios/inserircodigorecuperacao", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                codigo: codigo,
+                fkpermissoes: fkpermissoes,
+                idUsuario: idUsuario
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao atualizar");
+                }
+                return res.json();
+            })
+            .then(data => {
+                console.log("Atualizando com sucesso:", data);
+            })
+            .catch(err => {
+                console.log("Erro:", err);
+                console.log("Relaxa é para dar erro mesmo")
+            })
+    }
+    function mandaremail(email, codigo) {
+        const dadosDoFormulario = {
+            email: email,
+            assunto: "Você recebeu uma solicitação de troca de senha",
+            mensagem: `<!DOCTYPE html>
+<html xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" lang="en">
+
+<head>
+	<title></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"><!--[if mso]>
+<xml><w:WordDocument xmlns:w="urn:schemas-microsoft-com:office:word"><w:DontUseAdvancedTypographyReadingMail/></w:WordDocument>
+<o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch><o:AllowPNG/></o:OfficeDocumentSettings></xml>
+<![endif]--><!--[if !mso]><!--><!--<![endif]-->
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+		}
+
+		a[x-apple-data-detectors] {
+			color: inherit !important;
+			text-decoration: inherit !important;
+		}
+
+		#MessageViewBody a {
+			color: inherit;
+			text-decoration: none;
+		}
+
+		p {
+			line-height: inherit
+		}
+
+		.desktop_hide,
+		.desktop_hide table {
+			mso-hide: all;
+			display: none;
+			max-height: 0px;
+			overflow: hidden;
+		}
+
+		.image_block img+div {
+			display: none;
+		}
+
+		sup,
+		sub {
+			font-size: 75%;
+			line-height: 0;
+		}
+
+		@media (max-width:620px) {
+			.desktop_hide table.icons-inner {
+				display: inline-block !important;
+			}
+
+			.icons-inner {
+				text-align: center;
+			}
+
+			.icons-inner td {
+				margin: 0 auto;
+			}
+
+			.mobile_hide {
+				display: none;
+			}
+
+			.row-content {
+				width: 100% !important;
+			}
+
+			.stack .column {
+				width: 100%;
+				display: block;
+			}
+
+			.mobile_hide {
+				min-height: 0;
+				max-height: 0;
+				max-width: 0;
+				overflow: hidden;
+				font-size: 0px;
+			}
+
+			.desktop_hide,
+			.desktop_hide table {
+				display: table !important;
+				max-height: none !important;
+			}
+		}
+	</style><!--[if mso ]><style>sup, sub { font-size: 100% !important; } sup { mso-text-raise:10% } sub { mso-text-raise:-10% }</style> <![endif]-->
+</head>
+
+<body class="body" style="background-color: #f8f8f8; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none;">
+	<table class="nl-container" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #f8f8f8;">
+		<tbody>
+			<tr>
+				<td>
+					<table class="row row-1" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 600px; margin: 0 auto;" width="600">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="66.66666666666667%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad" style="width:100%;">
+																<div class="alignment" align="center">
+																	<div style="max-width: 400px;"><img src="https://435775eb4f.imgdist.com/pub/bfra/te9h5y2x/r36/vh3/dvl/HealthGuard_Logomarca_VERMELHA_fundo_transparente.png" style="display: block; height: auto; border: 0; width: 100%;" width="400" alt title height="auto"></div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td class="column column-2" width="33.333333333333336%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="empty_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad">
+																<div></div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-2" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; color: #000000; width: 600px; margin: 0 auto;" width="600">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="paragraph_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class="pad">
+																<div style="color:#101112;direction:ltr;font-family:Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:1.2;text-align:left;mso-line-height-alt:19px;">
+																	<p style="margin: 0; margin-bottom: 16px;">Olá,</p>
+																	<p style="margin: 0; margin-bottom: 16px;">Recebemos uma solicitação para alteração de senha.</p>
+																	<p style="margin: 0;">Para proteger a sua conta e confirmar que foi você quem solicitou esta mudança, a próxima etapa exige a confirmação por meio do seu código de Autenticação de Dois Fatores. Caso queira continuar o processo é coloque esse código abaixo para redefinir sua senha:</p>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-3" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 600px; margin: 0 auto;" width="600">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="paragraph_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class="pad">
+																<div style="color:#3b3b3b;direction:ltr;font-family:Arial, Helvetica, sans-serif;font-size:27px;font-weight:400;letter-spacing:0px;line-height:1.2;text-align:left;mso-line-height-alt:32px;">
+																	<p style="margin: 0;"><strong>${codigo}</strong></p>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-4" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 600px; margin: 0 auto;" width="600">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="100%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="paragraph_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class="pad">
+																<div style="color:#101112;direction:ltr;font-family:Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:1.2;text-align:left;mso-line-height-alt:19px;">
+																	<p style="margin: 0; margin-bottom: 16px;">Esse código é válido dentro os próximos 20 minutos, após esse tempo, caso queira fazer a alteração de senha, será gerado um novo código.</p>
+																	<p style="margin: 0; margin-bottom: 16px;">Se você desconhece essa solicitação, favor ignorar esse&nbsp; e-mail</p>
+																	<p style="margin: 0; margin-bottom: 16px;">&nbsp;</p>
+																	<p style="margin: 0; margin-bottom: 16px;">Atenciosamente,</p>
+																	<p style="margin: 0;">HealthGuard</p>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="row row-5" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+						<tbody>
+							<tr>
+								<td>
+									<table class="row-content stack" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-radius: 0; color: #000000; width: 600px; margin: 0 auto;" width="600">
+										<tbody>
+											<tr>
+												<td class="column column-1" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+														<tr>
+															<td class="pad" style="width:100%;">
+																<div class="alignment" align="center">
+																	<div style="max-width: 150px;"><img src="https://435775eb4f.imgdist.com/pub/bfra/te9h5y2x/m0g/qj7/66m/HealthGuard_1.png" style="display: block; height: auto; border: 0; width: 100%;" width="150" alt title height="auto"></div>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+												<td class="column column-2" width="75%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; padding-bottom: 5px; padding-top: 5px; vertical-align: top;">
+													<table class="paragraph_block block-1" width="100%" border="0" cellpadding="10" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+														<tr>
+															<td class="pad">
+																<div style="color:#101112;direction:ltr;font-family:Arial, Helvetica, sans-serif;font-size:16px;font-weight:400;letter-spacing:0px;line-height:1.2;text-align:left;mso-line-height-alt:19px;">
+																	<p style="margin: 0; margin-bottom: 16px;"><strong>Contato:</strong></p>
+																	<p style="margin: 0;"><strong>Email:&nbsp;</strong>contatohealtguard@gmail.com</p>
+																</div>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</td>
+			</tr>
+		</tbody>
+	</table><!-- End -->
+</body>
+
+</html>`
+        };
+        fetch('http://localhost:3000/enviar-email', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dadosDoFormulario)
+        })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+                console.log('Ocorreu ao enviar o email.');
+            });
+    }
+
 
 </script>

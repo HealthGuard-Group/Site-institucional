@@ -119,10 +119,41 @@ function buscarconvite(codigo) {
 
   return database.executar(instrucaoSql);
 }
+function verificarUsuario(email) {
+  var instrucaoSql = `SELECT idUsuario,nome,email,fkpermissoes FROM Usuario WHERE email = '${email}'`;
+
+  return database.executar(instrucaoSql);
+}
+function atualizarcodigorecuperacao(codigo, fkpermissoes, idUsuario) {
+  var instrucaoSql = `UPDATE CodigoRecuperacaoSenha SET codigo = '${codigo}', dataCriacao = default WHERE fkUsuario = '${idUsuario}' AND fkPermissoes = ${fkpermissoes}`;
+
+  return database.executar(instrucaoSql);
+}
+function inserircodigorecuperacao(codigo, fkpermissoes, idUsuario) {
+  var instrucaoSql = `INSERT INTO CodigoRecuperacaoSenha VALUES
+(DEFAULT,'${fkpermissoes}','${idUsuario}',"${codigo}",DEFAULT);`;
+
+  return database.executar(instrucaoSql);
+}
+function verificarCodigo(codigo) {
+  var instrucaoSql = `select * FROM CodigoRecuperacaoSenha WHERE datacriacao >= (now() - INTERVAL 20 MINUTE) AND codigo = '${codigo}';`;
+
+  return database.executar(instrucaoSql);
+}
+function atualizarsenha(senha, idUsuario) {
+  var instrucaoSql = `UPDATE Usuario SET senha = sha2('${senha}',256) WHERE idUsuario = '${idUsuario}'`;
+
+  return database.executar(instrucaoSql);
+}
 
 module.exports = {
     autenticar,
     cadastrar,
     inseriracao,
-    buscarconvite
+    buscarconvite,
+    verificarUsuario,
+    atualizarcodigorecuperacao,
+    inserircodigorecuperacao,
+    verificarCodigo,
+    atualizarsenha
 };

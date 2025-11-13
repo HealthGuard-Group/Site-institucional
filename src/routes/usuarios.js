@@ -18,5 +18,21 @@ router.post("/inseriracao", function (req, res) {
 router.get("/buscarconvite/:codigo", function (req, res) {
     usuarioController.buscarconvite(req, res);
 });
+router.get("/verificarUsuario/:email", function (req, res) {
+    usuarioController.verificarUsuario(req, res);
+});
+router.put("/atualizarcodigorecuperacao", function (req, res) {
+    usuarioController.atualizarcodigorecuperacao(req, res);
+});
+router.post("/inserircodigorecuperacao", function (req, res) {
+    usuarioController.inserircodigorecuperacao(req, res);
+});
+router.get("/verificarCodigo/:codigo", function (req, res) {
+    usuarioController.verificarCodigo(req, res);
+});
+router.put("/atualizarsenha", function (req, res) {
+    usuarioController.atualizarsenha(req, res);
+});
+
 
 module.exports = router;
