@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logs de Acesso</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+  <link rel="stylesheet" href="../css/acessos.css">
+</head>
+<body>
+  <!-- Começo do Menu -->
+  <div class="menu-lateral">
+    <div class="pai-icones-superiores">
+      <div id="logo">
+        <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+          class="icone-logo-pequena">
+      </div>
+      <br>
+      <div class="icone-box" id="monitoramento_redirecionamento">
+        <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+        <div class="texto-icone oculto">Monitoramento</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="gestao_redirecionamento">
+        <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+        <div class="texto-icone oculto">Gestão de usuários</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="alertas_redirecionamento">
+        <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+        <div class="texto-icone oculto">Histórico de Alertas</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="suporte_redirecionamento">
+        <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+        <div class="texto-icone oculto">Suporte</div>
+      </div>
+    </div>
+    <div class="pai-icones-inferiores">
+      <hr class="separador-forte">
+      <div class="icone-box-inferior">
+        <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+        <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+        <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+        <div class="texto-icone oculto">Sair da conta</div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim do Menu -->
+
+  <div class="container-geral">
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="conteudo">
+
+      <h2 class="titulo">Logs de Acesso</h2>
+
+      <div class="filtros">
+        <select class="filtro">
+          <option>Filtrar por</option>
+          <option>Data</option>
+          <option>Usuário</option>
+        </select>
+
+        <input type="text" placeholder="Usuário" class="campo-usuario">
+      </div>
+
+      <div class="tabela">
+        <div class="linha cabecalho">
+          <div class="coluna">Data/Hora</div>
+          <div class="coluna">Usuário</div>
+          <div class="coluna">E-mail</div>
+          <div class="coluna">Descrição</div>
+          <div class="coluna">Resultado</div>
+          <div class="coluna">Máquina</div>
+        </div>
+
+        <div class="linha">
+          <div class="coluna">2025-11-12 16:14:25</div>
+          <div class="coluna">João Silva</div>
+          <div class="coluna">joao.silva@email.com</div>
+          <div class="coluna">Cadastro Máquina</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-02</div>
+        </div>
+
+        <div class="linha">
+          <div class="coluna">2025-11-12 16:34:55</div>
+          <div class="coluna">Marina de Carvalho</div>
+          <div class="coluna">marina.carvalho@email.com</div>
+          <div class="coluna">Editar Métricas</div>
+          <div class="coluna falha"><span class="bolinha vermelha"></span>Falha</div>
+          <div class="coluna">Máquina A-07</div>
+        </div>
+
+        <div class="linha">
+          <div class="coluna">2025-11-12 17:22:38</div>
+          <div class="coluna">Pedro Andrade</div>
+          <div class="coluna">pedro.andrade@email.com</div>
+          <div class="coluna">Adicionou Convite</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-04</div>
+        </div>
+
+        <div class="linha">
+          <div class="coluna">2025-11-12 17:56:43</div>
+          <div class="coluna">Ana Clara Lima</div>
+          <div class="coluna">ana.lima@email.com</div>
+          <div class="coluna">Visualizou Dashboard</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-06</div>
+        </div>
+
+        <div class="linha">
+          <div class="coluna">2025-11-12 18:32:13</div>
+          <div class="coluna">Maria Luiza Costa</div>
+          <div class="coluna">maria.costa@email.com</div>
+          <div class="coluna">Adicionou Funcionário</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-08</div>
+        </div>
+
+         <div class="linha">
+          <div class="coluna">2025-11-12 18:41:11</div>
+          <div class="coluna">João Pedro Fonseca</div>
+          <div class="coluna">joao.fonseca@email.com</div>
+          <div class="coluna">Visualizou Métricas</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-06</div>
+        </div>
+
+         <div class="linha">
+          <div class="coluna">2025-11-12 18:44:25</div>
+          <div class="coluna">José Augusto</div>
+          <div class="coluna">jose.augusto@email.com</div>
+          <div class="coluna">Removeu Funcionário</div>
+          <div class="coluna falha"><span class="bolinha vermelha"></span>Falha</div>
+          <div class="coluna">Máquina A-02</div>
+        </div>
+
+          <div class="linha">
+          <div class="coluna">2025-11-12 18:46:55</div>
+          <div class="coluna">Catarina Pires</div>
+          <div class="coluna">catarina.pires@email.com</div>
+          <div class="coluna">Visualizou Dashboard</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-06</div>
+        </div>
+
+        <div class="linha">
+          <div class="coluna">2025-11-12 18:47:36</div>
+          <div class="coluna">Stella Gonçalves</div>
+          <div class="coluna">stella.goncalves@email.com</div>
+          <div class="coluna">Alterou descrição de máquina</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-01</div>
+        </div>
+
+         <div class="linha">
+          <div class="coluna">2025-11-12 18:52:40</div>
+          <div class="coluna">Miguel Alvarez</div>
+          <div class="coluna">miguel.alvarez@email.com</div>
+          <div class="coluna">Alterou cor de alerta</div>
+          <div class="coluna falha"><span class="bolinha vermelha"></span>Falha</div>
+          <div class="coluna">Máquina A-01</div>
+        </div>
+
+        <div class="linha">
+          <div class="coluna">2025-11-12 18:52:40</div>
+          <div class="coluna">Lúcia Garcia</div>
+          <div class="coluna">lucia.garcia@email.com</div>
+          <div class="coluna">Realizou cadastro</div>
+          <div class="coluna sucesso"><span class="bolinha verde"></span>Sucesso</div>
+          <div class="coluna">Máquina A-07</div>
+        </div>
+      </div>
+
+     
+     
+
+    </div>
+  </div>
+
+</body>
+</html>
+<script src="../js/menu-lateral.js"></script>
