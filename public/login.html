@@ -91,18 +91,18 @@
                     console.log("Entrei no Fetch do Log")
                     console.log("Id Usuário no Login:", sessionStorage.ID_USUARIO)
                     console.log("Id Unidade no Login:", sessionStorage.FK_UNIDADE)
-                    fetch("/usuarios/inseriracao", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({
-                            idUnidade: json.fkUnidadeDeAtendimento,
-                            idUsuario: json.idUsuario,
-                            idLogAcesso: fkLogAcesso,
-                            acao: "Fazendo login"
-                        }),
-                    })
+                    // fetch("/usuarios/inseriracao", {
+                    //     method: "POST",
+                    //     headers: {
+                    //         "Content-Type": "application/json",
+                    //     },
+                    //     body: JSON.stringify({
+                    //         idUnidade: json.fkUnidadeDeAtendimento,
+                    //         idUsuario: json.idUsuario,
+                    //         idLogAcesso: fkLogAcesso,
+                    //         acao: "Fazendo login"
+                    //     }),
+                    // })
                         .then(function (resposta) {
                             setTimeout(function () {
                                 mensagem.innerHTML = `Login realizado com sucesso!`;
