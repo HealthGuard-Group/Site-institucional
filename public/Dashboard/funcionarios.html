@@ -143,40 +143,34 @@
                             <option value="Aceito">Gestor</option>
                             <option value="Pendente">Técnico de TI</option>
                         </select>
+
+                        <button class="botao-aplicar-filtros" onclick="adicionarFiltro()">
+                            Aplicar filtros
+                        </button>
                     </div>
 
-                    <div class="componente-filtro" id="campo-data-convite-gerado">
+                    <!-- <div class="componente-filtro" id="campo-data-convite-gerado">
                         Convite gerado entre: <input type="date" id="campo_data_convite_gerado_min"> e: <input
                             type="date" id="campo_data_convite_gerado_max">
-                    </div>
-                </div>
-
-                <div class="box-filtros">
-                    <div class="componente-filtro" id="campo-data-convite-gerado">
-                        Convite expirado entre: <input type="date" id="campo_data_convite_expirado_min"> e: <input
-                            type="date" id="campo_data_convite_expirado_max">
-                    </div>
-                    <button class="botao-aplicar-filtros" onclick="adicionarFiltro()">
-                        Aplicar filtros
-                    </button>
+                    </div> -->
                 </div>
 
                 <div class="box-filtros-aplicados" id="div_filtros">
                     <div class="filtro-aplicado">
-                        Status Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                        Cargo/Permissão: Técnico de TI &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
                     </div>
-                    <div class="filtro-aplicado">
+                    <!-- <div class="filtro-aplicado">
                         Gerado entre: 10/10/1025 - 15/10/2025 &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
                     </div>
                     <div class="filtro-aplicado">
                         Expirado entre: 25/10/1025 - 27/10/2025 &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
-                    </div>
+                    </div> -->
                 </div>
 
             </div>
             <div class="box-selecao-funcionario">
                 <div class="texto-funcionalidade alinhamento-centralizar-vertical">
-                    Selecione um usuário:
+                    Selecione um funcionário:
                 </div>
 
                 <div class="filtro-direita">
@@ -221,6 +215,112 @@
                             </div>
                         </td>
                     </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                        <td class="td-nome-completo">André Augusto Corado Leão</td>
+                        <td class="td-email">andre@gmail.com</td>
+                        <td class="td-cpf-funcionario">000.000.000-00</td>
+                        <td class="td-permissao">Técnico de TI</td>
+                        <td class="td-acoes-funcionario">
+                            <div class="icone-editar">
+                                <img src="../assets/imgs/user-edit.png" alt="Editar">
+                            </div>
+                            <div class="icone-excluir">
+                                <img src="../assets/imgs/contact.png" alt="Excluir">
+                            </div>
+                        </td>
+                    </tr>
+                    
                 </table>
             </div>
         </div>
