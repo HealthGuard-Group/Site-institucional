@@ -25,6 +25,7 @@ var aquariosRouter = require("./src/routes/aquarios");
 var empresasRouter = require("./src/routes/empresas");
 var dashboardRouter = require("./src/routes/dashboard");
 var convitesRouter = require("./src/routes/convites");
+var graficoRouter = require("./src/routes/grafico");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,6 +41,7 @@ app.use("/aquarios", aquariosRouter);
 app.use("/empresas", empresasRouter);
 app.use("/dashboard", dashboardRouter);
 app.use("/convites", convitesRouter);
+app.use("/grafico", graficoRouter);
 
 app.post('/enviar-email', async (req, res) => {
     const {email, assunto,mensagem } = req.body;
