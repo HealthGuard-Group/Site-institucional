@@ -3,7 +3,7 @@ var fkUsuario = undefined
 var nomeUsuario = undefined
 var permissao = undefined
 var fkLogAcesso = undefined
-var fkDac = undefined
+// var fkDac = undefined
 
 window.addEventListener("beforeunload", () => {
     sessionStorage.FK_UNIDADE = fkUnidade
@@ -11,7 +11,7 @@ window.addEventListener("beforeunload", () => {
     sessionStorage.NOME_USUARIO = nomeUsuario
     sessionStorage.ID_PERMISSAO = permissao
     sessionStorage.ID_LOGACESSO = fkLogAcesso
-    sessionStorage.ID_DAC = fkDac
+    // sessionStorage.ID_DAC = fkDac
 });
 
 function validarSessao() {
@@ -21,7 +21,7 @@ function validarSessao() {
         nomeUsuario = sessionStorage.NOME_USUARIO;
         permissao = sessionStorage.ID_PERMISSAO;
         fkLogAcesso = sessionStorage.ID_LOGACESSO;
-        fkDac = sessionStorage.ID_DAC
+        // fkDac = sessionStorage.ID_DAC
     });
 
     // Para não trocar tela sem sessão
@@ -33,14 +33,14 @@ function validarSessao() {
     fkUsuario = sessionStorage.ID_USUARIO
     nomeUsuario = sessionStorage.NOME_USUARIO
     permissao = sessionStorage.ID_PERMISSAO
-    fkDac = sessionStorage.ID_DAC
+    // fkDac = sessionStorage.ID_DAC
     // Trocando os valores da fkUnidade
     sessionStorage.FK_UNIDADE = null
     sessionStorage.ID_USUARIO = null
     sessionStorage.NOME_USUARIO = null
     sessionStorage.ID_PERMISSAO = null
     sessionStorage.ID_LOGACESSO = null
-    sessionStorage.ID_DAC = null
+    // sessionStorage.ID_DAC = null
     nome_usuario.innerHTML = nomeUsuario
     validacaoPermissao()
     fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
@@ -83,7 +83,7 @@ function puxarVariaveis() {
         idUnidadeAtendimento: fkUnidade,
         nomeUsuario: nomeUsuario,
         permissao: permissao,
-        idDac: fkDac
+        // idDac: fkDac
     }
     return variaveis
 }

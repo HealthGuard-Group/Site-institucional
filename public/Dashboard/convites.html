@@ -626,7 +626,7 @@
         function puxarConvites() {
             var variaveis = puxarVariaveis()
             variaveis = variaveis.idUnidadeAtendimento
-            tabela_funcionarios.innerHTML = `
+            tabela_convites.innerHTML = `
             <tr id="titulo-tabela">
                         <td id="tr-cod-convite">Cód. Convite</td>
                         <td id="tr-nome-completo">Nome Completo</td>
@@ -634,7 +634,6 @@
                         <td id="tr-data-criacao-convite">Data de criação</td>
                         <td id="tr-data-expiracao-convite">Data de expiração</td>
                         <td id="tr-status-funcionario">Status</td>
-                        // <td id="tr-acoes-funcionario">Ações</td>
                     </tr>`
             fetch(`/convites/buscarconvites/${variaveis}`, {
                 method: "GET",
@@ -658,7 +657,7 @@
                 let data_expiracao = new Date(dados[i].dataExpiracao)
                 data_expiracao = data_expiracao.toLocaleDateString('pt-BR')
                 if (dados[i].statusCodigoValidacaoUsuario == "Expirado") {
-                    tabela_funcionarios.innerHTML += `
+                    tabela_convites.innerHTML += `
                             <tr class="dados-tabela">
                         <td class="td-cod-convite">${dados[i].codigo}</td>
                         <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
@@ -666,18 +665,10 @@
                         <td class="td-data-criacao-convite">${data_criacao}</td>
                         <td class="td-data-expiracao-convite">${data_expiracao}</td>
                         <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
-                        <td class="td-acoes-funcionario">
-                            <div class="icone-editar"
-                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
-                                ---
-                            </div>
-                            <div class="icone-excluir">
-                                <img src="../assets/imgs/contact.png" alt="Excluir">
-                            </div>
-                        </td>
+                        
                     </tr>`
                 } if (dados[i].statusCodigoValidacaoUsuario == "Pendente") {
-                    tabela_funcionarios.innerHTML += `
+                    tabela_convites.innerHTML += `
                             <tr class="dados-tabela">
                         <td class="td-cod-convite">${dados[i].codigo}</td>
                         <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
@@ -685,18 +676,10 @@
                         <td class="td-data-criacao-convite">${data_criacao}</td>
                         <td class="td-data-expiracao-convite">${data_expiracao}</td>
                         <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
-                        <td class="td-acoes-funcionario">
-                            <div class="icone-editar">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar">
-                            </div>
-                            <div class="icone-excluir">
-                                <img src="../assets/imgs/contact.png" alt="Excluir">
-                            </div>
-
-                        </td>
+                        
                     </tr>`
                 } if (dados[i].statusCodigoValidacaoUsuario == "Aceito") {
-                    tabela_funcionarios.innerHTML += `
+                    tabela_convites.innerHTML += `
                             <tr class="dados-tabela">
                         <td class="td-cod-convite">${dados[i].codigo}</td>
                         <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
@@ -704,14 +687,6 @@
                         <td class="td-data-criacao-convite">${data_criacao}</td>
                         <td class="td-data-expiracao-convite">${data_expiracao}</td>
                         <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
-                        // <td class="td-acoes-funcionario">
-                        //     <div class="icone-editar">
-                        //         <img src="../assets/imgs/user-edit.png" alt="Editar">
-                        //     </div>
-                        //     <div class="icone-excluir">
-                        //         <img src="../assets/imgs/contact.png" alt="Excluir">
-                        //     </div>
-                        // </td>
                     </tr>`
                 }
             }
