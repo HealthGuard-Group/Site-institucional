@@ -91,6 +91,16 @@
                     console.log("Entrei no Fetch do Log")
                     console.log("Id Usuário no Login:", sessionStorage.ID_USUARIO)
                     console.log("Id Unidade no Login:", sessionStorage.FK_UNIDADE)
+                    fetch("/empresas/InserirLogAcesso", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            fkUsuario: sessionStorage.ID_USUARIO,
+                            fkUnidadeDeAtendimento: sessionStorage.FK_UNIDADE
+                        })
+                    })
                     // fetch("/usuarios/inseriracao", {
                     //     method: "POST",
                     //     headers: {
