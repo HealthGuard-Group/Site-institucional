@@ -15,7 +15,7 @@
 
 </head>
 
-<body onload=""validarSessao()">
+<body onload="validarSessao()">
 
   <!-- Começo do Menu -->
   <div class="menu-lateral">
@@ -235,7 +235,7 @@
 
   <script src="../js/menu-lateral.js"></script>
   <script>
-var idDac = sessionStorage.ID_DAC;
+    var idDac = sessionStorage.ID_DAC;
     console.log(idDac)
 
     fetch(`/grafico/exibirInfoDac/${idDac}`, {
@@ -248,17 +248,17 @@ var idDac = sessionStorage.ID_DAC;
         console.log(resposta)
 
         nome_MaquinaDac.innerHTML = `${resposta[0].nomeIdentificacao}`
-        if(resposta[0].statusDac == "Alerta"){
-        status_MaquinaDac.innerHTML = `<p style="color:#b30000">Status: ${resposta[0].statusDac}</p>`
+        if (resposta[0].statusDac == "Alerta") {
+          status_MaquinaDac.innerHTML = `<p style="color:#b30000">Status: ${resposta[0].statusDac}</p>`
         }
-        else if(resposta[0].statusDac == "Ativo"){
-        status_MaquinaDac.innerHTML = `<p style="color:green">Status: ${resposta[0].statusDac}</p>`
+        else if (resposta[0].statusDac == "Ativo") {
+          status_MaquinaDac.innerHTML = `<p style="color:green">Status: ${resposta[0].statusDac}</p>`
         }
-        else if(resposta[0].statusDac == "Inativo"){
-        status_MaquinaDac.innerHTML = `<p style="color:grey">Status: ${resposta[0].statusDac}</p>`
+        else if (resposta[0].statusDac == "Inativo") {
+          status_MaquinaDac.innerHTML = `<p style="color:grey">Status: ${resposta[0].statusDac}</p>`
         }
-        else if(resposta[0].statusDac == "Em configuração"){
-          window.location.href="monitoramento.html"
+        else if (resposta[0].statusDac == "Em configuração") {
+          window.location.href = "monitoramento.html"
         }
 
         descricao_MaquinaDac.innerHTML = `${resposta[0].descricao}`
