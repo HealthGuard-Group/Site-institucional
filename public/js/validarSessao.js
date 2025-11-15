@@ -54,7 +54,7 @@ function validarSessao() {
             if (window.location.href.includes("monitoramento.html")) {
                 telaMonitoramento()
             }
-            if (window.location.href.includes("funcionarios.html")) {
+            if (window.location.href.includes("convites.html")) {
                 puxarConvites()
             }
         })

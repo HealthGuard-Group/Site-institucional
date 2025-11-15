@@ -10,8 +10,20 @@ function buscarconvites(fkUnidade) {
 
   return database.executar(instrucaoSql);
 }
+function validarconvite(emailVar) {
+  var instrucaoSql = `SELECT * FROM CodigoValidacaoUsuario WHERE emailSugerido = "${emailVar}" AND statusCodigoValidacaoUsuario = "Pendente"`;
+
+  return database.executar(instrucaoSql);
+}
+function revogarconvites(id) {
+  var instrucaoSql = `UPDATE CodigoValidacaoUsuario SET statusCodigoValidacaoUsuario = "Revogado" WHERE idCodigoValidacao = "${id}"`;
+
+  return database.executar(instrucaoSql);
+}
 
 module.exports = {
     criarconvite,
-    buscarconvites
+    buscarconvites,
+    validarconvite,
+    revogarconvites
 };

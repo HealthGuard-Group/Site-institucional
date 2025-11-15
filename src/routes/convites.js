@@ -9,5 +9,11 @@ router.post("/criarconvite", function (req, res) {
 router.get("/buscarconvites/:variaveis", function (req, res) {
   convitesController.buscarconvites(req, res);
 });
+router.get("/validarconvite/:emailVar", function (req, res) {
+  convitesController.validarconvite(req, res);
+});
+router.put("/revogarconvites", function (req, res) {
+  convitesController.revogarconvites(req, res);
+});
 
 module.exports = router;

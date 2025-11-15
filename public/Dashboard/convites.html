@@ -130,7 +130,6 @@
                 <div class="texto-funcionalidade alinhamento-centralizar-vertical">
                     Filtros:
                 </div>
-                <!-- uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu -->
                 <div class="box-filtros">
                     <div class="componente-filtro" id="campo-cpf">
                         Buscar por Nome: <input type="text" placeholder="Ex: Roberto" id="campo_nome">
@@ -143,6 +142,7 @@
                             <option value="Aceito">Aceito</option>
                             <option value="Pendente">Pendente</option>
                             <option value="Expirado">Expirado</option>
+                            <option value="Revogado">Revogado</option>
                         </select>
                     </div>
 
@@ -564,45 +564,78 @@
             }
             let codigo_gerado = gerarTextoAleatorio(10)
             var info_usuario = puxarVariaveis()
-            console.log(nome.value, email.value)
-            fetch("/convites/criarconvite", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    fkUnidadeAtendimento: info_usuario.idUnidadeAtendimento,
-                    codigo: codigo_gerado,
-                    data: data.value,
-                    fkpermissao: fkpermissao,
-                    nome: nome.value,
-                    email: email.value
-                }),
+            var emailVar = email.value
+            fetch(`/convites/validarconvite/${emailVar}`, {
+                method: "GET",
             })
-                .then(function (resposta) {
-                    console.log("resposta: ", resposta);
-                    document.getElementById("popupFundo").classList.add("oculto")
-                    document.getElementById("popupConviteGerado").classList.remove("oculto")
-                    codigo_texto.innerHTML = codigo_gerado
-                    email_convite.innerHTML = email.value
-                    email_convite.href = `mailto:${email.value}`
-                    var data_formatada = new Date(data.value)
-                    data_formatada = data_formatada.toLocaleDateString("pt-BR")
-                    mandaremail(email.value, codigo_gerado, data_formatada)
-                    inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
-                    if (resposta.ok) {
-                    } else {
-                        throw "Não foi possível mandar os dados para o banco";
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    if (resposta.length != 0) {
+                        fetch("/convites/revogarconvites", {
+                            method: "PUT",
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            body: JSON.stringify({
+                                id: resposta[0].idCodigoValidacao
+                            })
+                        })
+                            .then(res => {
+                                if (!res.ok) {
+                                    throw new Error("Erro ao atualizar");
+                                }
+                                return res.json();
+                            })
+                            .then(data => {
+                                console.log("Atualizando com sucesso:", data);
+
+                            })
+                            .catch(err => {
+                                console.log("Erro:", err);
+                                console.log("Oiiii")
+                            })
                     }
+                    fetch("/convites/criarconvite", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            fkUnidadeAtendimento: info_usuario.idUnidadeAtendimento,
+                            codigo: codigo_gerado,
+                            data: data.value,
+                            fkpermissao: fkpermissao,
+                            nome: nome.value,
+                            email: email.value
+                        }),
+                    })
+                        .then(function (resposta) {
+                            console.log("resposta: ", resposta);
+                            document.getElementById("popupFundo").classList.add("oculto")
+                            document.getElementById("popupConviteGerado").classList.remove("oculto")
+                            codigo_texto.innerHTML = codigo_gerado
+                            email_convite.innerHTML = email.value
+                            email_convite.href = `mailto:${email.value}`
+                            var data_formatada = new Date(data.value)
+                            data_formatada = data_formatada.toLocaleDateString("pt-BR")
+                            //mandaremail(email.value, codigo_gerado, data_formatada)
+                            //inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
+                            if (resposta.ok) {
+                            } else {
+                                throw "Não foi possível mandar os dados para o banco";
+                            }
+                        })
+                        .catch(function (resposta) {
+                            console.log(`#ERRO: ${resposta}`);
+                            alert("Erro no catch");
+                        });
                 })
                 .catch(function (resposta) {
-                    console.log(`#ERRO: ${resposta}`);
-                    alert("Erro no catch");
+                    console.log(`Erro no catch: ${resposta}`);
                 });
-
-            // alert(`Convite enviado para ${nome} (${email}) como ${permissao}.`)
-            // popupFundo.style.display = "none"
-            // telaEscurecida.classList.add("oculto");
+            console.log(nome.value, email.value)
         }
         function gerarTextoAleatorio(tamanhoTexto) {
             if (!Number.isInteger(tamanhoTexto)) {
@@ -687,6 +720,17 @@
                         <td class="td-data-criacao-convite">${data_criacao}</td>
                         <td class="td-data-expiracao-convite">${data_expiracao}</td>
                         <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                    </tr>`
+                } if (dados[i].statusCodigoValidacaoUsuario == "Revogado") {
+                    tabela_convites.innerHTML += `
+                            <tr class="dados-tabela">
+                        <td class="td-cod-convite">${dados[i].codigo}</td>
+                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
+                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
+                        <td class="td-data-criacao-convite">${data_criacao}</td>
+                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
+                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Revogado</span></td>
+                        
                     </tr>`
                 }
             }
