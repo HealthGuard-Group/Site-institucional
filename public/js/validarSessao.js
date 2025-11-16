@@ -57,6 +57,9 @@ function validarSessao() {
             if (window.location.href.includes("convites.html")) {
                 puxarConvites()
             }
+            if (window.location.href.includes("funcionarios.html")) {
+                puxarFuncionarios()
+            }
         })
         .catch(function (resposta) {
             console.log(`Erro no catch: ${resposta}`);
