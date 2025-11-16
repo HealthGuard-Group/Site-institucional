@@ -48,6 +48,11 @@ document.getElementById("alertas_redirecionamento").addEventListener('click', ()
 document.getElementById("suporte_redirecionamento").addEventListener('click', () => {
     console.log("Redirecionando para suporte")
 })
+document.getElementById("tela_perfil").addEventListener('click', () => {
+    console.log("Redirecionando para tela de perfil")
+    window.location.href = "telaPerfil.html"
+})
+
 document.getElementById("sair_conta_redirecionamento").addEventListener('click', () => {
     sessionStorage.clear()
     window.location.href = "../index.html"
