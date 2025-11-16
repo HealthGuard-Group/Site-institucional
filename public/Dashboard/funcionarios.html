@@ -185,7 +185,7 @@
                             Novo convite
                         </div>
                     </div> -->
-                    <button class="botao-recarregar" onclick="puxarConvites()">
+                    <button class="botao-recarregar" onclick="puxarFuncionarios()">
                         <img src="../assets/imgs/icone-recarregar.png" alt="" class="icone-recarregar">
                     </button>
                 </div>
@@ -442,7 +442,7 @@
                         Expirado entre: ${formatarData(filtrosAtivos[3][0])} - ${formatarData(filtrosAtivos[3][1])} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(3)">
                     </div>`
             }
-            puxarConvites()
+            puxarFuncionarios()
         }
         function filtrarConvites(dados) {
             var dados_filtrados = []
@@ -635,21 +635,19 @@
             }
             return texto
         }
-        function puxarConvites() {
+        function puxarFuncionarios() {
             var variaveis = puxarVariaveis()
             variaveis = variaveis.idUnidadeAtendimento
             tabela_funcionarios.innerHTML = `
-            <tr id="titulo-tabela">
-                        <td id="tr-seletor"><input class="checkbox-padrao" type="checkbox"></td>
-                        <td id="tr-cod-convite">Cód. Convite</td>
-                        <td id="tr-nome-completo">Nome Completo</td>
-                        <td id="tr-cpf-funcionario">Email</td>
-                        <td id="tr-data-criacao-convite">Data de criação</td>
-                        <td id="tr-data-expiracao-convite">Data de expiração</td>
-                        <td id="tr-status-funcionario">Status</td>
-                        <td id="tr-acoes-funcionario">Ações</td>
-                    </tr>`
-            fetch(`/convites/buscarconvites/${variaveis}`, {
+                <tr id="titulo-tabela">
+                    <td id="tr-seletor"></td>
+                    <td id="tr-nome-completo">Nome Completo</td>
+                    <td id="tr-email">E-mail</td>
+                    <td id="tr-cpf-funcionario">CPF</td>
+                    <td id="tr-permissao">Cargo/Permissão</td>
+                    <td id="tr-acoes-funcionario">Ações</td>
+                </tr>`
+            fetch(`/funcionarios/buscarfuncionarios/${variaveis}`, {
                 method: "GET",
             })
                 .then(resposta => {
@@ -657,8 +655,9 @@
                 })
                 .then(resposta => {
                     console.log(resposta)
-                    var dados_filtrados = filtrarConvites(resposta)
-                    atualizarTabela(dados_filtrados)
+                    // var dados_filtrados = filtrarConvites(resposta)
+                    // atualizarTabela(dados_filtrados)
+                    atualizarTabela(resposta)
                 })
                 .catch(function (resposta) {
                     console.log(`Erro no catch: ${resposta}`);
@@ -670,56 +669,13 @@
                 data_criacao = data_criacao.toLocaleDateString('pt-BR')
                 let data_expiracao = new Date(dados[i].dataExpiracao)
                 data_expiracao = data_expiracao.toLocaleDateString('pt-BR')
-                if (dados[i].statusCodigoValidacaoUsuario == "Expirado") {
-                    tabela_funcionarios.innerHTML += `
-                            <tr class="dados-tabela">
+                tabela_funcionarios.innerHTML += `
+                    <tr class="dados-tabela">
                         <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
-                        <td class="td-cod-convite">${dados[i].codigo}</td>
-                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
-                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
-                        <td class="td-data-criacao-convite">${data_criacao}</td>
-                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
-                        <td class="td-status-funcionario"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
-                        <td class="td-acoes-funcionario">
-                            <div class="icone-editar"
-                                style="background-color: rgba(255, 255, 255, 0); font-weight: 900;">
-                                ---
-                            </div>
-                            <div class="icone-excluir">
-                                <img src="../assets/imgs/contact.png" alt="Excluir">
-                            </div>
-                        </td>
-                    </tr>`
-                } if (dados[i].statusCodigoValidacaoUsuario == "Pendente") {
-                    tabela_funcionarios.innerHTML += `
-                            <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
-                        <td class="td-cod-convite">${dados[i].codigo}</td>
-                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
-                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
-                        <td class="td-data-criacao-convite">${data_criacao}</td>
-                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
-                        <td class="td-status-funcionario"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
-                        <td class="td-acoes-funcionario">
-                            <div class="icone-editar">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar">
-                            </div>
-                            <div class="icone-excluir">
-                                <img src="../assets/imgs/contact.png" alt="Excluir">
-                            </div>
-
-                        </td>
-                    </tr>`
-                } if (dados[i].statusCodigoValidacaoUsuario == "Aceito") {
-                    tabela_funcionarios.innerHTML += `
-                            <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
-                        <td class="td-cod-convite">${dados[i].codigo}</td>
-                        <td class="td-nome-completo">${dados[i].nomeSugerido}</td>
-                        <td class="td-cpf-funcionario">${dados[i].emailSugerido}</td>
-                        <td class="td-data-criacao-convite">${data_criacao}</td>
-                        <td class="td-data-expiracao-convite">${data_expiracao}</td>
-                        <td class="td-status-funcionario"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                        <td class="td-nome-completo">${dados[i].nomeUsuario}</td>
+                        <td class="td-email">${dados[i].email}</td>
+                        <td class="td-cpf-funcionario">${dados[i].cpf}</td>
+                        <td class="td-permissao">${dados[i].permissao}</td>
                         <td class="td-acoes-funcionario">
                             <div class="icone-editar">
                                 <img src="../assets/imgs/user-edit.png" alt="Editar">
@@ -729,9 +685,7 @@
                             </div>
                         </td>
                     </tr>`
-                }
             }
-
         }
         function mandaremail(email, codigo, dataExpiracao) {
             // Exemplo de como o seu site (frontend.js) enviaria os dados
