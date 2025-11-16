@@ -1032,6 +1032,101 @@
         }
     }
 
+    function formatarData(date) {
+        if (typeof date === "string" && date.includes("-")) {
+            const [ano, mes, dia] = date.split("-")
+            return `${dia}/${mes}/${ano}`
+        }
+
+        const d = new Date(date);
+        return d.toLocaleDateString("pt-BR")
+    }
+
+    function limparExibicaoFiltros() {
+        document.querySelector(".box-filtros-aplicados").innerHTML = ""
+    }
+
+    function resetarFiltrosVisuaisEInternos() {
+        document.querySelector('select[name="status-codigo"]').value = "todos"
+
+        const ids = ["data-gerado-min", "data-gerado-max", "data-expirado-min", "data-expirado-max"]
+        for (const id of ids) {
+            document.getElementById(id).value = ""
+        }
+
+        filtrosAtivos = { status: "", gerado: ["", ""], expirado: ["", ""] }
+
+        limparExibicaoFiltros()
+
+        const linhas = document.querySelectorAll("#tabela-codigos .dados-tabela")
+        for (const l of linhas) {
+            l.style.display = ""
+        }
+    }
+
+    function fecharFiltro(tipo) {
+        if (tipo === "status") filtrosAtivos.status = ""
+        if (tipo === "gerado") filtrosAtivos.gerado = ["", ""]
+        if (tipo === "expirado") filtrosAtivos.expirado = ["", ""]
+
+        const ids = {
+            status: 'select[name="status-codigo"]',
+            gerado: ['#data-gerado-min', '#data-gerado-max'],
+            expirado: ['#data-expirado-min', '#data-expirado-max']
+        }
+
+        if (tipo === "status") document.querySelector(ids.status).value = "todos"
+        if (tipo === "gerado") {
+            for (const sel of ids.gerado) {
+                document.querySelector(sel).value = ""
+            }
+        }
+
+        if (tipo === "expirado") {
+            for (const sel of ids.expirado) {
+                document.querySelector(sel).value = ""
+            }
+        }
+
+        const semFiltros = !filtrosAtivos.status && !filtrosAtivos.gerado[0] && !filtrosAtivos.expirado[0]
+        if (semFiltros) {
+            resetarFiltrosVisuaisEInternos()
+        } else {
+            montarExibicaoFiltros()
+            filtrarTabela()
+        }
+    }
+
+    function montarExibicaoFiltros() {
+        const div = document.querySelector(".box-filtros-aplicados")
+        div.innerHTML = ""
+
+        if (filtrosAtivos.status) {
+            const texto = filtrosAtivos.status.charAt(0).toUpperCase() + filtrosAtivos.status.slice(1)
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Status: ${texto}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('status')">
+            </div>`
+        }
+
+        if (filtrosAtivos.gerado[0] && filtrosAtivos.gerado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Gerado entre: ${formatarData(filtrosAtivos.gerado[0])} - ${formatarData(filtrosAtivos.gerado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('gerado')">
+            </div>`
+        }
+
+        if (filtrosAtivos.expirado[0] && filtrosAtivos.expirado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Expirado entre: ${formatarData(filtrosAtivos.expirado[0])} - ${formatarData(filtrosAtivos.expirado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('expirado')">
+            </div>`
+        }
+    }
+
 
 
 </script>
