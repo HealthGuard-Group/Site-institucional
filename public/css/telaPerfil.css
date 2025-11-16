@@ -1,0 +1,238 @@
+body {
+    background-color: rgb(238, 238, 238);
+}
+#conteudo {
+    gap: 25px;
+    display: flex;
+    margin-left: 7%;
+    align-items: flex-start;
+}
+
+input {
+    width: 90%;
+    height: 30%;
+    border: solid 1.8px rgb(0, 0, 0, 0.4);
+    padding-left: 2%;
+    padding-top: 1.5%;
+    padding-bottom: 1.5%;
+    border-radius: 8px;
+    margin-top: 1%;
+}
+.input_foto {
+    display: flex;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    background-color: #a0a0a0; 
+    color: white;
+    border-radius: 8px; 
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+    transition: background-color 0.2s ease;
+    margin-left: 10%;
+    
+}
+
+.input_foto:hover {
+    background-color: #8c8c8c;
+}
+#ipt_foto {
+    display: none;
+}
+.container {
+    border-radius: 15px;
+    padding: 1%;
+    margin-top: 4%;
+    margin-bottom: 2%;
+    background-color: rgb(255, 255, 255);
+}
+.container h2 {
+    margin-top: 2%;
+    margin-left: 2%;
+}
+.container button {
+    justify-content: center;
+    cursor: pointer;
+    margin-top: 3%;
+    width: 90%;
+    padding: 2%;
+    color: white;
+    background-color: rgb(44, 44, 44);
+    border: none;
+    border-radius: 14px;
+    font-size: 2.5vh;
+}
+.container button:hover {
+    background-color:  rgb(0, 0, 0);
+}
+#botao-alterar-foto  {
+    width: 100%;
+
+}
+#botao-alterar-foto label {
+    width: 25%;
+}
+#botao-alterar-foto p {
+    margin-left: 10%;
+    font-size: 2vh;
+    color: rgb(34, 34, 34);
+}
+
+#Foto-perfil {
+    display: flex;
+    
+}
+#Foto-perfil div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+#Foto-perfil h2 {
+    align-items: start;
+}
+#Foto-perfil img {
+width: 20%;
+}
+#Lado-direito { 
+flex: 1;
+padding: 20px;
+box-sizing: border-box;
+}
+
+#info-pessoais {
+    display: flex;
+    margin-left: 4%;
+    padding-bottom: 2%;
+    flex-direction: column;
+}
+
+
+#campo_cpf,#campo_permissao {
+    flex: 1;
+
+}
+ #ipt_cpf,#ipt_permissao {
+width: 80%;
+ height: 68%;
+ }
+
+ #campos_rec_senha {
+    display: flex;
+    flex-direction: column;
+    margin-left: 4%;
+ }
+ #redefinir-senha {
+    margin-bottom: 2%;
+ }
+
+
+ #excluir_conta {
+    cursor: pointer;
+    margin-top: 3%;
+    color: #fff;
+    display: flex;
+    width: 100%;
+    background-color: #f34235;
+    border-radius: 8px;
+    align-items: center; 
+    padding: 12px 15px;
+    gap: 10px;
+}
+#excluir_conta img {
+    height: 5vh; 
+    width: 5vh; 
+}
+#excluir_conta p {
+    margin: 0;
+}
+main h1 {
+    margin-left: 10%;
+   padding-top: 2%;
+}
+
+.modal-overlay {
+    /* CORREÇÃO: Deve ter APENAS 'display: none' por padrão */
+    display: none; 
+
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000; 
+
+    /* REMOVIDO DAQUI: As 3 linhas abaixo
+       (display, justify-content, align-items)
+       foram movidas para .modal-visivel
+    */
+}
+
+/* A CLASSE MÁGICA: Adicionamos/removemos via JS */
+.modal-visivel {
+    /* CORREÇÃO: As 3 linhas de centralização
+       (display, justify, align) vêm para CÁ. */
+    display: flex !important; 
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* A caixa branca do conteúdo do modal (sem alterações) */
+.modal-conteudo {
+    background-color: #fff;
+    padding: 25px 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+}
+
+/* ... (o resto do CSS do modal está correto) ... */
+.modal-conteudo h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.modal-conteudo p {
+    color: #555;
+    font-size: 16px;
+    margin-bottom: 25px;
+}
+
+.modal-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-botao {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancelar {
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.btn-cancelar:hover {
+    background-color: #ddd;
+}
+
+.btn-excluir {
+    background-color: #f34235;
+    color: white;
+}
+.btn-excluir:hover {
+    background-color: #d93025;
+}

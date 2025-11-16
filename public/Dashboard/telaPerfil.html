@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/telaPerfil.css">
+    <link rel="stylesheet" href="../css/global.css">
+
+    <title>Perfil</title>
+</head>
+
+<body>
+    <!-- Inicio menu lateral  -->
+    <div class="menu-lateral">
+        <div class="pai-icones-superiores">
+            <div id="logo">
+                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                    class="icone-logo-pequena">
+            </div>
+            <br>
+            <div class="icone-box" id="monitoramento_redirecionamento">
+                <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                <div class="texto-icone oculto">Monitoramento</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_redirecionamento">
+                <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Gestão de funcionários</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="alertas_redirecionamento">
+                <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                <div class="texto-icone oculto">Histórico de Alertas</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_convites">
+                <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Convites</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="suporte_redirecionamento">
+                <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                <div class="texto-icone oculto">Suporte</div>
+            </div>
+        </div>
+        <div class="pai-icones-inferiores">
+            <hr class="separador-forte">
+            <div class="icone-box-inferior">
+                <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                <div class="texto-icone oculto">Sair da conta</div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim do menu lateral -->
+    <main>
+        <h1>Perfil</h1>
+    </main>
+    <div id="conteudo">
+
+
+        <div id="Lado-esquerdo">
+            <div class="container">
+
+                <div>
+
+                    <h2>Foto de perfil</h2>
+                    <div id="Foto-perfil">
+                        <img src="../assets/icon/image.png" alt="icone de foto">
+                        <div id="botao-alterar-foto">
+
+                            <label for="ipt_foto" class="input_foto">
+                                Alterar Foto
+                            </label>
+                            <input id="ipt_foto" type="file" />
+                            <br>
+                            <p>Tamanho mínimo recomendado 800x800 px. <br>
+                                Formato: PNG ou JPG</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <h2>Informações pessoais</h2>
+                <div id="info-pessoais">
+
+                    <br>
+                    <div id="campo_nome">
+                        Nome Completo <br>
+                        <input type="text" id="ipt_nome"> <br><br>
+                    </div>
+
+                    <div id="campo_email">
+                        E-mail<br>
+                        <input type="text" id="ipt_email"> <br><br>
+                    </div>
+
+                    <div style="display: flex; gap: 20px;" id="cpf_permissao">
+                        <div id="campo_cpf">
+                            CPF <br>
+                            <input type="text" name="" id="ipt_cpf">
+                        </div>
+                        <div id="campo_permissao">
+                            Permissão <br>
+                            <input type="text" id="ipt_permissao">
+                        </div>
+
+                    </div>
+                    <br>
+
+                    <button>Salvar Informações</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="Lado-direito">
+            <div class="container">
+                <h2>Redefinir senha</h2>
+                <br>
+                <div id="redefinir-senha">
+                    <div id="campos_rec_senha">
+
+                        <div id="campo_senha_atual">
+                            Senha Atual <br>
+                            <input type="text" id="ipt_senha">
+                        </div>
+                        <br>
+                        <div id="campo_senha_nova">
+                            Nova senha <br>
+                            <input type="text" id="ipt_nova">
+                        </div>
+                        <br>
+                        <div id="campo_confirmacao">
+                            Confirmar nova senha <br>
+                            <input type="text" id="ipt_confirmacao">
+                        </div>
+                        <br>
+                        <button>Salvar Informações</button>
+                    </div>
+                </div>
+            </div>
+
+
+            <div id="excluir_conta">
+
+                <img src="../assets/imgs/deletar-usuario.png" alt="">
+
+                <p> Excluir Conta </p>
+            </div>
+
+            <div id="modal-confirmacao" class="modal-overlay">
+
+                <div class="modal-conteudo">
+                    <h2>Excluir Conta</h2>
+                    <p>Você tem certeza que deseja excluir sua conta? Esta ação é irreversível.</p>
+
+                    <div class="modal-botoes">
+                        <button id="btn-cancelar" class="modal-botao btn-cancelar">Cancelar</button>
+                        <button id="btn-confirmar-exclusao" class="modal-botao btn-excluir"
+                            onclick="excluir_conta()">Sim, Excluir</button>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+</html>
+<script src="../js/menu-lateral.js"></script>
+<script>
+    // Script do modal de confirmação de exclusão de conta
+    document.addEventListener('DOMContentLoaded', () => {
+
+        const botaoAbrirModal = document.getElementById('excluir_conta');
+        const modal = document.getElementById('modal-confirmacao');
+        const botaoCancelar = document.getElementById('btn-cancelar');
+        function abrirModal() {
+            modal.classList.add('modal-visivel');
+        }
+        function fecharModal() {
+            modal.classList.remove('modal-visivel');
+        }
+        botaoAbrirModal.addEventListener('click', abrirModal);
+        botaoCancelar.addEventListener('click', fecharModal);
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                fecharModal();
+            }
+        });
+    });
+    // Fim do script do modal
+    
+</script>
