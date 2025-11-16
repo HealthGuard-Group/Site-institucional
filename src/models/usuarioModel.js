@@ -6,7 +6,8 @@ function autenticar(email, senha) {
     u.idUsuario,
     u.nome AS nomeUsuario,
     p.idPermissoes,
-    cv.fkUnidadeDeAtendimento
+    cv.fkUnidadeDeAtendimento,
+    la.idLogAcesso
     FROM Usuario u
     JOIN Permissoes p 
     ON u.fkPermissoes = p.idPermissoes
@@ -19,7 +20,23 @@ function autenticar(email, senha) {
     ;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql)
+    .then((resultado) => {
+
+                        var idLogAcesso = resultado[0].idLogAcesso;
+                        var fkUnidadeDeAtendimento = resultado[0].fkUnidadeDeAtendimento
+                        var idUsuario = resultado[0].idUsuario;
+
+                            var inserirLogAcoes = `
+                                INSERT INTO LogAcoes (fkUnidadeAtendimento, fkUsuario, fkLogAceso, acao)
+                                VALUES (${fkUnidadeDeAtendimento}, ${idUsuario}, ${idLogAcesso}, 'Realizando Login');
+                            `
+                            return database.executar(inserirLogAcoes).then(() => resultado)
+                    }).
+                    catch(erro => {
+        console.error("Erro ao Inserir ação do usuário:", erro)
+        throw erro;
+    })
 }
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
