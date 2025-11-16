@@ -502,6 +502,9 @@
     document.addEventListener('click', function (elemento) {
         if (elemento.target.closest('.maquina-box')) {
             var maquina = event.target.closest('.maquina-box');
+            console.log(maquina)
+            console.log(maquina.querySelector('.nome-maquina').textContent.replaceAll(" ",""))
+            inserirAcao(`Acessando ${maquina.querySelector('.nome-maquina').textContent.replaceAll(" ","")}`)
             sessionStorage.ID_DAC = maquina.id;
             window.location.href = "grafico1.html"
         }
