@@ -154,7 +154,6 @@ main h1 {
 }
 
 .modal-overlay {
-    /* CORREÇÃO: Deve ter APENAS 'display: none' por padrão */
     display: none; 
 
     position: fixed;
@@ -164,24 +163,14 @@ main h1 {
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000; 
-
-    /* REMOVIDO DAQUI: As 3 linhas abaixo
-       (display, justify-content, align-items)
-       foram movidas para .modal-visivel
-    */
 }
 
-/* A CLASSE MÁGICA: Adicionamos/removemos via JS */
 .modal-visivel {
-    /* CORREÇÃO: As 3 linhas de centralização
-       (display, justify, align) vêm para CÁ. */
     display: flex !important; 
     justify-content: center;
     align-items: center;
 }
 
-
-/* A caixa branca do conteúdo do modal (sem alterações) */
 .modal-conteudo {
     background-color: #fff;
     padding: 25px 30px;
@@ -192,7 +181,6 @@ main h1 {
     text-align: center;
 }
 
-/* ... (o resto do CSS do modal está correto) ... */
 .modal-conteudo h2 {
     margin-top: 0;
     color: #333;
