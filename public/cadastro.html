@@ -90,8 +90,7 @@
           console.log(resposta)
 
           if (resposta.length == 0) {
-            nome.disabled = false
-            email.disabled = false
+            
           } else {
             email.value = resposta[0].emailSugerido
             nome.value = resposta[0].nomeSugerido
