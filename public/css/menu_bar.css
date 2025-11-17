@@ -106,8 +106,10 @@
     width: 3.5vh;
 }
 .icone-menu-5{
-    height: 3.5vh;
-    width: 3.5vh;
+    height: 6vh;
+    width: 6vh;
+    border: 5px solid, #6f0606;
+    border-radius: 100%;
 }
 .icone-menu-6{
     height: 3.5vh;
