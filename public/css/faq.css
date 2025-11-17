@@ -1,0 +1,95 @@
+*{
+    overflow-y: hidden;
+
+}
+.container-geral {
+    margin-left: 6%;
+    padding: 4vh 4vw;
+    height: 200vh;
+    width: 200vh;
+    background-color: #f5f5f5;
+}
+
+.conteudo-faq {
+    background: white;
+    padding: 5vh 4vw;
+    border-radius: 8px;
+    width: 90%;
+    margin: auto;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+
+.titulo-faq {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 1vh;
+}
+
+.descricao-faq {
+    text-align: center;
+    font-size: 1.1rem;
+    width: 70%;
+    margin: auto;
+    margin-bottom: 4vh;
+    
+}
+
+
+.faq-lista {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.4vh;
+}
+
+
+.faq-pergunta {
+    width: 100%;
+    background: white;
+    border: 2px solid #000;
+    padding: 1.2vh 1.5vw;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.faq-pergunta .seta {
+    font-size: 1.2rem;
+    margin-left: 1vw;
+}
+
+
+.faq-resposta {
+    padding: 2vh 1vw;
+    font-size: 1rem;
+    color: #333;
+    display: none;
+    margin-top: -0.8vh;
+    background-color: #fafafa;
+    border-radius: 0 0 6px 6px;
+}
+
+.faq-pergunta.ativo .seta {
+    transform: rotate(180deg);
+}
+
+
+.suporte-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    font-size: 1.4rem;
+    font-weight: bold;
+    gap: 1vw;
+}
+
+.logo-jira {
+    height: 28px;
+}
