@@ -47,6 +47,7 @@ document.getElementById("alertas_redirecionamento").addEventListener('click', ()
 })
 document.getElementById("suporte_redirecionamento").addEventListener('click', () => {
     console.log("Redirecionando para suporte")
+    window.location.href = "faq.html"
 })
 document.getElementById("tela_perfil").addEventListener('click', () => {
     console.log("Redirecionando para tela de perfil")
