@@ -2,7 +2,7 @@ body {
     background-color: rgb(238, 238, 238);
 }
 #conteudo {
-    gap: 25px;
+    gap: 5px;
     display: flex;
     margin-left: 7%;
     align-items: flex-start;
@@ -18,28 +18,7 @@ input {
     border-radius: 8px;
     margin-top: 1%;
 }
-.input_foto {
-    display: flex;
-    padding-top: 1%;
-    padding-bottom: 1%;
-    background-color: #a0a0a0; 
-    color: white;
-    border-radius: 8px; 
-    cursor: pointer;
-    text-align: center;
-    justify-content: center;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
-    transition: background-color 0.2s ease;
-    margin-left: 10%;
-    
-}
 
-.input_foto:hover {
-    background-color: #8c8c8c;
-}
-#ipt_foto {
-    display: none;
-}
 .container {
     border-radius: 15px;
     padding: 1%;
@@ -66,36 +45,7 @@ input {
 .container button:hover {
     background-color:  rgb(0, 0, 0);
 }
-#botao-alterar-foto  {
-    width: 100%;
 
-}
-#botao-alterar-foto label {
-    width: 25%;
-}
-#botao-alterar-foto p {
-    margin-left: 10%;
-    font-size: 2vh;
-    color: rgb(34, 34, 34);
-}
-
-#Foto-perfil {
-    display: flex;
-    
-}
-#Foto-perfil div{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    
-}
-
-#Foto-perfil h2 {
-    align-items: start;
-}
-#Foto-perfil img {
-width: 20%;
-}
 #Lado-direito { 
 flex: 1;
 padding: 20px;
