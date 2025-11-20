@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="html_fonte">
+<html lang="pt-br" id="html_fonte">
 
 <head>
     <meta charset="UTF-8">
@@ -46,20 +46,20 @@
                                 Gerado entre:
                                 <input type="date" id="data-gerado-min"> e:
                                 <input type="date" id="data-gerado-max">
-                                </div>
-                                </div>
+                            </div>
+                        </div>
 
-                                <div class="box-filtros">
-                                <div class="componente-filtro" id="campo-data-codigo-expirado">
-                                    Expirado entre:
-                                    <input type="date" id="data-expirado-min"> e:
-                                    <input type="date" id="data-expirado-max">
-                                </div>
+                        <div class="box-filtros">
+                            <div class="componente-filtro" id="campo-data-codigo-expirado">
+                                Expirado entre:
+                                <input type="date" id="data-expirado-min"> e:
+                                <input type="date" id="data-expirado-max">
+                            </div>
 
-                                <button onclick="adicionarFiltro()" class="botao-aplicar-filtros">
-                                    Aplicar filtros
-                                </button>
-                                </div>
+                            <button onclick="adicionarFiltro()" class="botao-aplicar-filtros">
+                                Aplicar filtros
+                            </button>
+                        </div>
 
                         <div class="box-filtros-aplicados">
                             <!-- <div class="filtro-aplicado">
@@ -116,22 +116,22 @@
                                 <td class="td-data-expiracao-codigo">07/10/2025 08:40</td>
                                 <td class="td-status-codigo"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
                             </tr>
-                            
+
                         </table>
                     </div>
                 </div>
             </div>
             <div class="popup-fundo oculto" id="modal_adicionarmaquina">
-                <div class="popup reduzido">
+                <div class="popup reduzido" id="modal_adicionar">
                     <div class="popup-header">
                         <div class="titulo_modal">Adicionar nova máquina</div>
                         <button class="fechar" onclick="fecharPop()"><img class="fechar"
                                 src="../assets/imgs/iconeFechar.png"></button>
                     </div>
                     <div class="line"></div>
-                    <div class="texto-marcacao-modal">Indentificação da máquina:</div>
+                    <div class="texto-marcacao-modal">Identificação da máquina:</div>
                     <div class="box-input-modal">
-                        <div class="texto-modal">Apelido da máquina<span class="texto-modal"
+                        <div class="texto-modal">Digite o apelido da máquina<span class="texto-modal"
                                 style="color: red;">*</span>:</div>
                         <div class="coluna-erro-modal">
                             <input type="text" class="input-modal" id="nome_indetificao_maquina" maxlength="45"
@@ -167,7 +167,7 @@
                                 </label>
                             </div>
                             <div class="box-selecao-modal">
-                                <div class="texto-modal">Uso de Rede</div>
+                                <div class="texto-modal">Uso de Rede(O/I)</div>
                                 <label for="uso_rede" class="switch">
                                     <input type="checkbox" id="uso_rede" class="input-checkbox">
                                     <span class="slider"></span>
@@ -178,9 +178,21 @@
                     <div class="box-botao-modal">
                         <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
                         </div>
-                        <button class="botao-modal" onclick="adicionandoServicos()">Próximo</button>
+                        <div class="botoes-modal">
+                            <button class="botao-modal btn-personalizar" onclick="adicionando_nova_maquina()">Adicionar
+                                Máquina<br>(Métricas Padrão)</button>
+                            <button class="botao-modal" onclick="adicionandoServicos()">Personalizar métricas</button>
+                        </div>
                     </div>
+                    <div class="tooltip-container">
+                        <i class="i_metricas_padrao"><u>Visualizar métricas padrão</u></i>
+                        <div class="tooltip">
+                            Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do "de Finibus Bonorum et Malorum" (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, "Lorem Ipsum dolor sit amet..." vem de uma linha na seção 1.10.32.
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
             <div class="popup-fundo oculto" id="modal_codigofinal">
                 <div class="popup modal-reduzido">
@@ -208,23 +220,38 @@
                 <div class="popup-header">
                     <div class="popup">
                         <div class="popup-header">
-                            <div class="titulo_modal">Adicionar nova máquina</div>
+                            <div class="titulo_modal">Personalização Métricas</div>
                             <button class="fechar" onclick="fecharPop()"><img class="fechar"
                                     src="../assets/imgs/iconeFechar.png"></button>
                         </div>
                         <div class="line"></div>
+                        <div class="progresso_componentes">
+                           <div class="componente">
+                            CPU
+                           </div> 
+                            <div class="componente">
+                            RAM
+                           </div> 
+                            <div class="componente">
+                            DISCO
+                           </div> 
+                           <div class="componente">
+                            REDE
+                           </div> 
+                        </div>
+                        <div class="line"></div>
                         <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
                         </div>
-                        <div class="texto-marcacao-modal">Intervalo de operação ideal:</div>
+                        <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div></div>
                         <div class="box-input-modal">
-                            <div class="texto-modal">Valor mínimo(%)<span class="texto-modal"
+                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
                                     style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
                                 <input type="number" class="input-modal" id="valor_minimo_ideal"
                                     oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
                                 <div class="texto-erro oculto" id="texto_erro_valor_minimo">Preencha o campo</div>
                             </div>
-                            <div class="texto-modal">Valor máximo(%)<span class="texto-modal"
+                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
                                     style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
                                 <input type="number" class="input-modal" id="valor_maximo_ideal"
@@ -232,53 +259,25 @@
                                 <div class="texto-erro oculto" id="texto_erro_valor_maximo">Preencha o campo</div>
                             </div>
                         </div>
-                        <div class="texto-marcacao-modal">Definições dos alertas:</div>
+                        <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div></div>
                         <div class="box-input-modal">
-                            <div class="texto-modal">Nome do Alerta:</div>
-                            <div class="coluna-erro-modal-input">
-                                <input type="text" class="input-modal" id="valor_nome_alerta"
-                                    oninput="validarnumero(this)" placeholder="Ex: Severo,Alerta" maxlength="45">
-                                <div class="texto-erro oculto" id="texto_erro_nome_alerta">Preencha o campo </div>
-                            </div>
-                            <div class="texto-modal">Cor do alerta:</div>
+                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
-                                <input type="color" class="input-modal-number" id="valor_cor_alerta"
-                                    placeholder="Ex: 90%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_cor_alerta">Preencha o campo </div>
-                            </div>
-                        </div>
-                        <div class="box-input-modal">
-                            <div class="texto-modal">Valor mínimo(%):</div>
-                            <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_minimo_alerta"
+                                <input type="number" class="input-modal" id="valor_minimo_ideal"
                                     oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_valor_minimo_alerta">Preencha o campo
-                                </div>
+                                <div class="texto-erro oculto" id="texto_erro_valor_minimo">Preencha o campo</div>
                             </div>
-                            <div class="texto-modal">Valor máximo(%):</div>
+                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_maximo_alerta"
+                                <input type="number" class="input-modal" id="valor_maximo_ideal"
                                     oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_valor_maximo_alerta">Preencha o campo
-                                </div>
-                            </div>
-                            <button class="botao-modal-reduzido" onclick="adicionandoAlerta()">Adicionar
-                                alerta</button>
-                        </div>
-                        <div class="barra-grafico-modal-pai">
-                            <div class="div-grafico-modal" style="width: 74%;">
-                                <div class="texto-grafico-modal">0% - 74%</div>
-                                <div class="preencher" style="background-color: lawngreen;"></div>
-                            </div>
-                            <div class="div-grafico-modal" style="width: 12%;">
-                                <div class="texto-grafico-modal">75% - 86%</div>
-                                <div class="preencher" style="background-color: yellow;"></div>
-                            </div>
-                            <div class="div-grafico-modal" style="width: 14%;">
-                                <div class="texto-grafico-modal">87% - 100%</div>
-                                <div class="preencher" style="background-color: red;"></div>
+                                <div class="texto-erro oculto" id="texto_erro_valor_maximo">Preencha o campo</div>
                             </div>
                         </div>
+                            <div class="line"></div>
+                           <div class="ipt_metrica_padrao"><p> Usar configuração padrão</p><input type="checkbox"></div>
                         <div class="box-botao-modal">
                             <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
                                 serviço
@@ -503,8 +502,8 @@
         if (elemento.target.closest('.maquina-box')) {
             var maquina = event.target.closest('.maquina-box');
             console.log(maquina)
-            console.log(maquina.querySelector('.nome-maquina').textContent.replaceAll(" ",""))
-            inserirAcao(`Acessando ${maquina.querySelector('.nome-maquina').textContent.replaceAll(" ","")}`)
+            console.log(maquina.querySelector('.nome-maquina').textContent.replaceAll(" ", ""))
+            inserirAcao(`Acessando ${maquina.querySelector('.nome-maquina').textContent.replaceAll(" ", "")}`)
             sessionStorage.ID_DAC = maquina.id;
             window.location.href = "grafico1.html"
         }
