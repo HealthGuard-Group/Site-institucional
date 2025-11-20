@@ -140,8 +140,8 @@
                         Cargo/Permissão:
                         <select name="viagem" id="campo_status_convite">
                             <option value="selecione">Selecione</option>
-                            <option value="Aceito">Gestor</option>
-                            <option value="Pendente">Técnico de TI</option>
+                            <option value="Gestor TI">Gestor de TI</option>
+                            <option value="Analista TI">Técnico de TI</option>
                         </select>
 
                         <button class="botao-aplicar-filtros" onclick="adicionarFiltro()">
@@ -362,7 +362,7 @@
                 filtrosAtivos[1] = select_tipo_convite.value
                 div_filtros.innerHTML += `
                 <div class="filtro-aplicado">
-                        Status: ${select_tipo_convite.value} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                        Cargo/Permissão: ${select_tipo_convite.value} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
                 </div>`
                 select_tipo_convite.value = "selecione"
                 replotagem_status = false
@@ -376,28 +376,28 @@
             } if (filtrosAtivos[1].length != 0 && replotagem_status) {
                 div_filtros.innerHTML += `
                 <div class="filtro-aplicado">
-                        Status: ${filtrosAtivos[1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
+                        Cargo/Permissão: ${filtrosAtivos[1]} &nbsp <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro(1)">
                 </div>`
             }
             puxarFuncionarios()
         }
-        function filtrarConvites(dados) {
+        function filtrarFuncionarios(dados) {
             var dados_filtrados = []
             var vetor_auxiliar_nome = []
             if (filtrosAtivos[0] == '') {
                 vetor_auxiliar_nome = dados
             } else {
                 for (let i = 0; i < dados.length; i++) {
-                    if (formatarTextoParaComparacao(dados[i].nomeSugerido).includes(formatarTextoParaComparacao(filtrosAtivos[0]))) {
+                    if (formatarTextoParaComparacao(dados[i].nomeUsuario).includes(formatarTextoParaComparacao(filtrosAtivos[0]))) {
                         vetor_auxiliar_nome.push(dados[i])
                     }
                 }
             }
             if (filtrosAtivos[1] == "") {
-                vetor_auxiliar_status = vetor_auxiliar_nome
+                dados_filtrados = vetor_auxiliar_nome
             } else {
                 for (let i = 0; i < vetor_auxiliar_nome.length; i++) {
-                    if ((filtrosAtivos[1] == vetor_auxiliar_nome[i].statusCodigoValidacaoUsuario)) {
+                    if ((filtrosAtivos[1] == vetor_auxiliar_nome[i].permissao)) {
                         dados_filtrados.push(vetor_auxiliar_nome[i])
                     }
                 }
@@ -424,9 +424,9 @@
                 })
                 .then(resposta => {
                     console.log(resposta)
-                    // var dados_filtrados = filtrarConvites(resposta)
-                    // atualizarTabela(dados_filtrados)
-                    atualizarTabela(resposta)
+                    var dados_filtrados = filtrarFuncionarios(resposta)
+                    atualizarTabela(dados_filtrados)
+                    // atualizarTabela(resposta)
                 })
                 .catch(function (resposta) {
                     console.log(`Erro no catch: ${resposta}`);
@@ -459,6 +459,7 @@
             return texto_formatado
         }
         function mascaraCPF(cpf) {
+            
             let value = cpf.replace(/\D/g, '');
 
             if (value.length > 11) {
@@ -471,6 +472,32 @@
 
             return value
         }
+    
+        // POP-UP DE CÓDIGOS GERADOS
+        function copiartexto() {
+            var codigo = document.getElementById("codigo_texto").innerText
+            navigator.clipboard.writeText(codigo)
+            document.querySelector(".tela-box-copiar").classList.remove("oculto")
+            setTimeout(() => {
+                document.querySelector(".tela-box-copiar").classList.add("oculto")
+            }, 3000)
+        }
+        document.querySelector(".icone-editar").addEventListener('click', () => {
+            document.querySelector('.tela-escurecida').classList.remove('oculto')
+            document.getElementById("popupFundo").classList.remove("oculto")
+            document.getElementById('html_fonte').style.overflowY = "hidden"
+            nome.value = ``
+            email.value = ``
+            document.getElementById("permissao").value = "tecnico"
+            data.value = ``
+        })
+        function fecharPop() {
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupFundo").classList.add("oculto")
+            document.getElementById("popupConviteGerado").classList.add("oculto")
+            document.getElementById('html_fonte').style.overflowY = "auto"
+        }
+    
     </script>
 </body>
 
