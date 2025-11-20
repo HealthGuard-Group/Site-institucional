@@ -60,6 +60,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("funcionarios.html")) {
             puxarFuncionarios()
         }
+        if (window.location.href.includes("telaPerfil.html")){
+            atualizarDados()
+        }
     })
     .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
