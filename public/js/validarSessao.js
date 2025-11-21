@@ -21,7 +21,7 @@ window.addEventListener("load", () => {
     nomeUsuario = sessionStorage.NOME_USUARIO;
     permissao = sessionStorage.ID_PERMISSAO;
     fkLogAcesso = sessionStorage.ID_LOGACESSO;
-    // fkDac = sessionStorage.ID_DAC
+    //fkDac = sessionStorage.ID_DAC
 });
 
 // Para não trocar tela sem sessão

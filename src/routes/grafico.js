@@ -11,4 +11,8 @@ router.get("/buscarKpiDac/:idDac", function (req, res) {
   graficoController.buscarKpiDac(req, res);
 });
 
+router.get("/totalAlerta/:idDac", function (req, res) {
+  graficoController.totalAlerta(req, res);
+});
+
 module.exports = router;

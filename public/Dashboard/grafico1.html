@@ -131,7 +131,7 @@
                 <span class="tooltip-text">Quantidade de alertas totais obtidos nas últimas 24h</span>
               </span>
             </div>
-            <div class="number">8</div>
+            <div class="number" id="totalalertas"></div>
           </div>
 
           <div class="card alerta-card">
@@ -276,13 +276,28 @@
       })
       .then(resposta => {
         console.log(resposta)
-
-        comp_alertas.innerHTML = `${resposta[0].nomeDaMedicao}`
+        if(resposta[0] == null){
+          comp_alertas.innerHTML = `Sem componente`
+        }else{
+        comp_alertas.innerHTML = `${resposta[0].componente}`
+      }
       })
 
       .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
       });
+
+      fetch(`/grafico/totalAlerta/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+        return resposta.json();
+      })
+      .then(resposta => {
+        console.log(resposta)
+
+        totalalertas.innerHTML = `${resposta[0].totalAlertas}`
+      })
 
 
 
