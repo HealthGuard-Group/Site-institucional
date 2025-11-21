@@ -36,7 +36,9 @@ router.put("/atualizarsenha", function (req, res) {
 router.get("/puxardadosuser/:id", function (req, res) {
     usuarioController.puxardadosuser(req, res);
 });
-
+router.put("/updatedados/", function (req, res) {
+    usuarioController.updatedados(req, res);
+});
 
 
 module.exports = router;

@@ -289,6 +289,40 @@ function puxardadosuser(req, res) {
     }
 }
 
+function updatedados(req, res) {
+    var idUsuario = req.body.idUsuario
+    var nome = req.body.nome
+    var email = req.body.email
+    var cpf = req.body.cpf
+
+    if (idUsuario == undefined) {
+        res.status(400).send("Seu idUsuario está undefined!");
+    } else if (nome == undefined) {
+        res.status(400).send("Seu nome está undefined!");
+    } else if (email == undefined) {
+        res.status(400).send("Seu email está undefined!");
+    } else if (cpf == undefined) {
+        res.status(400).send("Seu cpf está undefined!");
+    } else  {
+        usuarioModel.updatedados(idUsuario, nome, email, cpf)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao atualizar os dados! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -299,5 +333,6 @@ module.exports = {
     inserircodigorecuperacao,
     verificarCodigo,
     atualizarsenha,
-    puxardadosuser
+    puxardadosuser,
+    updatedados
 }

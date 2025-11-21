@@ -169,6 +169,10 @@ function puxardadosuser(id) {
     
     
 }
+function updatedados(idUsuario, nome, email, cpf) {
+     var instrucaoSql = `update Usuario set nome = '${nome}',email = '${email}', cpf = '${cpf}' where idUsuario = ${idUsuario} ; `
+     return database.executar(instrucaoSql);
+}
 
 module.exports = {
     autenticar,
@@ -180,5 +184,6 @@ module.exports = {
     inserircodigorecuperacao,
     verificarCodigo,
     atualizarsenha,
-    puxardadosuser
+    puxardadosuser,
+    updatedados
 };

@@ -96,7 +96,7 @@
                     </div>
                     <br>
 
-                    <button>Salvar Informações</button>
+                    <button onclick="updateDados(ipt_nome.value, ipt_email.value ,ipt_cpf.value )">Salvar Informações</button>
                 </div>
             </div>
         </div>
@@ -182,10 +182,14 @@
     });
     // Fim do script do modal
 
+   function atualizarDados() {
+        var fks = puxarVariaveis()
+        var id= fks.idUsuario
+        puxardados(id)
+    }
 
- function informacoesPessoais(id) {
-    
-    fetch(`/usuarios/puxardadosuser/${id}`, {
+    function puxardados(id) {
+ fetch(`/usuarios/puxardadosuser/${id}`, {
       method: "GET",
     })
       .then(resposta => {
@@ -207,11 +211,9 @@
       .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
       });
-
+    }
 
     
- }  
-
 //   function mascaraCPF(cpf) {
 //     let value = cpf.value.replace(/\D/g, '');
 
@@ -225,13 +227,35 @@
 // console.log(value)
 //     return value
 //   } 
-    function atualizarDados() {
+    function updateDados(nome, email, cpf) {
         var fks = puxarVariaveis()
-        
-       informacoesPessoais(fks.idUsuario)
+        var idUsuario = fks.idUsuario
+        console.log(idUsuario)
+       fetch(`/usuarios/updatedados`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                nome: nome,
+                idUsuario: idUsuario,
+                email: email,
+                cpf: cpf
+            })
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao atualizar");
+                }
+                return res.json();
+            })
+            .then(data => {
 
-        
-    
-    }
-    
+              alert(`Dados atualizados com sucesso!`)
+            })
+            .catch(err => {
+              
+            })
+
+        }
 </script>
