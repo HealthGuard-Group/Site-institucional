@@ -108,7 +108,7 @@
                 <span class="tooltip-text">Componente monitorado que mais apresentou falhas nas útltimas 24h</span>
               </span>
             </div>
-            <div class="text" style="color:#b30000; font-weight: 700;">Mémoria RAM</div>
+            <div class="text"  id="comp_alertas" style="color:#b30000; font-weight: 700;"></div>
           </div>
 
 
@@ -262,6 +262,22 @@
         }
 
         descricao_MaquinaDac.innerHTML = `${resposta[0].descricao}`
+      })
+
+      .catch(function (resposta) {
+        console.log(`Erro no catch: ${resposta}`);
+      });
+
+      fetch(`/grafico/buscarKpiDac/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+        return resposta.json();
+      })
+      .then(resposta => {
+        console.log(resposta)
+
+        comp_alertas.innerHTML = `${resposta[0].nomeDaMedicao}`
       })
 
       .catch(function (resposta) {
