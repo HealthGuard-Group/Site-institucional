@@ -182,3 +182,6 @@ main h1 {
 .btn-excluir:hover {
     background-color: #d93025;
 }
+#resposta-alterar-dados {
+    margin-top: 2%;
+}
