@@ -1,11 +1,13 @@
+// const { atualizarpermissao } = require("../controllers/funcionariosController");
 var database = require("../database/config");
 
 function buscarfuncionarios(fkUnidade) {
   var instrucaoSql = `SELECT 
+                          u.idUsuario,
                           u.nome AS nomeUsuario, 
                           u.email, 
                           u.cpf, 
-                          p.nome AS permissao   
+                          p.nome AS permissao
                       FROM Usuario AS u 
                       JOIN Permissoes AS p  
                           ON p.idPermissoes = u.fkPermissoes
@@ -14,6 +16,13 @@ function buscarfuncionarios(fkUnidade) {
                       WHERE fkUnidadeDeAtendimento = ${fkUnidade}
                       GROUP BY u.idUsuario
                       ORDER BY u.idUsuario DESC;`;
+
+  return database.executar(instrucaoSql);
+}
+
+function atualizarpermissao(idUsuario, fkPermissao) {
+  var instrucaoSql = `UPDATE Usuario SET fkPermissoes = ${fkPermissao}
+	                        WHERE idUsuario = ${idUsuario};`;
 
   return database.executar(instrucaoSql);
 }
@@ -29,8 +38,8 @@ function buscarfuncionarios(fkUnidade) {
 // }
 
 module.exports = {
-   
   buscarfuncionarios,
+  atualizarpermissao
   // validarconvite,
   // revogarconvites
 };

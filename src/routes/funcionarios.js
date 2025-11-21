@@ -1,16 +1,19 @@
 var express = require("express");
 var router = express.Router();
 
-var convitesController = require("../controllers/funcionariosController");
+var funcionariosController = require("../controllers/funcionariosController");
 
 router.get("/buscarfuncionarios/:variaveis", function (req, res) {
-  convitesController.buscarfuncionarios(req, res);
+  funcionariosController.buscarfuncionarios(req, res);
+});
+router.put("/atualizarpermissao/:idUsuario", function (req, res) {
+  funcionariosController.atualizarpermissao(req, res);
 });
 // router.get("/validarconvite/:emailVar", function (req, res) {
-//   convitesController.validarconvite(req, res);
+//   funcionariosController.validarconvite(req, res);
 // });
-// router.put("/revogarconvites", function (req, res) {
-//   convitesController.revogarconvites(req, res);
+// router.put("/revogarfuncionarios", function (req, res) {
+//   funcionariosController.revogarfuncionarios(req, res);
 // });
 
 module.exports = router;

@@ -17,7 +17,7 @@
         <div class="tela-box-copiar oculto">
             <div class="box-copiar">
                 <img src="../assets/imgs/Icone ok.png" alt="" class="icon-ok">
-                <div class="texto-copiar">Código copiado com sucesso</div>
+                <div class="texto-copiar">Permissão alterada com sucesso!</div>
             </div>
         </div>
 
@@ -26,15 +26,15 @@
             <div id="popupFundo" class="popup-fundo oculto">
                 <div class="popup">
                     <div class="popup-header">
-                        <h2>Novo Convite</h2>
+                        <h2>Alterar Permissão</h2>
                         <button class="fechar" onclick="fecharPop()"><img class="fechar"
                                 src="../assets/imgs/iconeFechar.png"></button>
                     </div>
                     <div class="line"></div>
-                    <label for="nome">Nome da pessoa<span style="color: red">*</span>:</label>
+                    <label for="nome">Nome da pessoa:</label>
                     <input type="text" id="nome" placeholder="Ex: Arthur Felipe">
                     <div class="texto-erro oculto" id="texto_erro_nome">Preencha o campo</div>
-                    <label for="email">Email da pessoa<span style="color: red">*</span>:</label>
+                    <label for="email">Email da pessoa:</label>
                     <input type="email" id="email" placeholder="Ex: example@example.com">
                     <div class="texto-erro oculto" id="texto_erro_email">Preencha o campo</div>
                     <label for="permissao">Selecione a permissão<span style="color: red;">*</span>:</label>
@@ -43,10 +43,36 @@
                         <option value="gestor">Gestor de TI</option>
                     </select>
 
-                    <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
-                    <input type="date" id="data">
-                    <div class="texto-erro oculto" id="texto_erro_data">Preencha o campo</div>
-                    <button class="btn-convidar" onclick="convidar()">Convidar</button>
+                    <!-- <label for="data">Selecione data expiração<span style="color: red">*</span>:</label>
+                    <input type="date" id="data"> -->
+                    <div class="texto-erro oculto" id="texto_erro_permissao">Preencha o campo</div>
+                    <button class="btn-convidar" onclick="confirmarAlteracaoPermissao(idUsuarioClicadoAcao)">Alterar</button>
+                </div>
+            </div>
+            <div id="popupConfirmacaoAlterar" class="popup-fundo oculto">
+                <div class="popup popupConteudoConfirmacao">
+                    <!-- <div class="popup-header">
+                        <h2>Alterar Cargo/Permissão</h2>
+                    </div> -->
+                    <h2>Alterar Permissão</h2>
+                    <p>
+                        Você tem certeza que deseja alterar a permissão desse funcionário? 
+                        <br><br>
+
+                        <b class="nome-usuario-modal-confirmacao"></b>
+
+                        <!-- <br>
+                        <br> -->
+
+                        <br> <span class="troca-de-permissao"></span>
+
+                        <br><br>
+                    </p>
+
+                    <div class="modal-botoes">
+                        <button id="btn-cancelar" class="modal-botao btn-cancelar" onclick="cancelarAlteracao()">Cancelar</button>
+                        <button id="btn-confirmar-exclusao" class="modal-botao btn-excluir" onclick="atualizarPermissaoFuncionario(idUsuarioClicadoAcao)">Sim, Alterar</button>
+                    </div>
                 </div>
             </div>
             <div id="popupConviteGerado" class="popup-fundo oculto">
@@ -329,6 +355,11 @@
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
     <script>
+        var funcionarios; // Auxiliar que armazena os funcinários
+        var idUsuarioClicadoAcao; // Guarda o id do usuário clicado (editar ou remover) para exibir nome no modal
+        var permissaoAtual; // Permissão que o usuário possui antes da alteração
+        var novaPermissao; // Permissão que o usuário irá possuir com a alteração
+
         // Configuração dos filtros
         var filtrosAtivos = ["", ""]
         function fecharFiltro(index) {
@@ -413,7 +444,7 @@
                     <td id="tr-nome-completo">Nome Completo</td>
                     <td id="tr-email">E-mail</td>
                     <td id="tr-cpf-funcionario">CPF</td>
-                    <td id="tr-permissao">Cargo/Permissão</td>
+                    <td id="tr-permissao">Permissão</td>
                     <td id="tr-acoes-funcionario">Ações</td>
                 </tr>`
             fetch(`/funcionarios/buscarfuncionarios/${variaveis}`, {
@@ -426,6 +457,8 @@
                     console.log(resposta)
                     var dados_filtrados = filtrarFuncionarios(resposta)
                     atualizarTabela(dados_filtrados)
+                    funcionarios = dados_filtrados;
+                    
                     // atualizarTabela(resposta)
                 })
                 .catch(function (resposta) {
@@ -442,7 +475,7 @@
                         <td class="td-cpf-funcionario">${mascaraCPF(dados[i].cpf)}</td>
                         <td class="td-permissao">${dados[i].permissao}</td>
                         <td class="td-acoes-funcionario">
-                            <div class="icone-editar">
+                            <div class="icone-editar" onclick="editarPermissaoFuncionario(${dados[i].idUsuario})">
                                 <img src="../assets/imgs/user-edit.png" alt="Editar">
                             </div>
                             <div class="icone-excluir">
@@ -482,20 +515,85 @@
                 document.querySelector(".tela-box-copiar").classList.add("oculto")
             }, 3000)
         }
-        document.querySelector(".icone-editar").addEventListener('click', () => {
+        function editarPermissaoFuncionario(idUsuario) {   
             document.querySelector('.tela-escurecida').classList.remove('oculto')
             document.getElementById("popupFundo").classList.remove("oculto")
             document.getElementById('html_fonte').style.overflowY = "hidden"
-            nome.value = ``
-            email.value = ``
-            document.getElementById("permissao").value = "tecnico"
-            data.value = ``
-        })
+            nome.value = funcionarios[funcionarios.length - idUsuario].nomeUsuario
+            nome.disabled = true;
+            email.value = funcionarios[funcionarios.length - idUsuario].email
+            email.disabled = true;
+            if (funcionarios[funcionarios.length - idUsuario].permissao == "Analista TI") {
+                document.getElementById("permissao").value = "tecnico"
+                permissaoAtual = "Técnico de TI"
+            } else if (funcionarios[funcionarios.length - idUsuario].permissao == "Gestor TI") {
+                document.getElementById("permissao").selectedIndex = 1; // "gestor"
+                permissaoAtual = "Gestor de TI"
+            }
+
+            idUsuarioClicadoAcao = idUsuario;
+        }
+        function confirmarAlteracaoPermissao(idUsuarioClicado) {   
+            if ((permissaoAtual == "Técnico de TI" && document.getElementById("permissao").value == "tecnico") ||
+                permissaoAtual == "Gestor de TI" && document.getElementById("permissao").value == "gestor") {
+                texto_erro_permissao.classList.remove("oculto")
+                texto_erro_permissao.innerHTML = `Esse funcionário já pussui essa permissão`
+            } else {
+                if (document.getElementById("permissao").value == "tecnico") {
+                    novaPermissao = "Técnico de TI"
+                    fkPermissao = 2
+                    
+                } else {
+                    novaPermissao = "Gestor de TI"
+                    fkPermissao = 1
+                }
+                fecharPop();
+                document.querySelector('.tela-escurecida').classList.remove('oculto')
+                document.getElementById("popupConfirmacaoAlterar").classList.remove("oculto")
+                document.getElementById('html_fonte').style.overflowY = "hidden"
+                document.querySelector('.nome-usuario-modal-confirmacao').innerHTML = funcionarios[funcionarios.length - idUsuarioClicado].nomeUsuario;
+                document.querySelector('.troca-de-permissao').innerHTML = `${permissaoAtual} --> ${novaPermissao}`
+            }
+        }
         function fecharPop() {
+            texto_erro_permissao.classList.add("oculto")
             document.querySelector('.tela-escurecida').classList.add('oculto')
             document.getElementById("popupFundo").classList.add("oculto")
             document.getElementById("popupConviteGerado").classList.add("oculto")
             document.getElementById('html_fonte').style.overflowY = "auto"
+        }
+        function cancelarAlteracao() {
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupConfirmacaoAlterar").classList.add("oculto")
+            document.getElementById("popupConviteGerado").classList.add("oculto")
+            document.getElementById('html_fonte').style.overflowY = "auto"
+        }
+        function atualizarPermissaoFuncionario(idUsuario) {
+
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupConfirmacaoAlterar").classList.add("oculto")
+            document.getElementById("popupConviteGerado").classList.add("oculto")
+            document.getElementById('html_fonte').style.overflowY = "auto"
+            
+            fetch(`/funcionarios/atualizarpermissao/${idUsuario}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    fkPermissao: fkPermissao
+                }),
+            })
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    console.log("Permissão atualizada com sucesso!")
+                })
+                .catch(function (resposta) {
+                    console.log("UPDATE ❌")
+                    console.log(`Erro no catch: ${resposta}`);
+                });
         }
     
     </script>

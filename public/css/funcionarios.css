@@ -413,7 +413,7 @@ td {
     background: #fff;
     border-radius: 10px;
     padding: 25px 35px;
-    width: 350px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -475,7 +475,7 @@ td {
     transition: border-color 0.2s;
 }
 .line{
-    border-bottom: 1px solid #1a1a1a;
+    border-bottom: 1px solid #c2c2c2;
     width: 250%,
 }
 
@@ -550,4 +550,41 @@ td {
 /* Deixar por último */
 .oculto{
     display: none;
+}
+
+/* Modal de Confirmação de alteração  */
+.popupConteudoConfirmacao {
+    text-align: center;
+}
+.modal-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.modal-botao {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-cancelar {
+    background-color: #eee;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.btn-cancelar:hover {
+    background-color: #ddd;
+}
+
+.btn-excluir {
+    background-color: #f34235;
+    color: white;
+}
+.btn-excluir:hover {
+    background-color: #d93025;
 }
