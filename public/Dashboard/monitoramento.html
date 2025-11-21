@@ -179,15 +179,24 @@
                         <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
                         </div>
                         <div class="botoes-modal">
-                            <button class="botao-modal btn-personalizar" onclick="adicionando_nova_maquina()">Adicionar
+                            <button class="botao-modal btn-personalizar" onclick="adicionandoServicosPadrao()">Adicionar
                                 Máquina<br>(Métricas Padrão)</button>
-                            <button class="botao-modal" onclick="adicionandoServicos()">Personalizar métricas</button>
+                            <button class="botao-modal" onclick="adicionandoServicosPersonalizados()">Personalizar
+                                métricas</button>
                         </div>
                     </div>
                     <div class="tooltip-container">
                         <i class="i_metricas_padrao"><u>Visualizar métricas padrão</u></i>
                         <div class="tooltip">
-                            Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica, descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do "de Finibus Bonorum et Malorum" (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha de Lorem Ipsum, "Lorem Ipsum dolor sit amet..." vem de uma linha na seção 1.10.32.
+                            Ao contrário do que se acredita, Lorem Ipsum não é simplesmente um texto randômico. Com mais
+                            de 2000 anos, suas raízes podem ser encontradas em uma obra de literatura latina clássica
+                            datada de 45 AC. Richard McClintock, um professor de latim do Hampden-Sydney College na
+                            Virginia, pesquisou uma das mais obscuras palavras em latim, consectetur, oriunda de uma
+                            passagem de Lorem Ipsum, e, procurando por entre citações da palavra na literatura clássica,
+                            descobriu a sua indubitável origem. Lorem Ipsum vem das seções 1.10.32 e 1.10.33 do "de
+                            Finibus Bonorum et Malorum" (Os Extremos do Bem e do Mal), de Cícero, escrito em 45 AC. Este
+                            livro é um tratado de teoria da ética muito popular na época da Renascença. A primeira linha
+                            de Lorem Ipsum, "Lorem Ipsum dolor sit amet..." vem de uma linha na seção 1.10.32.
                         </div>
                     </div>
 
@@ -226,58 +235,63 @@
                         </div>
                         <div class="line"></div>
                         <div class="progresso_componentes">
-                           <div class="componente">
-                            CPU
-                           </div> 
                             <div class="componente">
-                            RAM
-                           </div> 
+                                CPU
+                            </div>
                             <div class="componente">
-                            DISCO
-                           </div> 
-                           <div class="componente">
-                            REDE
-                           </div> 
+                                RAM
+                            </div>
+                            <div class="componente">
+                                DISCO
+                            </div>
+                            <div class="componente">
+                                REDE
+                            </div>
                         </div>
                         <div class="line"></div>
                         <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
                         </div>
-                        <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div></div>
+                        <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div>
+                        </div>
                         <div class="box-input-modal">
                             <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
                                     style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_minimo_ideal"
+                                <input type="number" class="input-modal" id="valor_minimo_atencao"
                                     oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_valor_minimo">Preencha o campo</div>
+                                <div class="texto-erro oculto" id="texto_erro_minimo_atencao">Preencha o campo</div>
                             </div>
                             <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
                                     style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_maximo_ideal"
+                                <input type="number" class="input-modal" id="valor_maximo_atencao"
                                     oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_valor_maximo">Preencha o campo</div>
+                                <div class="texto-erro oculto" id="texto_erro_maximo_atencao">Preencha o campo</div>
                             </div>
                         </div>
-                        <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div></div>
+                        <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div>
+                        </div>
                         <div class="box-input-modal">
                             <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
                                     style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_minimo_ideal"
+                                <input type="number" class="input-modal" id="valor_minimo_alerta"
                                     oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_valor_minimo">Preencha o campo</div>
+                                <div class="texto-erro oculto" id="texto_erro_minimo_alerta">Preencha o campo</div>
                             </div>
                             <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
                                     style="color: red;">*</span>:</div>
                             <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_maximo_ideal"
+                                <input type="number" class="input-modal" id="valor_maximo_alerta"
                                     oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_valor_maximo">Preencha o campo</div>
+                                <div class="texto-erro oculto" id="texto_erro_maximo_alerta">Preencha o campo</div>
                             </div>
                         </div>
-                            <div class="line"></div>
-                           <div class="ipt_metrica_padrao"><p> Usar configuração padrão</p><input type="checkbox"></div>
+                        <div class="line"></div>
+                        <div class="ipt_metrica_padrao">
+                            <p> Usar configuração padrão</p><input type="checkbox" id="input_configuracao_padrao"
+                                onchange="puxarMetricasPadraoPersonalizado(this)">
+                        </div>
                         <div class="box-botao-modal">
                             <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
                                 serviço
@@ -285,7 +299,8 @@
                             <div class="box-botao-modal">
                                 <div class="texto-erro oculto" id="texto_erro_configuracao_alerta">Configure a operação
                                     ideal</div>
-                                <button class="botao-modal" onclick="salvandoAlerta()">Próximo</button>
+                                <button class="botao-modal"
+                                    onclick="parametrizarAlertasPersonalizado()">Próximo</button>
                             </div>
                         </div>
                     </div>
@@ -491,12 +506,6 @@
 <script src="../js/validarSessao.js"></script>
 <script src="../js/menu-lateral.js"></script>
 <script>
-    // Criação de váriaveis
-    var adicionando_nova_maquina = {
-        nome: "",
-        servicos: [],
-        alertas: [[], [], [], []]
-    }
     // Redirecionador Dash
     document.addEventListener('click', function (elemento) {
         if (elemento.target.closest('.maquina-box')) {
@@ -535,7 +544,7 @@
                 return resposta.json();
             })
             .then(resposta => {
-                console.log(resposta)
+                //console.log(resposta)
                 kpi_configuracao.innerHTML = resposta[0].configuracao
                 kpi_cadastradas.innerHTML = resposta[0].cadastradas
                 kpi_inativas.innerHTML = resposta[0].inativo
@@ -738,173 +747,275 @@
             });
     }
     // Modal Adicionar máquina
+    var maquina_nova = {
+        nome: "",
+        servicos: ["", "", "", ""],
+        alertaAtencao: [["", ""], ["", ""], ["", ""]],
+        alerta: [["", ""], ["", ""], ["", ""]]
+    }
+    var passo_metrica_personalizada = 0
     function validacaoNomeIndetificao() {
         var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
         if (nome_indetificao_maquina.value.length > 0) {
             nomeIndetificao.style.border = '0.2vh solid #0AA40A'
             nomeIndetificao.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+            return false
         } else {
             nomeIndetificao.style.border = '0.2vh solid #D30808'
             nomeIndetificao.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+            return true
         }
     }
-    function adicionandoServicos() {
-        adicionando_nova_maquina = {
-            nome: "",
-            servicos: [],
-            alertas: [[], [], [], []]
-        }
-        // Declarando variavéis
-        var input_nome_indentificao = nome_indetificao_maquina.value
-        var uso_cpu_porcentagem = document.getElementById('uso_cpu_porcentagem').checked
-        var uso_ram_porcentagem = document.getElementById('uso_ram_porcentagem').checked
-        var uso_disco_porcentagem = document.getElementById('uso_disco_porcentagem').checked
-        var uso_rede = document.getElementById('uso_rede').checked
-        if (input_nome_indentificao.length == 0) {
-            document.getElementById("texto_erro_nome_indentificao").classList.remove('oculto')
+    function adicionandoServicosPadrao() {
+        //Validação
+        var ax_erro = false
+        var validacao_nome = validacaoNomeIndetificao()
+        var input_uso_cpu = document.getElementById("uso_cpu_porcentagem")
+        var input_uso_ram = document.getElementById("uso_ram_porcentagem")
+        var input_uso_disco = document.getElementById("uso_disco_porcentagem")
+        var input_uso_rede = document.getElementById("uso_rede")
+        var texto_erro_maquina = document.getElementById("texto_erro_nome_indentificao")
+        var texto_erro_servicos = document.getElementById("texto_erro_selecao_servicos")
+        if (validacao_nome) {
+            texto_erro_maquina.classList.remove("oculto")
+            texto_erro_maquina.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+            ax_erro = true
         } else {
-            document.getElementById("texto_erro_nome_indentificao").classList.add('oculto')
+            texto_erro_maquina.classList.add("oculto")
         }
-        if (uso_cpu_porcentagem == false && uso_ram_porcentagem == false && uso_disco_porcentagem == false && uso_rede == false) {
-            document.getElementById("texto_erro_selecao_servicos").classList.remove('oculto')
+        if (!input_uso_cpu.checked && !input_uso_ram.checked && !input_uso_disco.checked && !input_uso_rede.checked) {
+            texto_erro_servicos.classList.remove("oculto")
+            texto_erro_servicos.innerHTML = `<span style="color: red;">Selecione no mínimo 1 serviço</span>`
+            ax_erro = true
         } else {
-            document.getElementById("texto_erro_selecao_servicos").classList.add('oculto')
+            texto_erro_servicos.classList.add("oculto")
         }
-        if (input_nome_indentificao.length > 0 && (uso_cpu_porcentagem == true || uso_ram_porcentagem == true || uso_disco_porcentagem == true || uso_rede == true)) {
-            adicionando_nova_maquina.nome = input_nome_indentificao
-            adicionando_nova_maquina.servicos[0] = uso_cpu_porcentagem
-            adicionando_nova_maquina.servicos[1] = uso_ram_porcentagem
-            adicionando_nova_maquina.servicos[2] = uso_disco_porcentagem
-            adicionando_nova_maquina.servicos[3] = uso_rede
-            if (uso_cpu_porcentagem == true) {
-                parametro_a_configurar.innerHTML = `Definição das métricas de uso de CPU(%):`
-            } else if (uso_ram_porcentagem == true) {
-                parametro_a_configurar.innerHTML = `Definição das métricas de uso de RAM(%):`
-            } else if (uso_disco_porcentagem == true) {
-                parametro_a_configurar.innerHTML = `Definição das métricas de uso de disco(%):`
-            }
-
-            document.getElementById("modal_adicionarmaquina_config").classList.remove("oculto")
-            document.getElementById("modal_adicionarmaquina").classList.add('oculto')
+        if (ax_erro) {
+            return
         }
+        // Fim da Validação
+        // Adição das variaveis no Json para o insert
+        maquina_nova.nome = nome_indetificao_maquina.value
+        maquina_nova.servicos[0] = input_uso_cpu.checked
+        maquina_nova.servicos[1] = input_uso_ram.checked
+        maquina_nova.servicos[2] = input_uso_disco.checked
+        maquina_nova.servicos[3] = input_uso_rede.checked
+        // Puxando métricas padrão
+        var fks = puxarVariaveis()
+        var fkUnidade = fks.idUnidadeAtendimento
+        fetch(`/dashboard/buscarMetricasPadrao/${fkUnidade}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+        console.log("Entrei na configuração padrão")
     }
-    function adicionandoAlerta() {
-        if (valor_nome_alerta.value == "") {
-            document.getElementById("texto_erro_nome_alerta").classList.remove("oculto")
+    function adicionandoServicosPersonalizados() {
+        //Validação
+        var ax_erro = false
+        var validacao_nome = validacaoNomeIndetificao()
+        var input_uso_cpu = document.getElementById("uso_cpu_porcentagem")
+        var input_uso_ram = document.getElementById("uso_ram_porcentagem")
+        var input_uso_disco = document.getElementById("uso_disco_porcentagem")
+        var input_uso_rede = document.getElementById("uso_rede")
+        var texto_erro_maquina = document.getElementById("texto_erro_nome_indentificao")
+        var texto_erro_servicos = document.getElementById("texto_erro_selecao_servicos")
+        if (validacao_nome) {
+            texto_erro_maquina.classList.remove("oculto")
+            texto_erro_maquina.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+            ax_erro = true
         } else {
-            document.getElementById("texto_erro_nome_alerta").classList.add("oculto")
-        } if (valor_minimo_alerta.value == '') {
-            texto_erro_valor_minimo_alerta.innerHTML = `Preencha o campo`
-            document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-        } else {
-            document.getElementById("texto_erro_valor_minimo_alerta").classList.add("oculto")
-        } if (valor_maximo_alerta.value == '') {
-            texto_erro_valor_maximo_alerta.innerHTML = `Preencha o campo`
-            document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-        } else {
-            document.getElementById("texto_erro_valor_maximo_alerta").classList.add("oculto")
-        } if (valor_minimo_alerta.value > valor_maximo_alerta.value) {
-            document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-            document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-            texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
-            texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
+            texto_erro_maquina.classList.add("oculto")
         }
-        if (valor_minimo_alerta.value < valor_maximo_alerta.value && valor_nome_alerta.value != "" && valor_minimo_alerta.value != '' && valor_maximo_alerta.value != '') {
-            if (adicionando_nova_maquina.servicos[0] == true && adicionando_nova_maquina.alertas[1] == "") {
-                for (let i = 0; i < adicionando_nova_maquina.alertas[0].length; i++) {
-                    if (valor_minimo_alerta.value > adicionando_nova_maquina.alertas[0][i].valor_minimo && valor_minimo_alerta.value < adicionando_nova_maquina.alertas[0][i].valor_maximo) {
-                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
-                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
-                        return
-                    }
-                    if (valor_maximo_alerta.value > adicionando_nova_maquina.alertas[0][i].valor_minimo && valor_maximo_alerta.value < adicionando_nova_maquina.alertas[0][i].valor_maximo) {
-                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
-                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
-                        return
-                    }
-                }
-                adicionando_nova_maquina.alertas[0].push({
-                    nome_alerta: valor_nome_alerta.value,
-                    cor: valor_cor_alerta.value,
-                    valor_minimo: valor_minimo_alerta.value,
-                    valor_maximo: valor_maximo_alerta.value
-                })
-            } else if (adicionando_nova_maquina.servicos[1] == true && adicionando_nova_maquina.alertas[1] == "") {
-                for (let i = 0; i < adicionando_nova_maquina.alertas[1].length; i++) {
-                    if (valor_minimo_alerta.value > adicionando_nova_maquina.alertas[1][i].valor_minimo && valor_minimo_alerta.value < adicionando_nova_maquina.alertas[1][i].valor_maximo) {
-                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
-                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
-                        return
-                    }
-                    if (valor_maximo_alerta.value > adicionando_nova_maquina.alertas[1][i].valor_minimo && valor_maximo_alerta.value < adicionando_nova_maquina.alertas[1][i].valor_maximo) {
-                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
-                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
-                        return
-                    }
-                }
-                adicionando_nova_maquina.alertas[1].push({
-                    nome_alerta: valor_nome_alerta.value,
-                    cor: valor_cor_alerta.value,
-                    valor_minimo: valor_minimo_alerta.value,
-                    valor_maximo: valor_maximo_alerta.value
-                })
-            } else if (adicionando_nova_maquina.servicos[2] == true && adicionando_nova_maquina.alertas[2] == "") {
-                for (let i = 0; i < adicionando_nova_maquina.alertas[2].length; i++) {
-                    if (valor_minimo_alerta.value > adicionando_nova_maquina.alertas[2][i].valor_minimo && valor_minimo_alerta.value < adicionando_nova_maquina.alertas[2][i].valor_maximo) {
-                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
-                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
-                        return
-                    }
-                    if (valor_maximo_alerta.value > adicionando_nova_maquina.alertas[2][i].valor_minimo && valor_maximo_alerta.value < adicionando_nova_maquina.alertas[2][i].valor_maximo) {
-                        document.getElementById("texto_erro_valor_minimo_alerta").classList.remove("oculto")
-                        document.getElementById("texto_erro_valor_maximo_alerta").classList.remove("oculto")
-                        texto_erro_valor_minimo_alerta.innerHTML = `Valor invalído`
-                        texto_erro_valor_maximo_alerta.innerHTML = `Valor invalído`
-                        return
-                    }
-                }
-                adicionando_nova_maquina.alertas[2].push({
-                    nome_alerta: valor_nome_alerta.value,
-                    cor: valor_cor_alerta.value,
-                    valor_minimo: valor_minimo_alerta.value,
-                    valor_maximo: valor_maximo_alerta.value
-                })
+        if (!input_uso_cpu.checked && !input_uso_ram.checked && !input_uso_disco.checked && !input_uso_rede.checked) {
+            texto_erro_servicos.classList.remove("oculto")
+            texto_erro_servicos.innerHTML = `<span style="color: red;">Selecione no mínimo 1 serviço</span>`
+            ax_erro = true
+        } else {
+            texto_erro_servicos.classList.add("oculto")
+        }
+        if (ax_erro) {
+            return
+        }
+        // Fim da Validação
+        // Adição das variaveis no Json para o insert
+        maquina_nova.nome = nome_indetificao_maquina.value
+        maquina_nova.servicos[0] = input_uso_cpu.checked
+        maquina_nova.servicos[1] = input_uso_ram.checked
+        maquina_nova.servicos[2] = input_uso_disco.checked
+        maquina_nova.servicos[3] = input_uso_rede.checked
+        document.getElementById("modal_adicionarmaquina").classList.add("oculto")
+        document.getElementById("modal_adicionarmaquina_config").classList.remove("oculto")
+        passo_metrica_personalizada = 0
+        avancarPaginaAlertaPersonalizado()
+        console.log("Entrei na configuração personalizada")
+    }
+    function avancarPaginaAlertaPersonalizado() {
+        for (let i = 0; i < 3; i++) {
+            if (maquina_nova.servicos[passo_metrica_personalizada] == false) {
+                passo_metrica_personalizada++
+            } if (passo_metrica_personalizada >= 3) {
+                salvandoAlerta()
             }
         }
+        var texto_metricas = ["Definição das métricas de uso de CPU(%):", "Definição das métricas de uso de RAM(%):", "Definição das métricas de uso de Disco(%):"]
+        parametro_a_configurar.innerHTML = texto_metricas[passo_metrica_personalizada]
+        valor_minimo_atencao.value = ""
+        valor_maximo_atencao.value = ""
+        valor_minimo_alerta.value = ""
+        valor_maximo_alerta.value = ""
+        input_configuracao_padrao.checked = false
+        valor_minimo_atencao.disabled = false
+        valor_maximo_atencao.disabled = false
+        valor_minimo_alerta.disabled = false
+        valor_maximo_alerta.disabled = false
+        passo_metrica_personalizada++
+    }
+    function parametrizarAlertasPersonalizado() {
+        // Validação
+        var min_atencao = document.getElementById("valor_minimo_atencao").value
+        var max_atencao = document.getElementById("valor_maximo_atencao").value
+        var min_alerta = document.getElementById("valor_minimo_alerta").value
+        var max_alerta = document.getElementById("valor_maximo_alerta").value
+        var texto_min_atencao = document.getElementById("texto_erro_minimo_atencao")
+        var texto_max_atencao = document.getElementById("texto_erro_maximo_atencao")
+        var texto_min_alerta = document.getElementById("texto_erro_minimo_alerta")
+        var texto_max_alerta = document.getElementById("texto_erro_maximo_alerta")
+        var input_metrica_padrao = document.getElementById("input_configuracao_padrao").checked
+        var ax_erro = false
+        if (!input_metrica_padrao) {
+            if (min_alerta == 0 && max_alerta == 0) {
+                texto_min_alerta.classList.remove("oculto")
+                texto_max_alerta.classList.remove("oculto")
+                texto_min_alerta.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+                texto_max_alerta.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+                ax_erro = true
+            } else if (min_alerta >= max_alerta) {
+                texto_min_alerta.classList.remove("oculto")
+                texto_max_alerta.classList.remove("oculto")
+                texto_min_alerta.innerHTML = `<span style="color: red;">Deve ser menor que o limite máximo</span>`
+                texto_max_alerta.innerHTML = `<span style="color: red;">Deve ser maior que o limite mínimo</span>`
+                ax_erro = true
+            } else if (min_alerta <= max_atencao) {
+                texto_min_alerta.classList.remove("oculto")
+                texto_max_alerta.classList.add("oculto")
+                texto_min_alerta.innerHTML = `<span style="color: red;">Deve ser maior que o limite da Atenção(${max_atencao}%)</span>`
+                ax_erro = true
+            }
+            else {
+                texto_min_alerta.classList.add("oculto")
+                texto_max_alerta.classList.add("oculto")
+            }
+            if (min_atencao == 0 && max_atencao == 0) {
+                texto_min_atencao.classList.remove("oculto")
+                texto_max_atencao.classList.remove("oculto")
+                texto_min_atencao.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+                texto_max_atencao.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+            } else if (min_atencao >= max_atencao) {
+                texto_min_atencao.classList.remove("oculto")
+                texto_max_atencao.classList.remove("oculto")
+                texto_min_atencao.innerHTML = `<span style="color: red;">Deve ser menor que o limite máximo</span>`
+                texto_max_atencao.innerHTML = `<span style="color: red;">Deve ser maior que o limite mínimo</span>`
+            } else if (max_atencao >= min_alerta) {
+                texto_min_atencao.classList.add("oculto")
+                texto_max_atencao.classList.remove("oculto")
+                texto_max_atencao.innerHTML = `<span style="color: red;">Deve ser menor que o início do Alerta (${min_alerta}%)</span>`
+            }
+            if (ax_erro) {
+                return
+            }
+        }
+        // Fim Validação
+        console.log(passo_metrica_personalizada)
+        maquina_nova.alertaAtencao[passo_metrica_personalizada - 1][0] = min_atencao
+        maquina_nova.alertaAtencao[passo_metrica_personalizada - 1][1] = max_atencao
+        maquina_nova.alerta[passo_metrica_personalizada - 1][0] = min_alerta
+        maquina_nova.alerta[passo_metrica_personalizada - 1][1] = max_alerta
+        console.log("Passei da validação")
+        avancarPaginaAlertaPersonalizado()
     }
     function salvandoAlerta() {
-        if (valor_minimo_ideal.value == "" || valor_maximo_ideal.value == "") {
-            texto_erro_configuracao_alerta.classList.remove("oculto")
-            return
-        } else {
-            texto_erro_configuracao_alerta.classList.add("oculto")
-        }
-        if (adicionando_nova_maquina.servicos[1] == true && adicionando_nova_maquina.alertas[1] == "") {
-            parametro_a_configurar.innerHTML = `Definição das métricas de uso de RAM(%):`
-            adicionando_nova_maquina.alertas[1] = "Hello World"
-        } else if (adicionando_nova_maquina.servicos[2] == true && adicionando_nova_maquina.alertas[2] == "") {
-            parametro_a_configurar.innerHTML = `Definição das métricas de uso de disco(%):`
-            adicionando_nova_maquina.alertas[2] = "Hello World"
-        } else {
-            document.getElementById("modal_codigofinal").classList.remove("oculto")
-            document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
-        }
+        document.getElementById("modal_codigofinal").classList.remove("oculto")
+        document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
     }
     function validarnumero(input) {
         if (input.value < 0) {
             input.value = 0
         } if (input.value > 100) {
             input.value = 100
+        }
+    }
+    function puxarMetricasPadraoPersonalizado(input) {
+        var valor_input = input.checked
+        if (valor_input) {
+            valor_minimo_atencao.disabled = true
+            valor_maximo_atencao.disabled = true
+            valor_minimo_alerta.disabled = true
+            valor_maximo_alerta.disabled = true
+            fetch(`/dashboard/buscarMetricasPadrao/${fkUnidade}`, {
+                method: "GET",
+            })
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    if (passo_metrica_personalizada == 0) {
+                        for (let i = 0; i < resposta.length; i++) {
+                            if (resposta[i].fkMedicoesDisponiveis == 1) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                                } else {
+                                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                                }
+                            }
+                        }
+                    } if (passo_metrica_personalizada == 1) {
+                        for (let i = 0; i < resposta.length; i++) {
+                            if (resposta[i].fkMedicoesDisponiveis == 6) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                                } else {
+                                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                                }
+                            }
+                        }
+                    } if (passo_metrica_personalizada == 2) {
+                        for (let i = 0; i < resposta.length; i++) {
+                            if (resposta[i].fkMedicoesDisponiveis == 10) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                                } else {
+                                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`Erro no catch: ${resposta}`);
+                });
+        } else {
+            valor_minimo_atencao.disabled = false
+            valor_maximo_atencao.disabled = false
+            valor_minimo_alerta.disabled = false
+            valor_maximo_alerta.disabled = false
+            valor_minimo_atencao.value = ""
+            valor_maximo_atencao.value = ""
+            valor_minimo_alerta.value = ""
+            valor_maximo_alerta.value = ""
         }
     }
     // POP-UP DE CÓDIGOS GERADOS
@@ -931,6 +1042,9 @@
         document.querySelector('.tela-escurecida').classList.remove('oculto')
         document.getElementById("modal_adicionarmaquina").classList.remove('oculto')
         document.getElementById('html_fonte').style.overflowY = "hidden"
+        var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
+        nomeIndetificao.style.border = '0.2vh solid #000'
+        nomeIndetificao.style.boxShadow = 'none'
     })
 
     // FILTROS MODAL "CONVITES GERADOS"

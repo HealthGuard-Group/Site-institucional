@@ -97,10 +97,34 @@ function buscarKpisMonitoramento(req, res) {
       );
   }
 }
+function buscarMetricasPadrao(req, res) {
+  var fkUnidade = req.params.fkUnidade;
+  if (fkUnidade == undefined) {
+    res.status(400).send("Seu fkUnidade está undefined!");
+  } else {
+
+    dashboardModel.buscarMetricasPadrao(fkUnidade)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao puxar as métricas padrão! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
 
 module.exports = {
   buscarLogAcesso,
   buscarNomeDaUnidade,
   buscarMaquina,
-  buscarKpisMonitoramento
+  buscarKpisMonitoramento,
+  buscarMetricasPadrao
 }

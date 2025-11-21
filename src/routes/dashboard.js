@@ -15,5 +15,8 @@ router.get("/buscarMaquina/:fkUnidade", function (req, res) {
 router.get("/buscarKpisMonitoramento/:fkUnidade", function (req, res) {
   dashboardController.buscarKpisMonitoramento(req, res);
 });
+router.get("/buscarMetricasPadrao/:fkUnidade", function (req, res) {
+  dashboardController.buscarMetricasPadrao(req, res);
+});
 
 module.exports = router;

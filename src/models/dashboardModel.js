@@ -22,10 +22,15 @@ function buscarKpisMonitoramento(fkUnidade) {
     FROM Dac WHERE fkUnidadeDeAtendimento = ${fkUnidade} limit 1;`;
   return database.executar(instrucaoSql);
 }
+function buscarMetricasPadrao(fkUnidade) {
+  var instrucaoSql = `SELECT fkMedicoesDisponiveis,nomeNivel,valorMinimo,valorMaximo FROM MetricaAlerta WHERE fkUnidadeDeAtendimento = ${fkUnidade} AND fkDac IS NULL;`;
+  return database.executar(instrucaoSql);
+}
 
 module.exports = {
   buscarLogAcesso,
   buscarNomeDaUnidade,
   buscarMaquina,
-  buscarKpisMonitoramento
+  buscarKpisMonitoramento,
+  buscarMetricasPadrao
 };
