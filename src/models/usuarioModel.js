@@ -161,6 +161,13 @@ function atualizarsenha(senha, idUsuario) {
   var instrucaoSql = `UPDATE Usuario SET senha = sha2('${senha}',256) WHERE idUsuario = '${idUsuario}'`;
 
   return database.executar(instrucaoSql);
+} 
+
+function puxardadosuser(id) {
+    var instrucaoSql = `select * from Usuario where idUsuario = ${id} `;
+    return database.executar(instrucaoSql);
+    
+    
 }
 
 module.exports = {
@@ -172,5 +179,6 @@ module.exports = {
     atualizarcodigorecuperacao,
     inserircodigorecuperacao,
     verificarCodigo,
-    atualizarsenha
+    atualizarsenha,
+    puxardadosuser
 };

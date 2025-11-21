@@ -185,13 +185,53 @@
 
  function informacoesPessoais(id) {
     
+    fetch(`/usuarios/puxardadosuser/${id}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+        return resposta.json();
+      })
+      .then(resposta => {
+        console.log(resposta)
+        ipt_nome.value = resposta[0].nome
+        ipt_email.value = resposta[0].email
+        if (resposta[0].fkPermissoes == 1) {
+            ipt_permissao.value = "Gestor de TI"
+        } else {
+            ipt_permissao.value = "Técnico de TI"
+        }
     
- }   
+        ipt_cpf.value = resposta[0].cpf
+      })
+
+      .catch(function (resposta) {
+        console.log(`Erro no catch: ${resposta}`);
+      });
+
+
+    
+ }  
+
+//   function mascaraCPF(cpf) {
+//     let value = cpf.value.replace(/\D/g, '');
+
+//     if (value.length > 11) {
+//       value = value.substring(0, 11);
+//     }
+
+//     value = value.replace(/(\d{3})(\d)/, '$1.$2')
+//       .replace(/(\d{3})(\d)/, '$1.$2')
+//       .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+// console.log(value)
+//     return value
+//   } 
     function atualizarDados() {
         var fks = puxarVariaveis()
         
-        informacoesPessoais(fks.idUsuario);
+       informacoesPessoais(fks.idUsuario)
+
         
+    
     }
     
 </script>

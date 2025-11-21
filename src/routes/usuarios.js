@@ -33,6 +33,10 @@ router.get("/verificarCodigo/:codigo", function (req, res) {
 router.put("/atualizarsenha", function (req, res) {
     usuarioController.atualizarsenha(req, res);
 });
+router.get("/puxardadosuser/:id", function (req, res) {
+    usuarioController.puxardadosuser(req, res);
+});
+
 
 
 module.exports = router;

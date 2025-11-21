@@ -265,6 +265,30 @@ function atualizarsenha(req, res) {
     }
 }
 
+function puxardadosuser(req, res) {
+    var id = req.params.id
+
+    if (id == undefined) {
+        res.status(400).send("Seu id está undefined!");
+    }  else {
+        usuarioModel.puxardadosuser(id)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar a atualizar a senha! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     autenticar,
     cadastrar,
@@ -274,5 +298,6 @@ module.exports = {
     atualizarcodigorecuperacao,
     inserircodigorecuperacao,
     verificarCodigo,
-    atualizarsenha
+    atualizarsenha,
+    puxardadosuser
 }
