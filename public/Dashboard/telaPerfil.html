@@ -185,10 +185,11 @@
     });
     // Fim do script do modal
 
-
+    var idUsuario;
     function atualizarDados() {
         var fks = puxarVariaveis()
         var id = fks.idUsuario
+        idUsuario = id
         puxardados(id)
     }
 
@@ -322,8 +323,35 @@
 
             })
             .catch(err => {
-
+            
             })
-
     }
+
+ 
+    
+function excluir_conta() {
+        console.log("Apagando usuario com o ID" + idUsuario);
+        fetch(`/usuarios/excluirconta/${idUsuario}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }).then(function (resposta) {
+
+            if (resposta.ok) {
+                window.alert("Conta excluida com sucesso");
+                window.location = "../index.html"
+            } else if (resposta.status == 404) {
+                window.alert("Deu 404!");
+            } else {
+                throw ("Houve um erro ao tentar realizar a postagem! Código da resposta: " + resposta.status);
+            }
+        }).catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+        });
+    }
+
+
+
+ 
 </script>

@@ -173,6 +173,12 @@ function updatedados(idUsuario, nome, email, cpf) {
      var instrucaoSql = `update Usuario set nome = '${nome}',email = '${email}', cpf = '${cpf}' where idUsuario = ${idUsuario} ; `
      return database.executar(instrucaoSql);
 }
+function excluir_conta(idUsuario) {
+     var instrucaoSql = `Delete from Usuario where idUsuario = ${idUsuario}; `
+     return database.executar(instrucaoSql);
+    
+
+}
 
 module.exports = {
     autenticar,
@@ -185,5 +191,6 @@ module.exports = {
     verificarCodigo,
     atualizarsenha,
     puxardadosuser,
-    updatedados
+    updatedados,
+    excluir_conta
 };

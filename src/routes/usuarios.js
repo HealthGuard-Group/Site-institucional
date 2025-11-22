@@ -39,6 +39,9 @@ router.get("/puxardadosuser/:id", function (req, res) {
 router.put("/updatedados/", function (req, res) {
     usuarioController.updatedados(req, res);
 });
+router.delete("/excluirconta/:idUsuario", function (req, res) {
+    usuarioController.excluir_conta(req, res);
+});
 
 
 module.exports = router;
