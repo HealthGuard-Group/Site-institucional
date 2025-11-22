@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Especificação CPU</title>
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/global.css">
+</head>
+
+<body>
+    <!-- Inicio menu lateral  -->
+    <div class="menu-lateral" id="menu">
+        <div class="pai-icones-superiores">
+            <div id="logo">
+                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                    class="icone-logo-pequena">
+            </div>
+            <br>
+            <div class="icone-box" id="monitoramento_redirecionamento">
+                <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                <div class="texto-icone oculto">Monitoramento</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_redirecionamento">
+                <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Gestão de funcionários</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="alertas_redirecionamento">
+                <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                <div class="texto-icone oculto">Histórico de Alertas</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_convites">
+                <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Convites</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="suporte_redirecionamento">
+                <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                <div class="texto-icone oculto">Suporte</div>
+            </div>
+        </div>
+        <div class="pai-icones-inferiores">
+            <hr class="separador-forte">
+            <div class="icone-box-inferior" id="tela_perfil">
+                <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                <div class="texto-icone oculto">Sair da conta</div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim do menu lateral -->
+    <header>
+        
+             <button onclick="history.back()" class="btn-voltar">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="13 16 9 12 13 8"></polyline>
+        </svg>
+    </button>
+        
+                Maquina <span> 01 </span> / Dashboard Especifica CPU
+    </header>
+    <div class="conteudo">
+
+
+        <div id="kpis-superior">
+            <div class="kpis" id="Uso-CPU">
+
+                <b>Uso da CPU</b>
+                <div class="dados-kpi" id="grafico-cpu"></div>
+
+
+            </div>
+
+            <div class="kpis" id="Processos">
+                <b> Processos Ativos </b>
+                <div class="dados-kpi">0</div>
+
+            </div>
+
+            <div class="kpis" id="frequencia">
+                <b> Frequência(MHz)<br>
+                    Atual/Máxima </b>
+                <div class="dados-kpi">
+                    <span id="mhz_atual">atual</span>/<span id="mhz_max">Maxima</span>
+                </div>
+
+
+            </div>
+
+            <div class="kpis" id="qtd-alertas">
+                <b> Alertas dos ultimos 7 dias </b>
+                <div class="dados-kpi">0</div>
+
+            </div>
+
+        </div>
+        <div class="divs-inferior">
+
+
+            <div class="graficos">
+                <div id="titulo-graficos">
+                    <select name="" id="slc_grafico">
+                        <option value="">Mapa de calor</option>
+                        <option value="">Detalhado</option>
+                    </select>
+                    <b>Acompanhamento em tempo real por Núcleo de CPU </b>
+                </div>
+                <div id="grafico-heatmap"></div>
+            </div>
+
+            <div id="Historico">
+                <header>Ultimos alertas de CPU</header>
+                <div style="background-color: #b30000;" class="alertas" id="alerta_1">
+                        Alerta Grave <br>
+                       <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+                
+                  <div style="background-color: #daa520;" class="alertas" id="alerta_1">
+                        Em atenção <br>
+                       <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+
+                    <div style="background-color: #daa520;" class="alertas" id="alerta_1">
+                        Em atenção <br>
+                       <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+                
+                <div style="background-color: #b30000;" class="alertas" id="alerta_1">
+                        Alerta Grave <br>
+                       <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+
+                  <div style="background-color: #daa520;" class="alertas" id="alerta_1">
+                        Em atenção <br>
+                       <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+                
+
+
+                
+
+                
+            
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+</body>
+
+</html>
+<script src="../js/menu-lateral.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+
+// Botao voltar
+
+
+    var porc_cpu = 41
+    var cor = 'green'
+
+    if (porc_cpu > 40 && porc_cpu < 80) {
+        cor = '#f1c402'
+    } else if (porc_cpu > 80) {
+        cor = '#b30000'
+    }
+
+    var porcentagemCpuChart = {
+        series: [porc_cpu],
+        colors: [cor],
+        chart: {
+            type: 'radialBar',
+            offsetY: -20,
+            sparkline: {
+                enabled: true
+            }
+        },
+        plotOptions: {
+            radialBar: {
+                startAngle: -90,
+                endAngle: 90,
+                track: {
+                    background: "#e7e7e7",
+                    strokeWidth: '100%',
+                    margin: 15,
+                    dropShadow: {
+                        enabled: true,
+                        top: 2,
+                        left: 0,
+                        color: '#444',
+                        opacity: 1,
+                        blur: 2
+                    }
+                },
+                dataLabels: {
+                    name: {
+                        show: false
+                    },
+                    value: {
+                        offsetY: -2,
+                        fontSize: '4vh'
+                    }
+                }
+            }
+        },
+        grid: {
+            padding: {
+                top: -10
+            }
+        },
+        fill: {
+            width: '100%',
+            gradient: {
+                shade: 'light',
+                shadeIntensity: 0.4,
+                inverseColors: false,
+                opacityFrom: 1,
+                opacityTo: 1,
+                stops: [0, 50, 53, 91]
+            },
+        },
+        labels: ['Porcentagem da CPU'],
+    };
+
+    var heatmap = {
+        series: [
+            {
+                name: 'Núcleo 1',
+                data: [
+                    { x: '10:00:00', y: 22 }, { x: '10:00:05', y: 45 }, { x: '10:00:10', y: 12 },
+                    { x: '10:00:15', y: 56 }, { x: '10:00:20', y: 81 }, { x: '10:00:25', y: 90 },
+                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 88 }, { x: '10:00:40', y: 78 },
+                    { x: '10:00:45', y: 20 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
+                ]
+            },
+            {
+                name: 'Núcleo 2',
+                data: [
+                    { x: '10:00:00', y: 43 }, { x: '10:00:05', y: 55 }, { x: '10:00:10', y: 40 },
+                    { x: '10:00:15', y: 60 }, { x: '10:00:20', y: 100 }, { x: '10:00:25', y: 81 },
+                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 95 }, { x: '10:00:40', y: 78 },
+                    { x: '10:00:45', y: 32 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
+                ]
+            },
+            {
+                name: 'Núcleo 3',
+                data: [
+                    { x: '10:00:00', y: 10 }, { x: '10:00:05', y: 15 }, { x: '10:00:10', y: 8 },
+                    { x: '10:00:15', y: 12 }, { x: '10:00:20', y: 86 }, { x: '10:00:25', y: 84 },
+                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 81 }, { x: '10:00:40', y: 78 },
+                    { x: '10:00:45', y: 32 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
+                ]
+            },
+            {
+                name: 'Núcleo 4',
+                data: [
+                    { x: '10:00:00', y: 65 }, { x: '10:00:05', y: 55 }, { x: '10:00:10', y: 42 },
+                    { x: '10:00:15', y: 33 }, { x: '10:00:20', y: 20 }, { x: '10:00:25', y: 15 },
+                    { x: '10:00:30', y: 45 }, { x: '10:00:35', y: 60 }, { x: '10:00:40', y: 70 },
+                    { x: '10:00:45', y: 85 }, { x: '10:00:50', y: 90 }, { x: '10:00:55', y: 95 }
+                ]
+            },
+            {
+                name: 'Núcleo 5',
+                data: [
+                    { x: '10:00:00', y: 12 }, { x: '10:00:05', y: 24 }, { x: '10:00:10', y: 36 },
+                    { x: '10:00:15', y: 48 }, { x: '10:00:20', y: 60 }, { x: '10:00:25', y: 72 },
+                    { x: '10:00:30', y: 84 }, { x: '10:00:35', y: 96 }, { x: '10:00:40', y: 50 },
+                    { x: '10:00:45', y: 40 }, { x: '10:00:50', y: 30 }, { x: '10:00:55', y: 20 }
+                ]
+            },
+            {
+                name: 'Núcleo 6',
+                data: [
+                    { x: '10:00:00', y: 98 }, { x: '10:00:05', y: 85 }, { x: '10:00:10', y: 75 },
+                    { x: '10:00:15', y: 65 }, { x: '10:00:20', y: 55 }, { x: '10:00:25', y: 45 },
+                    { x: '10:00:30', y: 35 }, { x: '10:00:35', y: 25 }, { x: '10:00:40', y: 15 },
+                    { x: '10:00:45', y: 5 }, { x: '10:00:50', y: 10 }, { x: '10:00:55', y: 15 }
+                ]
+            }
+        ],
+        chart: {
+            height: '80%',
+            type: 'heatmap',
+            width: '100%',
+            toolbar: { show: true }
+        },
+        plotOptions: {
+            heatmap: {
+                shadeIntensity: 0.5,
+                radius: 0,
+                useFillColorAsStroke: false,
+                colorScale: {
+                    ranges: [
+                        {
+                            from: 0,
+                            to: 40,
+                            name: '0k',
+                            color: '#00A100' // Verde
+                        },
+                        {
+                            from: 41,
+                            to: 80,
+                            name: 'atenção',
+                            color: '#f1c402'
+                        },
+                        {
+                            from: 81,
+                            to: 100,
+                            name: 'Alerta grave',
+                            color: '#b30000'
+                        }
+                    ]
+                }
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            width: 1
+        },
+    };
+
+    var chart = new ApexCharts(document.querySelector("#grafico-cpu"), porcentagemCpuChart);
+    chart.render();
+
+    chart.render().then(() => {
+        setTimeout(() => {
+            window.dispatchEvent(new Event('resize'));
+        }, 10);
+    });
+    var chart = new ApexCharts(document.querySelector("#grafico-heatmap"), heatmap);
+    chart.render();
+
+
+
+
+
+</script>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        overflow: hidden;
+        background-color: #F8F8F8;
+
+    }
+
+    header {
+        display: flex;
+        align-items: center;
+        gap:1%;
+        margin-left: 7%;
+        margin-top: 1%;
+        font-size: 3vh
+    }
+
+    
+
+    .conteudo {
+        margin-left: 7%;
+        margin-right: 1%;
+        height: 95vh;
+        display: flex;
+        flex-direction: column;
+
+    }
+    #menu {
+        margin-top: -1%;
+    }
+
+    #kpis-superior {
+
+        display: flex;
+        gap: 1%;
+        margin-top: 1%;
+        height: 20%;
+    }
+
+    #kpis-superior b {
+        font-size: 3vh;
+    }
+
+    .kpis {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        width: 24.25%;
+        padding: 15px;
+        overflow: hidden;
+        height: 100%;
+        background-color: #fff;
+        border-radius: 20px;
+        font-size: 4vh;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    .dados-kpi {
+        height: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+    .divs-inferior {
+        display: flex;
+        margin-top: 2%;
+        gap: 1%;
+    }
+#titulo-graficos{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20%;
+    width: 100%;
+    font-size: 3vh;
+}
+#titulo-graficos b {
+justify-content: center;
+}
+#slc_grafico {
+    position: absolute;
+    left: 2%;
+    padding: 5px; 
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    width: 10%;
+    background-color: transparent;
+
+}
+    .graficos {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: end;
+        align-items: flex-start;
+        width: 80%;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    }
+
+    #grafico-heatmap {
+        display: flex;
+        justify-content: center;
+        align-content: end;
+        align-items: flex-end;
+        width: 100%;
+    }
+
+    #Historico {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        height: 63vh;
+        width: 36vh;
+        background-color: #fff;
+        border-radius: 20px;
+        box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+        overflow-y: scroll;
+
+    }
+    #Historico header {
+        margin-top: 5%;
+        font-size: 2.5vh;
+        font-weight: bold;
+
+    }
+
+    #Uso-CPU {
+        box-sizing: border-box;
+    }
+    .alertas {
+        display: flex;
+        padding-top: 5%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        margin-top: 1vh;
+        background-color: transparent;
+        width: 90%;
+        height: 20%;
+        border-radius: 15px;
+        flex-shrink: 0;   
+        color: #fff;
+        font-size: 3vh;
+        gap: 20%;
+    }
+    .alertas p {
+        font-size: 2vh;
+    }
+ .btn-voltar {
+    background-color: #b30000;
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 2%;
+    min-width: 45px;
+    max-width: 80px; 
+    aspect-ratio: 1 / 1; 
+    border-radius: 50%; 
+
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0; 
+}
+
+.btn-voltar:hover {
+    background-color: #8f0000; 
+    color: #ffffff;
+    transform: scale(1.05); 
+}
+
+.btn-voltar svg {
+    width: 50%; 
+    height: 50%;
+}
+</style>

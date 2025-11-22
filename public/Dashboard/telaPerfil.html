@@ -126,7 +126,7 @@
                             <input type="text" id="ipt_confirmacao">
                         </div>
                         <br>
-                        <button>Salvar Informações</button>
+                        <button onclick="redefinirSenha()">Salvar Informações</button>
                     </div>
                 </div>
             </div>
@@ -186,10 +186,14 @@
     // Fim do script do modal
 
     var idUsuario;
+    var senha_criptografada;
     function atualizarDados() {
         var fks = puxarVariaveis()
         var id = fks.idUsuario
+        var senha = fks.senha
         idUsuario = id
+        senha_criptografada = senha
+        
         puxardados(id)
     }
 
@@ -351,7 +355,12 @@ function excluir_conta() {
         });
     }
 
+function redefinirSenha() {
+    
 
+    console.log(senha_criptografada)
+
+}
 
  
 </script>
