@@ -13,6 +13,7 @@ section {
     background-color: #000;
     opacity: 50%;
     z-index: -1;
+    pointer-events: none; /* Permite clicar nos elementos atrás */
 }
 
 header {
@@ -65,7 +66,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 65%;
+    width: 70%;
 }
 
 #nav-list ul {
@@ -371,7 +372,7 @@ nav {
 
 /* SECTION - HEALTHGUARD --------------------------------------------- */
 section {
-    scroll-margin-top: 50px;
+    scroll-margin-top: 115px;
 }
 
 #section-healthguard {
@@ -432,13 +433,14 @@ section {
     }
 
     .titulo-padrao {
-        font-size: 1.5rem;
+        font-size: 1.8rem;
         font-weight: 750;
         color: #860b19;
     }
 
     #texto-healthguard {
         text-align: justify;
+        margin-bottom: 20%;
     }
 
     #direita-healthguard {
@@ -448,7 +450,7 @@ section {
     }
 
     #direita-healthguard img {
-        width: 300px;
+        width: 330px;
         margin-right: 0;
     }
 }
@@ -559,9 +561,132 @@ section {
     height: 40%;
 }
 
-#container-imagem-sobre-nos img {
-    width: 70%;
+#div-imagem-sobre-nos {
+    width: 75%;
     height: 80%;
+    background-image: url("../assets/imgs/imagem_samu_atendimento_sobre_nos.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media (max-width: 910px) {
+    #section-sobre-nos {
+        /* background-color: rgb(89, 255, 0); */
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        height: 225vh;
+    }
+
+    .div-titulo {
+        margin-top: 20%;
+    }
+
+    #container-texto-sobre-nos {
+        /* background-color: #111c28; */
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        place-items: center; /* Centraliza horizontal e verticalmente */
+        height: 50%;
+        margin-top: 7%;
+        gap: 10%;
+    }
+
+    #frase-sobre-nos {
+        /* background-color: rgb(172, 172, 172); */
+        width: 80%;
+        margin-bottom: 7%;
+        font-size: 0.85rem;
+    }
+
+    #frase-sobre-nos h1 span{
+        color: #860b19;
+    }
+
+    .div-missao-visao-sobre-nos {
+        /* background-color: beige; */
+        display: flex;
+        flex-direction: column;
+        gap: 1.5vh;
+        width: 78%;
+        text-align: justify;
+    }
+
+    #container-cards-sobre-nos {
+        /* background-color: #111c28; */
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        justify-content: center;
+        justify-items: center;
+        align-items: start;
+        margin-top: 30%;
+        height: 70%;
+        gap: 2%;
+    }
+
+    .card-sobre-nos {
+        background-color: white;
+        display: flex;
+        border-radius: 20px;
+        width: 80%;
+        height: 85%;
+        box-shadow: rgba(0, 0, 0, 0.25) 0px 5px 15px;
+    }
+
+    .esquerda-card-sobre-nos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 35%;
+        height: 100%;
+    }
+
+    .fundo-icone-card-sobre-nos {
+        background-color: #5B5B5B;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 100%;
+        width: 60px;
+        height: 60px;
+    }
+
+    .fundo-icone-card-sobre-nos img {
+        width: 60%;
+    }
+
+    .direita-card-sobre-nos {
+        /* background-color: #860b198c; */
+        width: 60%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.7vh;
+    }
+
+    .direita-card-sobre-nos p {
+        font-size: 0.8rem;
+    }
+
+    #container-imagem-sobre-nos {
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        margin-bottom: 20%;
+    }
+
+    #div-imagem-sobre-nos {
+        width: 80%;
+        height: 100%;
+        background-image: url("../assets/imgs/imagem_samu_sobre_nos_para_mobile.png");
+    }
 }
 
 /* SECTION - MEMBROS --------------------------------------------- */
@@ -736,14 +861,25 @@ section {
     display: none !important;
 }
 
+@media (max-width: 910px) {
+    #section-membros p {
+        width: 80%;
+        text-align: center;
+        margin-top: 2%;
+        color: #4d4d4d;
+    }
+}
+
 /* SECTION - NOSSOS SERVIÇOS --------------------------------------------- */
 #section-nossos-servicos {
-    scroll-margin-top: 70px;
+    scroll-margin-top: 60px;
     display: flex;
     flex-direction: column;
     gap: 6%;
     /* background-color: whitesmoke; */
     width: 100%;
+    height: 87vh;
+    margin-bottom: 2%;
 }
 
 .div-titulo {
@@ -755,7 +891,7 @@ section {
 #container-cards-servicos {
     display: grid;
     grid-template-columns: 20% 20% 20% 20%;
-    grid-template-rows: 70% 70% 70% 70%;
+    grid-template-rows: 85%;
     justify-content: center;
     gap: 2%;
     width: 100%;
@@ -818,6 +954,7 @@ section {
     #section-nossos-servicos {
         height: 225vh;
         gap: 3%;
+        margin-bottom: 20%;
     }
 
     .div-titulo {
@@ -843,10 +980,12 @@ section {
 
 /* SECTION - BENEFÍCIOS --------------------------------------------- */
 #section-beneficios {
+    scroll-margin-top: 40px;
     display: flex;
     flex-direction: column;
     gap: 6%;
     width: 100%;
+    margin-bottom: 5%;
 }
 
 .div-titulo {
@@ -862,7 +1001,7 @@ section {
 #container-cards-beneficios {
     display: grid;
     grid-template-columns: 25% 25% 25%;
-    grid-template-rows: 40% 40% 40%;
+    grid-template-rows: 38% 38%;
     justify-content: center;
     gap: 3%;
     row-gap: 7%;
@@ -936,6 +1075,8 @@ section {
     #section-beneficios {
         height: 340vh;
         gap: 3%;
+        margin-bottom: 10%;
+
     }
 
     .div-titulo {
@@ -966,7 +1107,7 @@ section {
     flex-direction: column;
     align-items: center;
     width: 100vw;
-    height: 50vh;
+    height: 65vh;
 }
 
 #container-rodape {
@@ -1074,7 +1215,7 @@ section {
     #container-rodape {
         display: grid;
         grid-template-columns: 100%;
-        grid-template-rows: 40% 50% 100%;
+        grid-template-rows: 50% 50% 50%;
     }
 
     #logo-rodape {
@@ -1110,6 +1251,16 @@ section {
         gap: 1.5%;
         height: 15%;
         margin-left: 10%;
+    }
+    #direitos-rodape {
+        background-color:  rgb(237, 237, 237);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-column: 1 / -1;
+        width: 90%;
+        height: 10%;
+        text-align: center;
     }
 
 }

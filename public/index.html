@@ -22,8 +22,10 @@
         <header id="inicio">
             <nav>
                 <div id="nav-logomarca">
-                    <img id="logomarca-healthguard"
+                    <a href="#inicio"> 
+                        <img id="logomarca-healthguard"
                         src="./assets/imgs/HealthGuard_Logomarca_VERMELHA_fundo_transparente.png" alt="HealthGuard">
+                    </a>
                 </div>
                 <div class="menu-mobile">
                     <div class="linha1"></div>
@@ -32,11 +34,12 @@
                 </div>
                 <div id="nav-list">
                     <ul>
-                        <li><a href="#inicio">Início</a></li>
-                        <li><a href="#section-sobre-nos">Sobre nós</a></li>
-                        <li><a href="#section-membros">Membros</a></li>
-                        <li><a href="#section-nossos-servicos">Nossos serviços</a></li>
-                        <li><a href="#rodape-contato">Contato</a></li>
+                        <li onclick="handleLinkClick()"><a href="#inicio" >Início</a></li>
+                        <li onclick="handleLinkClick()"><a href="#section-sobre-nos">Sobre nós</a></li>
+                        <li onclick="handleLinkClick()"><a href="#section-membros">Membros</a></li>
+                        <li onclick="handleLinkClick()"><a href="#section-nossos-servicos">Nossos serviços</a></li>
+                        <li onclick="handleLinkClick()"><a href="#section-beneficios">Benefícios</a></li>
+                        <li onclick="handleLinkClick()"><a href="#rodape-contato">Contato</a></li>
                     </ul>
                     <div id="div-buttons">
                         <button id="button-login" class="button-contorno"
@@ -179,7 +182,8 @@
             </div>
 
             <div id="container-imagem-sobre-nos">
-                <img src="./assets/imgs/imagem_samu_atendimento_sobre_nos.png">
+                <div id="div-imagem-sobre-nos"></div>
+                <!-- <img src="./assets/imgs/imagem_samu_atendimento_sobre_nos.png"> -->
             </div>
         </section>
 
@@ -510,7 +514,9 @@
                         <ul>
                             <li><a href="#inicio">Início</a></li>
                             <li><a href="#section-sobre-nos">Sobre nós</a></li>
-                            <li><a href="#section-nossa-solucao">Nossa solução</a></li>
+                            <li><a href="#section-membros">Membros</a></li>
+                            <li><a href="#section-nossos-servicos">Nossos serviços</a></li>
+                            <li><a href="#section-beneficios">Benefícios</a></li>
                             <li><a href="#contato">Contato</a></li>
                         </ul>
                     </div>
@@ -527,9 +533,9 @@
                     </div>
                 </div>
 
-                <div id="direitos-rodape">
-                    © 2025 HealthGuard. Todos os direitos reservados.
-                </div>
+            </div>
+            <div id="direitos-rodape">
+                © 2025 HealthGuard. Todos os direitos reservados.
             </div>
 
         </footer>

@@ -36,6 +36,18 @@ class NavbarMobile {
         }
         return this;
     }
+
+}
+
+function handleLinkClick() {
+// Fecha a navbar
+const navbarMobile = document.querySelector('#nav-list');
+const menuMobile = document.querySelector('.menu-mobile');
+const camadaEscura = document.querySelector('.camada-escura');
+
+navbarMobile.classList.remove('active');
+menuMobile.classList.remove('active');
+camadaEscura.classList.remove('active');
 }
 
 const navbarMobile = new NavbarMobile(
