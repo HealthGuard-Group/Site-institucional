@@ -18,5 +18,14 @@ router.get("/buscarKpisMonitoramento/:fkUnidade", function (req, res) {
 router.get("/buscarMetricasPadrao/:fkUnidade", function (req, res) {
   dashboardController.buscarMetricasPadrao(req, res);
 });
+router.post("/inserirmaquina", function (req, res) {
+  dashboardController.inserirmaquina(req, res);
+});
+router.post("/inserirmaquinaservicos", function (req, res) {
+  dashboardController.inserirmaquinaservicos(req, res);
+});
+router.post("/inserirmaquinametricaspersonalizadas", function (req, res) {
+  dashboardController.inserirmaquinametricaspersonalizadas(req, res);
+});
 
 module.exports = router;

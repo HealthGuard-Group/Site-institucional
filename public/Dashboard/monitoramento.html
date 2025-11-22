@@ -751,7 +751,8 @@
         nome: "",
         servicos: ["", "", "", ""],
         alertaAtencao: [["", ""], ["", ""], ["", ""]],
-        alerta: [["", ""], ["", ""], ["", ""]]
+        alerta: [["", ""], ["", ""], ["", ""]],
+        codigo: ""
     }
     var passo_metrica_personalizada = 0
     function validacaoNomeIndetificao() {
@@ -801,21 +802,8 @@
         maquina_nova.servicos[2] = input_uso_disco.checked
         maquina_nova.servicos[3] = input_uso_rede.checked
         // Puxando métricas padrão
-        var fks = puxarVariaveis()
-        var fkUnidade = fks.idUnidadeAtendimento
-        fetch(`/dashboard/buscarMetricasPadrao/${fkUnidade}`, {
-            method: "GET",
-        })
-            .then(resposta => {
-                return resposta.json();
-            })
-            .then(resposta => {
-                console.log(resposta)
-            })
-            .catch(function (resposta) {
-                console.log(`Erro no catch: ${resposta}`);
-            });
         console.log("Entrei na configuração padrão")
+        salvandoAlerta(false)
     }
     function adicionandoServicosPersonalizados() {
         //Validação
@@ -862,7 +850,8 @@
             if (maquina_nova.servicos[passo_metrica_personalizada] == false) {
                 passo_metrica_personalizada++
             } if (passo_metrica_personalizada >= 3) {
-                salvandoAlerta()
+                salvandoAlerta(true)
+                break
             }
         }
         var texto_metricas = ["Definição das métricas de uso de CPU(%):", "Definição das métricas de uso de RAM(%):", "Definição das métricas de uso de Disco(%):"]
@@ -880,10 +869,10 @@
     }
     function parametrizarAlertasPersonalizado() {
         // Validação
-        var min_atencao = document.getElementById("valor_minimo_atencao").value
-        var max_atencao = document.getElementById("valor_maximo_atencao").value
-        var min_alerta = document.getElementById("valor_minimo_alerta").value
-        var max_alerta = document.getElementById("valor_maximo_alerta").value
+        var min_atencao = Number(document.getElementById("valor_minimo_atencao").value)
+        var max_atencao = Number(document.getElementById("valor_maximo_atencao").value)
+        var min_alerta = Number(document.getElementById("valor_minimo_alerta").value)
+        var max_alerta = Number(document.getElementById("valor_maximo_alerta").value)
         var texto_min_atencao = document.getElementById("texto_erro_minimo_atencao")
         var texto_max_atencao = document.getElementById("texto_erro_maximo_atencao")
         var texto_min_alerta = document.getElementById("texto_erro_minimo_alerta")
@@ -927,6 +916,9 @@
                 texto_min_atencao.classList.add("oculto")
                 texto_max_atencao.classList.remove("oculto")
                 texto_max_atencao.innerHTML = `<span style="color: red;">Deve ser menor que o início do Alerta (${min_alerta}%)</span>`
+            } else {
+                texto_min_atencao.classList.add("oculto")
+                texto_max_atencao.classList.add("oculto")
             }
             if (ax_erro) {
                 return
@@ -941,7 +933,72 @@
         console.log("Passei da validação")
         avancarPaginaAlertaPersonalizado()
     }
-    function salvandoAlerta() {
+    function salvandoAlerta(personalizado) {
+        console.log("Entrei")
+        var fks = puxarVariaveis()
+        var idUnidadeAtendimento = fks.idUnidadeAtendimento
+        maquina_nova.codigo = gerarCodigoAleatorio(20)
+        fetch("/dashboard/inserirmaquina", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                maquina_nova: maquina_nova,
+                idUnidadeAtendimento: idUnidadeAtendimento
+            }),
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var idDac = resposta[0].idDac
+                fetch("/dashboard/inserirmaquinaservicos", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        maquina_nova: maquina_nova,
+                        idUnidadeAtendimento: idUnidadeAtendimento,
+                        idDac: idDac
+                    }),
+                })
+                    .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+                        if (personalizado) {
+                            console.log("Entrei no personalizado")
+                            fetch("/dashboard/inserirmaquinametricaspersonalizadas", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    maquina_nova: maquina_nova,
+                                    idUnidadeAtendimento: idUnidadeAtendimento,
+                                    idDac: idDac
+                                }),
+                            })
+                                .then(function (resposta) {
+                                    console.log("resposta: ", resposta);
+                                })
+                                .catch(function (resposta) {
+                                    console.log(`#ERRO: ${resposta}`);
+                                    alert("Erro no catch");
+                                });
+                        }
+                        div_codigo_gerado.innerHTML = maquina_nova.codigo
+                    })
+                    .catch(function (resposta) {
+                        console.log(`#ERRO: ${resposta}`);
+                        alert("Erro no catch");
+                    });
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                alert("Erro no catch");
+            });
         document.getElementById("modal_codigofinal").classList.remove("oculto")
         document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
     }
@@ -953,8 +1010,16 @@
         }
     }
     function puxarMetricasPadraoPersonalizado(input) {
+        var texto_min_atencao = document.getElementById("texto_erro_minimo_atencao")
+        var texto_max_atencao = document.getElementById("texto_erro_maximo_atencao")
+        var texto_min_alerta = document.getElementById("texto_erro_minimo_alerta")
+        var texto_max_alerta = document.getElementById("texto_erro_maximo_alerta")
         var valor_input = input.checked
         if (valor_input) {
+            texto_min_alerta.classList.add("oculto")
+            texto_max_alerta.classList.add("oculto")
+            texto_min_atencao.classList.add("oculto")
+            texto_max_atencao.classList.add("oculto")
             valor_minimo_atencao.disabled = true
             valor_maximo_atencao.disabled = true
             valor_minimo_alerta.disabled = true
@@ -1017,6 +1082,18 @@
             valor_minimo_alerta.value = ""
             valor_maximo_alerta.value = ""
         }
+    }
+    function gerarCodigoAleatorio(tamanhoCodigo) {
+        var caracteres = [
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        ];
+        var codigo = ""
+        for (let i = 0; i < tamanhoCodigo; i++) {
+            let random = Math.round(Math.random() * caracteres.length - 1, 0)
+            codigo += caracteres[random]
+        }
+        return codigo
     }
     // POP-UP DE CÓDIGOS GERADOS
     document.getElementById("botao_codigos_gerados").addEventListener('click', () => {

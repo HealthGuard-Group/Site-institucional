@@ -26,11 +26,58 @@ function buscarMetricasPadrao(fkUnidade) {
   var instrucaoSql = `SELECT fkMedicoesDisponiveis,nomeNivel,valorMinimo,valorMaximo FROM MetricaAlerta WHERE fkUnidadeDeAtendimento = ${fkUnidade} AND fkDac IS NULL;`;
   return database.executar(instrucaoSql);
 }
+async function inserirmaquina(maquina_nova, idUnidadeAtendimento) {
+  console.log(maquina_nova)
+  var insert = `INSERT INTO Dac(fkUnidadeDeAtendimento,nomeIdentificacao,codigoValidacao) VALUES (${idUnidadeAtendimento},'${maquina_nova.nome}','${maquina_nova.codigo}');`;
+  var select = `SELECT idDac FROM Dac WHERE fkUnidadeDeAtendimento = ${idUnidadeAtendimento} AND codigoValidacao = '${maquina_nova.codigo}';`
+  console.log("-------------------------------------------------------------------------------------------")
+  console.log("Insert feito no banco:", insert)
+  console.log("-------------------------------------------------------------------------------------------")
+  await database.executar(insert);
+
+  return database.executar(select)
+}
+
+function inserirmaquinaservicos(maquina_nova, idUnidadeAtendimento, idDac) {
+  console.log(maquina_nova)
+  var instrucaoSql = `INSERT INTO MedicoesSelecionadas (fkUnidadeDeAtendimento,fkDac,fkMedicoesDisponiveis) VALUES `;
+  if (maquina_nova.servicos[0] == true) {
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},1),(${idUnidadeAtendimento},${idDac},2),(${idUnidadeAtendimento},${idDac},3),(${idUnidadeAtendimento},${idDac},4),(${idUnidadeAtendimento},${idDac},5),`
+  } if (maquina_nova.servicos[1] == true) {
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},6),(${idUnidadeAtendimento},${idDac},7),(${idUnidadeAtendimento},${idDac},8),(${idUnidadeAtendimento},${idDac},9),`
+  } if (maquina_nova.servicos[2] == true) {
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},10),`
+  } if (maquina_nova.servicos[3] == true) {
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},11),`
+  } 
+  instrucaoSql = instrucaoSql.slice(0, -1) + ";";
+  console.log(instrucaoSql[instrucaoSql.length - 1])
+  console.log("Insert de máquina:", instrucaoSql)
+  return database.executar(instrucaoSql);
+}
+function inserirmaquinametricaspersonalizadas(maquina_nova, idUnidadeAtendimento, idDac) {
+  console.log(maquina_nova)
+  var instrucaoSql = `INSERT INTO MetricaAlerta (fkMedicoesDisponiveis,fkUnidadeDeAtendimento,fkDac,fkUnidadeDeAtendimentoDac,nomeNivel,valorMinimo,valorMaximo) VALUES`;
+  if (maquina_nova.servicos[0] == true) {
+    instrucaoSql += `(1,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Atenção",${maquina_nova.alertaAtencao[0][0]},${maquina_nova.alertaAtencao[0][1]}),(1,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Alerta",${maquina_nova.alerta[0][0]},${maquina_nova.alerta[0][1]}),`
+  } if (maquina_nova.servicos[1] == true) {
+    instrucaoSql += `(6,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Atenção",${maquina_nova.alertaAtencao[1][0]},${maquina_nova.alertaAtencao[1][1]}),(6,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Alerta",${maquina_nova.alerta[1][0]},${maquina_nova.alerta[1][1]}),`
+  } if (maquina_nova.servicos[2] == true) {
+    instrucaoSql += `(10,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Atenção",${maquina_nova.alertaAtencao[2][0]},${maquina_nova.alertaAtencao[2][1]}),(10,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Alerta",${maquina_nova.alerta[2][0]},${maquina_nova.alerta[2][1]}),`
+  } 
+  instrucaoSql = instrucaoSql.slice(0, -1) + ";";
+  console.log(instrucaoSql[instrucaoSql.length - 1])
+  console.log("Insert de máquina:", instrucaoSql)
+  return database.executar(instrucaoSql);
+}
 
 module.exports = {
   buscarLogAcesso,
   buscarNomeDaUnidade,
   buscarMaquina,
   buscarKpisMonitoramento,
-  buscarMetricasPadrao
+  buscarMetricasPadrao,
+  inserirmaquina,
+  inserirmaquinaservicos,
+  inserirmaquinametricaspersonalizadas
 };
