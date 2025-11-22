@@ -28,6 +28,7 @@ var convitesRouter = require("./src/routes/convites");
 var funcionariosRouter = require("./src/routes/funcionarios");
 var graficoRouter = require("./src/routes/grafico");
 var analiseramRouter = require("./src/routes/analiseram");
+var analisecpuRouter = require("./src/routes/analisecpu");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -46,6 +47,7 @@ app.use("/convites", convitesRouter);
 app.use("/funcionarios", funcionariosRouter);
 app.use("/grafico", graficoRouter);
 app.use("/analiseram", analiseramRouter)
+app.use("/analisecpu", analisecpuRouter )
 
 app.post('/enviar-email', async (req, res) => {
     const {email, assunto,mensagem } = req.body;

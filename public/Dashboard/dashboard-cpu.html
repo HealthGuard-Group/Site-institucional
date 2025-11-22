@@ -5,17 +5,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Especificação CPU</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+
     <link rel="stylesheet" href="../css/menu_bar.css">
     <link rel="stylesheet" href="../css/global.css">
 </head>
 
-<body>
+<body onload="puxardados(1,1)">
     <!-- Inicio menu lateral  -->
     <div class="menu-lateral" id="menu">
         <div class="pai-icones-superiores">
             <div id="logo">
-                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
-                    class="icone-logo-pequena">
+                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard" class="icone-logo-pequena">
             </div>
             <br>
             <div class="icone-box" id="monitoramento_redirecionamento">
@@ -66,7 +67,7 @@
         </svg>
     </button>
         
-                Maquina <span> 01 </span> / Dashboard Especifica CPU
+                <span id="nome_maquina"> Maquina 01</span>/ Dashboard Especifica CPU
     </header>
     <div class="conteudo">
 
@@ -156,15 +157,6 @@
 
         </div>
 
-
-
-
-
-
-
-
-
-
     </div>
 </body>
 
@@ -173,10 +165,24 @@
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
 
-// Botao voltar
 
+ function puxardados(fkunidade, fkdac) {
+        fetch(`/analisecpu/puxardados/${fkunidade}/${fkdac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+            })
 
-    var porc_cpu = 41
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+// grafico cpu
+    var porc_cpu = 0
     var cor = 'green'
 
     if (porc_cpu > 40 && porc_cpu < 80) {
