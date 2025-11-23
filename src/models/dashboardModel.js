@@ -40,15 +40,15 @@ async function inserirmaquina(maquina_nova, idUnidadeAtendimento) {
 
 function inserirmaquinaservicos(maquina_nova, idUnidadeAtendimento, idDac) {
   console.log(maquina_nova)
-  var instrucaoSql = `INSERT INTO MedicoesSelecionadas (fkUnidadeDeAtendimento,fkDac,fkMedicoesDisponiveis) VALUES `;
+  var instrucaoSql = `INSERT INTO MedicoesSelecionadas (fkUnidadeDeAtendimento,fkDac,fkMedicoesDisponiveis) VALUES (${idUnidadeAtendimento},${idDac},13),`;
   if (maquina_nova.servicos[0] == true) {
-    instrucaoSql += `(${idUnidadeAtendimento},${idDac},1),(${idUnidadeAtendimento},${idDac},2),(${idUnidadeAtendimento},${idDac},3),(${idUnidadeAtendimento},${idDac},4),(${idUnidadeAtendimento},${idDac},5),`
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},1),(${idUnidadeAtendimento},${idDac},2),(${idUnidadeAtendimento},${idDac},3),(${idUnidadeAtendimento},${idDac},4),(${idUnidadeAtendimento},${idDac},5),(${idUnidadeAtendimento},${idDac},12),`
   } if (maquina_nova.servicos[1] == true) {
     instrucaoSql += `(${idUnidadeAtendimento},${idDac},6),(${idUnidadeAtendimento},${idDac},7),(${idUnidadeAtendimento},${idDac},8),(${idUnidadeAtendimento},${idDac},9),`
   } if (maquina_nova.servicos[2] == true) {
     instrucaoSql += `(${idUnidadeAtendimento},${idDac},10),`
   } if (maquina_nova.servicos[3] == true) {
-    instrucaoSql += `(${idUnidadeAtendimento},${idDac},11),`
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},11),(${idUnidadeAtendimento},${idDac},14),(${idUnidadeAtendimento},${idDac},15),(${idUnidadeAtendimento},${idDac},16),`
   } 
   instrucaoSql = instrucaoSql.slice(0, -1) + ";";
   console.log(instrucaoSql[instrucaoSql.length - 1])
