@@ -29,11 +29,13 @@ function buscarMetricasPadrao(fkUnidade) {
 async function inserirmaquina(maquina_nova, idUnidadeAtendimento) {
   console.log(maquina_nova)
   var insert = `INSERT INTO Dac(fkUnidadeDeAtendimento,nomeIdentificacao,codigoValidacao) VALUES (${idUnidadeAtendimento},'${maquina_nova.nome}','${maquina_nova.codigo}');`;
+  var insert2 = `INSERT INTO HealthGuard.CodigoConfiguracaoMaquina (fkUnidadeDeAtendimento, codigo, dataExpiracao) VALUES (${idUnidadeAtendimento},'${maquina_nova.codigo}',NOW() + INTERVAL 7 DAY)`
   var select = `SELECT idDac FROM Dac WHERE fkUnidadeDeAtendimento = ${idUnidadeAtendimento} AND codigoValidacao = '${maquina_nova.codigo}';`
   console.log("-------------------------------------------------------------------------------------------")
   console.log("Insert feito no banco:", insert)
   console.log("-------------------------------------------------------------------------------------------")
   await database.executar(insert);
+  await database.executar(insert2)
 
   return database.executar(select)
 }
