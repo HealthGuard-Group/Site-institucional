@@ -23,8 +23,38 @@ function totalAlerta(idDac){
   return database.executar(instrucaoSql);
 }
 
+function buscarCpu(idDac){
+  var instrucaoSql = `
+      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 1
+      order by dataCaptura desc
+      limit 1;
+  `
+   return database.executar(instrucaoSql);
+}
+
+function buscarRam(idDac){
+  var instrucaoSql = `
+      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 2
+      order by dataCaptura desc
+      limit 1;
+  `
+   return database.executar(instrucaoSql);
+}
+
+function buscarRede(idDac){
+  var instrucaoSql = `
+      select dataCaptura from  Leitura where fkDac = ${idDac}
+      order by dataCaptura desc
+      limit 1;
+  `
+   return database.executar(instrucaoSql);
+}
+
 module.exports = {
     exibirInfoDac,
     buscarKpiDac,
-    totalAlerta
+    totalAlerta,
+    buscarCpu,
+    buscarRam,
+    buscarRede
 };

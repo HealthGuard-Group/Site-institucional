@@ -73,8 +73,84 @@ function totalAlerta(req, res) {
     }
 }
 
+function buscarCpu(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.buscarCpu(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function buscarRam(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.buscarRam(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+
+function buscarRede(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.buscarRede(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     exibirInfoDac,
     buscarKpiDac,
-    totalAlerta
+    totalAlerta,
+    buscarCpu,
+    buscarRam,
+    buscarRede
 }

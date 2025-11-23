@@ -93,9 +93,9 @@
           </div>
 
           <div class="div_componentes">
-            <div> <span class="status-dot ok"> </span> Uso de CPU: <strong>70%</strong></div>
-            <div> <span class="status-dot alerta-grave"></span>Uso de Memória RAM: <strong>89%</strong></div>
-            <div> <span class="status-dot ok"></span>Status da Rede: <strong>CONECTADA</strong></div>
+            <div> <span class="status-dot ok"> </span> Uso de CPU: <strong id="cpu"></strong></div>
+            <div> <span class="status-dot alerta-grave"></span>Uso de Memória RAM: <strong id="ram"></strong></div>
+            <div> <span id="redeok" class="status-dot ok"></span>Status da Rede: <strong id="rede"></strong></div>
           </div>
           <button class="btn-editar">Editar</button>
         </div>
@@ -298,6 +298,58 @@
 
         totalalertas.innerHTML = `${resposta[0].totalAlertas}`
       })
+
+
+    function atualizarDados() {
+        fetch(`/grafico/buscarCpu/${idDac}`, {
+          method: "GET",
+        }).then(resposta => resposta.json())
+        .then(resposta => {
+          console.log(resposta);
+          cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
+        })
+        .catch(erro => console.error("Erro:", erro));
+
+
+        fetch(`/grafico/buscarRam/${idDac}`, {
+          method: "GET",
+        }).then(resposta => resposta.json())
+        .then(resposta => {
+          console.log(resposta);
+          ram.innerHTML = `${resposta[0].medidaCapturada}%`;
+        })
+        .catch(erro => console.error("Erro:", erro));
+
+        fetch(`/grafico/buscarRede/${idDac}`, {
+          method: "GET",
+        }).then(resposta => resposta.json())
+        .then(resposta => {
+          console.log(resposta);
+
+          if (resposta[0].dataCaptura) {
+          const dataServidor = new Date(resposta[0].dataCaptura);
+          const agora = new Date();
+          const diferenca1 = agora - dataServidor;
+          const diferenca2 = diferenca1 / 1000 / 60;
+
+          if (diferenca2 > 1) {
+              rede.innerHTML = `NÃO CONECTADO`;
+              redeok.classList.remove("status-dot", "ok")
+              redeok.classList.add("status-dot","alerta-grave")
+              status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
+          } else {
+              rede.innerHTML = `CONECTADO`;
+              redeok.classList.remove("status-dot", "alerta-grave")
+              redeok.classList.add("status-dot","ok")
+              status_MaquinaDac.innerHTML = `<p style="color:green">Status: Ativa</p>`
+          }
+}
+        })
+        .catch(erro => console.error("Erro:", erro));
+    }
+      atualizarDados();
+      setInterval(atualizarDados, 2000);
+    
 
 
 
