@@ -176,8 +176,14 @@ function updatedados(idUsuario, nome, email, cpf) {
 function excluir_conta(idUsuario) {
      var instrucaoSql = `Delete from Usuario where idUsuario = ${idUsuario}; `
      return database.executar(instrucaoSql);
-    
+}
 
+function validacaosenha(email, senha) {
+    console.log('select')
+    var instrucaoSql = `select idUsuario from Usuario where email = '${email}'and senha = sha2('${senha}' ,256) limit 1;    `;
+    return database.executar(instrucaoSql);
+    
+    
 }
 
 module.exports = {
@@ -192,5 +198,6 @@ module.exports = {
     atualizarsenha,
     puxardadosuser,
     updatedados,
-    excluir_conta
+    excluir_conta,
+    validacaosenha
 };

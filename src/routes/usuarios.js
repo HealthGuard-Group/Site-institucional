@@ -42,6 +42,9 @@ router.put("/updatedados/", function (req, res) {
 router.delete("/excluirconta/:idUsuario", function (req, res) {
     usuarioController.excluir_conta(req, res);
 });
+router.get("/validacaosenha/:email/:senha", function (req, res) {
+    usuarioController.validacaosenha(req, res);
+});
 
 
 module.exports = router;
