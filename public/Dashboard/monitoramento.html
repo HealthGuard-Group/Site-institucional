@@ -1001,6 +1001,7 @@
             });
         document.getElementById("modal_codigofinal").classList.remove("oculto")
         document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
+        document.getElementById("modal_adicionarmaquina").classList.add("oculto")
     }
     function validarnumero(input) {
         if (input.value < 0) {
@@ -1090,7 +1091,7 @@
         ];
         var codigo = ""
         for (let i = 0; i < tamanhoCodigo; i++) {
-            let random = Math.round(Math.random() * caracteres.length - 1, 0)
+            let random = Math.floor(Math.random() * caracteres.length)
             codigo += caracteres[random]
         }
         return codigo
