@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/menu_bar.css">
     <link rel="stylesheet" href="../css/analiseDisco.css">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body onload="validarSessao()">
@@ -77,17 +78,135 @@
 
             <div class="corpo">
                 <div class="box-kpis">
-                    <div class="kpi kpi-1"></div>
-                    <div class="kpi kpi-2"></div>
-                    <div class="kpi kpi-3"></div>
-                    <div class="kpi kpi-4"></div>
+                    <div class="kpi kpi-1">
+                        <div class="top">
+                            <div class="titulo-kpi">
+                                <b>Percentual de disco ocupado</b>
+                            </div>
+                            <div class="icone-info">
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        Valor em porcentagem correspondente à quantidade de disco utilizada de acordo com a capacidade total
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dado-kpi">
+                            <b>78%</b>
+                        </div>
+                    </div>
+                    <div class="kpi kpi-2">
+                        <div class="top">
+                            <div class="titulo-kpi">
+                                <b>Espaço Livre</b>
+                            </div>
+                            <div class="icone-info">
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        Quantidade de Gigabytes disponíveis do disco
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dado-kpi">
+                            <b>120 GB</b>
+                        </div>
+                    </div>
+                    <div class="kpi kpi-3">
+                       <div class="top iops-top">
+                            <div class="titulo-kpi iops-titulo">
+                                <b>Número de operações de leitura e escrita por segundo</b>
+                            </div>
+                            <div class="icone-info iops-icone-info">
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        IOPS: "Operações de Entrada/Saída por Segundo". Métrica que mede o desempenho do disco. Quanto maior o número de IOPS, mais rápida é a unidade.
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dado-kpi">
+                            <b>1.2 K/s</b>
+                        </div>
+                    </div>
+                    <div class="kpi kpi-4">
+                       <div class="top">
+                            <div class="titulo-kpi">
+                                <b>Capacidade total do disco</b>
+                            </div>
+                            <div class="icone-info">
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text tooltip-perto-da-borda">
+                                        Capacidade total de armazenamento do disco em Gibabytes
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dado-kpi">
+                            <b>512 GB</b>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="box-graficos-duplo">
+                    <div class="grafico-esquerda">
+                        <div class="top-grafico">
+                            <div class="titulo-grafico">
+                                <b>Percentual de disco ocupado x espaço livre</b>
+                            </div>
+                            <div class="icone-info-grafico">
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text tooltip-perto-da-borda">
+                                        Percentual de uso do disco em relação ao percentual de espaço livre do disco
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dado-grafico">
+                            <b>GRAFICO DE PIZZA</b>
+                        </div>
+                    </div>
+                    <div class="grafico-direita">
+                        <div class="top-grafico">
+                            <div class="titulo-grafico titulo-grafico-barras">
+                                <b>Percentual de disco ocupado por partição</b>
+                            </div>
+                            <div class="icone-info-grafico icone-grafico-barras">
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text tooltip-perto-da-borda">
+                                        Percentual de disco que está sendo utilizado em cada partição do disco
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dado-grafico">
+                            <b>GRAFICO DE BARRAS HORIZONTAL</b>
+                        </div>
+                    </div>
                 </div>
                 <div class="box-grafico-unico-comprido">
-                    
-                </div>
-                <div class="box-graficos-duplo">
-                    <div class="grafico-esquerda"></div>
-                    <div class="grafico-direita"></div>
+                    <div class="top-grafico">
+                            <div class="titulo-grafico titulo-grafico-linha">
+                                <b>Percentual médio de uso do disco nos últimos 15 dias</b>
+                            </div>
+                            <div class="icone-info-grafico icone-grafico-linha">
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text tooltip-perto-da-borda">
+                                        Percentual médio de uso do disco nos últimos 15 dias com base na capacidade
+                                    </span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="dado-grafico">
+                            <b>GRAFICO DE LINHAS</b>
+                        </div>
                 </div>
             </div>
         </div>
