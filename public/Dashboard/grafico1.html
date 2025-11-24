@@ -72,24 +72,24 @@
           <div class="header-esquerda">
             <img src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
             <span id="pagina-monitoramento">Monitoramento</span>
-          <img src="../assets/imgs/botao_seta_preto.png" alt="">
+            <img src="../assets/imgs/botao_seta_preto.png" alt="">
 
-          <span id="nome_MaquinaDac"></span>
-          <span class="status alerta" id="status_MaquinaDac"></span>
+            <span id="nome_MaquinaDac"></span>
+            <span class="status alerta" id="status_MaquinaDac"></span>
+          </div>
+
+          <input type="checkbox" id="btn_descricao">
+          <!-- <label class="link-descricao" for="btn_descricao">Exibir descrição</label> -->
+          <div class="descricao">
+            <p id="descricao_MaquinaDac"></p>
+          </div>
         </div>
 
-        <input type="checkbox" id="btn_descricao">
-        <!-- <label class="link-descricao" for="btn_descricao">Exibir descrição</label> -->
-        <div class="descricao">
-          <p id="descricao_MaquinaDac"></p>
+        <div class="botao-excluir-maquina">
+          <img src="../assets/imgs/icone-lixeira2.png">
         </div>
       </div>
-      
-      <div class="botao-excluir-maquina">
-        <img src="../assets/imgs/icone-lixeira2.png" >
-      </div>
-    </div>
-      
+
 
       <div class="dashboard-cards">
         <div class="card-monitoramento">
@@ -119,7 +119,7 @@
                 <span class="tooltip-text">Componente monitorado que mais apresentou falhas nas útltimas 24h</span>
               </span>
             </div>
-            <div class="text"  id="comp_alertas" style="color:#b30000; font-weight: 700;"></div>
+            <div class="text" id="comp_alertas" style="color:#b30000; font-weight: 700;"></div>
           </div>
 
 
@@ -188,6 +188,7 @@
             <select id="componentSelect">
               <option value="CPU" selected>CPU</option>
               <option value="Memória">Memória RAM</option>
+              <option value="Disco">Disco</option>
             </select>
 
             <div class="config-alertas-status">
@@ -233,6 +234,7 @@
                 <span class="tooltip-text">Escolha de tipo de gráficos que podem ser selecionados de acordo com os
                   insigths desejados</span>
               </span>
+              <div class="redirect-chart">Exibir mais detalhes</div>
             </div>
           </div>
 
@@ -248,6 +250,19 @@
   <script>
     var idDac = sessionStorage.ID_DAC;
     console.log(idDac)
+
+    //Redirecionador para Dash individuais
+    document.querySelector(".redirect-chart").addEventListener("click", () => {
+      var select = componentSelect.value
+      if (select == "CPU") {
+        window.location.href = "dashboard-cpu.html"
+      } else if (select == "Memória") {
+        window.location.href = "analiseRAM.html"
+      } else if (select == "Disco"){
+        window.location.href = "analiseDisco.html"
+      }
+    })
+    //
 
     fetch(`/grafico/exibirInfoDac/${idDac}`, {
       method: "GET",
@@ -279,7 +294,7 @@
         console.log(`Erro no catch: ${resposta}`);
       });
 
-      fetch(`/grafico/buscarKpiDac/${idDac}`, {
+    fetch(`/grafico/buscarKpiDac/${idDac}`, {
       method: "GET",
     })
       .then(resposta => {
@@ -287,18 +302,18 @@
       })
       .then(resposta => {
         console.log(resposta)
-        if(resposta[0] == null){
+        if (resposta[0] == null) {
           comp_alertas.innerHTML = `Sem componente`
-        }else{
-        comp_alertas.innerHTML = `${resposta[0].componente}`
-      }
+        } else {
+          comp_alertas.innerHTML = `${resposta[0].componente}`
+        }
       })
 
       .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
       });
 
-      fetch(`/grafico/totalAlerta/${idDac}`, {
+    fetch(`/grafico/totalAlerta/${idDac}`, {
       method: "GET",
     })
       .then(resposta => {
@@ -312,9 +327,9 @@
 
 
     function atualizarDados() {
-        fetch(`/grafico/buscarCpu/${idDac}`, {
-          method: "GET",
-        }).then(resposta => resposta.json())
+      fetch(`/grafico/buscarCpu/${idDac}`, {
+        method: "GET",
+      }).then(resposta => resposta.json())
         .then(resposta => {
           console.log(resposta);
           cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
@@ -322,45 +337,45 @@
         .catch(erro => console.error("Erro:", erro));
 
 
-        fetch(`/grafico/buscarRam/${idDac}`, {
-          method: "GET",
-        }).then(resposta => resposta.json())
+      fetch(`/grafico/buscarRam/${idDac}`, {
+        method: "GET",
+      }).then(resposta => resposta.json())
         .then(resposta => {
           console.log(resposta);
           ram.innerHTML = `${resposta[0].medidaCapturada}%`;
         })
         .catch(erro => console.error("Erro:", erro));
 
-        fetch(`/grafico/buscarRede/${idDac}`, {
-          method: "GET",
-        }).then(resposta => resposta.json())
+      fetch(`/grafico/buscarRede/${idDac}`, {
+        method: "GET",
+      }).then(resposta => resposta.json())
         .then(resposta => {
           console.log(resposta);
 
           if (resposta[0].dataCaptura) {
-          const dataServidor = new Date(resposta[0].dataCaptura);
-          const agora = new Date();
-          const diferenca1 = agora - dataServidor;
-          const diferenca2 = diferenca1 / 1000 / 60;
+            const dataServidor = new Date(resposta[0].dataCaptura);
+            const agora = new Date();
+            const diferenca1 = agora - dataServidor;
+            const diferenca2 = diferenca1 / 1000 / 60;
 
-          if (diferenca2 > 1) {
+            if (diferenca2 > 1) {
               rede.innerHTML = `NÃO CONECTADO`;
               redeok.classList.remove("status-dot", "ok")
-              redeok.classList.add("status-dot","alerta-grave")
+              redeok.classList.add("status-dot", "alerta-grave")
               status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
-          } else {
+            } else {
               rede.innerHTML = `CONECTADO`;
               redeok.classList.remove("status-dot", "alerta-grave")
-              redeok.classList.add("status-dot","ok")
+              redeok.classList.add("status-dot", "ok")
               status_MaquinaDac.innerHTML = `<p style="color:green">Status: Ativa</p>`
+            }
           }
-}
         })
         .catch(erro => console.error("Erro:", erro));
     }
-      atualizarDados();
-      setInterval(atualizarDados, 2000);
-    
+    atualizarDados();
+    setInterval(atualizarDados, 2000);
+
 
 
 

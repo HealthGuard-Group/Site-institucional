@@ -539,6 +539,18 @@ label.link-descricao:hover {
   gap: 10px;
 }
 
+.redirect-chart{
+  cursor: pointer;
+  color: #5b5b5b;
+  font-size: 0.7vw;
+  text-decoration: underline;
+}
+
+.redirect-chart:hover{
+  color: #9a1522;
+  transition: 0.3s;
+}
+
 @media (max-width: 900px) {
   .info-tooltip {
     left: 10px;
