@@ -1,3 +1,361 @@
-#monitoramento_redirecionamento{
-    background-color:  #9a1522;
+#monitoramento_redirecionamento {
+    background-color: #9a1522;
+}
+
+.dashboard-box {
+    margin-left: 6%;
+    height: 100vh;
+    width: 94%;
+
+    padding: 2vw 2vw;
+    display: flex;
+    flex-direction: column;
+    gap: 4%;
+}
+
+.info-maquina-box {
+    background-color: #fff;
+    height: 10%;
+    width: 100%;
+    border-radius: 8px;
+    padding: 0 1vw;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    display: flex;
+}
+
+.info-maquina-box-left {
+    height: 100%;
+    width: 60%;
+
+    display: flex;
+    align-items: center;
+    gap: 1vw;
+}
+
+.info-maquina-box-right {
+    height: 100%;
+    width: 40%;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.icon-seta-redirect {
+    height: 40%;
+    cursor: pointer;
+}
+
+.box-bread-crumbs {
+    display: flex;
+}
+
+.texto-bread-crumbs {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.5vw;
+    color: black;
+    text-decoration: underline;
+    transition: 0.3s;
+}
+
+.texto-bread-crumbs:hover {
+    color: #9a1522;
+}
+
+.texto-redirect {
+    color: #5b5b5b;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.big-content-dashboard {
+    height: 86%;
+    width: 100%;
+
+    display: flex;
+}
+
+.big-content-left {
+    height: 100%;
+    width: 75%;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.big-content-right {
+    margin-top: 1%;
+    height: 100%;
+    width: 25%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.kpis-box {
+    height: 25%;
+    width: 100%;
+    padding-right: 2vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.kpi-box {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    height: 80%;
+    width: 30%;
+}
+
+.kpi-top {
+    width: 100%;
+    height: 40%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.tooltip {
+    position: fixed;
+    margin-left: 17.5%;
+    display: inline-block;
+    color: #000000;
+    cursor: help;
+    font-size: 12px;
+    font-weight: bold;
+    font-size: 1.5vw;
+}
+
+.tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333333c7;
+    color: #fff;
+    text-align: start;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 800;
+    top: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+.title-kpi {
+    text-align: center;
+    font-size: 1vw;
+    font-weight: bold;
+    margin-right: 1vw;
+}
+
+.kpi-bottom {
+    height: 60%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.kpi-text {
+    font-size: 1.8vw;
+    font-weight: bold;
+}
+
+.grafico-box {
+    background-color: #fff;
+    height: 75%;
+    width: calc(100% - 2vw);
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.top-grafico {
+    width: 100%;
+    height: 15%;
+
+    display: flex;
+}
+
+.title-grafico {
+    height: 100%;
+    width: 100%;
+    font-size: 1.5vw;
+    font-weight: bold;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottom-grafico {
+    width: 100%;
+    height: 85%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+}
+
+.grafico {
+    height: 90%;
+    width: 75%;
+}
+
+.legenda {
+    height: 90%;
+    width: 20%;
+    margin-right: 3vw;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+}
+
+.box-legenda {
+    background-color: #fff;
+    width: 100%;
+    height: 30%;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-top: solid #000000 0.8vh;
+    padding-top: 0.5vh;
+}
+
+.title-legenda {
+    width: 100%;
+    height: 20%;
+    font-size: 1.2vw;
+    font-weight: bold;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.subtitle-legenda {
+    width: 100%;
+    height: 40%;
+    font-size: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ranking-box {
+    height: 40%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    padding: 1vw 1vw;
+}
+
+.box-ia {
+    height: 56%;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.raking-top{
+    height: 20%;
+    width: 100%;
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-align: center;
+    padding-right: 2vw;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.raking-bottom{
+    height: 80%;
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5vh;
+}
+.lista-ranking{
+    padding-left: 1vw;
+}
+.option-ranking{
+    font-size: 1vw;
+}
+.ia-top{
+    height: 15%;
+    width: 100%;
+    font-size: 1.2vw;
+    font-weight: bold;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.ia-bottom{
+    height: 85%;
+    width: 100%;
+    padding: 1vw;
+}
+.ia-text{
+    height: 80%;
+    width: 100%;
+    font-size: 1vw;
+}
+.ia-button-box{
+    height: 20%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.button-ia{
+    cursor: pointer;
+    height: 65%;
+    width: 65%;
+    color: #fff;
+    background-color: #1E2A38;
+    border: none;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    font-size: 0.9vw;
+    font-weight: 500;
+    border-radius: 1vh;
+}
+.grafico-ajuste{
+    margin-left: 63.5%;
+    margin-top: 1.5%;
+}
+.ajuste-ranking{
+    margin-left: 21%;
+}
+.ajuste-ia{
+    margin-left: 19.5%;
 }

@@ -9,58 +9,300 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/menu_bar.css">
     <link rel="stylesheet" href="../css/analiseRAM.css">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body onload="validarSessao()">
-    <!-- Começo do Menu -->
-    <div class="menu-lateral">
-        <div class="pai-icones-superiores">
-            <div id="logo">
-                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
-                    class="icone-logo-pequena">
+    <section class="tela">
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_redirecionamento">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de funcionários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="alertas_redirecionamento">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_convites">
+                    <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Convites</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="suporte_redirecionamento">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
             </div>
-            <br>
-            <div class="icone-box" id="monitoramento_redirecionamento">
-                <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
-                <div class="texto-icone oculto">Monitoramento</div>
-            </div>
-            <hr class="separador">
-            <div class="icone-box" id="gestao_redirecionamento">
-                <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
-                <div class="texto-icone oculto">Gestão de funcionários</div>
-            </div>
-            <hr class="separador">
-            <div class="icone-box" id="alertas_redirecionamento">
-                <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
-                <div class="texto-icone oculto">Histórico de Alertas</div>
-            </div>
-            <hr class="separador">
-            <div class="icone-box" id="gestao_convites">
-                <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
-                <div class="texto-icone oculto">Convites</div>
-            </div>
-            <hr class="separador">
-            <div class="icone-box" id="suporte_redirecionamento">
-                <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
-                <div class="texto-icone oculto">Suporte</div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior" id="tela_perfil">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
             </div>
         </div>
-        <div class="pai-icones-inferiores">
-            <hr class="separador-forte">
-            <div class="icone-box-inferior" id="tela_perfil">
-                <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
-                <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+        <div class="dashboard-box">
+            <div class="info-maquina-box">
+                <div class="info-maquina-box-left">
+                    <img src="../assets/imgs/seta-esquerda.png" alt="seta-esquerda" class="icon-seta-redirect"
+                        id="redirect_dashboard">
+                    <div class="box-bread-crumbs">
+                        <a href="monitoramento.html" class="texto-bread-crumbs">Monitoramento</a>
+                        <span class="texto-bread-crumbs">/</span>
+                        <a href="grafico1.html" class="texto-bread-crumbs">Máquina A-01</a>
+                        <span class="texto-bread-crumbs">/</span>
+                        <a href="#" class="texto-bread-crumbs">Análise de RAM</a>
+                    </div>
+                </div>
+                <div class="info-maquina-box-right">
+                    <div class="texto-redirect">
+                        Exibir Descrição
+                    </div>
+                </div>
             </div>
-            <hr class="separador">
-            <div class="icone-box-inferior" id="sair_conta_redirecionamento">
-                <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
-                <div class="texto-icone oculto">Sair da conta</div>
+            <div class="big-content-dashboard">
+                <div class="big-content-left">
+                    <div class="kpis-box">
+                        <div class="kpi-box">
+                            <div class="kpi-top">
+                                <div class="title-kpi">
+                                    Tempo de estresse de RAM nas últimas 24h
+                                </div>
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        olá
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="kpi-bottom">
+                                <div class="kpi-text" id="texto_kpi_estresse">
+                                    2h30m
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-top">
+                                <div class="title-kpi">
+                                    Memória RAM total
+                                </div>
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        olá
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="kpi-bottom">
+                                <div class="kpi-text" id="texto_kpi_ram">
+                                    16GB
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-top">
+                                <div class="title-kpi">
+                                    Memória swap total
+                                </div>
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        olá
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="kpi-bottom">
+                                <div class="kpi-text" id="texto_kpi_swap">
+                                    16GB
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grafico-box">
+                        <div class="top-grafico">
+                            <div class="title-grafico">
+                                Monitoramento em tempo real de uso da
+                                memória SWAP e RAM(%)
+                            </div>
+                            <span class="tooltip grafico-ajuste">
+                                <i class='bxr  bx-info-circle'></i>
+                                <span class="tooltip-text">
+                                    olá
+                                </span>
+                            </span>
+                        </div>
+                        <div class="bottom-grafico">
+                            <div class="grafico">
+                                <canvas id="mychart"></canvas>
+                            </div>
+                            <div class="legenda">
+                                <div class="box-legenda" style="border-top: solid blue 0.8vh;">
+                                    <div class="title-legenda">
+                                        Memória RAM
+                                    </div>
+                                    <div class="subtitle-legenda">
+                                        Alerta: 90%
+                                    </div>
+                                    <div class="subtitle-legenda">
+                                        Atenção: 70%
+                                    </div>
+                                </div>
+                                <div class="box-legenda" style="border-top: solid purple 0.8vh;">
+                                    <div class="title-legenda">
+                                        Memória Swap
+                                    </div>
+                                    <div class="subtitle-legenda">
+                                        Alerta: 90%
+                                    </div>
+                                    <div class="subtitle-legenda">
+                                        Atenção: 70%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="big-content-right">
+                    <div class="ranking-box">
+                        <div class="raking-top">
+                            Ranking dos maiores consumidores de RAM
+                            <span class="tooltip ajuste-ranking">
+                                <i class='bxr  bx-info-circle'></i>
+                                <span class="tooltip-text">
+                                    olá
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="raking-bottom">
+                            <div class="option-ranking"><strong>1º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>2º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>3º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>4º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>5º -</strong> Google Chrome</div>
+                        </div>
+                    </div>
+                    <div class="box-ia">
+                        <div class="ia-top">
+                            Recomendação de IA:
+                            <span class="tooltip ajuste-ia">
+                                <i class='bxr  bx-info-circle'></i>
+                                <span class="tooltip-text">
+                                    olá
+                                </span>
+                            </span>
+                        </div>
+                        <div class="ia-bottom">
+                            <div class="ia-text">
+                                Olá, percebemos que sua máquina não está tendo uma boa perfomance.
+                                Fizemos uma análise, e vimos que dentro do último mês essa máquina tevemos picos acima
+                                de 90% de memória SWAP em uso, no qual permaneceu em estado de pico por mais de 2 horas.
+                                Como sugestão seria recomendado um upgrade de máquina para 32GB de RAM, para que a
+                                máquina evite lentidões.
+                                Risco de travamento: Altíssimo
+                            </div>
+                            <div class="ia-button-box">
+                                <button class="button-ia">Gerar nova recomendação</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- Fim do Menu -->
+        <!-- Fim do Menu -->
+    </section>
+
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="../js/validarSessao.js"></script>
 <script src="../js/menu-lateral.js"></script>
+<script>
+    // Redirecionador Dashboard(Gráfico 1)
+    document.getElementById("redirect_dashboard").addEventListener("click", () => {
+        window.location.href = "grafico1.html"
+    })
+    // Código do gráfico do Chart.js
+    const ctx = document.getElementById("mychart").getContext("2d")
+
+    const grafico = new Chart(ctx, {
+        type: "line",
+
+        data: {
+
+            labels: ["10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00"],
+
+            datasets: [
+                {
+                    label: "Uso memória RAM(%)",
+                    data: [60, 65, 68, 80, 85, 90, 60],
+                    borderColor: "blue",
+                    backgroundColor: "blue",
+                    tension: 0.1
+                },
+                {
+                    label: "Uso memória SWAP(%)",
+                    data: [3, 5, 8, 10, 12, 15, 2],
+                    borderColor: "purple",
+                    backgroundColor: "purple",
+                    tension: 0.1
+                }
+            ]
+        },
+
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function (valor) {
+                            return valor + "%"
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: "Uso em porcentagem (%)",
+                        color: "#000000",
+                        font: {
+                            size: 16,
+                            weight: "bold"
+                        }
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: "Data da Captura",
+                        color: "#000000",
+                        font: {
+                            size: 16,
+                            weight: "bold"
+                        }
+                    }
+                }
+            }
+        }
+    })
+</script>
 
 </html>
