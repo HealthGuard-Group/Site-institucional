@@ -21,6 +21,13 @@
             </div>
         </div>
 
+        <div class="tela-box-info-exclusao oculto">
+            <div class="box-info-exclusao">
+                <img src="../assets/imgs/Icone ok.png" alt="" class="icon-ok">
+                <div class="texto-copiar">Funcionário excluído com sucesso!</div>
+            </div>
+        </div>
+
         <!-- Começo modais -->
         <div class="tela-escurecida oculto">
             <div id="popupFundo" class="popup-fundo oculto">
@@ -72,6 +79,33 @@
                     <div class="modal-botoes">
                         <button id="btn-cancelar" class="modal-botao btn-cancelar" onclick="cancelarAlteracao()">Cancelar</button>
                         <button id="btn-confirmar-exclusao" class="modal-botao btn-excluir" onclick="atualizarPermissaoFuncionario(idUsuarioClicadoAcao)">Sim, Alterar</button>
+                    </div>
+                </div>
+            </div>
+            <div id="popupConfirmacaoExcluir" class="popup-fundo oculto">
+                <div class="popup popupConteudoConfirmacao">
+                    <!-- <div class="popup-header">
+                        <h2>Alterar Cargo/Permissão</h2>
+                    </div> -->
+                    <h2>Excluir funcionário</h2>
+                    <p>
+                        <br>
+                        <b class="nome-usuario-modal-exclusao"></b>
+                        <br><br>
+                        Você tem certeza que deseja excluir esse funcionário? Esta ação é irreversível. 
+
+
+                        <!-- <br>
+                        <br> -->
+
+                        <!-- <br> <span class="troca-de-permissao"></span> -->
+
+                        <br><br>
+                    </p>
+
+                    <div class="modal-botoes">
+                        <button id="btn-cancelar" class="modal-botao btn-cancelar" onclick="cancelarExclusao()">Cancelar</button>
+                        <button id="btn-confirmar-exclusao" class="modal-botao btn-excluir" onclick="excluirFuncionario(idUsuarioClicadoAcao)">Sim, Excluir</button>
                     </div>
                 </div>
             </div>
@@ -356,6 +390,7 @@
     <script src="../js/menu-lateral.js"></script>
     <script>
         var funcionarios; // Auxiliar que armazena os funcinários
+        var index; // Armazena informações completas (indice) do usuario clicado
         var idUsuarioClicadoAcao; // Guarda o id do usuário clicado (editar ou remover) para exibir nome no modal
         var permissaoAtual; // Permissão que o usuário possui antes da alteração
         var novaPermissao; // Permissão que o usuário irá possuir com a alteração
@@ -466,23 +501,39 @@
                 });
         }
         function atualizarTabela(dados) {
+            let variaveis = puxarVariaveis()
+
             for (let i = 0; i < dados.length; i++) {
-                tabela_funcionarios.innerHTML += `
-                    <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
-                        <td class="td-nome-completo">${dados[i].nomeUsuario}</td>
-                        <td class="td-email">${dados[i].email}</td>
-                        <td class="td-cpf-funcionario">${mascaraCPF(dados[i].cpf)}</td>
-                        <td class="td-permissao">${dados[i].permissao}</td>
-                        <td class="td-acoes-funcionario">
-                            <div class="icone-editar" onclick="editarPermissaoFuncionario(${dados[i].idUsuario})">
-                                <img src="../assets/imgs/user-edit.png" alt="Editar">
-                            </div>
-                            <div class="icone-excluir">
-                                <img src="../assets/imgs/contact.png" alt="Excluir">
-                            </div>
-                        </td>
-                    </tr>`
+                if (dados[i].idUsuario == variaveis.idUsuario) {
+                    tabela_funcionarios.innerHTML += `
+                        <tr class="dados-tabela">
+                            <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                            <td class="td-nome-completo">${dados[i].nomeUsuario}</td>
+                            <td class="td-email">${dados[i].email}</td>
+                            <td class="td-cpf-funcionario">${mascaraCPF(dados[i].cpf)}</td>
+                            <td class="td-permissao">${dados[i].permissao}</td>
+                            <td class="td-acoes-funcionario">
+                                <b style="color: #656464;">(Você)</b>
+                            </td>
+                        </tr>`
+                } else {
+                    tabela_funcionarios.innerHTML += `
+                        <tr class="dados-tabela">
+                            <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
+                            <td class="td-nome-completo">${dados[i].nomeUsuario}</td>
+                            <td class="td-email">${dados[i].email}</td>
+                            <td class="td-cpf-funcionario">${mascaraCPF(dados[i].cpf)}</td>
+                            <td class="td-permissao">${dados[i].permissao}</td>
+                            <td class="td-acoes-funcionario">
+                                <div class="icone-editar" onclick="editarPermissaoFuncionario(${dados[i].idUsuario})">
+                                    <img src="../assets/imgs/user-edit.png" alt="Editar">
+                                </div>
+                                <div class="icone-excluir" onclick="confirmarExclusaoFuncionario(${dados[i].idUsuario})">
+                                    <img src="../assets/imgs/contact.png" alt="Excluir">
+                                </div>
+                            </td>
+                        </tr>`
+                }
             }
         }
         function formatarTextoParaComparacao(texto) {
@@ -515,25 +566,37 @@
                 document.querySelector(".tela-box-copiar").classList.add("oculto")
             }, 3000)
         }
-        function editarPermissaoFuncionario(idUsuario) {   
+        function infoExclusao() {
+            var codigo = document.getElementById("codigo_texto").innerText
+            navigator.clipboard.writeText(codigo)
+            document.querySelector(".tela-box-info-exclusao").classList.remove("oculto")
+            setTimeout(() => {
+                document.querySelector(".tela-box-info-exclusao").classList.add("oculto")
+            }, 3000)
+        }
+        function editarPermissaoFuncionario(idUsuario) {  
+            // Buscar o índice do do funcionario clicado
+            index = funcionarios.findIndex(func => func.idUsuario === idUsuario);
+
             document.querySelector('.tela-escurecida').classList.remove('oculto')
             document.getElementById("popupFundo").classList.remove("oculto")
             document.getElementById('html_fonte').style.overflowY = "hidden"
-            nome.value = funcionarios[funcionarios.length - idUsuario].nomeUsuario
+
+            nome.value = funcionarios[index].nomeUsuario
             nome.disabled = true;
-            email.value = funcionarios[funcionarios.length - idUsuario].email
+            email.value = funcionarios[index].email
             email.disabled = true;
-            if (funcionarios[funcionarios.length - idUsuario].permissao == "Analista TI") {
+            if (funcionarios[index].permissao == "Técnico de TI") {
                 document.getElementById("permissao").value = "tecnico"
                 permissaoAtual = "Técnico de TI"
-            } else if (funcionarios[funcionarios.length - idUsuario].permissao == "Gestor TI") {
+            } else if (funcionarios[index].permissao == "Gestor de TI") {
                 document.getElementById("permissao").selectedIndex = 1; // "gestor"
                 permissaoAtual = "Gestor de TI"
             }
 
             idUsuarioClicadoAcao = idUsuario;
         }
-        function confirmarAlteracaoPermissao(idUsuarioClicado) {   
+        function confirmarAlteracaoPermissao(idUsuarioClicado) {  
             if ((permissaoAtual == "Técnico de TI" && document.getElementById("permissao").value == "tecnico") ||
                 permissaoAtual == "Gestor de TI" && document.getElementById("permissao").value == "gestor") {
                 texto_erro_permissao.classList.remove("oculto")
@@ -551,7 +614,7 @@
                 document.querySelector('.tela-escurecida').classList.remove('oculto')
                 document.getElementById("popupConfirmacaoAlterar").classList.remove("oculto")
                 document.getElementById('html_fonte').style.overflowY = "hidden"
-                document.querySelector('.nome-usuario-modal-confirmacao').innerHTML = funcionarios[funcionarios.length - idUsuarioClicado].nomeUsuario;
+                document.querySelector('.nome-usuario-modal-confirmacao').innerHTML = funcionarios[index].nomeUsuario;
                 document.querySelector('.troca-de-permissao').innerHTML = `${permissaoAtual} --> ${novaPermissao}`
             }
         }
@@ -589,13 +652,59 @@
                 })
                 .then(resposta => {
                     console.log("Permissão atualizada com sucesso!")
+                    copiartexto()
                 })
                 .catch(function (resposta) {
                     console.log("UPDATE ❌")
                     console.log(`Erro no catch: ${resposta}`);
                 });
         }
-    
+        function confirmarExclusaoFuncionario(idUsuario) {
+            // Buscar o índice do do funcionario clicado
+            index = funcionarios.findIndex(func => func.idUsuario === idUsuario);
+
+            document.querySelector('.tela-escurecida').classList.remove('oculto')
+            document.getElementById("popupConfirmacaoExcluir").classList.remove("oculto")
+            // document.getElementById("popupConviteGerado").classList.add("oculto")
+            document.getElementById('html_fonte').style.overflowY = "hidden"
+            document.querySelector('.nome-usuario-modal-exclusao').innerHTML = funcionarios[index].nomeUsuario;
+
+            idUsuarioClicadoAcao = idUsuario;
+        }
+        function cancelarExclusao() {
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupConfirmacaoExcluir").classList.add("oculto")
+            document.getElementById("popupConviteGerado").classList.add("oculto")
+            document.getElementById('html_fonte').style.overflowY = "auto"
+        }
+        function excluirFuncionario(idUsuario) {
+            document.querySelector('.tela-escurecida').classList.add('oculto')
+            document.getElementById("popupConfirmacaoExcluir").classList.add("oculto")
+            // document.getElementById("popupConviteGerado").classList.add("oculto")
+            document.getElementById('html_fonte').style.overflowY = "auto"
+            
+            fetch(`/funcionarios/excluirfuncionario/${idUsuario}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                // body: JSON.stringify({
+                //     fkPermissao: fkPermissao
+                // }),
+            })
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    console.log("Usuário exclído com sucesso!")
+                    infoExclusao()
+                })
+                .catch(function (resposta) {
+                    console.log("Update ('delete') ❌")
+                    console.log(`Erro no catch: ${resposta}`);
+                });
+        }
+        
     </script>
 </body>
 

@@ -3,17 +3,17 @@ var database = require("../database/config");
 
 function buscarfuncionarios(fkUnidade) {
   var instrucaoSql = `SELECT 
-                          u.idUsuario,
-                          u.nome AS nomeUsuario, 
-                          u.email, 
-                          u.cpf, 
-                          p.nome AS permissao
+                        u.idUsuario,
+                        u.nome AS nomeUsuario, 
+                        u.email, 
+                        u.cpf, 
+                        p.nome AS permissao
                       FROM Usuario AS u 
                       JOIN Permissoes AS p  
-                          ON p.idPermissoes = u.fkPermissoes
+                        ON p.idPermissoes = u.fkPermissoes
                       JOIN CodigoValidacaoUsuario AS codV
-                          ON p.idPermissoes = codV.fkPermissoes
-                      WHERE fkUnidadeDeAtendimento = ${fkUnidade}
+                        ON p.idPermissoes = codV.fkPermissoes
+                      WHERE fkUnidadeDeAtendimento = 1 AND statusUsuario = 'Ativo'
                       GROUP BY u.idUsuario
                       ORDER BY u.idUsuario DESC;`;
 
@@ -22,6 +22,13 @@ function buscarfuncionarios(fkUnidade) {
 
 function atualizarpermissao(idUsuario, fkPermissao) {
   var instrucaoSql = `UPDATE Usuario SET fkPermissoes = ${fkPermissao}
+	                        WHERE idUsuario = ${idUsuario};`;
+
+  return database.executar(instrucaoSql);
+}
+
+function excluirfuncionario(idUsuario) {
+  var instrucaoSql = `UPDATE Usuario SET statusUsuario = 'Inativo'
 	                        WHERE idUsuario = ${idUsuario};`;
 
   return database.executar(instrucaoSql);
@@ -39,7 +46,8 @@ function atualizarpermissao(idUsuario, fkPermissao) {
 
 module.exports = {
   buscarfuncionarios,
-  atualizarpermissao
+  atualizarpermissao,
+  excluirfuncionario
   // validarconvite,
   // revogarconvites
 };

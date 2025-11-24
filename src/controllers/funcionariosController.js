@@ -50,6 +50,30 @@ function atualizarpermissao(req, res) {
             );
     }
 }
+function excluirfuncionario(req, res) {
+    var idUsuario = req.params.idUsuario;
+    if (idUsuario == undefined) {
+        res.status(400).send("Seu idUsuario está undefined!");
+    } else {
+
+        funcionariosModel.excluirfuncionario(idUsuario)
+            .then(
+                function (resultado) {
+                    console.log(resultado);
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 function validarconvite(req, res) {
     var emailVar = req.params.emailVar;
     if (emailVar == undefined) {
@@ -98,7 +122,8 @@ function revogarconvites(req, res) {
 }
 module.exports = {
     buscarfuncionarios,
-    atualizarpermissao
+    atualizarpermissao,
+    excluirfuncionario
     // validarconvite,
     // revogarconvites
 }

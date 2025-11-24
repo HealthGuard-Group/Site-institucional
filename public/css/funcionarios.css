@@ -527,7 +527,28 @@ td {
     gap: 10px;
 
     height: 8vh;
-    width: 300px;
+    width: 350px;
+}
+.tela-box-info-exclusao{
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+}
+.box-info-exclusao{
+    position: fixed;
+    z-index: 10000;
+    background-color: lightgreen;
+    margin-top: 5vh;
+    border-radius: 10px;
+    padding-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    height: 8vh;
+    width: 350px;
 }
 .botao-recarregar{
     cursor: pointer;
