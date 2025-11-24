@@ -66,19 +66,30 @@
   <!-- Fim do Menu -->
   <div class="container">
     <div class="conteudo-principal">
-      <div class="header">
-        <div class="header-esquerda">
+      <div class="header-pai">
+
+        <div class="header">
+          <div class="header-esquerda">
+            <img src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+            <span id="pagina-monitoramento">Monitoramento</span>
+          <img src="../assets/imgs/botao_seta_preto.png" alt="">
+
           <span id="nome_MaquinaDac"></span>
           <span class="status alerta" id="status_MaquinaDac"></span>
         </div>
 
         <input type="checkbox" id="btn_descricao">
-        <label class="link-descricao" for="btn_descricao">Exibir descrição</label>
+        <!-- <label class="link-descricao" for="btn_descricao">Exibir descrição</label> -->
         <div class="descricao">
           <p id="descricao_MaquinaDac"></p>
         </div>
       </div>
-
+      
+      <div class="botao-excluir-maquina">
+        <img src="../assets/imgs/icone-lixeira2.png" >
+      </div>
+    </div>
+      
 
       <div class="dashboard-cards">
         <div class="card-monitoramento">

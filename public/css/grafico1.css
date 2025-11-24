@@ -20,8 +20,15 @@ body {
   box-sizing: border-box;
 }
 
-.header {
+.header-pai {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+  height: 10%;
+}
+
+.header {
+  width: 94%;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -41,6 +48,14 @@ body {
   font-size: 16px;
   gap: 14px;
 
+}
+
+#bt-voltar {
+    width: 1.8%;
+}
+
+.header-esquerda img {
+    width: 1.8%;
 }
 
 #btn_descricao {
@@ -77,6 +92,33 @@ label.link-descricao:hover {
   transform: translateY(0);
   margin-top: 8px;
   padding-bottom: 10px;
+}
+
+.botao-excluir-maquina {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 5%;
+  height: 80%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.botao-excluir-maquina img {
+  width: 45%;
+  opacity: 0.8;
+}
+
+.botao-excluir-maquina:hover {
+  cursor: pointer;
+}
+
+.botao-excluir-maquina img:hover {
+  width: 45%;
+  opacity: 0.9;
+  transform: scale(1.1);
+  transition: 0.5s ease;
 }
 
 .status.alerta {
