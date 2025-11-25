@@ -10,7 +10,6 @@
     padding: 2vw 2vw;
     display: flex;
     flex-direction: column;
-    gap: 4%;
 }
 
 .info-maquina-box {
@@ -47,16 +46,22 @@
     cursor: pointer;
 }
 
+.seta-top{
+    width: 5%;
+}
+
+
 .box-bread-crumbs {
     display: flex;
+    gap: 0.5vw;
 }
 
 .texto-bread-crumbs {
+    padding-top: 0.4vh;
     text-decoration: none;
     font-weight: bold;
     font-size: 1.5vw;
     color: black;
-    text-decoration: underline;
     transition: 0.3s;
 }
 
@@ -65,7 +70,7 @@
 }
 
 .big-content-dashboard {
-    height: 86%;
+    height: 90%;
     width: 100%;
 
     display: flex;

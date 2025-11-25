@@ -67,9 +67,9 @@
                         id="redirect_dashboard">
                     <div class="box-bread-crumbs">
                         <a href="monitoramento.html" class="texto-bread-crumbs">Monitoramento</a>
-                        <span class="texto-bread-crumbs">/</span>
-                        <a href="grafico1.html" class="texto-bread-crumbs">Máquina A-01</a>
-                        <span class="texto-bread-crumbs">/</span>
+                        <img src="../assets/imgs/botao_seta_preto.png" alt="seta" class="seta-top">
+                        <a href="grafico1.html" class="texto-bread-crumbs" id="div_nome_maquina">Máquina A-01</a>
+                        <img src="../assets/imgs/botao_seta_preto.png" alt="seta" class="seta-top">
                         <a href="#" class="texto-bread-crumbs">Análise de RAM</a>
                     </div>
                 </div>
@@ -156,10 +156,10 @@
                                     <div class="title-legenda">
                                         Memória RAM
                                     </div>
-                                    <div class="subtitle-legenda">
+                                    <div class="subtitle-legenda" id="div_alerta">
                                         Alerta: 90%
                                     </div>
-                                    <div class="subtitle-legenda">
+                                    <div class="subtitle-legenda" id="div_atencao">
                                         Atenção: 70%
                                     </div>
                                 </div>
@@ -233,73 +233,226 @@
 <script src="../js/validarSessao.js"></script>
 <script src="../js/menu-lateral.js"></script>
 <script>
+    // Váriaveis Globais
+    const ctx = document.getElementById("mychart").getContext("2d") // Gráfico
+    var grafico = ""    // Gráfico
+    var vetor_ram = []  // Usa no gráfico
+    var vetor_swap = [] // Usa no gráfico
+    var vetor_data = [] // Usa no gráfico
     // Redirecionador Dashboard(Gráfico 1)
     document.getElementById("redirect_dashboard").addEventListener("click", () => {
         window.location.href = "grafico1.html"
     })
-    // Código do gráfico do Chart.js
-    const ctx = document.getElementById("mychart").getContext("2d")
-
-    const grafico = new Chart(ctx, {
-        type: "line",
-
-        data: {
-
-            labels: ["10:00", "10:10", "10:20", "10:30", "10:40", "10:50", "11:00"],
-
-            datasets: [
-                {
-                    label: "Uso memória RAM(%)",
-                    data: [60, 65, 68, 80, 85, 90, 60],
-                    borderColor: "blue",
-                    backgroundColor: "blue",
-                    tension: 0.1
-                },
-                {
-                    label: "Uso memória SWAP(%)",
-                    data: [3, 5, 8, 10, 12, 15, 2],
-                    borderColor: "purple",
-                    backgroundColor: "purple",
-                    tension: 0.1
+    // Função puxar máquina selecionada
+    function puxarNomeDaMaquina() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarnomemaquina/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var div_maquina = document.getElementById("div_nome_maquina")
+                div_maquina.innerHTML = resposta[0].nomeIdentificacao
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Função para atualizar as KPI's
+    function atualizarKpisRAM() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarmemoria/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var div_ram = document.getElementById("texto_kpi_ram")
+                var div_swap = document.getElementById("texto_kpi_swap")
+                for (let i = 0; i < resposta.length; i++) {
+                    if (resposta[i].fkMedicoesDisponiveis == 7) {
+                        div_ram.innerHTML = resposta[i].medidaCapturada + "GB"
+                    } else {
+                        div_swap.innerHTML = resposta[i].medidaCapturada + "GB"
+                    }
                 }
-            ]
-        },
-
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    max: 100,
-                    ticks: {
-                        callback: function (valor) {
-                            return valor + "%"
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: "Uso em porcentagem (%)",
-                        color: "#000000",
-                        font: {
-                            size: 16,
-                            weight: "bold"
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Função de puxar os dados do alerta de RAM
+    function puxandoMetricasAlertaDeRam(idUnidade) {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarmetricasrammaquina/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var alerta = document.getElementById("div_alerta")
+                var atencao = document.getElementById("div_atencao")
+                if (resposta.length == 0) {
+                    fetch(`/analiseram/buscarmetricasrammaquinaunidade/${idUnidade}`, {
+                        method: "GET",
+                    })
+                        .then(resposta => {
+                            return resposta.json();
+                        })
+                        .then(resposta => {
+                            for (let i = 0; i < resposta.length; i++) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    atencao.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
+                                } else {
+                                    alerta.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
+                                }
+                            }
+                        })
+                        .catch(function (resposta) {
+                            console.log(`Erro no catch: ${resposta}`);
+                        });
+                } else {
+                    for (let i = 0; i < resposta.length; i++) {
+                        if (resposta[i].nomeNivel == "Atenção") {
+                            atencao.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
+                        } else {
+                            alerta.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
                         }
                     }
-                },
-                x: {
-                    title: {
-                        display: true,
-                        text: "Data da Captura",
-                        color: "#000000",
-                        font: {
-                            size: 16,
-                            weight: "bold"
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Atualizando o gráfico
+    function puxandoDadosGraficoRamSwap() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/puxardadosgraficoRAM/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                for (let i = resposta.length - 1; i >= 0; i--) {
+                    if (resposta[i].fkMedicoesDisponiveis == 8) {
+                        vetor_swap.push(resposta[i].medidaCapturada)
+                        vetor_data.push(formatarData(resposta[i].dataCaptura))
+                    } else {
+                        vetor_ram.push(resposta[i].medidaCapturada)
+                    }
+                }
+                plotarGraficoRam()
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    function plotarGraficoRam() {
+        // Código do gráfico do Chart.js
+        grafico = new Chart(ctx, {
+            type: "line",
+
+            data: {
+
+                labels: vetor_data,
+
+                datasets: [
+                    {
+                        label: "Uso memória RAM(%)",
+                        data: vetor_ram,
+                        borderColor: "blue",
+                        backgroundColor: "blue",
+                        tension: 0.1
+                    },
+                    {
+                        label: "Uso memória SWAP(%)",
+                        data: vetor_swap,
+                        borderColor: "purple",
+                        backgroundColor: "purple",
+                        tension: 0.1
+                    }
+                ]
+            },
+
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function (valor) {
+                                return valor + "%"
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: "Uso em porcentagem (%)",
+                            color: "#000000",
+                            font: {
+                                size: 16,
+                                weight: "bold"
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Data da Captura",
+                            color: "#000000",
+                            font: {
+                                size: 16,
+                                weight: "bold"
+                            }
                         }
                     }
                 }
             }
+        })
+    }
+    function atualizarGraficoRam() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/atualizardadosgraficoRAM/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                vetor_data.shift()
+                vetor_ram.shift()
+                vetor_swap.shift()
+                for (let i = 0; i < resposta.length; i++) {
+                    if (resposta[i].fkMedicoesDisponiveis == 6) {
+                        vetor_ram.push(resposta[i].medidaCapturada)
+                        vetor_data.push(formatarData(resposta[i].dataCaptura))
+                    } else {
+                        vetor_swap.push(resposta[i].medidaCapturada)
+                    }
+                }
+                grafico.update()
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Funções Auxiliares
+    function formatarData(data) {
+        const fuso = {
+            timeZone: 'America/Sao_Paulo',
+            hour12: false
         }
-    })
+        var data_formatada = new Date(data)
+        data_formatada = data_formatada.toLocaleTimeString("pt-BR", fuso)
+        return data_formatada
+    }
 </script>
 
 </html>
