@@ -426,10 +426,18 @@
                 return resposta.json();
             })
             .then(resposta => {
-                vetor_data.shift()
-                vetor_ram.shift()
-                vetor_swap.shift()
+                console.log(vetor_data)
+                var ax_monitoramento = true
+                if (vetor_data.length == 10) {
+                    vetor_data.shift()
+                    vetor_ram.shift()
+                    vetor_swap.shift()
+                }
                 for (let i = 0; i < resposta.length; i++) {
+                    if (formatarData(resposta[i].dataCaptura) == vetor_data[vetor_data.length - 1]) {
+                        ax_monitoramento = false
+                        break;
+                    }
                     if (resposta[i].fkMedicoesDisponiveis == 6) {
                         vetor_ram.push(resposta[i].medidaCapturada)
                         vetor_data.push(formatarData(resposta[i].dataCaptura))
@@ -437,7 +445,9 @@
                         vetor_swap.push(resposta[i].medidaCapturada)
                     }
                 }
-                grafico.update()
+                if (ax_monitoramento) {
+                    grafico.update()
+                }
             })
             .catch(function (resposta) {
                 console.log(`Erro no catch: ${resposta}`);
