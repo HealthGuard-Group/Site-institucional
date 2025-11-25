@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Logs de Acesso</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/logAcessos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+
+    <!-- Começo do Menu -->
+    <div class="menu-lateral">
+        <div class="pai-icones-superiores">
+            <div id="logo">
+                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                    class="icone-logo-pequena">
+            </div>
+            <br>
+            <div class="icone-box" id="monitoramento_redirecionamento">
+                <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                <div class="texto-icone oculto">Monitoramento</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_redirecionamento">
+                <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Gestão de usuários</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="alertas_redirecionamento">
+                <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                <div class="texto-icone oculto">Histórico de Alertas</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="suporte_redirecionamento">
+                <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                <div class="texto-icone oculto">Suporte</div>
+            </div>
+        </div>
+        <div class="pai-icones-inferiores">
+            <hr class="separador-forte">
+            <div class="icone-box-inferior">
+                <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                <div class="texto-icone oculto">Sair da conta</div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim do Menu -->
+    <div class="container-principal">
+
+        <nav class="espaco-menu" aria-label="Espaço para menu lateral">
+
+        </nav>
+
+
+        <main class="area-conteudo" role="main" aria-labelledby="tituloLogs">
+            <h1 class="titulo-pagina" id="tituloLogs">Logs de Acesso</h1>
+            <p class="descricao-pagina">
+                Monitora acessos, falhas e atividades do sistema.
+            </p>
+
+
+            <section class="area-kpis-superiores" aria-label="Indicadores principais">
+                <div class="kpi" tabindex="0" aria-describedby="descricaoTotalEventos">
+                    <span class="descricao-kpi" id="descricaoTotalEventos">Total de Eventos</span>
+                    <span class="icone-info">i</span>
+                    <span class="valor-kpi">23</span>
+                </div>
+
+                <div class="kpi" tabindex="0" aria-describedby="descricaoUsuariosAtivos">
+                    <span class="descricao-kpi" id="descricaoUsuariosAtivos">Usuários Ativos</span>
+                    <span class="icone-info">i</span>
+                    <span class="valor-kpi">15</span>
+                </div>
+
+                <div class="kpi" tabindex="0" aria-describedby="descricaoMaquinasAlteradas">
+                    <span class="descricao-kpi" id="descricaoMaquinasAlteradas">Máquinas Alteradas</span>
+                    <span class="icone-info">i</span>
+                    <span class="valor-kpi">6</span>
+                </div>
+
+                <div class="kpi" tabindex="0" aria-describedby="descricaoFalhasEmAcoes">
+                    <span class="descricao-kpi" id="descricaoFalhasEmAcoes">Falhas Em Ações</span>
+                    <span class="icone-info">i</span>
+                    <span class="valor-kpi">4</span>
+                </div>
+            </section>
+
+
+            <section class="area-filtros" aria-label="Filtros para os dados">
+                <span class="texto-filtrar-por">Filtrar por:</span>
+
+                <label for="filtro-dia" class="label-filtro">Dia</label>
+                <select id="filtro-dia" name="dia">
+                    <option value=""></option>
+
+                </select>
+
+              
+            </section>
+
+
+            <section class="area-graficos" aria-label="Gráficos do sistema">
+                <article class="cartao-grafico" aria-labelledby="tituloCargaTrabalho">
+                    <header class="titulo-grafico">
+                        <span id="tituloCargaTrabalho">Carga de Trabalho do Sistema</span>
+                        <span class="icone-info">i</span>
+                    </header>
+
+                    <canvas id="graficoCargaTrabalho" aria-label="Gráfico linha da carga de trabalho"
+                        role="img"></canvas>
+                </article>
+
+                <article class="cartao-grafico" aria-labelledby="tituloTiposAcao">
+                      <span class="icone-info">i</span>
+                    <header>
+                        <span class="titulo-grafico" id="tituloTiposAcao">Tipos De Ação</span>
+    
+                    </header>
+                    <p class="subtitulo-grafico">(Leitura, Escrita/Alteração, Segurança)</p>
+                   
+                    <canvas id="graficoTiposAcao" aria-label="Histograma de tipos de ação" role="img"></canvas>
+                </article>
+
+                <article class="cartao-grafico" aria-labelledby="tituloUsuariosAtivosSite">
+                    <header class="titulo-grafico">
+                        <span id="tituloUsuariosAtivosSite">Usuários Mais Ativos No Site</span>
+                        <span class="icone-info">i</span>
+                    </header>
+                    <canvas id="graficoUsuariosAtivos" aria-label="Gráfico barras usuários ativos" role="img"></canvas>
+                </article>
+            </section>
+
+
+            <section class="linha-insights">
+
+                <div class="cartao-insight" aria-label="Insight principal">
+                    <p class="texto-insight">
+                        Usuário José Rodrigues (IP 192.168.1.15) fez Login SUCESSO no módulo Financeiro às 10:05:12;
+                    </p>
+                </div>
+
+                <div class="cartao-downloads" aria-label="Downloads de dados">
+                    <p tabindex="0">Baixar PDF de dados.</p>
+                    <p tabindex="0">Baixar Excel de dados.</p>
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+
+    <script src="../js/menu-lateral.js"></script>
+    <script>
+
+
+        const historicosKpi = {
+            "Total de Eventos": [
+                { data: "01/06", eventos: 5 },
+                { data: "02/06", eventos: 9 },
+                { data: "03/06", eventos: 23 },
+                { data: "04/06", eventos: 17 },
+                { data: "05/06", eventos: 20 }
+            ],
+            "Usuários Ativos": [
+                { data: "01/06", valor: 7 },
+                { data: "02/06", valor: 12 },
+                { data: "03/06", valor: 15 },
+                { data: "04/06", valor: 10 },
+                { data: "05/06", valor: 8 }
+            ],
+            "Máquinas Alteradas": [
+                { data: "01/06", valor: 2 },
+                { data: "02/06", valor: 5 },
+                { data: "03/06", valor: 6 },
+                { data: "04/06", valor: 3 },
+                { data: "05/06", valor: 4 }
+            ],
+            "Falhas Em Ações": [
+                { data: "01/06", valor: 0 },
+                { data: "02/06", valor: 2 },
+                { data: "03/06", valor: 4 },
+                { data: "04/06", valor: 1 },
+                { data: "05/06", valor: 3 }
+            ]
+        };
+
+        
+        const dialogHistorico = document.createElement('dialog');
+        dialogHistorico.innerHTML = `
+  <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+    <span id="tituloHistorico" style="font-weight:700; font-size:17px;"></span>
+    <button id="btnFecharPopup" style="
+      background:#b70000; border:none; color:white;
+      font-weight:700; padding:5px 12px; cursor:pointer; font-size:14px; border-radius:5px;">Fechar</button>
+  </header>
+  <table style="border-collapse:collapse; width:100%;">
+    <thead>
+      <tr>
+        <th style="border:1px solid #999; padding:6px;">Data</th>
+        <th style="border:1px solid #999; padding:6px;">Valor</th>
+      </tr>
+    </thead>
+    <tbody id="tabelaBody"></tbody>
+  </table>
+`;
+        document.body.appendChild(dialogHistorico);
+
+        const btnFecharPopup = dialogHistorico.querySelector('#btnFecharPopup');
+        const tabelaBody = dialogHistorico.querySelector('#tabelaBody');
+        const tituloHistorico = dialogHistorico.querySelector('#tituloHistorico');
+
+        btnFecharPopup.addEventListener('click', () => dialogHistorico.close());
+
+        
+
+        
+
+        const ctxCarga = document.getElementById('graficoCargaTrabalho').getContext('2d');
+        new Chart(ctxCarga, {
+            type: 'line',
+            data: {
+                labels: ['22:00', '23:00', '00:00', '01:00', '02:00', '03:00'],
+                datasets: [{
+                    label: 'Carga de Trabalho',
+                    data: [4, 8, 12, 16, 18, 20],
+                    borderColor: '#b70000',
+                    backgroundColor: 'rgba(183,0,0,0.2)',
+                    fill: true,
+                    tension: 0.4,
+                    pointRadius: 5,
+                    pointBackgroundColor: '#b70000',
+                    pointHoverRadius: 7
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 25, ticks: { stepSize: 5 } } }
+            }
+        });
+
+        const ctxTiposAcao = document.getElementById('graficoTiposAcao').getContext('2d');
+        new Chart(ctxTiposAcao, {
+            type: 'bar',
+            data: {
+                labels: ['2', '4', '6', '8', '10', '12', '14'],
+                datasets: [{
+                    label: 'Número de Ações',
+                    data: [2, 5, 6, 6, 4, 3, 2],
+                    backgroundColor: 'skyblue'
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 7, ticks: { stepSize: 1 } } }
+            }
+        });
+
+        const ctxUsuarios = document.getElementById('graficoUsuariosAtivos').getContext('2d');
+        new Chart(ctxUsuarios, {
+            type: 'bar',
+            data: {
+                labels: ['Marcos', 'Giovanna', 'Henrique', 'Lucas', 'Alfredo', 'Cecília'],
+                datasets: [{
+                    label: 'Usuários Ativos',
+                    data: [3, 7, 12, 15, 16, 18],
+                    backgroundColor: [
+                        '#7ed6df', '#1e90ff', '#00008b', '#008000', '#0000cd', '#32cd32'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { display: false } },
+                scales: { y: { beginAtZero: true, max: 20, ticks: { stepSize: 5 } } }
+            }
+        });
+
+        function popularSelect(id, valores) {
+            const select = document.getElementById(id);
+            valores.forEach(val => {
+                const option = document.createElement('option');
+                option.value = val;
+                option.textContent = val;
+                select.appendChild(option);
+            });
+        }
+        popularSelect('filtro-dia', ['01', '02', '03', '04', '05']);
+        popularSelect('filtro-mes', ['01', '02', '03', '04', '05', '06']);
+        popularSelect('filtro-ano', ['2022', '2023', '2024']);
+    </script>
