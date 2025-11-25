@@ -63,6 +63,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("telaPerfil.html")){
             atualizarDados()
         }
+        if (window.location.href.includes("analiseRAM.html")) {
+            telaAnaliseRam()
+        }
     })
     .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
@@ -117,4 +120,14 @@ fetch("/usuarios/inseriracao", {
         console.log(`#ERRO: ${resposta}`);
         alert("Erro no catch");
     });
+}
+function telaAnaliseRam() {
+    puxarNomeDaMaquina()
+    puxandoMetricasAlertaDeRam(fkUnidade)
+    atualizarKpisRAM()
+    puxandoDadosGraficoRamSwap()
+    var loop = setInterval(() => {
+        atualizarKpisRAM()
+        atualizarGraficoRam()
+    },10000)
 }
