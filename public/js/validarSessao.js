@@ -126,8 +126,10 @@ function telaAnaliseRam() {
     puxandoMetricasAlertaDeRam(fkUnidade)
     atualizarKpisRAM()
     puxandoDadosGraficoRamSwap()
+    puxarRankingRAM()
     var loop = setInterval(() => {
         atualizarKpisRAM()
         atualizarGraficoRam()
-    },10000)
+        puxarRankingRAM()
+    },5000)
 }

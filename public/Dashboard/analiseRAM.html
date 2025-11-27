@@ -190,7 +190,7 @@
                             </span>
                         </div>
 
-                        <div class="raking-bottom">
+                        <div class="raking-bottom" id="ranking_div">
                             <div class="option-ranking"><strong>1º -</strong> Google Chrome</div>
                             <div class="option-ranking"><strong>2º -</strong> Google Chrome</div>
                             <div class="option-ranking"><strong>3º -</strong> Google Chrome</div>
@@ -329,6 +329,30 @@
                 console.log(`Erro no catch: ${resposta}`);
             });
     }
+    function puxarRankingRAM() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarranking/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var ranking = JSON.parse(resposta[0].medidaCapturada)
+                var div_rank = document.getElementById("ranking_div")
+                console.log(ranking)
+                div_rank.innerHTML = `
+                <div class="option-ranking"><strong>1º -</strong> ${ranking[0].nome} <strong>${ranking[0].memoria_mb}MB</strong></div>
+                            <div class="option-ranking"><strong>2º -</strong> ${ranking[1].nome} <strong>${ranking[1].memoria_mb}MB</strong></div>
+                            <div class="option-ranking"><strong>3º -</strong> ${ranking[2].nome} <strong>${ranking[2].memoria_mb}MB</strong></div>
+                            <div class="option-ranking"><strong>4º -</strong> ${ranking[3].nome} <strong>${ranking[3].memoria_mb}MB</strong></div>
+                            <div class="option-ranking"><strong>5º -</strong> ${ranking[4].nome} <strong>${ranking[4].memoria_mb}MB</strong></div>
+                `
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
     // Atualizando o gráfico
     function puxandoDadosGraficoRamSwap() {
         var idDac = sessionStorage.ID_DAC
@@ -339,7 +363,6 @@
                 return resposta.json();
             })
             .then(resposta => {
-                console.log(resposta)
                 for (let i = resposta.length - 1; i >= 0; i--) {
                     if (resposta[i].fkMedicoesDisponiveis == 8) {
                         vetor_swap.push(resposta[i].medidaCapturada)
@@ -426,7 +449,6 @@
                 return resposta.json();
             })
             .then(resposta => {
-                console.log(vetor_data)
                 var ax_monitoramento = true
                 if (vetor_data.length == 10) {
                     vetor_data.shift()

@@ -27,4 +27,8 @@ router.get(`/atualizardadosgraficoRAM/:idDac`, function (req, res) {
     analiseramController.atualizardadosgraficoRAM(req, res);
 });
 
+router.get(`/buscarranking/:idDac`, function (req, res) {
+    analiseramController.buscarranking(req, res);
+});
+
 module.exports = router;

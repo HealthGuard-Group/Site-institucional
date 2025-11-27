@@ -30,6 +30,12 @@ function atualizardadosgraficoRAM(idDac) {
 
     return database.executar(instrucaoSql);
 }
+function buscarranking(idDac) {
+    var instrucaoSql = `SELECT medidaCapturada FROM Leitura WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = 17 ORDER BY idLeitura DESC LIMIT 1`;
+
+    return database.executar(instrucaoSql);
+}
+
 
 module.exports = {
     buscarnomemaquina,
@@ -37,5 +43,6 @@ module.exports = {
     buscarmetricasrammaquina,
     buscarmetricasrammaquinaunidade,
     puxardadosgraficoRAM,
-    atualizardadosgraficoRAM
+    atualizardadosgraficoRAM,
+    buscarranking
 };
