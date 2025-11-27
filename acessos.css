@@ -1,0 +1,141 @@
+#alertas_redirecionamento {
+    background-color: #9a1522;
+}
+
+.container-geral {
+    margin-left: 6%;
+    width: 100%;
+    height: 50vh;
+    background-color: #f8f8f8;
+    position: fixed;
+    z-index: 998;
+    padding-left: 2vw;
+    padding-top: 2vh;
+}
+
+.titulo {
+    font-size: 2vw;
+    font-weight: bold;
+    height: 8vh;
+    display: flex;
+    align-items: center;
+}
+
+.texto-topico {
+    font-size: 1.5vw;
+    font-weight: bold;
+    height: 6vh;
+}
+
+.filtros {
+    display: flex;
+    width: 90%;
+    height: 7vh;
+    justify-content: start;
+    align-items: center;
+    margin-bottom: 1%;
+    gap: 1vw;
+}
+
+.filtro {
+    border-radius: 1vh;
+    width: 20vw;
+    height: 4vh;
+    font-size: 1vw;
+    font-weight: 400;
+    border: none;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+                rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+
+.campo-usuario {
+    border-radius: 1vh;
+    width: 20vw;
+    height: 4vh;
+    font-size: 1vw;
+    border: none;
+    padding-left: .7vw;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
+                rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+
+.tabela {
+    background-color: white;
+    height: 66vh;
+    width: 90%;
+    overflow: auto;
+    color: rgb(69, 69, 69);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+                rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.cabecalho {
+    height: 6vh;
+    width: 100%;
+    background-color: #1E2A38;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+
+.cabecalho .coluna {
+    width: 35%;
+    font-size: 1.2vw;
+    text-align: center;
+}
+
+
+.linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 10vh;
+    border-bottom: 2px solid #edecec;
+    font-weight: 400;
+    text-align: center;
+}
+
+
+.coluna {
+    width: 35%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1vw;
+}
+
+
+.bolinha {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+
+.bolinha.verde {
+    background-color: #139B36;
+}
+
+
+.bolinha.vermelha {
+    background-color: #b30000;
+}
+
+
+.sucesso, .falha {
+    font-weight: 750;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .3vw;
+}
