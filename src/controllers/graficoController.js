@@ -145,6 +145,28 @@ function buscarRede(req, res) {
             );
     }
 }
+function excluirMaquina(req, res) {
+    var idDac= req.params.idDac
+
+    if (idDac == undefined) {
+        res.status(400).send("IdDac está undefined!");
+    } else {  graficoModel.excluirMaquina(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao remover maquina! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
 
 module.exports = {
     exibirInfoDac,
@@ -152,5 +174,6 @@ module.exports = {
     totalAlerta,
     buscarCpu,
     buscarRam,
-    buscarRede
+    buscarRede,
+    excluirMaquina
 }

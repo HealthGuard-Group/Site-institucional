@@ -50,11 +50,19 @@ function buscarRede(idDac){
    return database.executar(instrucaoSql);
 }
 
+function excluirMaquina(idDac) {
+    var instrucaoSql = `
+      update Dac set statusDac = 'Excluido' where idDac = ${idDac};
+  `
+   return database.executar(instrucaoSql);
+}
+
 module.exports = {
     exibirInfoDac,
     buscarKpiDac,
     totalAlerta,
     buscarCpu,
     buscarRam,
-    buscarRede
+    buscarRede,
+    excluirMaquina
 };

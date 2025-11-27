@@ -85,7 +85,7 @@
           </div>
         </div>
 
-        <div class="botao-excluir-maquina">
+        <div onclick="excluir_maquina()" class="botao-excluir-maquina">
           <img src="../assets/imgs/icone-lixeira2.png">
         </div>
       </div>
@@ -607,6 +607,36 @@
       if (monitorInterval) clearInterval(monitorInterval);
     });
 
+    function excluir_maquina() {
+      console.log('entrou na função')
+ fetch(`/grafico/excluirMaquina/${idDac}`, {
+            method: "PUT",
+            headers: {  
+                "Content-Type": "application/json"
+            },
+        })
+            .then(res => {
+                if (!res.ok) {
+                    throw new Error("Erro ao remover");
+                }
+                return res.json();
+            })
+            .then(data => {
+
+              alert('Maquina removida com sucesso! ')
+                setTimeout(() => {
+                    window.location.href = 'monitoramento.html';
+                }, 3000);
+
+
+            })
+            .catch(err => {
+
+            })
+
+
+
+    }
   </script>
 </body>
 

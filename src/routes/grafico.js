@@ -26,5 +26,9 @@ router.get("/buscarRam/:idDac", function (req, res) {
 router.get("/buscarRede/:idDac", function (req, res) {
   graficoController.buscarRede(req, res);
 })
+router.put("/excluirMaquina/:idDac", function (req, res) {
+      console.log('entrou na rota')
+  graficoController.excluirMaquina(req, res);
+})
 
 module.exports = router;
