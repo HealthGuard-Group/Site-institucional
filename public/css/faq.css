@@ -1,36 +1,32 @@
-*{
-    overflow-y: hidden;
-
+body {
+  margin: 0;
+  background: #f8f8f8;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
 }
+
 .container-geral {
-    margin-left: 6%;
-    padding: 4vh 4vw;
-    height: 200vh;
-    width: 200vh;
-    background-color: #f5f5f5;
+    margin-left: 3%;
+    display: flex;
+    justify-content: center;
+    padding: 70px;
+    width: 100vw;
+    height: 100vh;
 }
-
-.conteudo-faq {
-    background: white;
-    padding: 5vh 4vw;
-    border-radius: 8px;
-    width: 90%;
-    margin: auto;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+.conteudo-faq{
+    width: 80%;
 }
 
 
 .titulo-faq {
-    text-align: center;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 1vh;
 }
 
 .descricao-faq {
-    text-align: center;
     font-size: 1.1rem;
-    width: 70%;
+    width: 100%;
     margin: auto;
     margin-bottom: 4vh;
     
@@ -42,13 +38,24 @@
     display: flex;
     flex-direction: column;
     gap: 1.4vh;
+
+}
+
+.faq-item{
+    border-bottom: 3px solid #32445a;
+    margin-bottom: 10px;
 }
 
 
-.faq-pergunta {
+
+button{
+   border: none;
+}
+
+
+.faq-pergunta { 
+  background: #f8f8f8;
     width: 100%;
-    background: white;
-    border: 2px solid #000;
     padding: 1.2vh 1.5vw;
     border-radius: 6px;
     font-size: 1.1rem;
@@ -57,7 +64,8 @@
     justify-content: space-between;
     align-items: center;
     cursor: pointer;
-}
+
+} 
 
 .faq-pergunta .seta {
     font-size: 1.2rem;
@@ -73,6 +81,7 @@
     margin-top: -0.8vh;
     background-color: #fafafa;
     border-radius: 0 0 6px 6px;
+
 }
 
 .faq-pergunta.ativo .seta {
@@ -81,15 +90,36 @@
 
 
 .suporte-area {
-    display: flex;
     justify-content: center;
-    align-items: center;
+    text-align: center;
     margin-top: 5vh;
-    font-size: 1.4rem;
-    font-weight: bold;
     gap: 1vw;
 }
 
+.suporte-area h3{
+    font-size: 1.5em;
+}
+
+.suporte-area p{
+    margin-top: 10px;
+}
+
+
+
 .logo-jira {
+    margin-top: 10px;
     height: 28px;
+}
+
+.suporte-area button{
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #1E2A38;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 1vh;
+    border: none;
+    color: #fff;
+    font-size: 0.8vw;
+    font-weight: 600;
+    margin-top: 20px;
 }
