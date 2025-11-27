@@ -168,10 +168,10 @@
                                         Memória Swap
                                     </div>
                                     <div class="subtitle-legenda">
-                                        Alerta: 90%
+                                        Alerta: 30%
                                     </div>
                                     <div class="subtitle-legenda">
-                                        Atenção: 70%
+                                        Atenção: 10%
                                     </div>
                                 </div>
                             </div>
@@ -329,6 +329,7 @@
                 console.log(`Erro no catch: ${resposta}`);
             });
     }
+    // Puxando o Ranking
     function puxarRankingRAM() {
         var idDac = sessionStorage.ID_DAC
         fetch(`/analiseram/buscarranking/${idDac}`, {
@@ -340,7 +341,6 @@
             .then(resposta => {
                 var ranking = JSON.parse(resposta[0].medidaCapturada)
                 var div_rank = document.getElementById("ranking_div")
-                console.log(ranking)
                 div_rank.innerHTML = `
                 <div class="option-ranking"><strong>1º -</strong> ${ranking[0].nome} <strong>${ranking[0].memoria_mb}MB</strong></div>
                             <div class="option-ranking"><strong>2º -</strong> ${ranking[1].nome} <strong>${ranking[1].memoria_mb}MB</strong></div>
@@ -348,6 +348,36 @@
                             <div class="option-ranking"><strong>4º -</strong> ${ranking[3].nome} <strong>${ranking[3].memoria_mb}MB</strong></div>
                             <div class="option-ranking"><strong>5º -</strong> ${ranking[4].nome} <strong>${ranking[4].memoria_mb}MB</strong></div>
                 `
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Puxando KPi de estresse
+    function puxandoKpiStress() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarestresse/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var total_estresse_segundo = 0
+                for (let i = 0; i < resposta.length; i++) {
+                    var inicio = new Date(resposta[i].dataInicio)
+                    if (resposta[i].dataTermino == null) {
+                        var fim = new Date()
+                    } else {
+                        var fim = new Date(resposta[i].dataTermino)
+                    }
+                    total_estresse_segundo += Math.round((fim - inicio) / 1000, 0)
+                }
+                var horas = Math.floor(total_estresse_segundo / 3600)
+                var minutos = Math.floor((total_estresse_segundo % 3600) / 60)
+                var segundos = total_estresse_segundo % 60
+                var div_estresse = document.getElementById("texto_kpi_estresse")
+                div_estresse.innerHTML = `${horas}h${minutos}m${segundos}s`
             })
             .catch(function (resposta) {
                 console.log(`Erro no catch: ${resposta}`);

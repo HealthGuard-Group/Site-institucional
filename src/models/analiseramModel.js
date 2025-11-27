@@ -35,6 +35,12 @@ function buscarranking(idDac) {
 
     return database.executar(instrucaoSql);
 }
+function buscarestresse(idDac) {
+    var instrucaoSql = `SELECT dataInicio,dataTermino FROM Alerta WHERE fkDac = ${idDac} AND dataInicio > NOW() - INTERVAL 1 DAY AND fkMedicoesDisponiveis = 8`;
+
+    return database.executar(instrucaoSql);
+}
+
 
 
 module.exports = {
@@ -44,5 +50,6 @@ module.exports = {
     buscarmetricasrammaquinaunidade,
     puxardadosgraficoRAM,
     atualizardadosgraficoRAM,
-    buscarranking
+    buscarranking,
+    buscarestresse
 };

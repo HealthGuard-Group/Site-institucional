@@ -127,8 +127,10 @@ function telaAnaliseRam() {
     atualizarKpisRAM()
     puxandoDadosGraficoRamSwap()
     puxarRankingRAM()
+    puxandoKpiStress()
     var loop = setInterval(() => {
         atualizarKpisRAM()
+        puxandoKpiStress()
         atualizarGraficoRam()
         puxarRankingRAM()
     },5000)

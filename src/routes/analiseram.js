@@ -31,4 +31,8 @@ router.get(`/buscarranking/:idDac`, function (req, res) {
     analiseramController.buscarranking(req, res);
 });
 
+router.get(`/buscarestresse/:idDac`, function (req, res) {
+    analiseramController.buscarestresse(req, res);
+});
+
 module.exports = router;

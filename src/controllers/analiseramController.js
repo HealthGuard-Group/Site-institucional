@@ -168,6 +168,30 @@ function buscarranking(req, res) {
     }
 }
 
+function buscarestresse(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        analiseramModel.buscarestresse(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar a atualização dados de RAM e SWAP! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     buscarnomemaquina,
     buscarmemoria,
@@ -175,5 +199,6 @@ module.exports = {
     buscarmetricasrammaquinaunidade,
     puxardadosgraficoRAM,
     atualizardadosgraficoRAM,
-    buscarranking
+    buscarranking,
+    buscarestresse
 }
