@@ -352,14 +352,25 @@
         .then(resposta => {
           console.log(resposta);
 
-          if (resposta[0].dataCaptura) {
+          if(resposta == ""){
+            rede.innerHTML = `Máquina Inativa`
+            ram.innerHTML = `Máquina Sem Dados`
+            cpu.innerHTML = `Máquina Sem Dados`
+              redeok.classList.remove("status-dot", "ok")
+              redeok.classList.add("status-dot", "alerta-grave")
+              status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
+          }
+
+          if (resposta[0].dataCaptura ) {
             const dataServidor = new Date(resposta[0].dataCaptura);
             const agora = new Date();
             const diferenca1 = agora - dataServidor;
             const diferenca2 = diferenca1 / 1000 / 60;
 
-            if (diferenca2 > 1) {
-              rede.innerHTML = `NÃO CONECTADO`;
+            if (diferenca2 > 1 ) {
+              rede.innerHTML = `NÃO CONECTADO`
+              ram.innerHTML = `Máquina Inativa`
+              cpu.innerHTML = `Máquina inativa`
               redeok.classList.remove("status-dot", "ok")
               redeok.classList.add("status-dot", "alerta-grave")
               status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
@@ -369,6 +380,7 @@
               redeok.classList.add("status-dot", "ok")
               status_MaquinaDac.innerHTML = `<p style="color:green">Status: Ativa</p>`
             }
+          
           }
         })
         .catch(erro => console.error("Erro:", erro));
