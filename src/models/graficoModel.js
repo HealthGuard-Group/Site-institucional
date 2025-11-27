@@ -34,10 +34,10 @@ function buscarCpu(idDac){
 
 function buscarRam(idDac){
   var instrucaoSql = `
-      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 2
+      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 6
       order by dataCaptura desc
       limit 1;
-  `
+  ` 
    return database.executar(instrucaoSql);
 }
 
