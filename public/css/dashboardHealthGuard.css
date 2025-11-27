@@ -1,12 +1,10 @@
 body {
   margin: 0;
   background: #f8f8f8;
-  overflow-x: hidden;
   font-family: Arial, sans-serif;
 }
 
-.main-content {
-  
+.menu {
   margin-left: -7%;
   width: 100%
 }
@@ -48,15 +46,23 @@ h2 {
   color: #b30000;
 }
 
+.conjunto {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px; 
+    margin-top: 2%;
+}
+
+
 .chart-container {
     margin-left: 16%;
-    padding: 10px;
-    height: 440px;
-    width: 60%;
+    padding: 3%;
+    height: 69vh !important;
+    width: 65%;
     background: #fff;
     border-radius: 10px;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    margin-top: 2%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
@@ -65,10 +71,76 @@ h2 {
 
 .tituloGrafico {
     margin-top: 2%;
-    margin-bottom: 20px;
+    margin-bottom: 5%;
 }
 
 canvas#graficoAcessos {
-    width: 50% ;
-    height: 70% !important; 
+    width: 80% ;
+    height: 7% ;
 }
+
+.rankin-container {
+    width: 40%;
+    height: 69vh; 
+    background: #fff;
+    padding: 1.5%;
+    border-radius: 10px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    
+}
+
+.rankin-container h3 {
+    text-align: center;
+    margin-bottom: 2%;
+    font-size: 1.2vw; 
+}
+
+.rankin-container h4 {
+    margin: 5% 0 1.5% 0;
+    font-size: 1vw;
+    border-left: 0.4vw solid #b30000;
+    padding-left: 1%;
+}
+
+.rankin-container .h42 {
+    margin: 10% 0 1.5% 0;
+    font-size: 1vw;
+    border-left: 0.4vw solid #b30000;
+    padding-left: 1%;
+}
+
+.rankin-container .cabecalho {
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 10% 1fr 20% 18%;
+    font-weight: bold;
+    margin-bottom: 2%;
+    font-size: 1vw;
+}
+
+.rankin-container .cabecalho2 {
+    margin-top: 5%;
+    display: grid;
+    grid-template-columns: 10% 1fr 25% 18%;
+    font-weight: bold;
+    margin-bottom: 2%;
+    font-size: 1vw;
+}
+
+.rankin-container .linha {
+    margin-top: 1.5%;
+    display: grid;
+    grid-template-columns: 10% 1fr 15% 18%;
+    padding: 1.5% 0;
+    border-bottom: 1px solid #eee;
+    font-size: 0.85vw;
+}
+
+.rankin-container p {
+    margin: 0;
+    padding: 0;
+}
+
+

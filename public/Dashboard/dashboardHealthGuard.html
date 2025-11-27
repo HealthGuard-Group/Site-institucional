@@ -59,7 +59,7 @@
         </div>
 
 
-<div class="main-content">
+<div class="menu">
 <h2>Visão do Negócio</h2>
 
 
@@ -73,7 +73,7 @@
         <p id="kpi2"></p>
     </div>
     <div class="kpi-box">
-        <h3>Total de máquinas sendo monitoradas</h3>
+        <h3>Porcentagem de usuários que entram</h3>
         <p id="kpi3"></p>
     </div>
     <div class="kpi-box">
@@ -82,10 +82,60 @@
     </div>
 
 </div>
-<div class="chart-container">
-    <h3 class="tituloGrafico">Quantidade de acessos à aplicação nos  ultimos 7 dias</h3>
-    <canvas class="grafico" id="graficoAcessos"></canvas>
+<div class="conjunto">
+    <div class="chart-container">
+        <h3 class="tituloGrafico">Quantidade de acessos à aplicação nos últimos 7 dias</h3>
+        <canvas class="grafico" id="graficoAcessos"></canvas>
+    </div>
+
+    <div class="rankin-container">
+
+    <h4>Unidades com mais alertas hoje</h4>
+
+    <div class="cabecalho">
+        <span></span>
+        <span>Nome</span>
+        <span>Alertas</span>
+        <span>Máquinas</span>
+    </div>
+
+    <div class="linha">
+        <span>1°</span><span>Unidade Vila Sonia</span><span>176</span><span>98</span>
+    </div>
+
+    <div class="linha">
+        <span>2°</span><span>Unidade Vila Sonia</span><span>121</span><span>12</span>
+    </div>
+
+    <div class="linha">
+        <span>3°</span><span>Unidade Vila Sonia</span><span>69</span><span>110</span>
+    </div>
+
+    <h4 class="h42">Unidades com mais chamados nesse mês</h4>
+
+    <div class="cabecalho2">
+        <span></span>
+        <span>Nome</span>
+        <span>Chamados</span>
+        <span>Usuários</span>
+    </div>
+
+    <div class="linha">
+        <span>1°</span><span>Unidade Vila Sonia</span><span>12</span><span>90</span>
+    </div>
+
+    <div class="linha">
+        <span>2°</span><span>Unidade Vila Sonia</span><span>32</span><span>88</span>
+    </div>
+
+    <div class="linha">
+        <span>3°</span><span>Unidade Vila Sonia</span><span>61</span><span>71</span>
+    </div>
+
 </div>
+
+</div>
+
 </div>
 
 
@@ -168,6 +218,7 @@
                         borderColor: '#1a1a1a',
                         fill: false,
                         tension: 0.2
+                        
                     }]
                 },
                 options: {
