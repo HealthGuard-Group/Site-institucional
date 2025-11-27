@@ -79,7 +79,7 @@
 
                     <!-- TABELA DE CÓDIGOS GERADOS -->
                     <div id="container-tabela">
-                        <table id="tabela-codigos">
+                        <table id="tabela_codigos">
                             <tr id="titulo-tabela">
                                 <td id="tr-cod-codigo">Código de Configuração</td>
                                 <td id="tr-data-criacao-codigo">Data de criação</td>
@@ -416,7 +416,7 @@
                     </select>
                 </div>
                 <div class="filtro-direita-acoes">
-                    <button class="botao-codigo-cinza" id="botao_codigos_gerados">
+                    <button class="botao-codigo-cinza" id="botao_codigos_gerados" onclick="puxarCodigos()">
                         Ver códigos de configuração gerados
                     </button>
                     <div class="div-botao-adicionar" id="botao_adicionar_maquina">
@@ -1226,7 +1226,7 @@
     }
 
     function filtrarTabela() {
-        const linhas = document.querySelectorAll("#tabela-codigos .dados-tabela")
+        const linhas = document.querySelectorAll("#tabela_codigos .dados-tabela")
 
         for (const linha of linhas) {
             const status = linha.querySelector(".td-status-codigo span")?.textContent.trim().toLowerCase() || ""
@@ -1281,7 +1281,7 @@
 
         limparExibicaoFiltros()
 
-        const linhas = document.querySelectorAll("#tabela-codigos .dados-tabela")
+        const linhas = document.querySelectorAll("##tabela_codigos .dados-tabela")
         for (const l of linhas) {
             l.style.display = ""
         }
@@ -1350,6 +1350,72 @@
         }
     }
 
+    function puxarCodigos() {
+        var variaveis = puxarVariaveis()
+        variaveis = variaveis.idUnidadeAtendimento
+        tabela_codigos.innerHTML = `
+                <tr id="titulo-tabela">
+                    <td id="tr-cod-codigo">Código de Configuração</td>
+                    <td id="tr-data-criacao-codigo">Data de criação</td>
+                    <td id="tr-data-expiracao-codigo">Data de expiração</td>
+                    <td id="tr-status-codigo">Status</td>
+                </tr>`
+        fetch(`/dashboard/buscarcodigos/${variaveis}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var codigos_filtrados = resposta
+                // var dados_filtrados = filtrarFuncionarios(resposta)
+                atualizarTabela(codigos_filtrados)
+                // funcionarios = dados_filtrados;
 
+                // atualizarTabela(resposta)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+    function atualizarTabela(dados) {
+        let variaveis = puxarVariaveis()
+
+        for (let i = 0; i < dados.length; i++) {
+
+            let data_criacao = new Date(dados[i].dataCriacao)
+            data_criacao = data_criacao.toLocaleDateString('pt-BR')
+            let data_expiracao = new Date(dados[i].dataExpiracao)
+            data_expiracao = data_expiracao.toLocaleDateString('pt-BR')
+
+            if (dados[i].status == 'Pendente') {
+                tabela_codigos.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-cod-codigo">${dados[i].codigo}</td>
+                        <td class="td-data-criacao-codigo">${data_criacao}</td>
+                        <td class="td-data-expiracao-codigo">${data_expiracao}</td>
+                        <td class="td-status-codigo"><span style="color: rgb(233, 136, 0);">${dados[i].status}</span></td>
+                    </tr>`
+            } else if (dados[i].status == 'Expirado') {
+                tabela_codigos.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-cod-codigo">${dados[i].codigo}</td>
+                        <td class="td-data-criacao-codigo">${data_criacao}</td>
+                        <td class="td-data-expiracao-codigo">${data_expiracao}</td>
+                        <td class="td-status-codigo"><span style="color:rgb(214, 36, 36);">${dados[i].status}</span></td>
+                    </tr>`
+            } else {
+                tabela_codigos.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-cod-codigo">${dados[i].codigo}</td>
+                        <td class="td-data-criacao-codigo">${data_criacao}</td>
+                        <td class="td-data-expiracao-codigo">${data_expiracao}</td>
+                        <td class="td-status-codigo"><span style="color: rgb(0, 170, 40);">${dados[i].status}</span></td>
+                    </tr>`
+            }
+        }
+    }
 
 </script>

@@ -120,6 +120,32 @@ function buscarMetricasPadrao(req, res) {
       );
   }
 }
+
+function buscarcodigos(req, res) {
+    var fkUnidade = req.params.variaveis;
+    if (fkUnidade == undefined) {
+        res.status(400).send("Seu idUsuario está undefined!");
+    } else {
+
+        dashboardModel.buscarcodigos(fkUnidade)
+            .then(
+                function (resultado) {
+                    console.log(resultado);
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 function inserirmaquina(req, res) {
   var maquina_nova = req.body.maquina_nova;
   var idUnidadeAtendimento = req.body.idUnidadeAtendimento;
@@ -211,6 +237,7 @@ module.exports = {
   buscarMaquina,
   buscarKpisMonitoramento,
   buscarMetricasPadrao,
+  buscarcodigos,
   inserirmaquina,
   inserirmaquinaservicos,
   inserirmaquinametricaspersonalizadas

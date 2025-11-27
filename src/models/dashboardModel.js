@@ -26,6 +26,21 @@ function buscarMetricasPadrao(fkUnidade) {
   var instrucaoSql = `SELECT fkMedicoesDisponiveis,nomeNivel,valorMinimo,valorMaximo FROM MetricaAlerta WHERE fkUnidadeDeAtendimento = ${fkUnidade} AND fkDac IS NULL;`;
   return database.executar(instrucaoSql);
 }
+
+function buscarcodigos(fkUnidade) {
+  var instrucaoSql = `SELECT 
+                          idCodigoConfiguracao AS idCodigo,
+                          fkUnidadeDeAtendimento,
+                          codigo,
+                          dataCriacao,
+                          dataExpiracao,
+                          statusCodigoConfiguracaoMaquina AS status
+                      FROM
+                          CodigoConfiguracaoMaquina`;
+
+  return database.executar(instrucaoSql);
+}
+
 async function inserirmaquina(maquina_nova, idUnidadeAtendimento) {
   console.log(maquina_nova)
   var insert = `INSERT INTO Dac(fkUnidadeDeAtendimento,nomeIdentificacao,codigoValidacao) VALUES (${idUnidadeAtendimento},'${maquina_nova.nome}','${maquina_nova.codigo}');`;
@@ -51,7 +66,7 @@ function inserirmaquinaservicos(maquina_nova, idUnidadeAtendimento, idDac) {
     instrucaoSql += `(${idUnidadeAtendimento},${idDac},10),`
   } if (maquina_nova.servicos[3] == true) {
     instrucaoSql += `(${idUnidadeAtendimento},${idDac},11),(${idUnidadeAtendimento},${idDac},14),(${idUnidadeAtendimento},${idDac},15),(${idUnidadeAtendimento},${idDac},16),`
-  } 
+  }
   instrucaoSql = instrucaoSql.slice(0, -1) + ";";
   console.log(instrucaoSql[instrucaoSql.length - 1])
   console.log("Insert de máquina:", instrucaoSql)
@@ -66,7 +81,7 @@ function inserirmaquinametricaspersonalizadas(maquina_nova, idUnidadeAtendimento
     instrucaoSql += `(6,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Atenção",${maquina_nova.alertaAtencao[1][0]},${maquina_nova.alertaAtencao[1][1]}),(6,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Alerta",${maquina_nova.alerta[1][0]},${maquina_nova.alerta[1][1]}),`
   } if (maquina_nova.servicos[2] == true) {
     instrucaoSql += `(10,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Atenção",${maquina_nova.alertaAtencao[2][0]},${maquina_nova.alertaAtencao[2][1]}),(10,${idUnidadeAtendimento},${idDac},${idUnidadeAtendimento},"Alerta",${maquina_nova.alerta[2][0]},${maquina_nova.alerta[2][1]}),`
-  } 
+  }
   instrucaoSql = instrucaoSql.slice(0, -1) + ";";
   console.log(instrucaoSql[instrucaoSql.length - 1])
   console.log("Insert de máquina:", instrucaoSql)
@@ -79,6 +94,7 @@ module.exports = {
   buscarMaquina,
   buscarKpisMonitoramento,
   buscarMetricasPadrao,
+  buscarcodigos,
   inserirmaquina,
   inserirmaquinaservicos,
   inserirmaquinametricaspersonalizadas

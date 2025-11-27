@@ -18,6 +18,9 @@ router.get("/buscarKpisMonitoramento/:fkUnidade", function (req, res) {
 router.get("/buscarMetricasPadrao/:fkUnidade", function (req, res) {
   dashboardController.buscarMetricasPadrao(req, res);
 });
+router.get("/buscarcodigos/:variaveis", function (req, res) {
+  dashboardController.buscarcodigos(req, res);
+});
 router.post("/inserirmaquina", function (req, res) {
   dashboardController.inserirmaquina(req, res);
 });
