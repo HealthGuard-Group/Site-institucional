@@ -1,6 +1,6 @@
 var database = require("../database/config");
 
-function buscarDados(idUnidadeAtendimento){
+function buscarDadosLogs(idUnidadeAtendimento){
      var instrucaoSql = `SELECT 
     u.nome,
     u.email,
@@ -16,5 +16,5 @@ function buscarDados(idUnidadeAtendimento){
  }
 
   module.exports={
-    buscarDados
+    buscarDadosLogs
   };

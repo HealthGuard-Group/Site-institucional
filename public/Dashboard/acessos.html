@@ -9,9 +9,12 @@
   <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="../css/menu_bar.css">
   <link rel="stylesheet" href="../css/acessos.css">
+
 </head>
 
-<body>
+<body onload="validarSessao()">
+
+
   <!-- Começo do Menu -->
   <div class="menu-lateral">
     <div class="pai-icones-superiores">
@@ -80,7 +83,7 @@
         <input type="text" placeholder="Usuário" class="campo-usuario">
       </div>
 
-      <table class="tabela">
+      <table class="tabela" id="tabela">
         <tr class="linha cabecalho">
           <td class="coluna">Data/Hora</td>
           <td class="coluna">Usuário</td>
@@ -168,16 +171,20 @@
     </div>
   </div>
 
+  <script src="../js/menu-lateral.js"></script>
+  <script src="../js/validarSessao.js"></script>
+
 </body>
 
 </html>
-<script src="../js/menu-lateral.js"></script>
+
 <script>
   function buscarDadosLogs() {
     var variaveis = puxarVariaveis()
+    console.log(variaveis)
     variaveis = variaveis.idUnidadeAtendimento
+    console.log(variaveis)
     tabela.innerHTML = `
-                <table class ="tabela">
         <tr class ="linha cabecalho">
           <td class="coluna">Data/Hora</td>
           <td class="coluna">Usuário</td>
@@ -186,7 +193,7 @@
           <td class="coluna">Resultado</td>
           <td class="coluna">Máquina</td>
         </tr>`
-    fetch(`/funcionarios/buscarfuncionarios/${variaveis}`, {
+    fetch(`/acessos/buscarDadosLogs/${variaveis}`, {
       method: "GET",
     })
       .then(resposta => {
@@ -194,9 +201,9 @@
       })
       .then(resposta => {
         console.log(resposta)
-        var dados_filtrados = filtrarFuncionarios(resposta)
-        atualizarTabela(dados_filtrados)
-        funcionarios = dados_filtrados;
+        // var dados_filtrados = filtrarFuncionarios(resposta)
+        atualizarTabela(resposta)
+        // funcionarios = dados_filtrados;
 
         // atualizarTabela(resposta)
       })
@@ -204,4 +211,29 @@
         console.log(`Erro no catch: ${resposta}`);
       });
   }
+
+  function atualizarTabela(dados) {
+    console.log("Respota entrando na função:", dados)
+    // let variaveis = puxarVariaveis()
+   // let hora = new Date(dados[i].horarioDaAcao)
+    //hora = horarioDaAcao.toLocaleDateString('pt-BR')
+
+
+    for (let i = 0; i < dados.length; i++) {
+
+      tabela.innerHTML += `
+          <tr class="linha">
+          <td class="coluna">${dados[i].horarioDaAcao}</td>
+          <td class="coluna">${dados[i].nome}</td>
+          <td class="coluna">${dados[i].email}</td>
+          <td class="coluna">${dados[i].acao}</td>
+          <td class="coluna sucesso"><span class="bolinha verde"></span><span style="color: #00aa28;">Sucesso</span>
+          </td>
+          <td class="coluna">Máquina A-02</td>
+        </tr>`
+
+    }
+  }
+
+
 </script>

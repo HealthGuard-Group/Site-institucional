@@ -215,7 +215,7 @@ td {
     align-items: center;
     gap: 5%;
 }
-.icone-visualização {
+.icone-visualizacao {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -223,10 +223,10 @@ td {
     height: 2.3vw; 
     background-color: rgba(116, 116, 116, 0); 
 }
-.icone-visualização img {
+.icone-visualizacao img {
     width: 70%;
 }
-.icone-visualização:hover {
+.icone-visualizacao:hover {
     cursor: pointer;
 }
 .dados-tabela {

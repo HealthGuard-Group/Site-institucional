@@ -1,12 +1,12 @@
 var acessosModel = require("../models/acessosModel");
 
-function buscarDados(req, res) {
-    var fkUNIDADE = req.params.fkunidade
+function buscarDadosLogs(req, res) {
+    var fkUNIDADE = req.params.variaveis
 
     if (fkUNIDADE == undefined) {
         res.status(400).send("FK unidade está undefined!"); 
     } else {
-        acessosModel.buscarDados(fkUNIDADE)
+        acessosModel.buscarDadosLogs(fkUNIDADE)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -25,5 +25,5 @@ function buscarDados(req, res) {
 }
 
 module.exports = {
-    buscarDados
+    buscarDadosLogs
 }

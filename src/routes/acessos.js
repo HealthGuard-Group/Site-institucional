@@ -3,8 +3,8 @@ var router = express.Router();
 
 var acessosController = require("../controllers/acessosController");
 
-router.get(`/buscarDados/:fkunidade/`, function (req, res) {
-   acessosController.buscarDados(req, res);
+router.get(`/buscarDadosLogs/:variaveis`, function (req, res) {
+   acessosController.buscarDadosLogs(req, res);
 });
 
 
