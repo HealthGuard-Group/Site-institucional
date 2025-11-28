@@ -536,12 +536,14 @@
 <script src="../js/menu-lateral.js"></script>
 <script>
     // Redirecionador Dash
-    document.addEventListener('click', function (elemento) {
-        if (elemento.target.closest('.maquina-box')) {
-            var maquina = event.target.closest('.maquina-box');
+    document.addEventListener('click', function (e) {
+        var elementoClicado = e.target;
+        if (elementoClicado.closest('.maquina-box')) {
+            var maquina = elementoClicado.closest('.maquina-box');
+            var nomeMaquina = maquina.querySelector('h3').textContent;
             console.log(maquina)
-            console.log(maquina.querySelector('.nome-maquina').textContent.replaceAll(" ", ""))
-            inserirAcao(`Acessando ${maquina.querySelector('.nome-maquina').textContent.replaceAll(" ", "")}`)
+           console.log(nomeMaquina.replaceAll(" ", ""))
+          inserirAcao(`Acessando ${nomeMaquina.replaceAll(" ", "")}`);
             sessionStorage.ID_DAC = maquina.id;
             window.location.href = "grafico1.html"
         }
