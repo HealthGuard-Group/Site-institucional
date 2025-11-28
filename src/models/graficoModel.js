@@ -15,10 +15,19 @@ function buscarKpiDac(idDac) {
     return database.executar(instrucaoSql);
 }
 
+function buscarMedicoesSelecionadas(idDac) {
+    const instrucaoSql = `
+        select * from medicoesSelecionadas where fkDac = ${idDac};
+    `;
+    return database.executar(instrucaoSql);
+}
+
 function totalAlerta(idDac){
   var instrucaoSql = `
-      select count(a.idAlerta) as totalAlertas from Alerta a
-      where a.fkDac = ${idDac};
+      select count(idAlerta) as totalAlertas
+      from alerta
+      where fkDac = ${idDac}
+      and dataInicio >= now() - interval 24 hour;
   `
   return database.executar(instrucaoSql);
 }
@@ -35,6 +44,15 @@ function buscarCpu(idDac){
 function buscarRam(idDac){
   var instrucaoSql = `
       select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 6
+      order by dataCaptura desc
+      limit 1;
+  ` 
+   return database.executar(instrucaoSql);
+}
+
+function buscarDisco(idDac){
+  var instrucaoSql = `
+      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 10
       order by dataCaptura desc
       limit 1;
   ` 
@@ -72,14 +90,61 @@ function atualizarDadosGraficoDashMonitoramento(idDac, idMonitoramento) {
    return database.executar(instrucaoSql);
 }
 
+function tempoAtividade(idDac) {
+    var instrucaoSql = `
+    select medidaCapturada from Leitura  where fkDac = ${idDac} and fkMedicoesDisponiveis = 13
+    order by idLeitura desc
+    limit 1;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function mediaAlertas(idDac) {
+    var instrucaoSql = `
+    select round(avg(qtdalertas), 0) as mediaalertasdiarios
+    from (
+    select date(dataInicio) as dia, count(*) as qtdalertas
+    from Alerta
+    where fkDac = ${idDac}
+    group by date(dataInicio)
+    ) as alertasdia;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function ativarMaquina(idDac) {
+  var instrucaoSql = `
+      update Dac 
+      set statusDac = 'Ativo'
+      where idDac = ${idDac};
+  `;
+  return database.executar(instrucaoSql);
+}
+
+function inativarMaquina(idDac) {
+  var instrucaoSql = `
+      update Dac 
+      set statusDac = 'Inativo'
+      where idDac = ${idDac};
+  `;
+  return database.executar(instrucaoSql);
+}
+
+
 module.exports = {
     exibirInfoDac,
     buscarKpiDac,
+    buscarMedicoesSelecionadas,
     totalAlerta,
     buscarCpu,
     buscarRam,
+    buscarDisco,
     buscarRede,
     excluirMaquina,
     puxarDadosGraficoDash,
-    atualizarDadosGraficoDashMonitoramento
+    atualizarDadosGraficoDashMonitoramento,
+    tempoAtividade,
+    mediaAlertas,
+    ativarMaquina,
+    inativarMaquina
 };

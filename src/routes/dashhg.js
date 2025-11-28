@@ -11,8 +11,8 @@ router.get("/quantidadeUsuarios", function (req, res) {
   dashhgController.quantidadeUsuarios(req, res);
 })
 
-router.get("/totalMaquinas", function (req, res) {
-  dashhgController.totalMaquinas(req, res);
+router.get("/percentual", function (req, res) {
+  dashhgController.percentual(req, res);
 })
 
 router.get("/usuariosDia", function (req, res) {

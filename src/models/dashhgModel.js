@@ -14,9 +14,16 @@ function quantidadeUsuarios(){
     return database.executar(qtdUsuariosSql)
 }
 
-function totalMaquinas(){
+function percentual(){
     var totalMaquinasSql = 
-    ` select count(idDac) from Dac;`;
+    ` select 
+    date(horarioDaAcao) as dia,
+    count(distinct case 
+        when acao = 'Realizando Login' then fkUsuario end) as quantidade_acessos
+    from LogAcoes
+    where horarioDaAcao >= now() - interval 1 day 
+    group by date(horarioDaAcao)
+    order by dia;`;
     return database.executar(totalMaquinasSql)
 }
 
@@ -24,7 +31,7 @@ function usuariosDia(){
     var usuariosDiasSql = 
     ` select 
     date(horarioDaAcao) as dia,
-    count('Realizando Login') as quantidade_acessos
+    count(case when acao = 'Realizando Login' then 1 end) as quantidade_acessos
     from LogAcoes
     where horarioDaAcao >= now() - interval 7 day
     group by date(horarioDaAcao)
@@ -34,6 +41,6 @@ function usuariosDia(){
 module.exports = {
   empresasCadastradas,
   quantidadeUsuarios,
-  totalMaquinas,
+  percentual,
   usuariosDia
 };

@@ -40,8 +40,8 @@ dashboardHGModel.quantidadeUsuarios()
       );
     }
 
-function totalMaquinas(req, res){
-dashboardHGModel.totalMaquinas()
+function percentual(req, res){
+dashboardHGModel.percentual()
       .then(
         function (resultado) {
           
@@ -80,6 +80,6 @@ dashboardHGModel.usuariosDia()
 module.exports = {
   empresasCadastradas,
   quantidadeUsuarios,
-  totalMaquinas,
+  percentual,
   usuariosDia
 }

@@ -73,7 +73,7 @@
         <p id="kpi2"></p>
     </div>
     <div class="kpi-box">
-        <h3>Porcentagem de usuários que entram</h3>
+        <h3>Porcentagem de usuários que entraram hoje</h3>
         <p id="kpi3"></p>
     </div>
     <div class="kpi-box">
@@ -141,6 +141,8 @@
 
 <script>
  
+    var usuariostotal = 0;
+     
     fetch(`/dashhg/empresasCadastradas/`, {
         method: "GET",
     })
@@ -158,17 +160,19 @@
         .then(resposta => resposta.json())
         .then(dados => {
             console.log("Resposta da API:", dados[0])
+            usuariostotal = dados[0]['count(idUsuario)']
             kpi2.innerHTML = dados[0]['count(idUsuario)']
             })
         .catch(err => console.error("Erro no fetch:", err))
     
-    fetch(`/dashhg/totalMaquinas/`, {
+    fetch(`/dashhg/percentual/`, {
         method: "GET",
     })
         .then(resposta => resposta.json())
         .then(dados => {
             console.log("Resposta da API:", dados[0])
-            kpi3.innerHTML = dados[0]['count(idDac)']
+            var porcentagem = dados[0]['quantidade_acessos'] / usuariostotal * 100
+            kpi3.innerHTML = `${porcentagem.toFixed(2)}%`
             })
         .catch(err => console.error("Erro no fetch:", err))
 
