@@ -4,6 +4,8 @@ function puxardados(req, res) {
     var fkUNIDADE = req.params.fkunidade
     var fkDAC = req.params.fkdac
 
+    console.log(`Debug: Chegou no controller. Unidade: ${fkUNIDADE}, DAC: ${fkDAC}`);
+    
     if (fkUNIDADE == undefined) {
         res.status(400).send("FK unidade está undefined!");
     } else if (fkDAC == undefined) {
