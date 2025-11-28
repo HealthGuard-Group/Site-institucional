@@ -363,7 +363,10 @@
                 return resposta.json();
             })
             .then(resposta => {
+                console.log(resposta)
                 var total_estresse_segundo = 0
+                var agora = new Date()
+                var limite24h = new Date(agora.getTime() - (24 * 60 * 60 * 1000))
                 for (let i = 0; i < resposta.length; i++) {
                     var inicio = new Date(resposta[i].dataInicio)
                     if (resposta[i].dataTermino == null) {
@@ -371,6 +374,10 @@
                     } else {
                         var fim = new Date(resposta[i].dataTermino)
                     }
+                    if (inicio < limite24h) {
+                        inicio = limite24h
+                    }
+                    
                     total_estresse_segundo += Math.round((fim - inicio) / 1000, 0)
                 }
                 var horas = Math.floor(total_estresse_segundo / 3600)

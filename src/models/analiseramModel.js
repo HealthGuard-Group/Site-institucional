@@ -36,7 +36,7 @@ function buscarranking(idDac) {
     return database.executar(instrucaoSql);
 }
 function buscarestresse(idDac) {
-    var instrucaoSql = `SELECT dataInicio,dataTermino FROM Alerta WHERE fkDac = ${idDac} AND dataInicio > NOW() - INTERVAL 1 DAY AND fkMedicoesDisponiveis = 8`;
+    var instrucaoSql = `SELECT dataInicio,dataTermino FROM Alerta WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = 8 AND (dataTermino >= NOW() - INTERVAL 1 DAY OR dataTermino IS NULL);`;
 
     return database.executar(instrucaoSql);
 }

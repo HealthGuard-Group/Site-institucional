@@ -57,6 +57,21 @@ function excluirMaquina(idDac) {
    return database.executar(instrucaoSql);
 }
 
+function puxarDadosGraficoDash(idDac, idMonitoramento) {
+    var instrucaoSql = `SELECT medidaCapturada,dataCaptura FROM Leitura WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = ${idMonitoramento} ORDER BY idLeitura DESC LIMIT 7;`
+   return database.executar(instrucaoSql);
+}
+
+function puxarDadosGraficoDash(idDac, idMonitoramento) {
+    var instrucaoSql = `SELECT medidaCapturada,dataCaptura FROM Leitura WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = ${idMonitoramento} ORDER BY idLeitura DESC LIMIT 7;`
+   return database.executar(instrucaoSql);
+}
+
+function atualizarDadosGraficoDashMonitoramento(idDac, idMonitoramento) {
+    var instrucaoSql = `SELECT medidaCapturada,dataCaptura FROM Leitura WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = ${idMonitoramento} ORDER BY idLeitura DESC LIMIT 1;`
+   return database.executar(instrucaoSql);
+}
+
 module.exports = {
     exibirInfoDac,
     buscarKpiDac,
@@ -64,5 +79,7 @@ module.exports = {
     buscarCpu,
     buscarRam,
     buscarRede,
-    excluirMaquina
+    excluirMaquina,
+    puxarDadosGraficoDash,
+    atualizarDadosGraficoDashMonitoramento
 };

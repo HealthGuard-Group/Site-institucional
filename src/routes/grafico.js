@@ -26,9 +26,18 @@ router.get("/buscarRam/:idDac", function (req, res) {
 router.get("/buscarRede/:idDac", function (req, res) {
   graficoController.buscarRede(req, res);
 })
+
 router.put("/excluirMaquina/:idDac", function (req, res) {
-      console.log('entrou na rota')
+  console.log('entrou na rota')
   graficoController.excluirMaquina(req, res);
+})
+
+router.get("/puxarDadosGraficoDash/:idDac/:idMonitoramento", function (req, res) {
+  graficoController.puxarDadosGraficoDash(req, res);
+})
+
+router.get("/atualizarDadosGraficoDashMonitoramento/:idDac/:idMonitoramento", function (req, res) {
+  graficoController.atualizarDadosGraficoDashMonitoramento(req, res);
 })
 
 module.exports = router;

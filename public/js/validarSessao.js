@@ -69,6 +69,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("acessos.html")){
             buscarDadosLogs()
         }
+        if (window.location.href.includes("grafico1.html")) {
+            telaGrafico1()
+        }
         if (window.location.href.includes("alertasGerais.html")){
             puxarAlertasGeral()
         }
@@ -139,5 +142,12 @@ function telaAnaliseRam() {
         puxandoKpiStress()
         atualizarGraficoRam()
         puxarRankingRAM()
+    },5000)
+}
+function telaGrafico1() {
+    trocarMonitoramento()
+    trocarGraficos()
+    var loop = setInterval(() => {
+        atualizarGraficoMonitoramento()
     },5000)
 }

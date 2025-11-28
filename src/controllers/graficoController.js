@@ -146,25 +146,78 @@ function buscarRede(req, res) {
     }
 }
 function excluirMaquina(req, res) {
-    var idDac= req.params.idDac
+    var idDac = req.params.idDac
 
     if (idDac == undefined) {
         res.status(400).send("IdDac está undefined!");
-    } else {  graficoModel.excluirMaquina(idDac)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao remover maquina! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
+    } else {
+        graficoModel.excluirMaquina(idDac)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao remover maquina! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+function puxarDadosGraficoDash(req, res) {
+    var idDac = req.params.idDac
+    var idMonitoramento = req.params.idMonitoramento
+
+    if (idDac == undefined) {
+        res.status(400).send("IdDac está undefined!");
+    } else if (idMonitoramento == undefined) {
+        res.status(400).send("idMonitoramento está undefined!");
+    } else {
+        graficoModel.puxarDadosGraficoDash(idDac, idMonitoramento)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao puxar os dados da dashboard! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
+    }
+}
+function atualizarDadosGraficoDashMonitoramento(req, res) {
+    var idDac = req.params.idDac
+    var idMonitoramento = req.params.idMonitoramento
+
+    if (idDac == undefined) {
+        res.status(400).send("IdDac está undefined!");
+    } else if (idMonitoramento == undefined) {
+        res.status(400).send("idMonitoramento está undefined!");
+    } else {
+        graficoModel.atualizarDadosGraficoDashMonitoramento(idDac, idMonitoramento)
+        .then(
+            function (resultado) {
+                res.json(resultado);
+            }
+        ).catch(
+            function (erro) {
+                console.log(erro);
+                console.log(
+                    "\nHouve um erro ao atualizar os dados da dashboard! Erro: ",
+                    erro.sqlMessage
+                );
+                res.status(500).json(erro.sqlMessage);
+            }
+        );
     }
 }
 
@@ -175,5 +228,7 @@ module.exports = {
     buscarCpu,
     buscarRam,
     buscarRede,
-    excluirMaquina
+    excluirMaquina,
+    puxarDadosGraficoDash,
+    atualizarDadosGraficoDashMonitoramento
 }
