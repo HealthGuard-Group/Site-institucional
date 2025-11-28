@@ -31,6 +31,7 @@ var analiseramRouter = require("./src/routes/analiseram");
 var analisecpuRouter = require("./src/routes/analisecpu");
 var dashhgRouter = require("./src/routes/dashhg");
 var acessosRouter = require("./src/routes/acessos");
+var alertasgeralRouter = require("./src/routes/alertasgeral");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -52,6 +53,7 @@ app.use("/analiseram", analiseramRouter)
 app.use("/analisecpu", analisecpuRouter )
 app.use("/dashhg", dashhgRouter);
 app.use("/acessos", acessosRouter)
+app.use("/alertasgeral", alertasgeralRouter)
 
 
 app.post('/enviar-email', async (req, res) => {

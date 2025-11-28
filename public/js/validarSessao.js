@@ -69,6 +69,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("acessos.html")){
             buscarDadosLogs()
         }
+        if (window.location.href.includes("alertasGerais.html")){
+            puxarAlertasGeral()
+        }
     })
     .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);

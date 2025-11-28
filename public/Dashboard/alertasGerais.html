@@ -51,7 +51,7 @@
                 <hr class="separador-forte">
                 <div class="icone-box-inferior" id="tela_perfil">
                     <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
-                    <div class="texto-icone oculto">Perfil</div>
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
                 </div>
                 <hr class="separador">
                 <div class="icone-box-inferior" id="sair_conta_redirecionamento">
@@ -83,7 +83,7 @@
             </div>
 
             <div id="container-tabela">
-                <table id="tabela-alertas">
+                <table id="tabela_alertas">
                     <tr id="titulo-tabela">
                         <td id="tr-tipo-alerta">Tipo de alerta</td>
                         <td id="tr-nome-maquina">Nome da máquina</td>
@@ -94,7 +94,8 @@
                         <td id="tr-acoes-alerta">Ação</td>
                     </tr>
                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"></span> Alerta Grave (Memória RAM)</td>
+                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"></span> Alerta Grave (Memória
+                            RAM)</td>
                         <td class="td-nome-maquina">Máquina A-08</td>
                         <td class="td-data-inicio-alerta">30/10/2025 12:00:05</td>
                         <td class="td-data-expiracao-alerta">--------------------</td>
@@ -107,7 +108,8 @@
                         </td>
                     </tr>
                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-critico"> </span>Em atenção (Memória RAM)</td>
+                        <td class="td-tipo-alerta"><span class="status-dot alerta-critico"> </span>Em atenção (Memória
+                            RAM)</td>
                         <td class="td-nome-maquina">Máquina B-06</td>
                         <td class="td-data-inicio-alerta">26/10/2025 08:30:06</td>
                         <td class="td-data-expiracao-alerta">27/10/2025 09:10:02</td>
@@ -133,7 +135,8 @@
                         </td>
                     </tr>
                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (Disco)</td>
+                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (Disco)
+                        </td>
                         <td class="td-nome-maquina">Máquina C-03</td>
                         <td class="td-data-inicio-alerta">23/10/2025 10:27:07</td>
                         <td class="td-data-expiracao-alerta">24/10/2025 18:08:20</td>
@@ -159,7 +162,8 @@
                         </td>
                     </tr>
                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (Disco)</td>
+                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (Disco)
+                        </td>
                         <td class="td-nome-maquina">Máquina D-05</td>
                         <td class="td-data-inicio-alerta">20/10/2025 12:46:01</td>
                         <td class="td-data-expiracao-alerta">20/10/2025 14:00:05</td>
@@ -179,11 +183,90 @@
     </section>
 
 
-
-
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
 
 </body>
 
 </html>
+
+<script>
+    function puxarAlertasGeral() {
+        var variaveis = puxarVariaveis()
+        console.log(variaveis)
+        variaveis = variaveis.idUnidadeAtendimento
+        console.log(variaveis)
+        tabela_alertas.innerHTML = `
+            <tr id="titulo-tabela">
+                <td id="tr-tipo-alerta">Tipo de alerta</td>
+                <td id="tr-nome-maquina">Nome da máquina</td>
+                <td id="tr-data-inicio-alerta">Data/Hora</td>
+                <td id="tr-data-expiracao-alerta">Data de visualização</td>
+                <td id="tr-status-alerta">Status</td>
+                <td id="tr-visualizador-alerta">Visualizador</td>
+                <td id="tr-acoes-alerta">Ação</td>
+            </tr>`
+        fetch(`/alertasgeral/puxarAlertasGeral/${variaveis}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                // var dados_filtrados = filtrarFuncionarios(resposta)
+                atualizarTabela(resposta)
+                // funcionarios = dados_filtrados;
+
+                // atualizarTabela(resposta)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+    function atualizarTabela(dados) {
+        console.log("Respota entrando na função:", dados)
+        // let variaveis = puxarVariaveis()
+        // let data_hora = new Date(dados[i].dataCriacao)
+        // data_hora = data_hora.toLocaleDateString('pt-BR')
+
+
+        for (let i = 0; i < dados.length; i++) {
+
+            if (dados[i].tipoAlerta == 'Alerta') {
+                tabela_alertas.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"></span>${dados[i].tipoAlerta}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">dd/mm/aaaa</td>
+                        <td class="td-data-expiracao-alerta">--------------------</td>
+                        <td class="td-status-alerta"><span style="color:  #656464;">Não Visto</span></td>
+                        <td class="td-visualizador-alerta">--------------------</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-visualizacao">
+                                <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            } else {
+                tabela_alertas.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot alerta-critico"></span>${dados[i].tipoAlerta}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">dd/mm/aaaa</td>
+                        <td class="td-data-expiracao-alerta">--------------------</td>
+                        <td class="td-status-alerta"><span style="color:  #656464;">Não Visto</span></td>
+                        <td class="td-visualizador-alerta">--------------------</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-visualizacao">
+                                <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            }
+
+        }
+
+    }
+</script>
