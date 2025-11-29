@@ -100,15 +100,11 @@
 
 
             <section class="area-filtros" aria-label="Filtros para os dados">
-                <span class="texto-filtrar-por">Filtrar por:</span>
-
-                <label for="filtro-dia" class="label-filtro">Dia</label>
-                <select id="filtro-dia" name="dia">
-                    <option value=""></option>
+                <span class="texto-filtrar-por">Últimas 24h de atividades.</span>
 
                 </select>
 
-              
+
             </section>
 
 
@@ -124,13 +120,13 @@
                 </article>
 
                 <article class="cartao-grafico" aria-labelledby="tituloTiposAcao">
-                      <span class="icone-info">i</span>
+                    <span class="icone-info">i</span>
                     <header>
                         <span class="titulo-grafico" id="tituloTiposAcao">Tipos De Ação</span>
-    
+
                     </header>
                     <p class="subtitulo-grafico">(Leitura, Escrita/Alteração, Segurança)</p>
-                   
+
                     <canvas id="graficoTiposAcao" aria-label="Histograma de tipos de ação" role="img"></canvas>
                 </article>
 
@@ -144,20 +140,29 @@
             </section>
 
 
-            <section class="linha-insights">
+            <section class="linha-insights" style="display:flex; gap:20px;">
 
-                <div class="cartao-insight" aria-label="Insight principal">
-                    <p class="texto-insight">
-                        Usuário José Rodrigues (IP 192.168.1.15) fez Login SUCESSO no módulo Financeiro às 10:05:12;
-                    </p>
+                <div class="cartao-insight" style="flex:1;">
+                    <h3>Insights</h3>
+                    <p class="texto-insight"> ... </p>
                 </div>
 
-                <div class="cartao-downloads" aria-label="Downloads de dados">
-                    <p tabindex="0">Baixar PDF de dados.</p>
+                <div class="cartao-insight" style="flex:1;">
+                    <h3>Sugestões</h3>
+                    <p class="texto-sugestoes"> ... </p>
+                </div>
+
+                <div class="cartao-downloads" aria-label="Downloads de dados" style="flex:1;">
+                    <p tabindex="0">Baixar relatório de dados.</p>
                     <p tabindex="0">Baixar Excel de dados.</p>
                 </div>
 
             </section>
+
+
+
+
+
 
         </main>
     </div>
@@ -165,69 +170,6 @@
 
     <script src="../js/menu-lateral.js"></script>
     <script>
-
-
-        const historicosKpi = {
-            "Total de Eventos": [
-                { data: "01/06", eventos: 5 },
-                { data: "02/06", eventos: 9 },
-                { data: "03/06", eventos: 23 },
-                { data: "04/06", eventos: 17 },
-                { data: "05/06", eventos: 20 }
-            ],
-            "Usuários Ativos": [
-                { data: "01/06", valor: 7 },
-                { data: "02/06", valor: 12 },
-                { data: "03/06", valor: 15 },
-                { data: "04/06", valor: 10 },
-                { data: "05/06", valor: 8 }
-            ],
-            "Máquinas Alteradas": [
-                { data: "01/06", valor: 2 },
-                { data: "02/06", valor: 5 },
-                { data: "03/06", valor: 6 },
-                { data: "04/06", valor: 3 },
-                { data: "05/06", valor: 4 }
-            ],
-            "Falhas Em Ações": [
-                { data: "01/06", valor: 0 },
-                { data: "02/06", valor: 2 },
-                { data: "03/06", valor: 4 },
-                { data: "04/06", valor: 1 },
-                { data: "05/06", valor: 3 }
-            ]
-        };
-
-        
-        const dialogHistorico = document.createElement('dialog');
-        dialogHistorico.innerHTML = `
-  <header style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-    <span id="tituloHistorico" style="font-weight:700; font-size:17px;"></span>
-    <button id="btnFecharPopup" style="
-      background:#b70000; border:none; color:white;
-      font-weight:700; padding:5px 12px; cursor:pointer; font-size:14px; border-radius:5px;">Fechar</button>
-  </header>
-  <table style="border-collapse:collapse; width:100%;">
-    <thead>
-      <tr>
-        <th style="border:1px solid #999; padding:6px;">Data</th>
-        <th style="border:1px solid #999; padding:6px;">Valor</th>
-      </tr>
-    </thead>
-    <tbody id="tabelaBody"></tbody>
-  </table>
-`;
-        document.body.appendChild(dialogHistorico);
-
-        const btnFecharPopup = dialogHistorico.querySelector('#btnFecharPopup');
-        const tabelaBody = dialogHistorico.querySelector('#tabelaBody');
-        const tituloHistorico = dialogHistorico.querySelector('#tituloHistorico');
-
-        btnFecharPopup.addEventListener('click', () => dialogHistorico.close());
-
-        
-
-        
 
         const ctxCarga = document.getElementById('graficoCargaTrabalho').getContext('2d');
         new Chart(ctxCarga, {
@@ -291,16 +233,159 @@
             }
         });
 
-        function popularSelect(id, valores) {
-            const select = document.getElementById(id);
-            valores.forEach(val => {
-                const option = document.createElement('option');
-                option.value = val;
-                option.textContent = val;
-                select.appendChild(option);
-            });
+        function gerarSugestoes(dados) {
+            const mensagens = [];
+            const sugestoes = [];
+
+            if (dados.falhas > 5) {
+                mensagens.push("Alto número de falhas detectado hoje.");
+                sugestoes.push("Verificar logs detalhados e reiniciar serviços.");
+            } else if (dados.falhas > 2) {
+                mensagens.push("Volume moderado de falhas registrado.");
+                sugestoes.push("Observar comportamento e monitorar eventos.");
+            }
+
+            if (dados.totalEventos > 30) {
+                mensagens.push("Grande volume de eventos registrado.");
+                sugestoes.push("Considerar otimizar consultas.");
+            } else if (dados.totalEventos < 10) {
+                mensagens.push("Poucos eventos registrados.");
+                sugestoes.push("Confirmar se o sistema está operando normalmente.");
+            }
+
+            if (dados.usuariosAtivos > 20) {
+                mensagens.push("Número alto de usuários ativos simultaneamente.");
+                sugestoes.push("Monitorar performance e conexões simultâneas.");
+            } else if (dados.usuariosAtivos < 5) {
+                mensagens.push("Poucos usuários conectados.");
+                sugestoes.push("Verificar disponibilidade do sistema.");
+            }
+
+            if (dados.maquinasAlteradas > 5) {
+                mensagens.push("Diversas máquinas sofreram alterações recentemente.");
+                sugestoes.push("Revisar mudanças recentes.");
+            }
+
+            if (mensagens.length === 0) {
+                mensagens.push("Atividade dentro dos padrões esperados até o momento.");
+                sugestoes.push("Continuar monitoramento padrão.");
+            }
+
+            return { mensagens, sugestoes };
         }
-        popularSelect('filtro-dia', ['01', '02', '03', '04', '05']);
-        popularSelect('filtro-mes', ['01', '02', '03', '04', '05', '06']);
-        popularSelect('filtro-ano', ['2022', '2023', '2024']);
+
+        function atualizarInsightESugestoes() {
+            const dados = coletarDadosDasKpis();
+            const resultado = gerarSugestoes(dados);
+
+            document.querySelector(".cartao-insight .texto-insight").textContent = resultado.mensagens[Math.floor(Math.random() * resultado.mensagens.length)];
+
+ 
+            const blocoSugestoes = document.querySelector(".cartao-insight + .cartao-insight .texto-sugestoes");
+            blocoSugestoes.textContent = resultado.sugestoes.join(" ");
+
+        }
+
+        atualizarInsightESugestoes();
+
+
+
+        function coletarDadosDasKpis() {
+            return {
+                totalEventos: Number(document.querySelectorAll(".kpi .valor-kpi")[0].textContent),
+                usuariosAtivos: Number(document.querySelectorAll(".kpi .valor-kpi")[1].textContent),
+                maquinasAlteradas: Number(document.querySelectorAll(".kpi .valor-kpi")[2].textContent),
+                falhas: Number(document.querySelectorAll(".kpi .valor-kpi")[3].textContent)
+            };
+        }
+
+
+
+        atualizarInsight();
+
+        function exportarExcel() {
+
+            var carga = [4, 8, 12, 16, 18, 20];
+            var tiposAcao = [2, 5, 6, 6, 4, 3, 2];
+            var usuarios = [3, 7, 12, 15, 16, 18];
+
+            var csv = "Categoria,Valores\n";
+
+            csv += "Carga de Trabalho," + carga.join(" | ") + "\n";
+            csv += "Tipos de Ação," + tiposAcao.join(" | ") + "\n";
+            csv += "Usuários Ativos," + usuarios.join(" | ") + "\n";
+
+
+            var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            var url = URL.createObjectURL(blob);
+
+            var a = document.createElement("a");
+            a.href = url;
+            a.download = "dados_logs.csv";
+            a.click();
+        }
+
+
+        function gerarRelatorioDeAlertas() {
+
+            var totalEventos = Number(document.querySelectorAll(".valor-kpi")[0].textContent);
+            var usuariosAtivos = Number(document.querySelectorAll(".valor-kpi")[1].textContent);
+            var maquinasAlteradas = Number(document.querySelectorAll(".valor-kpi")[2].textContent);
+            var falhas = Number(document.querySelectorAll(".valor-kpi")[3].textContent);
+
+
+            var alertas = [];
+
+            if (falhas > 5) {
+                alertas.push(" Alto número de falhas detectado hoje. Possível instabilidade do sistema.");
+            } else if (falhas > 2) {
+                alertas.push(" Volume moderado de falhas registrado. Observar comportamento.");
+            }
+
+            if (totalEventos > 30) {
+                alertas.push(" Grande volume de eventos registrado. Uso intenso do sistema.");
+            } else if (totalEventos < 10) {
+                alertas.push(" Poucos eventos registrados. Atividade baixa.");
+            }
+
+            if (usuariosAtivos > 20) {
+                alertas.push(" Número alto de usuários ativos simultaneamente.");
+            } else if (usuariosAtivos < 5) {
+                alertas.push(" Poucos usuários conectados no período atual.");
+            }
+
+            if (maquinasAlteradas > 5) {
+                alertas.push(" Diversas máquinas sofreram alterações recentemente.");
+            }
+
+            if (alertas.length == 0) {
+                alertas.push(" Atividade dentro dos padrões esperados até o momento.");
+            }
+
+
+            const conteudo = `
+        <h2>Relatório de Alertas - Logs do Sistema</h2>
+        <p><b>Total de Eventos:</b> ${totalEventos}</p>
+        <p><b>Usuários Ativos:</b> ${usuariosAtivos}</p>
+        <p><b>Máquinas Alteradas:</b> ${maquinasAlteradas}</p>
+        <p><b>Falhas em Ações:</b> ${falhas}</p>
+        <hr>
+        <h3>Alertas e Insights:</h3>
+        <ul>
+            ${alertas.map(a => `<li>${a}</li>`).join("")}
+        </ul>
+    `;
+
+
+            var janela = window.open("", "", "width=800,height=600");
+            janela.document.write(conteudo);
+            janela.document.close();
+        }
+
+
+        document.querySelectorAll(".cartao-downloads p")[0].onclick = gerarRelatorioDeAlertas;
+        document.querySelectorAll(".cartao-downloads p")[1].onclick = exportarExcel;
+
+
+
     </script>
