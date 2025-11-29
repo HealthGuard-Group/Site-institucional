@@ -86,97 +86,49 @@
                 <table id="tabela_alertas">
                     <tr id="titulo-tabela">
                         <td id="tr-tipo-alerta">Tipo de alerta</td>
-                        <td id="tr-nome-maquina">Nome da máquina</td>
-                        <td id="tr-data-inicio-alerta">Data/Hora</td>
-                        <td id="tr-data-expiracao-alerta">Data de visualização</td>
+                        <td id="tr-monitoramento-alerta">Monitoramento</td>
+                        <td id="tr-nome-maquina">Máquina</td>
+                        <td id="tr-data-inicio-alerta">Data de início</td>
+                        <td id="tr-data-termino-alerta">Data de término</td>
                         <td id="tr-status-alerta">Status</td>
-                        <td id="tr-visualizador-alerta">Visualizador</td>
+                        <td id="tr-data-verificacao-alerta">Data de verificação</td>
+                        <td id="tr-verificador-alerta">Verificador</td>
                         <td id="tr-acoes-alerta">Ação</td>
                     </tr>
+
                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"></span> Alerta Grave (Memória
-                            RAM)</td>
+                        <td class="td-tipo-alerta"><span class="status-dot alerta"></span>Alerta</td>
+                        <td class="td-monitoramento-alerta">Percentual de uso de cpu</td>
                         <td class="td-nome-maquina">Máquina A-08</td>
                         <td class="td-data-inicio-alerta">30/10/2025 12:00:05</td>
-                        <td class="td-data-expiracao-alerta">--------------------</td>
-                        <td class="td-status-alerta"><span style="color:  #656464;">Não Visto</span></td>
-                        <td class="td-visualizador-alerta">--------------------</td>
+                        <td class="td-data-termino-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">Não Verificado</b></td>
+                        <td class="td-data-verificacao-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-verificador-alerta">Arthur Felipe Amaral da Silva </td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
+                            <div class="icone-verificacao">
                                 <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
                             </div>
                         </td>
                     </tr>
                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-critico"> </span>Em atenção (Memória
-                            RAM)</td>
-                        <td class="td-nome-maquina">Máquina B-06</td>
-                        <td class="td-data-inicio-alerta">26/10/2025 08:30:06</td>
-                        <td class="td-data-expiracao-alerta">27/10/2025 09:10:02</td>
-                        <td class="td-status-alerta"><span style="color: #00aa28;">Visto</span></td>
-                        <td class="td-visualizador-alerta">André Augusto Corado Leão</td>
+                        <td class="td-tipo-alerta"><span class="status-dot atencao"></span>Atenção</td>
+                        <td class="td-monitoramento-alerta">Percentual de uso de cpu</td>
+                        <td class="td-nome-maquina">Máquina A-08</td>
+                        <td class="td-data-inicio-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-data-termino-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">Não Verificado</b></td>
+                        <td class="td-data-verificacao-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-verificador-alerta">Arthur Felipe Amaral da Silva </td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
-                                <img src="../assets/imgs/icone_verificado.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (CPU)</td>
-                        <td class="td-nome-maquina">Máquina C-01</td>
-                        <td class="td-data-inicio-alerta">23/10/2025 15:09:00</td>
-                        <td class="td-data-expiracao-alerta">23/10/2025 17:40:05</td>
-                        <td class="td-status-alerta"><span style="color: #00aa28;">Visto</span></td>
-                        <td class="td-visualizador-alerta">André Augusto Corado Leão</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
-                                <img src="../assets/imgs/icone_verificado.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (Disco)
-                        </td>
-                        <td class="td-nome-maquina">Máquina C-03</td>
-                        <td class="td-data-inicio-alerta">23/10/2025 10:27:07</td>
-                        <td class="td-data-expiracao-alerta">24/10/2025 18:08:20</td>
-                        <td class="td-status-alerta"><span style="color: #00aa28;">Visto</span></td>
-                        <td class="td-visualizador-alerta">Davi Escudero Caproni</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
-                                <img src="../assets/imgs/icone_verificado.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-critico"> </span>Em atenção (CPU)</td>
-                        <td class="td-nome-maquina">Máquina C-04</td>
-                        <td class="td-data-inicio-alerta">20/10/2025 09:06:01</td>
-                        <td class="td-data-expiracao-alerta">21/10/2025 17:05:13</td>
-                        <td class="td-status-alerta"><span style="color: #00aa28;">Visto</span></td>
-                        <td class="td-visualizador-alerta">André Augusto Corado Leão</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
-                                <img src="../assets/imgs/icone_verificado.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>
-                    <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (Disco)
-                        </td>
-                        <td class="td-nome-maquina">Máquina D-05</td>
-                        <td class="td-data-inicio-alerta">20/10/2025 12:46:01</td>
-                        <td class="td-data-expiracao-alerta">20/10/2025 14:00:05</td>
-                        <td class="td-status-alerta"><span style="color: #00aa28;">Visto</span></td>
-                        <td class="td-visualizador-alerta">Davi Escudero Caproni</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
-                                <img src="../assets/imgs/icone_verificado.png" alt="visualização">
+                            <div class="icone-verificacao">
+                                <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
                             </div>
                         </td>
                     </tr>
                 </table>
             </div>
+
         </div>
 
 
@@ -199,11 +151,13 @@
         tabela_alertas.innerHTML = `
             <tr id="titulo-tabela">
                 <td id="tr-tipo-alerta">Tipo de alerta</td>
-                <td id="tr-nome-maquina">Nome da máquina</td>
-                <td id="tr-data-inicio-alerta">Data/Hora</td>
-                <td id="tr-data-expiracao-alerta">Data de visualização</td>
+                <td id="tr-monitoramento-alerta">Monitoramento</td>
+                <td id="tr-nome-maquina">Máquina</td>
+                <td id="tr-data-inicio-alerta">Data de início</td>
+                <td id="tr-data-termino-alerta">Data de término</td>
                 <td id="tr-status-alerta">Status</td>
-                <td id="tr-visualizador-alerta">Visualizador</td>
+                <td id="tr-data-verificacao-alerta">Data de verificação</td>
+                <td id="tr-verificador-alerta">Verificador</td>
                 <td id="tr-acoes-alerta">Ação</td>
             </tr>`
         fetch(`/alertasgeral/puxarAlertasGeral/${variaveis}`, {
@@ -228,45 +182,107 @@
     function atualizarTabela(dados) {
         console.log("Respota entrando na função:", dados)
         // let variaveis = puxarVariaveis()
-        // let data_hora = new Date(dados[i].dataCriacao)
-        // data_hora = data_hora.toLocaleDateString('pt-BR')
 
 
         for (let i = 0; i < dados.length; i++) {
 
-            if (dados[i].tipoAlerta == 'Alerta') {
+            let data_inicio = new Date(dados[i].dataInicio);
+            data_inicio = data_inicio.toLocaleString("pt-BR", {
+                timeZone: "America/Sao_Paulo"
+            });
+
+
+            if (dados[i].dataTermino == null) {
+                var data_termino = "----------";
+            } else {
+                var data_termino = new Date(dados[i].dataTermino);
+                data_termino = data_termino.toLocaleString("pt-BR", {
+                    timeZone: "America/Sao_Paulo"
+                });
+            }
+
+            if (dados[i].dataVisualizacao == null) {
+                var data_visualizacao = "----------";
+            } else {
+                var data_visualizacao = new Date(dados[i].dataVisualizacao);
+                data_visualizacao = data_visualizacao.toLocaleString("pt-BR", {
+                    timeZone: "America/Sao_Paulo"
+                });
+            }
+
+            if (dados[i].verificador == null) {
+                dados[i].verificador = "--------------------";
+            }
+
+            if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
                 tabela_alertas.innerHTML += `
-                    <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-grave"></span>${dados[i].tipoAlerta}</td>
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot alerta"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
                         <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
-                        <td class="td-data-inicio-alerta">dd/mm/aaaa</td>
-                        <td class="td-data-expiracao-alerta">--------------------</td>
-                        <td class="td-status-alerta"><span style="color:  #656464;">Não Visto</span></td>
-                        <td class="td-visualizador-alerta">--------------------</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
-                                <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
+                            <div class="icone-verificacao">
+                                <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
                             </div>
                         </td>
                     </tr>`
-            } else {
+            } else if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
                 tabela_alertas.innerHTML += `
-                    <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta-critico"></span>${dados[i].tipoAlerta}</td>
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot alerta"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
                         <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
-                        <td class="td-data-inicio-alerta">dd/mm/aaaa</td>
-                        <td class="td-data-expiracao-alerta">--------------------</td>
-                        <td class="td-status-alerta"><span style="color:  #656464;">Não Visto</span></td>
-                        <td class="td-visualizador-alerta">--------------------</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color: rgb(0, 170, 40);">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-visualizacao">
-                                <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
+                            <div class="icone-verificacao">
+                                <img src="../assets/imgs/iconeOlhoVerde.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
+                tabela_alertas.innerHTML += `
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot atencao"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao">
+                                <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
+                tabela_alertas.innerHTML += `
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot atencao"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color:  rgb(0, 170, 40);">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao">
+                                <img src="../assets/imgs/icone_verificado.png" alt="visualização">
                             </div>
                         </td>
                     </tr>`
             }
-
         }
-
     }
 </script>
