@@ -246,7 +246,7 @@
                             Novo convite
                         </div>
                     </div> -->
-                    <button class="botao-recarregar" onclick="puxarFuncionarios()">
+                    <button class="botao-recarregar" onclick="puxarFuncionarios()" title="Atualizar tabela">
                         <img src="../assets/imgs/icone-recarregar.png" alt="" class="icone-recarregar">
                     </button>
                 </div>
@@ -525,10 +525,10 @@
                             <td class="td-cpf-funcionario">${mascaraCPF(dados[i].cpf)}</td>
                             <td class="td-permissao">${dados[i].permissao}</td>
                             <td class="td-acoes-funcionario">
-                                <div class="icone-editar" onclick="editarPermissaoFuncionario(${dados[i].idUsuario})">
+                                <div class="icone-editar" onclick="editarPermissaoFuncionario(${dados[i].idUsuario})" title="Alterar permissão">
                                     <img src="../assets/imgs/user-edit.png" alt="Editar">
                                 </div>
-                                <div class="icone-excluir" onclick="confirmarExclusaoFuncionario(${dados[i].idUsuario})">
+                                <div class="icone-excluir" onclick="confirmarExclusaoFuncionario(${dados[i].idUsuario})" title="Excluir funcionário">
                                     <img src="../assets/imgs/contact.png" alt="Excluir">
                                 </div>
                             </td>

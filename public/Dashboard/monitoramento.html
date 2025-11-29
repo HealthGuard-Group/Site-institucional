@@ -449,9 +449,11 @@
                 <div class="info_maquina">
                     <h3>Máquina A-02</h3>
                     <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
-                     </div>
+                </div>
                 <div class="status_maquina">
-                   <b><p>Status:<span class="texto-status-maquina vermelho"> Inativo</span></p></b>
+                    <b>
+                        <p>Status:<span class="texto-status-maquina vermelho"> Inativo</span></p>
+                    </b>
                 </div>
                 <div class="status_componentes">
                     <div class="componente">
@@ -474,8 +476,8 @@
                         <p>Uso de CPU (%)</p>
                     </div>
                 </div>
-                    <div class="detalhes_maquina">
-                <i><u>Visualizar mais detalhes </u></i>
+                <div class="detalhes_maquina">
+                    <i><u>Visualizar mais detalhes </u></i>
                 </div>
             </div>
 
@@ -542,8 +544,8 @@
             var maquina = elementoClicado.closest('.maquina-box');
             var nomeMaquina = maquina.querySelector('h3').textContent;
             console.log(maquina)
-           console.log(nomeMaquina.replaceAll(" ", ""))
-          inserirAcao(`Acessando ${nomeMaquina.replaceAll(" ", "")}`);
+            console.log(nomeMaquina.replaceAll(" ", ""))
+            inserirAcao(`Acessando ${nomeMaquina.replaceAll(" ", "")}`);
             sessionStorage.ID_DAC = maquina.id;
             window.location.href = "grafico1.html"
         }
@@ -708,7 +710,7 @@
                             div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
                 <div class="info_maquina">
                     <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
-                    <img src="../assets/imgs/Icone configuracao.png" alt="Status" class="imagem-status">
+                    <img src="../assets/imgs/iconeConfiguracao.png" alt="Status" class="imagem-status">
                      </div>
                 <div class="status_maquina">
                    <b><p>Status:<span class="texto-status-maquina vermelho"> Em Configuração</span></p></b>
