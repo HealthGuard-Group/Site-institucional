@@ -81,13 +81,14 @@
                     <div class="kpi kpi-1">
                         <div class="top">
                             <div class="titulo-kpi">
-                                <b>Percentual de disco ocupado</b>
+                                <b>Percentual de uso do disco</b>
                             </div>
                             <div class="icone-info">
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text">
-                                        Valor em porcentagem correspondente à quantidade de disco utilizada de acordo com a capacidade total
+                                        Valor em porcentagem correspondente à quantidade de disco utilizada de acordo
+                                        com a capacidade total
                                     </span>
                                 </span>
                             </div>
@@ -99,7 +100,7 @@
                     <div class="kpi kpi-2">
                         <div class="top">
                             <div class="titulo-kpi">
-                                <b>Espaço Livre</b>
+                                <b>Espaço disponível</b>
                             </div>
                             <div class="icone-info">
                                 <span class="tooltip">
@@ -115,7 +116,7 @@
                         </div>
                     </div>
                     <div class="kpi kpi-3">
-                       <div class="top iops-top">
+                        <div class="top iops-top">
                             <div class="titulo-kpi iops-titulo">
                                 <b>Número de operações de leitura e escrita por segundo</b>
                             </div>
@@ -123,7 +124,8 @@
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text">
-                                        IOPS: "Operações de Entrada/Saída por Segundo". Métrica que mede o desempenho do disco. Quanto maior o número de IOPS, mais rápida é a unidade.
+                                        IOPS: "Operações de Entrada/Saída por Segundo". Métrica que mede o desempenho do
+                                        disco. Quanto maior o número de IOPS, mais rápida é a unidade.
                                     </span>
                                 </span>
                             </div>
@@ -133,9 +135,9 @@
                         </div>
                     </div>
                     <div class="kpi kpi-4">
-                       <div class="top">
+                        <div class="top">
                             <div class="titulo-kpi">
-                                <b>Capacidade total do disco</b>
+                                <b>Capacidade total</b>
                             </div>
                             <div class="icone-info">
                                 <span class="tooltip">
@@ -152,67 +154,332 @@
                     </div>
                 </div>
 
-                <div class="box-graficos-duplo">
-                    <div class="grafico-esquerda">
-                        <div class="top-grafico">
-                            <div class="titulo-grafico">
-                                <b>Percentual de disco ocupado x espaço livre</b>
-                            </div>
-                            <div class="icone-info-grafico">
-                                <span class="tooltip">
-                                    <i class='bxr  bx-info-circle'></i>
-                                    <span class="tooltip-text tooltip-perto-da-borda">
-                                        Percentual de uso do disco em relação ao percentual de espaço livre do disco
+                <div class="container-graficos">
+
+                    <div class="box-graficos-duplo">
+                        <div class="grafico-esquerda">
+                            <div class="top-grafico">
+                                <div class="titulo-grafico">
+                                    <b>Uso do disco (Espaço usado x Espaço disponível)</b>
+                                </div>
+                                <div class="icone-info-grafico icone-info-grafico-donut">
+                                    <span class="tooltip">
+                                        <i class='bxr  bx-info-circle'></i>
+                                        <span class="tooltip-text tooltip-perto-da-borda">
+                                            Percentual de uso do disco em relação ao percentual de espaço disponível do
+                                            disco
+                                        </span>
                                     </span>
-                                </span>
+                                </div>
+                            </div>
+                            <div class="dado-grafico">
+                                <!-- Gráfico de pizza -->
+                                <canvas id="myChart1-pizza"></canvas>
                             </div>
                         </div>
-                        <div class="dado-grafico">
-                            <b>GRAFICO DE PIZZA</b>
+                        <div class="grafico-direita">
+                            <div class="top-grafico">
+                                <div class="titulo-grafico titulo-grafico-barras">
+                                    <b>Distribuição do uso por partição</b>
+                                </div>
+                                <div class="icone-info-grafico icone-grafico-barras">
+                                    <span class="tooltip">
+                                        <i class='bxr  bx-info-circle'></i>
+                                        <span class="tooltip-text tooltip-perto-da-borda">
+                                            Percentual de disco que está sendo utilizado em cada partição do disco
+                                        </span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="dado-grafico">
+                                <!-- Gráfico de Barras -->
+                                <canvas id="myChart2-barra"></canvas>
+                            </div>
                         </div>
                     </div>
-                    <div class="grafico-direita">
-                        <div class="top-grafico">
-                            <div class="titulo-grafico titulo-grafico-barras">
-                                <b>Percentual de disco ocupado por partição</b>
-                            </div>
-                            <div class="icone-info-grafico icone-grafico-barras">
-                                <span class="tooltip">
-                                    <i class='bxr  bx-info-circle'></i>
-                                    <span class="tooltip-text tooltip-perto-da-borda">
-                                        Percentual de disco que está sendo utilizado em cada partição do disco
-                                    </span>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="dado-grafico">
-                            <b>GRAFICO DE BARRAS HORIZONTAL</b>
-                        </div>
-                    </div>
-                </div>
-                <div class="box-grafico-unico-comprido">
-                    <div class="top-grafico">
+                    <div class="box-grafico-unico-comprido">
+                        <div class="top-grafico top-grafico-linha">
                             <div class="titulo-grafico titulo-grafico-linha">
-                                <b>Percentual médio de uso do disco nos últimos 15 dias</b>
+                                <b>Últimas variações e tendência do uso do disco</b>
                             </div>
                             <div class="icone-info-grafico icone-grafico-linha">
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text tooltip-perto-da-borda">
-                                        Percentual médio de uso do disco nos últimos 15 dias com base na capacidade
+                                        Últimas 10 variações no percentual de uso do disco e tendência de uso baseado no conceito de regressão linear simples, com a finalidade de prever de forma aproximada as próximas variações
                                     </span>
                                 </span>
                             </div>
                         </div>
-                        <div class="dado-grafico">
-                            <b>GRAFICO DE LINHAS</b>
+                        <div class="dado-grafico dado-grafico-linha">
+                            <!-- Gráfico de Linha -->
+                            <canvas id="myChart-linha"></canvas>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
 <script src="../js/validarSessao.js"></script>
 <script src="../js/menu-lateral.js"></script>
+
+<style>
+    #myChart1-pizza {
+        justify-content: start;
+        max-width: 90%;
+        max-height: 105%;
+        margin-top: -1%;
+    }
+</style>
+
+<script>
+
+    const ctx = document.getElementById('myChart1-pizza').getContext('2d');
+
+    const data = {
+        labels: ['Espaço usado', 'Espaço disponível'],
+        datasets: [{
+            data: [78, 30],
+            backgroundColor: [
+                'rgba(27, 53, 89, 1)',
+                '#05cd49',
+            ],
+            borderWidth: 1
+        }]
+    };
+
+    const options = {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'right', // legenda ao lado
+                labels: {
+                    // font: {
+                    //     size: 14
+                    // },
+                    color: '#333'
+                }
+            },
+        },
+        layout: {
+            padding: 20
+        },
+        // datalabels: {
+        //     color: '#fff',
+        //     font: {
+        //         weight: 'bold',
+        //         size: 26
+        //     },
+        //     formatter: function (value, context) {
+        //         return value + "%"
+        //     }
+        // },
+        // plugins: [ChartDataLabels]
+    };
+
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: options
+    });
+</script>
+
+<style>
+    #myChart2-barra {
+        max-width: 95%;
+        max-height: 95%;
+        margin-top: -1%;
+    }
+</style>
+
+<script>
+    const ctx2 = document.getElementById('myChart2-barra').getContext('2d');
+
+    const dataBarra = {
+        labels: ['C:/', 'D:/', 'E:/'],
+        datasets: [{
+            label: 'Percentual usado',
+            data: [25, 30, 20],
+            backgroundColor: [
+                'rgba(27, 53, 89, 1)',
+            ],
+            borderWidth: 1,
+            borderRadius: 6
+        }]
+    };
+
+    const optionsBarra = {
+        indexAxis: 'y', // transforma em barras horizontais
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            // legend: {
+            //     position: 'top',
+            //     labels: {
+            //         font: {
+            //             size: 14
+            //         },
+            //         color: '#333'
+            //     }
+            // },
+        },
+        scales: {
+            x: {
+                beginAtZero: true,
+                ticks: {
+                    font: {
+                        size: 12
+                    }
+                }
+            },
+            y: {
+                ticks: {
+                    font: {
+                        size: 12
+                    }
+                }
+            }
+        }
+    };
+
+    new Chart(ctx2, {
+        type: 'bar',
+        data: dataBarra,
+        options: optionsBarra
+    });
+</script>
+
+<style>
+    #myChart-linha {
+        max-width: 98%;
+        max-height: 100%;
+        width: 100%;
+        /* height: 100%; */
+        margin-top: 2%;
+    }
+</style>
+
+<script>
+    const ctxLinha = document.getElementById('myChart-linha').getContext('2d');
+
+    // Dados reais
+    const labels = [
+        ['15/10/2025', '10:05:20'],
+        ['15/10/2025', '10:10:20'],
+        ['15/10/2025', '10:15:20'],
+        ['15/10/2025', '10:20:20'],
+        ['15/10/2025', '10:25:20'],
+        ['15/10/2025', '10:05:20'],
+        ['15/10/2025', '10:10:20'],
+        ['15/10/2025', '10:15:20'],
+        ['15/10/2025', '10:20:20'],
+        ['15/10/2025', '10:25:20'],
+    ];
+    const y = [20.5, 20, 21, 22, 20, 21, 20.3, 22, 21, 23];
+
+    // Transformar datas em índices simples
+    const x = y.map((_, i) => i);
+
+    // Função simples de regressão
+    function regressaoLinear(x, y) {
+        const n = x.length;
+        const somaX = x.reduce((a, b) => a + b, 0);
+        const somaY = y.reduce((a, b) => a + b, 0);
+        const somaXY = x.reduce((s, xi, i) => s + xi * y[i], 0);
+        const somaX2 = x.reduce((s, xi) => s + xi * xi, 0);
+
+        const a = (n * somaXY - somaX * somaY) / (n * somaX2 - somaX * somaX);
+        const b = (somaY - a * somaX) / n;
+        return { a, b };
+    }
+
+    // Calcular a e b
+    const { a, b } = regressaoLinear(x, y);
+
+    // Criar linha de tendência
+    const yPrevisto = x.map(xi => a * xi + b);
+
+    // Estimar quando chegará a 100%
+    const xColapso = (100 - b) / a;
+    const dataColapsoTexto = "≈ ponto " + xColapso.toFixed(1);
+
+    const ultimaData = new Date("2025-10-15 10:25:20");
+    const minutosEntrePontos = 5;
+
+    const minutosAteColapso = xColapso * minutosEntrePontos;
+
+    const dataColapsoReal = new Date(ultimaData.getTime() + minutosAteColapso * 60000);
+
+    // Gráfico
+    new Chart(ctxLinha, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: 'Percentual usado (real)',
+                    data: y,
+                    borderColor: 'rgba(27, 53, 89, 1)',
+                    backgroundColor: 'rgba(27, 53, 89, 1)',
+                    tension: 0.3,
+                    // fill: false,
+                    order: 1
+                },
+                {
+                    label: 'Tendência (regressão linear)',
+                    data: yPrevisto,
+                    borderColor: 'rgb(255, 0, 0)',
+                    backgroundColor: 'rgba(255, 0, 0, 0.3)',
+                    borderDash: [10, 6],
+                    tension: 0,
+                    // fill: true,
+                    order: 99
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'top' },
+                annotation: {
+                    annotations: {
+                        colapso: {
+                            type: 'line',
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            scaleID: 'y',
+                            value: 100
+                        }
+                    }
+                },
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Horário da Medição'
+                    }
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Percentual de Uso (%)'
+                    },
+                    // min: 0,     // mínimo
+                    // max: 100,   // máximo
+                    // ticks: {
+                    //     stepSize: 1 // opcional: espaçamento dos números
+                    // }
+                }
+            }
+        }
+    });
+</script>
+
 
 </html>
