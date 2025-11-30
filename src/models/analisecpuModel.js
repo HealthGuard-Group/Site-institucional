@@ -57,7 +57,7 @@ JOIN
 }
 
 function puxarQtdAlertas(fkunidade, fkDAC) {
-    var instrucaoSql = `select count(idAlerta) as qtdalertas from Alerta where fkMedicoesSelecionadas = 1 and fkDac = ${fkDAC} and fkUnidadeDeAtendimento = ${fkunidade} and dataInicio > now() - interval 7 day;`;
+    var instrucaoSql = `select count(idAlerta) as qtdalertas from Alerta where fkMedicoesDisponiveis = 1 and fkDac = ${fkDAC}  and dataInicio > now() - interval 7 day;`;
     return database.executar(instrucaoSql);
 }
 module.exports = {
