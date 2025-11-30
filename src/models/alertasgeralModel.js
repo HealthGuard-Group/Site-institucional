@@ -5,22 +5,22 @@ function puxarAlertasGeral(fkUnidade){
                             idAlerta,
                             nomeAlerta,
                             medD.nomeDaMedicao AS monitoramento,
-                            dac.nomeIdentificacao AS nomeMaquina,
+                            Dac.nomeIdentificacao AS nomeMaquina,
                             dataInicio,
                             dataTermino,
                             statusAlerta,
                             dataVisualizacao,
                             nomeVisualizador AS verificador
                         FROM
-                            alerta
+                            Alerta
                                 JOIN
-                            medicoesSelecionadas AS medS ON medS.idMedicoesSelecionadas = alerta.fkMedicoesSelecionadas
+                            MedicoesSelecionadas AS medS ON medS.idMedicoesSelecionadas = Alerta.fkMedicoesSelecionadas
                                 JOIN
-                            Dac ON medS.fkDac = dac.idDac
+                            Dac ON medS.fkDac = Dac.idDac
                                 JOIN
                             MedicoesDisponiveis AS medD ON medD.idMedicoesDisponiveis = medS.fkMedicoesDisponiveis
                         WHERE
-                            alerta.fkUnidadeDeAtendimento = ${fkUnidade}
+                            Alerta.fkUnidadeDeAtendimento = ${fkUnidade}
                         ORDER BY idAlerta DESC;`;
     
     return database.executar(instrucaoSql);
