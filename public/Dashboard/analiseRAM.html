@@ -217,7 +217,7 @@
                                 </div>
                             </div>
                             <div class="ia-button-box">
-                                <button class="button-ia" onclick="gerarRecomendacao()">Gerar nova recomendação</button>
+                                <button class="button-ia" onclick="gerarRecomendacao()" id="botao_ia">Gerar nova recomendação</button>
                             </div>
                         </div>
                     </div>
@@ -454,6 +454,7 @@
                                     <div class="loader"></div>
                                     <div class="ia-no-text">Analisando os dados</div>
                                 </div>`
+        document.getElementById("botao_ia").classList.add("oculto")
 
         var listaProcessos = `
         ${document.getElementById("top1").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
@@ -509,6 +510,7 @@
                                 </div>`
             await delay(2000)
             div_texto.innerHTML = dados.resposta
+            document.getElementById("botao_ia").classList.remove("oculto")
             fetch("/analiseRAM/atualizarRecomendacaoIA", {
                 method: "PUT",
                 headers: {

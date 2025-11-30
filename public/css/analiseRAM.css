@@ -366,6 +366,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 1vh;
 }
 .icon-geminai{
     height: 25%;
@@ -392,4 +393,8 @@
   66.67% {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 100%,calc(3*100%/3) 0   }
   83.33% {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 100%}
   100%   {background-position: calc(0*100%/3) 50% ,calc(1*100%/3) 50% ,calc(2*100%/3) 50% ,calc(3*100%/3) 50% }
+}
+/* Deixar por último */
+.oculto{
+    display: none;
 }
