@@ -33,6 +33,7 @@ var dashhgRouter = require("./src/routes/dashhg");
 var acessosRouter = require("./src/routes/acessos");
 var alertasgeralRouter = require("./src/routes/alertasgeral");
 var dashAlertasSemanaisRouter = require("./src/routes/dashAlertasSemanais");
+var logAcoesRouter = require("./src/routes/logAcoes");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -56,6 +57,7 @@ app.use("/dashhg", dashhgRouter);
 app.use("/acessos", acessosRouter)
 app.use("/alertasgeral", alertasgeralRouter)
 app.use("/dashAlertasSemanais", dashAlertasSemanaisRouter);
+app.use("/logacoes", logAcoesRouter);
 
 app.post('/enviar-email', async (req, res) => {
     var email = req.body.email
