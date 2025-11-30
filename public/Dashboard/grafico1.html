@@ -187,9 +187,10 @@
               <strong> Componentes a monitorar: </strong>
             </span>
             <select id="componentSelect" onchange="trocarMonitoramento()">
-              <option value="CPU" selected>CPU</option>
-              <option value="Memória">Memória RAM</option>
-              <option value="Disco">Disco</option>
+              <option value="selecione" selected id="selecione">Selecione</option>
+              <option value="CPU" id="cpu_op">CPU</option>
+              <option value="Memoria" id="ram_op">Memória RAM</option>
+              <option value="Disco" id="disco_op">Disco</option>
             </select>
 
             <div class="config-alertas-status">
@@ -199,16 +200,16 @@
             </div>
 
             <div class="metrica">
-              <div class="metric-lado">Tempo de Inatividade (Nas últimas 24h)</div>
-              <div class="number" id="inatividade">8h30min</div>
+              <div class="metric-lado">Uso médio do Componente (Nas últimas 24h)</div>
+              <div class="number" id="usomedio"></div>
             </div>
             <div class="metrica">
               <div class="metric-lado">Quantidade de alertas (Nas últimas 24h) </div>
-              <div class="number" id="qtdAlertas">7</div>
+              <div class="number" id="qtdAlertas"></div>
             </div>
             <div class="metrica">
-              <div class="metrica-lado">Tempo médio entre alertas (Nas últimas 24h)</div>
-              <div class="number" id="tempoMedio">30min</div>
+              <div class="metrica-lado">Duração média dos alertas (Nas últimas 24h)</div>
+              <div class="number" id="tempoMedio"></div>
             </div>
           </div>
           <div class="metricas-valores">
@@ -315,50 +316,66 @@
       });
 
       async function buscarMedicoesSelecionadasFront(idDac) {
-        try {
-          const response = await fetch(`/grafico/buscarMedicoesSelecionadas/${idDac}`)
-          if (!response.ok) throw new Error('Erro ao buscar medições')
-          return await response.json()
-        } catch (erro) {
-          console.error("Erro no fetch:", erro)
-          return [];
-        }
+  try {
+    const response = await fetch(`/grafico/buscarMedicoesSelecionadas/${idDac}`)
+    if (!response.ok) throw new Error('Erro ao buscar medições')
+    return await response.json()
+  } catch (erro) {
+    console.error("Erro no fetch:", erro)
+    return [];
+  }
+}
+
+async function atualizarComponentes(idDac) {
+  try {
+    const medicoes = await buscarMedicoesSelecionadasFront(idDac)
+    console.log("Medições recebidas:", medicoes)
+
+    document.querySelectorAll('.div_componentes > div').forEach(div => div.style.display = 'none')
+    document.querySelectorAll('#componentSelect option').forEach(op => op.style.display = 'none')
+
+    const idsDiv = { 
+      1: 'cpu1', 
+      6: 'ram1', 
+      10: 'disco1'
+    }
+
+    const idsOption = {
+      1: 'cpu_op',
+      6: 'ram_op',
+      10: 'disco_op'
+    }
+
+    for ( i = 0; i < medicoes.length; i++) {
+      const medicao = medicoes[i]
+
+      const idDiv = idsDiv[medicao.fkMedicoesDisponiveis]
+      if (idDiv) {
+        document.getElementById(idDiv).style.display = 'block'
       }
 
-      async function atualizarComponentes(idDac) {
-        try {
-          const medicoes = await buscarMedicoesSelecionadasFront(idDac)
-          console.log("Medições recebidas:", medicoes)
-
-          document.querySelectorAll('.div_componentes > div').forEach(div => div.style.display = 'none')
-
-          const ids = { 
-            1: 'cpu1', 
-            6: 'ram1', 
-            10: 'disco1', 
-            11: 'rede1' 
-          }
-
-          for ( i = 0; i < medicoes.length; i++) {
-              const medicao = medicoes[i]
-
-              const idDiv = ids[medicao.fkMedicoesDisponiveis]
-              if (!idDiv){ 
-                continue
-              }
-              const div = document.getElementById(idDiv)
-              div.style.display = 'block'
-          }
-
-        } catch (erro) {
-          console.error("Erro ao atualizar componentes:", erro)
-        }
+      const idOp = idsOption[medicao.fkMedicoesDisponiveis]
+      if (idOp) {
+        document.getElementById(idOp).style.display = 'block'
       }
+    }
 
-      document.addEventListener('DOMContentLoaded', () => {
-        const idDac = sessionStorage.ID_DAC
-        atualizarComponentes(idDac)
-      });
+    const select = document.getElementById('componentSelect')
+    const visibleOptions = [...select.options].filter(op => op.style.display !== 'none')
+    if (visibleOptions.length > 0) {
+      select.value = visibleOptions[0].value
+    }
+
+  } catch (erro) {
+    console.error("Erro ao atualizar componentes:", erro)
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const idDac = sessionStorage.ID_DAC
+  atualizarComponentes(idDac)
+})
+
 
 
 
@@ -388,6 +405,146 @@
         mediaAlerta.innerHTML = `${resposta[0].mediaalertasdiarios}`
       })
       .catch(erro => console.error("Erro:", erro));
+
+
+
+
+
+       if (componentSelect.value === "CPU") {
+        
+        fetch(`/grafico/alertasCpu/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          qtdAlertas.innerHTML = `${resposta[0].total}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+      fetch(`/grafico/duracaoAlertaCpu/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          tempoMedio.innerHTML = `${resposta[0].duracao}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+
+      fetch(`/grafico/cpu24h/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          usomedio.innerHTML = `${resposta[0].mediauso}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+
+
+
+        } 
+        else if (componentSelect.value === "Memoria") {
+
+          fetch(`/grafico/alertasRam/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          qtdAlertas.innerHTML = `${resposta[0].total}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+
+      fetch(`/grafico/duracaoAlertaRam/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          tempoMedio.innerHTML = `${resposta[0].duracao}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+
+      fetch(`/grafico/ram24h/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          usomedio.innerHTML = `${resposta[0].mediauso}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+
+
+        }
+
+
+
+
+
+
+
+        else if (componentSelect.value === "Disco") {
+          fetch(`/grafico/alertasDisco/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          qtdAlertas.innerHTML = `${resposta[0].total}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+      fetch(`/grafico/duracaoAlertaDisco/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          tempoMedio.innerHTML = `${resposta[0].duracao}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+
+      fetch(`/grafico/disco24h/${idDac}`, {
+        method: "GET",
+        })
+          .then(resposta => {
+          return resposta.json()
+          })
+        .then(resposta => {
+          console.log(resposta)
+          usomedio.innerHTML = `${resposta[0].mediauso}`
+        })
+      .catch(erro => console.error("Erro:", erro))
+
+        }
+        else {
+          console.warn("Componente inválido!");
+  }
 
       fetch(`/grafico/buscarRede/${idDac}`, {
         method: "GET",
