@@ -120,7 +120,7 @@
         <!-- Fim do Menu -->
         <div class="filtros-box">
             <div class="texto-organizacao" id="div_nome_empresa">
-                Central de regulação de urgências de Diadema
+                nome
             </div>
             <div class="texto-topico">
                 Convites enviados para os funcionários:
@@ -316,6 +316,7 @@
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
     <script>
+        div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
         // Configuração dos filtros
         var filtrosAtivos = ["", "", ["", ""], ["", ""]]
         function fecharFiltro(index) {

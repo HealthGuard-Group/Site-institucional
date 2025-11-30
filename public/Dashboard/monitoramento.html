@@ -766,20 +766,37 @@
                     for (let i = 0; i < vetor_maquinas.length; i++) {
                         if (vetor_maquinas[i].statusDac == "Inativo") {
                             if (vetor_maquinas[i].statusDac == "Inativo") {
-                                div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
-                <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
+                                div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/iconeInativo.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Inativo</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
                     </div>
-                    <div class="texto-marcacao-maquina">
-                        Status:
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
                     </div>
-                    <div class="texto-status-maquina vermelho">
-                        Inativo
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
                     </div>
                 </div>
-                <div class="div-imagem-status">
-                    <img src="../assets/imgs/Icone inativo.png" alt="Status" class="imagem-status">
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
                 </div>
             </div>`
                             }
@@ -792,20 +809,37 @@
                     }
                     for (let i = 0; i < vetor_maquinas.length; i++) {
                         if (vetor_maquinas[i].statusDac == "Ativo") {
-                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
-                <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
+                            div_maquinas.innerHTML += `  <div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina verde"> Ativo</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
                     </div>
-                    <div class="texto-marcacao-maquina">
-                        Status:
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
                     </div>
-                    <div class="texto-status-maquina verde">
-                        Ok
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
                     </div>
                 </div>
-                <div class="div-imagem-status">
-                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
                 </div>
             </div>`
                         }
@@ -816,21 +850,15 @@
                     div_maquinas.innerHTML = ``
                     for (let i = 0; i < vetor_maquinas.length; i++) {
                         if (vetor_maquinas[i].statusDac == "Em configuração") {
-                            div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
-                <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
-                    <div class="texto-marcacao-maquina">
-                        Status:
-                    </div>
-                    <div class="texto-status-maquina vermelho">
-                        Em configuração
-                    </div>
+                            div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/iconeConfiguracao.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Em Configuração</span></p></b>
                 </div>
-                <div class="div-imagem-status">
-                    <img src="../assets/imgs/Icone configuracao.png" alt="Status" class="imagem-status">
-                </div>
+                
             </div>`
                         }
                     }
