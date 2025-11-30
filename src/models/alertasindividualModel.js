@@ -1,8 +1,9 @@
 var database = require("../database/config");
 
-function puxarAlertasGeral(fkUnidade){
+function puxarAlertasIndividual(fkUnidade, fkDac){
      var instrucaoSql = `SELECT 
                             idAlerta,
+                            medS.fkDac,
                             nomeAlerta,
                             medD.nomeDaMedicao AS monitoramento,
                             dac.nomeIdentificacao AS nomeMaquina,
@@ -20,7 +21,7 @@ function puxarAlertasGeral(fkUnidade){
                                 JOIN
                             MedicoesDisponiveis AS medD ON medD.idMedicoesDisponiveis = medS.fkMedicoesDisponiveis
                         WHERE
-                            alerta.fkUnidadeDeAtendimento = ${fkUnidade}
+                            alerta.fkUnidadeDeAtendimento = ${fkUnidade} AND medS.fkDac = ${fkDac}
                         ORDER BY idAlerta DESC;`;
     
     return database.executar(instrucaoSql);
@@ -38,6 +39,6 @@ function marcarAlertaComoVerificado(idAlerta, nomeVisualizador) {
 } 
 
 module.exports={
-    puxarAlertasGeral,
+    puxarAlertasIndividual,
     marcarAlertaComoVerificado
 };

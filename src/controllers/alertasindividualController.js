@@ -1,12 +1,13 @@
-var alertasgeralModel = require("../models/alertasgeralModel");
+var alertasindividualModel = require("../models/alertasindividualModel");
 
-function puxarAlertasGeral(req, res) {
+function puxarAlertasIndividual(req, res) {
     var fkUnidade = req.params.variaveis
+    var fkDac = req.params.idDac
 
     if (fkUnidade == undefined) {
         res.status(400).send("FK unidade está undefined!"); 
     } else {
-        alertasgeralModel.puxarAlertasGeral(fkUnidade)
+        alertasindividualModel.puxarAlertasIndividual(fkUnidade, fkDac)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -31,7 +32,7 @@ function marcarAlertaComoVerificado(req, res) {
         res.status(400).send("Seu idAlerta está undefined!");
     } else {
 
-        alertasgeralModel.marcarAlertaComoVerificado(idAlerta, nomeVisualizador)
+        alertasindividualModel.marcarAlertaComoVerificado(idAlerta, nomeVisualizador)
             .then(
                 function (resultado) {
                     console.log(resultado);
@@ -51,6 +52,6 @@ function marcarAlertaComoVerificado(req, res) {
 }
 
 module.exports = {
-    puxarAlertasGeral,
+    puxarAlertasIndividual,
     marcarAlertaComoVerificado
 }

@@ -75,6 +75,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("alertasGerais.html")){
             puxarAlertasGeral()
         }
+        if (window.location.href.includes("alertasIndividuais.html")){
+            puxarAlertasIndividual()
+        }
     })
     .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);

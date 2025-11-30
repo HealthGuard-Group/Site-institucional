@@ -219,7 +219,7 @@
             if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
                 tabela_alertas.innerHTML += `
                      <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-tipo-alerta"><span class="status-dot icone-alerta"></span>${dados[i].nomeAlerta}</td>
                         <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
                         <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
                         <td class="td-data-inicio-alerta">${data_inicio}</td>
@@ -236,7 +236,7 @@
             } else if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
                 tabela_alertas.innerHTML += `
                      <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot alerta"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-tipo-alerta"><span class="status-dot icone-alerta"></span>${dados[i].nomeAlerta}</td>
                         <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
                         <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
                         <td class="td-data-inicio-alerta">${data_inicio}</td>
@@ -253,7 +253,7 @@
             } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
                 tabela_alertas.innerHTML += `
                      <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot atencao"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-tipo-alerta"><span class="status-dot icone-atencao"></span>${dados[i].nomeAlerta}</td>
                         <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
                         <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
                         <td class="td-data-inicio-alerta">${data_inicio}</td>
@@ -270,7 +270,7 @@
             } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
                 tabela_alertas.innerHTML += `
                      <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot atencao"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-tipo-alerta"><span class="status-dot icone-atencao"></span>${dados[i].nomeAlerta}</td>
                         <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
                         <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
                         <td class="td-data-inicio-alerta">${data_inicio}</td>
@@ -307,7 +307,6 @@
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                dataVisualizacao: data_visualizacao,
                 nomeVisualizador: nomeVisualizador
             }),
         })
@@ -315,7 +314,7 @@
                 return resposta.json();
             })
             .then(resposta => {
-                console.log("Alerta Visualidado com sucesso! ✅")
+                console.log("Alerta Verificado com sucesso! ✅")
                 console.log(resposta)
                 puxarAlertasGeral()
                 // copiartexto()

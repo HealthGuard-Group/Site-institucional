@@ -52,7 +52,7 @@
                 <hr class="separador-forte">
                 <div class="icone-box-inferior" id="tela_perfil">
                     <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
-                    <div class="texto-icone oculto">Perfil</div>
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
                 </div>
                 <hr class="separador">
                 <div class="icone-box-inferior" id="sair_conta_redirecionamento">
@@ -68,7 +68,8 @@
             <div class="conteudo-principal">
                 <div class="header">
                     <div class="header-esquerda">
-                        <a href="grafico1.html"><img src="../assets/imgs/seta-esquerda.png" alt="" class="icon-seta"></a>
+                        <a href="grafico1.html"><img src="../assets/imgs/seta-esquerda.png" alt=""
+                                class="icon-seta"></a>
                         <span>Máquina A-08</span>
                         <span class="status alerta">Status: Alerta grave </span>
                     </div>
@@ -90,88 +91,45 @@
                 </div>
 
                 <div id="container-tabela">
-                    <table id="tabela-alertas">
+                    <table id="tabela_alertas">
                         <tr id="titulo-tabela">
                             <td id="tr-tipo-alerta">Tipo de alerta</td>
-                            <td id="tr-data-inicio-alerta">Data/Hora</td>
-                            <td id="tr-data-expiracao-alerta">Data de visualização</td>
+                            <td id="tr-monitoramento-alerta">Monitoramento</td>
+                            <td id="tr-nome-maquina">Máquina</td>
+                            <td id="tr-data-inicio-alerta">Data de início</td>
+                            <td id="tr-data-termino-alerta">Data de término</td>
                             <td id="tr-status-alerta">Status</td>
-                            <td id="tr-visualizador-alerta">Visualizador</td>
+                            <td id="tr-data-verificacao-alerta">Data de verificação</td>
+                            <td id="tr-verificador-alerta">Verificador</td>
                             <td id="tr-acoes-alerta">Ação</td>
                         </tr>
+
                         <tr class="dados-tabela">
-                            <td class="td-tipo-alerta"><span class="status-dot alerta-grave"></span> Alerta Grave (Memória RAM)</td>
-                            <td class="td-data-inicio-alerta">29/10/2025 12:00:05</td>
-                            <td class="td-data-expiracao-alerta">--------------------</td>
-                            <td class="td-status-alerta"><span style="color:  #656464;">Não Visto</span></td>
-                            <td class="td-visualizador-alerta">--------------------</td>
+                            <td class="td-tipo-alerta"><span class="status-dot icone-alerta"></span>Alerta</td>
+                            <td class="td-monitoramento-alerta">Percentual de uso de cpu</td>
+                            <td class="td-nome-maquina">Máquina A-08</td>
+                            <td class="td-data-inicio-alerta">30/10/2025 12:00:05</td>
+                            <td class="td-data-termino-alerta">30/10/2025 12:00:05</td>
+                            <td class="td-status-alerta"><b style="color: #656464;">Não Verificado</b></td>
+                            <td class="td-data-verificacao-alerta">30/10/2025 12:00:05</td>
+                            <td class="td-verificador-alerta">Arthur Felipe Amaral da Silva </td>
                             <td class="td-acoes-alerta">
-                                <div class="icone-visualizacao">
+                                <div class="icone-verificacao">
                                     <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
                                 </div>
                             </td>
                         </tr>
                         <tr class="dados-tabela">
-                            <td class="td-tipo-alerta"><span class="status-dot alerta-critico"> </span>Em atenção (CPU)
-                            </td>
-                            <td class="td-data-inicio-alerta">28/10/2025 19:00:44</td>
-                            <td class="td-data-expiracao-alerta">29/10/2025 12:00:05</td>
-                            <td class="td-status-alerta"><span style="color: #00aa28;">Visto</span></td>
-                            <td class="td-visualizador-alerta">André Augusto Corado Leão</td>
+                            <td class="td-tipo-alerta"><span class="status-dot icone-atencao"></span>Atenção</td>
+                            <td class="td-monitoramento-alerta">Percentual de uso de cpu</td>
+                            <td class="td-nome-maquina">Máquina A-08</td>
+                            <td class="td-data-inicio-alerta">30/10/2025 12:00:05</td>
+                            <td class="td-data-termino-alerta">30/10/2025 12:00:05</td>
+                            <td class="td-status-alerta"><b style="color: #656464;">Não Verificado</b></td>
+                            <td class="td-data-verificacao-alerta">30/10/2025 12:00:05</td>
+                            <td class="td-verificador-alerta">Arthur Felipe Amaral da Silva </td>
                             <td class="td-acoes-alerta">
-                                <div class="icone-visualizacao">
-                                    <img src="../assets/imgs/icone_verificado.png" alt="visualização">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="dados-tabela">
-                            <td class="td-tipo-alerta"><span class="status-dot alerta-critico"> </span>Em atenção (CPU)
-                            </td>
-                            <td class="td-data-inicio-alerta">27/10/2025 08:32:27</td>
-                            <td class="td-data-expiracao-alerta">27/10/2025 14:00:03</td>
-                            <td class="td-status-alerta"><span style="color: #00aa28;">Visto</span></td>
-                            <td class="td-visualizador-alerta">Davi Escudero Caproni</td>
-                            <td class="td-acoes-alerta">
-                                <div class="icone-visualizacao">
-                                    <img src="../assets/imgs/icone_verificado.png" alt="visualização">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="dados-tabela">
-                            <td class="td-tipo-alerta"><span class="status-dot alerta-critico"> </span>Em atenção (Memória RAM)
-                            </td>
-                            <td class="td-data-inicio-alerta">23/10/2025 15:09:09</td>
-                            <td class="td-data-expiracao-alerta">--------------------</td>
-                            <td class="td-status-alerta"><span style="color: #656464;">Não Visto</span></td>
-                            <td class="td-visualizador-alerta">--------------------</td>
-                            <td class="td-acoes-alerta">
-                                <div class="icone-visualizacao">
-                                    <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="dados-tabela">
-                            <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (CPU)
-                            </td>
-                            <td class="td-data-inicio-alerta">24/10/2025 19:35:20</td>
-                            <td class="td-data-expiracao-alerta">--------------------</td>
-                            <td class="td-status-alerta"><span style="color:  #656464;">Não Visto</span></td>
-                            <td class="td-visualizador-alerta">--------------------</td>
-                            <td class="td-acoes-alerta">
-                                <div class="icone-visualizacao">
-                                    <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="dados-tabela">
-                            <td class="td-tipo-alerta"><span class="status-dot alerta-grave"> </span>Alerta Grave (Memória RAM)
-                            </td>
-                            <td class="td-data-inicio-alerta">22/10/2025 23:02:07</td>
-                            <td class="td-data-expiracao-alerta">--------------------</td>
-                            <td class="td-status-alerta"><span style="color: #656464;">Não Visto</span></td>
-                            <td class="td-visualizador-alerta">--------------------</td>
-                            <td class="td-acoes-alerta">
-                                <div class="icone-visualizacao">
+                                <div class="icone-verificacao">
                                     <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
                                 </div>
                             </td>
@@ -192,3 +150,193 @@
 </body>
 
 </html>
+
+<script>
+    var idDac = sessionStorage.ID_DAC;
+    console.log("ID DAC ",idDac)
+    var data_visualizacao;
+
+    function puxarAlertasIndividual() {
+        var variaveis = puxarVariaveis()
+        console.log(variaveis)
+        variaveis = variaveis.idUnidadeAtendimento
+        console.log(variaveis)
+        tabela_alertas.innerHTML = `
+            <tr id="titulo-tabela">
+                <td id="tr-tipo-alerta">Tipo de alerta</td>
+                <td id="tr-monitoramento-alerta">Monitoramento</td>
+                <td id="tr-nome-maquina">Máquina</td>
+                <td id="tr-data-inicio-alerta">Data de início</td>
+                <td id="tr-data-termino-alerta">Data de término</td>
+                <td id="tr-status-alerta">Status</td>
+                <td id="tr-data-verificacao-alerta">Data de verificação</td>
+                <td id="tr-verificador-alerta">Verificador</td>
+                <td id="tr-acoes-alerta">Ação</td>
+            </tr>`
+        fetch(`/alertasindividual/puxarAlertasIndividual/${variaveis}/${idDac}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                // var dados_filtrados = filtrarFuncionarios(resposta)
+                atualizarTabela(resposta)
+                // funcionarios = dados_filtrados;
+
+                // atualizarTabela(resposta)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+    function atualizarTabela(dados) {
+        console.log("Respota entrando na função:", dados)
+        // let variaveis = puxarVariaveis()
+
+
+        for (let i = 0; i < dados.length; i++) {
+
+            let data_inicio = new Date(dados[i].dataInicio);
+            data_inicio = data_inicio.toLocaleString("pt-BR", {
+                timeZone: "America/Sao_Paulo"
+            });
+
+
+            if (dados[i].dataTermino == null) {
+                var data_termino = "----------";
+            } else {
+                var data_termino = new Date(dados[i].dataTermino);
+                data_termino = data_termino.toLocaleString("pt-BR", {
+                    timeZone: "America/Sao_Paulo"
+                });
+            }
+
+            if (dados[i].dataVisualizacao == null) {
+                data_visualizacao = "----------";
+            } else {
+                data_visualizacao = new Date(dados[i].dataVisualizacao);
+                data_visualizacao = data_visualizacao.toLocaleString("pt-BR", {
+                    timeZone: "America/Sao_Paulo"
+                });
+            }
+
+            if (dados[i].verificador == null) {
+                dados[i].verificador = "--------------------";
+            }
+
+            if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
+                tabela_alertas.innerHTML += `
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot icone-alerta"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
+                                <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            } else if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
+                tabela_alertas.innerHTML += `
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot icone-alerta"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color: rgb(0, 170, 40);">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao" title="Alerta verificado">
+                                <img src="../assets/imgs/iconeOlhoVerde.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
+                tabela_alertas.innerHTML += `
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot icone-atencao"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
+                                <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
+                tabela_alertas.innerHTML += `
+                     <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot icone-atencao"></span>${dados[i].nomeAlerta}</td>
+                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                        <td class="td-data-inicio-alerta">${data_inicio}</td>
+                        <td class="td-data-termino-alerta">${data_termino}</td>
+                        <td class="td-status-alerta"><b style="color:  rgb(0, 170, 40);">${dados[i].statusAlerta}</b></td>
+                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao" title="Alerta verificado">
+                                <img src="../assets/imgs/iconeOlhoVerde.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>`
+            }
+        }
+    }
+
+    function marcarAlertaComoVerificado(idAlerta) {
+
+        var variaveis = puxarVariaveis();
+        var nomeVisualizador = variaveis.nomeUsuario;
+
+        console.log("PARAMETROS:", idAlerta, data_visualizacao, nomeVisualizador)
+
+
+        // document.querySelector('.tela-escurecida').classList.add('oculto')
+        // document.getElementById("popupConfirmacaoAlterar").classList.add("oculto")
+        // document.getElementById("popupConviteGerado").classList.add("oculto")
+        // document.getElementById('html_fonte').style.overflowY = "auto"
+
+        fetch(`/alertasindividual/marcarAlertaComoVerificado/${idAlerta}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeVisualizador: nomeVisualizador
+            }),
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log("Alerta Verificado com sucesso! ✅")
+                console.log(resposta)
+                puxarAlertasIndividual()
+                // copiartexto()
+            })
+            .catch(function (resposta) {
+                console.log("UPDATE ALERTA ❌")
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+</script>
