@@ -10,12 +10,164 @@
   <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="../css/menu_bar.css">
   <link rel="stylesheet" href="../css/grafico1.css">
+    <link rel="stylesheet" href="../css/monitoramento.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../js/validarSessao.js"></script>
 
 </head>
 
 <body onload="validarSessao()">
+<div class="tela-escurecida oculto">
+            <div class="popup-fundo oculto" id="modal_atualizarmaquina">
+                <div class="popup reduzido" id="modal_atualizar">
+                    <div class="popup-header">
+                        <div class="titulo_modal">Editar a máquina</div>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="texto-marcacao-modal">Seleção dos serviços de monitoramento:</div>
+                    <div class="box-selecao-servicos">
+                        <div class="box-colunas-selecao">
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de CPU(%)</div>
+                                <label for="uso_cpu_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_cpu_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de RAM(%)</div>
+                                <label for="uso_ram_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_ram_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="barra-vertical-modal"></div>
+                        <div class="box-colunas-selecao">
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de Disco(%)</div>
+                                <label for="uso_disco_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_disco_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de Rede(O/I)</div>
+                                <label for="uso_rede" class="switch">
+                                    <input type="checkbox" id="uso_rede" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-botao-modal">
+                        <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
+                        </div>
+                        <div class="botoes-modal">
+                            <button class="botao-modal btn-personalizar" onclick="adicionandoServicosPadrao()">Redefinir Métricas Padrão</button>
+                            <button class="botao-modal" onclick="adicionandoServicosPersonalizados()">Personalizar
+                                métricas</button>
+                        </div>
+                    </div>
+                    <div class="tooltip-container">
+                        <i class="i_metricas_padrao"><u>Visualizar métricas padrão</u></i>
+                        <div class="tooltip">
+                            <p>Com base em nossos estudos e análises, determinamos as métricas-padrão para os alertas,
+                                sendo elas:</p>
+                            <p><strong>CPU</strong></p>
+                            <p>Em atenção – 58.1%</p>
+                            <p>Alerta grave – 78.5%</p>
+
+
+                            <p><strong>Memória RAM</strong></p>
+                            <p>Em atenção – 91.9%</p>
+                            <p>Alerta grave – 100%</p>
+
+
+                            <p><strong>DISCO</strong></p>
+                            <p>Em atenção – 70%</p>
+                            <p>Alerta grave – 80%</p>
+
+
+                            <p><strong>REDE</strong></p>
+                            <p>Alerta grave – Rede desconectada</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- Modal métricas alertas -->
+            <div class="popup-fundo oculto" id="modal_adicionarmaquina_config">
+                <div class="popup-header">
+                    <div class="popup">
+                        <div class="popup-header">
+                            <div class="titulo_modal">Personalização Métricas</div>
+                            <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                    src="../assets/imgs/iconeFechar.png"></button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
+                        </div>
+                        <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div>
+                        </div>
+                        <div class="box-input-modal">
+                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_minimo_atencao"
+                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_minimo_atencao">Preencha o campo</div>
+                            </div>
+                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_maximo_atencao"
+                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_maximo_atencao">Preencha o campo</div>
+                            </div>
+                        </div>
+                        <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div>
+                        </div>
+                        <div class="box-input-modal">
+                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_minimo_alerta"
+                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_minimo_alerta">Preencha o campo</div>
+                            </div>
+                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_maximo_alerta"
+                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_maximo_alerta">Preencha o campo</div>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="ipt_metrica_padrao">
+                            <p> Usar configuração padrão</p><input type="checkbox" id="input_configuracao_padrao"
+                                onchange="puxarMetricasPadraoPersonalizado(this)">
+                        </div>
+                        <div class="box-botao-modal">
+                            <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
+                                serviço
+                            </div>
+                            <div class="box-botao-modal">
+                                <div class="texto-erro oculto" id="texto_erro_configuracao_alerta">Configure a operação
+                                    ideal</div>
+                                <button class="botao-modal"
+                                    onclick="parametrizarAlertasPersonalizado()">Próximo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
 
   <!-- Começo do Menu -->
   <div class="menu-lateral">
@@ -104,12 +256,11 @@
           </div>
 
           <div class="div_componentes">
-            <div id="cpu1"> <span class="status-dot ok"> </span> Uso de CPU: <strong id="cpu"></strong></div>
-            <div id="ram1"> <span class="status-dot alerta-grave"></span>Uso de Memória RAM: <strong id="ram"></strong></div>
-            <div id="disco1"> <span class="status-dot alerta-grave"></span>Uso do Disco Rígido: <strong id="disco"></strong></div>
-            <div id="rede1"> <span id="redeok" class="status-dot ok"></span>Status da Rede: <strong id="rede"></strong></div>
+            <div> <span class="status-dot ok"> </span> Uso de CPU: <strong id="cpu"></strong></div>
+            <div> <span class="status-dot alerta-grave"></span>Uso de Memória RAM: <strong id="ram"></strong></div>
+            <div> <span id="redeok" class="status-dot ok"></span>Status da Rede: <strong id="rede"></strong></div>
           </div>
-          <button class="btn-editar">Editar</button>
+          <button class="btn-editar" id="botao_editar_maquina">Editar</button>
         </div>
 
         <div class="kpi-topo">
@@ -132,7 +283,7 @@
                   monitoramento </span>
               </span>
             </div>
-            <div class="tempo-atividade" id="tempoatvd"></div>
+            <div class="tempo-atividade">15h30min</div>
           </div>
 
 
@@ -154,7 +305,7 @@
                   dias</span>
               </span>
             </div>
-            <div class="number" id="mediaAlerta"></div>
+            <div class="number">35</div>
           </div>
         </div>
 
@@ -187,10 +338,9 @@
               <strong> Componentes a monitorar: </strong>
             </span>
             <select id="componentSelect" onchange="trocarMonitoramento()">
-              <option value="selecione" selected id="selecione">Selecione</option>
-              <option value="CPU" id="cpu_op">CPU</option>
-              <option value="Memoria" id="ram_op">Memória RAM</option>
-              <option value="Disco" id="disco_op">Disco</option>
+              <option value="CPU" selected>CPU</option>
+              <option value="Memória">Memória RAM</option>
+              <option value="Disco">Disco</option>
             </select>
 
             <div class="config-alertas-status">
@@ -200,16 +350,16 @@
             </div>
 
             <div class="metrica">
-              <div class="metric-lado">Uso médio do Componente (Nas últimas 24h)</div>
-              <div class="number" id="usomedio"></div>
+              <div class="metric-lado">Tempo de Inatividade (Nas últimas 24h)</div>
+              <div class="number" id="inatividade">8h30min</div>
             </div>
             <div class="metrica">
               <div class="metric-lado">Quantidade de alertas (Nas últimas 24h) </div>
-              <div class="number" id="qtdAlertas"></div>
+              <div class="number" id="qtdAlertas">7</div>
             </div>
             <div class="metrica">
-              <div class="metrica-lado">Duração média dos alertas (Nas últimas 24h)</div>
-              <div class="number" id="tempoMedio"></div>
+              <div class="metrica-lado">Tempo médio entre alertas (Nas últimas 24h)</div>
+              <div class="number" id="tempoMedio">30min</div>
             </div>
           </div>
           <div class="metricas-valores">
@@ -250,17 +400,26 @@
 
   <script src="../js/menu-lateral.js"></script>
   <script>
+    document.getElementById("botao_editar_maquina").addEventListener('click', () => {
+        document.querySelector('.tela-escurecida').classList.remove('oculto')
+        document.getElementById("modal_atualizarmaquina").classList.remove('oculto')
+        document.getElementById('html_fonte').style.overflowY = "hidden"
+        var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
+        nomeIndetificao.style.border = '0.2vh solid #000'
+        nomeIndetificao.style.boxShadow = 'none'
+    })
+
     var idDac = sessionStorage.ID_DAC;
     console.log("Id Dac:", idDac)
 
-    //Redirecionador para Dash individuais
+    // //Redirecionador para Dash individuais
     document.querySelector(".redirect-chart").addEventListener("click", () => {
       var select = componentSelect.value
       if (select == "CPU") {
         window.location.href = "dashboard-cpu.html"
       } else if (select == "Memória") {
         window.location.href = "analiseRAM.html"
-      } else if (select == "Disco") {
+      } else if (select == "Disco"){
         window.location.href = "analiseDisco.html"
       }
     })
@@ -315,73 +474,7 @@
         console.log(`Erro no catch: ${resposta}`);
       });
 
-      async function buscarMedicoesSelecionadasFront(idDac) {
-  try {
-    const response = await fetch(`/grafico/buscarMedicoesSelecionadas/${idDac}`)
-    if (!response.ok) throw new Error('Erro ao buscar medições')
-    return await response.json()
-  } catch (erro) {
-    console.error("Erro no fetch:", erro)
-    return [];
-  }
-}
-
-async function atualizarComponentes(idDac) {
-  try {
-    const medicoes = await buscarMedicoesSelecionadasFront(idDac)
-    console.log("Medições recebidas:", medicoes)
-
-    document.querySelectorAll('.div_componentes > div').forEach(div => div.style.display = 'none')
-    document.querySelectorAll('#componentSelect option').forEach(op => op.style.display = 'none')
-
-    const idsDiv = { 
-      1: 'cpu1', 
-      6: 'ram1', 
-      10: 'disco1'
-    }
-
-    const idsOption = {
-      1: 'cpu_op',
-      6: 'ram_op',
-      10: 'disco_op'
-    }
-
-    for ( i = 0; i < medicoes.length; i++) {
-      const medicao = medicoes[i]
-
-      const idDiv = idsDiv[medicao.fkMedicoesDisponiveis]
-      if (idDiv) {
-        document.getElementById(idDiv).style.display = 'block'
-      }
-
-      const idOp = idsOption[medicao.fkMedicoesDisponiveis]
-      if (idOp) {
-        document.getElementById(idOp).style.display = 'block'
-      }
-    }
-
-    const select = document.getElementById('componentSelect')
-    const visibleOptions = [...select.options].filter(op => op.style.display !== 'none')
-    if (visibleOptions.length > 0) {
-      select.value = visibleOptions[0].value
-    }
-
-  } catch (erro) {
-    console.error("Erro ao atualizar componentes:", erro)
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const idDac = sessionStorage.ID_DAC
-  atualizarComponentes(idDac)
-})
-
-
-
-
-    function atualizarDados() {
-
-      fetch(`/grafico/totalAlerta/${idDac}`, {
+    fetch(`/grafico/totalAlerta/${idDac}`, {
       method: "GET",
     })
       .then(resposta => {
@@ -392,159 +485,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
         totalalertas.innerHTML = `${resposta[0].totalAlertas}`
       })
-      .catch(erro => console.error("Erro:", erro));
-
-      fetch(`/grafico/mediaAlertas/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-        return resposta.json();
-      })
-      .then(resposta => {
-        console.log(resposta)
-        mediaAlerta.innerHTML = `${resposta[0].mediaalertasdiarios}`
-      })
-      .catch(erro => console.error("Erro:", erro));
 
 
-
-
-
-       if (componentSelect.value === "CPU") {
-        
-        fetch(`/grafico/alertasCpu/${idDac}`, {
+    function atualizarDados() {
+      fetch(`/grafico/buscarCpu/${idDac}`, {
         method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
+      }).then(resposta => resposta.json())
         .then(resposta => {
-          console.log(resposta)
-          qtdAlertas.innerHTML = `${resposta[0].total}`
+          console.log(resposta);
+          cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
         })
-      .catch(erro => console.error("Erro:", erro))
+        .catch(erro => console.error("Erro:", erro));
 
-      fetch(`/grafico/duracaoAlertaCpu/${idDac}`, {
+
+      fetch(`/grafico/buscarRam/${idDac}`, {
         method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
+      }).then(resposta => resposta.json())
         .then(resposta => {
-          console.log(resposta)
-          tempoMedio.innerHTML = `${resposta[0].duracao}`
+          console.log(resposta);
+          ram.innerHTML = `${resposta[0].medidaCapturada}%`;
         })
-      .catch(erro => console.error("Erro:", erro))
-
-
-      fetch(`/grafico/cpu24h/${idDac}`, {
-        method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
-        .then(resposta => {
-          console.log(resposta)
-          usomedio.innerHTML = `${resposta[0].mediauso}`
-        })
-      .catch(erro => console.error("Erro:", erro))
-
-
-
-
-        } 
-        else if (componentSelect.value === "Memoria") {
-
-          fetch(`/grafico/alertasRam/${idDac}`, {
-        method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
-        .then(resposta => {
-          console.log(resposta)
-          qtdAlertas.innerHTML = `${resposta[0].total}`
-        })
-      .catch(erro => console.error("Erro:", erro))
-
-
-      fetch(`/grafico/duracaoAlertaRam/${idDac}`, {
-        method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
-        .then(resposta => {
-          console.log(resposta)
-          tempoMedio.innerHTML = `${resposta[0].duracao}`
-        })
-      .catch(erro => console.error("Erro:", erro))
-
-
-      fetch(`/grafico/ram24h/${idDac}`, {
-        method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
-        .then(resposta => {
-          console.log(resposta)
-          usomedio.innerHTML = `${resposta[0].mediauso}`
-        })
-      .catch(erro => console.error("Erro:", erro))
-
-
-
-        }
-
-
-
-
-
-
-
-        else if (componentSelect.value === "Disco") {
-          fetch(`/grafico/alertasDisco/${idDac}`, {
-        method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
-        .then(resposta => {
-          console.log(resposta)
-          qtdAlertas.innerHTML = `${resposta[0].total}`
-        })
-      .catch(erro => console.error("Erro:", erro))
-
-      fetch(`/grafico/duracaoAlertaDisco/${idDac}`, {
-        method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
-        .then(resposta => {
-          console.log(resposta)
-          tempoMedio.innerHTML = `${resposta[0].duracao}`
-        })
-      .catch(erro => console.error("Erro:", erro))
-
-
-      fetch(`/grafico/disco24h/${idDac}`, {
-        method: "GET",
-        })
-          .then(resposta => {
-          return resposta.json()
-          })
-        .then(resposta => {
-          console.log(resposta)
-          usomedio.innerHTML = `${resposta[0].mediauso}`
-        })
-      .catch(erro => console.error("Erro:", erro))
-
-        }
-        else {
-          console.warn("Componente inválido!");
-  }
+        .catch(erro => console.error("Erro:", erro));
 
       fetch(`/grafico/buscarRede/${idDac}`, {
         method: "GET",
@@ -553,7 +514,6 @@ document.addEventListener('DOMContentLoaded', () => {
           console.log(resposta);
 
           if(resposta == ""){
-            fetch(`/grafico/inativarMaquina/${idDac}`, { method: "PUT" });
             rede.innerHTML = `Máquina Inativa`
             ram.innerHTML = `Máquina Sem Dados`
             cpu.innerHTML = `Máquina Sem Dados`
@@ -569,76 +529,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const diferenca2 = diferenca1 / 1000 / 60;
 
             if (diferenca2 > 1 ) {
-              fetch(`/grafico/inativarMaquina/${idDac}`, { method: "PUT" });
               rede.innerHTML = `NÃO CONECTADO`
               ram.innerHTML = `Máquina Inativa`
-              disco.innerHTML = `Máquina Inativa`
               cpu.innerHTML = `Máquina inativa`
               redeok.classList.remove("status-dot", "ok")
               redeok.classList.add("status-dot", "alerta-grave")
               status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
             } else {
-
-              fetch(`/grafico/ativarMaquina/${idDac}`, { method: "PUT" })
               rede.innerHTML = `CONECTADO`;
               redeok.classList.remove("status-dot", "alerta-grave")
               redeok.classList.add("status-dot", "ok")
               status_MaquinaDac.innerHTML = `<p style="color:green">Status: Ativa</p>`
-
-              fetch(`/grafico/buscarCpu/${idDac}`, {
-                method: "GET",
-              }).then(resposta => resposta.json())
-                .then(resposta => {
-                  console.log(resposta);
-                  cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
-                })
-                .catch(erro => console.error("Erro:", erro));
-
-
-              fetch(`/grafico/buscarRam/${idDac}`, {
-                method: "GET",
-              }).then(resposta => resposta.json())
-                .then(resposta => {
-                  console.log(resposta);
-                  ram.innerHTML = `${resposta[0].medidaCapturada}%`;
-                })
-                .catch(erro => console.error("Erro:", erro));
-
-
-              fetch(`/grafico/buscarDisco/${idDac}`, {
-                method: "GET",
-              }).then(resposta => resposta.json())
-                .then(resposta => {
-                  console.log(resposta);
-                  disco.innerHTML = `${resposta[0].medidaCapturada}%`
-                })
-                .catch(erro => console.error("Erro:", erro))
-
-              fetch(`/grafico/tempoAtividade/${idDac}`, {
-                method: "GET",
-              }).then(resposta => resposta.json())
-                .then(resposta => {
-                  const tempo = resposta[0].medidaCapturada
-                  const [horas, minutos] = tempo.split(":")
-                  tempoatvd.innerHTML = `${horas}h ${minutos}min`
-                })
-                .catch(erro => console.error("Erro:", erro))
-
-
-
-
-
-
-
-            } // FIM DO ELSE
+            }
 
           }
         })
         .catch(erro => console.error("Erro:", erro));
-
-      
-
-      
     }
     atualizarDados();
     setInterval(atualizarDados, 2000);
@@ -661,41 +567,34 @@ document.addEventListener('DOMContentLoaded', () => {
         grave: [2, 3, 2, 1, 2, 1, 0],
         critico: [1, 2, 1, 0, 1, 0, 0]
       }
-    };
-    var dadosMonitoramento = []
-    var dataAlerta = []
-    var dataMonitoramento = []
-    var legendaMonitoramento = ""
-    // Funções Auxiliares
-    function formatarData(data) {
-      const fuso = {
-        timeZone: 'America/Sao_Paulo',
-        hour12: false
-      }
-      var data_formatada = new Date(data)
-      data_formatada = data_formatada.toLocaleTimeString("pt-BR", fuso)
-      return data_formatada
     }
-    //
+    var dadosMonitoramento = [40, 55, 68, 75, 82, 78, 85]
+    var dataAlerta = ['24/10', '25/10', '26/10', '27/10', '28/10', '29/10', '30/10']
+    var dataMonitoramento = ['11:30', '11:35', '11:40', '11:45', '11:50', '11:55', '12:00']
     function plotarGraficosDash() {
       var configuracaoBackgroundMonitoramento = {
         id: 'backgroundColorPlugin',
         beforeDraw: (chart) => {
           const { ctx, chartArea, scales } = chart
           if (!chartArea) return
+
           const { top, bottom, left, right } = chartArea
           const yScale = scales.y
           const getY = (valor) => yScale.getPixelForValue(valor)
+
           ctx.save();
-          // Valor ideal
+          // Zona Verde (< 73)
           ctx.fillStyle = 'rgba(19, 155, 54, 0.7)'
           ctx.fillRect(left, getY(73), right - left, bottom - getY(71))
-          // Valor Atenção
+
+          // Zona Amarela (73 - 87)
           ctx.fillStyle = 'rgba(243, 190, 58, 0.8)'
           ctx.fillRect(left, getY(87), right - left, getY(73) - getY(87))
-          // Valor Alerta
+
+          // Zona Vermelha (> 87)
           ctx.fillStyle = 'rgba(220, 23, 23, 0.7)'
           ctx.fillRect(left, top, right - left, getY(87) - top)
+
           ctx.restore()
         }
       }
@@ -723,7 +622,7 @@ document.addEventListener('DOMContentLoaded', () => {
         data: {
           labels: dataMonitoramento,
           datasets: [{
-            label: legendaMonitoramento,
+            label: "Uso de CPU",
             data: dadosMonitoramento,
             borderColor: '#000',
             backgroundColor: '#000',
@@ -739,12 +638,7 @@ document.addEventListener('DOMContentLoaded', () => {
           scales: {
             y: {
               min: 0, max: 100,
-              ticks: {
-                stepSize: 10,
-                callback: function (valor) {
-                  return valor + "%"
-                }
-              },
+              ticks: { stepSize: 10 },
               title: { display: true, text: 'Uso (%)' }
             }
           },
@@ -759,17 +653,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function trocarMonitoramento() {
       var select = document.getElementById("componentSelect").value
+
       if (select == "CPU") {
-        puxarDadosGraficoDash(1)
+        graficoMonitoramento.data.datasets[0].label = "Uso de CPU"
+        graficoMonitoramento.data.datasets[0].data = [40, 55, 68, 75, 82, 78, 85]
+        graficoAlerta.data.datasets[0].data = dadosGraficoAlerta.CPU.grave
+        graficoAlerta.data.datasets[1].data = dadosGraficoAlerta.CPU.critico
+
       } else if (select == "Memória") {
-        puxarDadosGraficoDash(6)
+        graficoMonitoramento.data.datasets[0].label = "Uso de Memória"
+        graficoMonitoramento.data.datasets[0].data = [15, 22, 35, 30, 42, 38, 45]
+        graficoAlerta.data.datasets[0].data = dadosGraficoAlerta.Memória.grave
+        graficoAlerta.data.datasets[1].data = dadosGraficoAlerta.Memória.critico
+
       } else if (select == "Disco") {
-        puxarDadosGraficoDash(10)
+        graficoMonitoramento.data.datasets[0].label = "Uso de Disco"
+        graficoMonitoramento.data.datasets[0].data = [60, 72, 85, 92, 95, 88, 98]
+        graficoAlerta.data.datasets[0].data = dadosGraficoAlerta.Disco.grave
+        graficoAlerta.data.datasets[1].data = dadosGraficoAlerta.Disco.critico
       }
-      if (graficoMonitoramento != "") {
-        graficoMonitoramento.update()
-        graficoAlerta.update()
-      }
+
+      graficoMonitoramento.update()
+      graficoAlerta.update()
     }
 
     function trocarGraficos() {
@@ -783,73 +688,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    function puxarDadosGraficoDash(idMonitoramento) {
-      if (idMonitoramento == 1) {
-        legendaMonitoramento = "Uso de CPU"
-      } else if (idMonitoramento == 2) {
-        legendaMonitoramento = "Uso de Memória"
-      } else if (idMonitoramento == 3) {
-        legendaMonitoramento = "Uso de Disco"
-      }
-      fetch(`/grafico/puxarDadosGraficoDash/${idDac}/${idMonitoramento}`, {
-        method: "GET",
-      })
-        .then(resposta => {
-          return resposta.json();
-        })
-        .then(resposta => {
-          console.log(resposta)
-          while (dadosMonitoramento.length != 0) {
-            dadosMonitoramento.shift()
-            dataMonitoramento.shift()
-          }
-          for (let i = resposta.length - 1; i >= 0; i--) {
-            dadosMonitoramento.push(resposta[i].medidaCapturada)
-            dataMonitoramento.push(formatarData(resposta[i].dataCaptura))
-          }
-          if (graficoMonitoramento == "") {
-            plotarGraficosDash()
-          } else {
-            graficoMonitoramento.update()
-          }
-        })
-        .catch(function (resposta) {
-          console.log(`Erro no catch: ${resposta}`);
-        });
-    }
+    plotarGraficosDash()
+    trocarGraficos()
+    trocarMonitoramento()
 
-    function atualizarGraficoMonitoramento() {
-      var select = document.getElementById("componentSelect").value
-      var idMonitoramento = 0;
-      if (select == "CPU") {
-        idMonitoramento = 1
-      } else if (select == "Memória") {
-        idMonitoramento = 6
-      } else if (select == "Disco") {
-        idMonitoramento = 10
-      }
-      fetch(`/grafico/atualizarDadosGraficoDashMonitoramento/${idDac}/${idMonitoramento}`, {
-        method: "GET",
-      })
-        .then(resposta => {
-          return resposta.json();
-        })
-        .then(resposta => {
-          if (dataMonitoramento[dataMonitoramento.length - 1] != formatarData(resposta[0].dataCaptura)) {
-            dadosMonitoramento.push(resposta[0].medidaCapturada)
-            dataMonitoramento.push(formatarData(resposta[0].dataCaptura))
 
-            if (dadosMonitoramento.length == 8) {
-              dadosMonitoramento.shift()
-              dataMonitoramento.shift()
-            }
-            graficoMonitoramento.update()
-          } 
-        })
-        .catch(function (resposta) {
-          console.log(`Erro no catch: ${resposta}`);
-        });
-    }
 
     function excluir_maquina() {
       console.log('entrou na função')

@@ -32,6 +32,7 @@ var analisecpuRouter = require("./src/routes/analisecpu");
 var dashhgRouter = require("./src/routes/dashhg");
 var acessosRouter = require("./src/routes/acessos");
 var alertasgeralRouter = require("./src/routes/alertasgeral");
+var dashAlertasSemanaisRouter = require("./src/routes/dashAlertasSemanais");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -54,7 +55,7 @@ app.use("/analisecpu", analisecpuRouter )
 app.use("/dashhg", dashhgRouter);
 app.use("/acessos", acessosRouter)
 app.use("/alertasgeral", alertasgeralRouter)
-
+app.use("/dashAlertasSemanais", dashAlertasSemanaisRouter);
 
 app.post('/enviar-email', async (req, res) => {
     const {email, assunto,mensagem } = req.body;
