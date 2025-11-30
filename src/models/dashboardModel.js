@@ -89,7 +89,7 @@ function inserirmaquinametricaspersonalizadas(maquina_nova, idUnidadeAtendimento
 }
 
 function puxarNome(fkUnidade) {
-  var instrucaoSql = `select nomeFantasia as razaoSocial from unidadeDeAtendimento where idUnidadeDeAtendimento = ${fkUnidade};`;
+  var instrucaoSql = `select nomeFantasia as razaoSocial from UnidadeDeAtendimento where idUnidadeDeAtendimento = ${fkUnidade};`;
 
   return database.executar(instrucaoSql);
 }

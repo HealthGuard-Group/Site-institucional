@@ -10,164 +10,164 @@
   <link rel="stylesheet" href="../css/global.css">
   <link rel="stylesheet" href="../css/menu_bar.css">
   <link rel="stylesheet" href="../css/grafico1.css">
-    <link rel="stylesheet" href="../css/monitoramento.css">
+  <link rel="stylesheet" href="../css/monitoramento.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="../js/validarSessao.js"></script>
 
 </head>
 
 <body onload="validarSessao()">
-<div class="tela-escurecida oculto">
-            <div class="popup-fundo oculto" id="modal_atualizarmaquina">
-                <div class="popup reduzido" id="modal_atualizar">
-                    <div class="popup-header">
-                        <div class="titulo_modal">Editar a máquina</div>
-                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
-                                src="../assets/imgs/iconeFechar.png"></button>
-                    </div>
-                    <div class="line"></div>
-                    <div class="texto-marcacao-modal">Seleção dos serviços de monitoramento:</div>
-                    <div class="box-selecao-servicos">
-                        <div class="box-colunas-selecao">
-                            <div class="box-selecao-modal">
-                                <div class="texto-modal">Uso de CPU(%)</div>
-                                <label for="uso_cpu_porcentagem" class="switch">
-                                    <input type="checkbox" id="uso_cpu_porcentagem" class="input-checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="box-selecao-modal">
-                                <div class="texto-modal">Uso de RAM(%)</div>
-                                <label for="uso_ram_porcentagem" class="switch">
-                                    <input type="checkbox" id="uso_ram_porcentagem" class="input-checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="barra-vertical-modal"></div>
-                        <div class="box-colunas-selecao">
-                            <div class="box-selecao-modal">
-                                <div class="texto-modal">Uso de Disco(%)</div>
-                                <label for="uso_disco_porcentagem" class="switch">
-                                    <input type="checkbox" id="uso_disco_porcentagem" class="input-checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                            <div class="box-selecao-modal">
-                                <div class="texto-modal">Uso de Rede(O/I)</div>
-                                <label for="uso_rede" class="switch">
-                                    <input type="checkbox" id="uso_rede" class="input-checkbox">
-                                    <span class="slider"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="box-botao-modal">
-                        <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
-                        </div>
-                        <div class="botoes-modal">
-                            <button class="botao-modal btn-personalizar" onclick="adicionandoServicosPadrao()">Redefinir Métricas Padrão</button>
-                            <button class="botao-modal" onclick="adicionandoServicosPersonalizados()">Personalizar
-                                métricas</button>
-                        </div>
-                    </div>
-                    <div class="tooltip-container">
-                        <i class="i_metricas_padrao"><u>Visualizar métricas padrão</u></i>
-                        <div class="tooltip">
-                            <p>Com base em nossos estudos e análises, determinamos as métricas-padrão para os alertas,
-                                sendo elas:</p>
-                            <p><strong>CPU</strong></p>
-                            <p>Em atenção – 58.1%</p>
-                            <p>Alerta grave – 78.5%</p>
-
-
-                            <p><strong>Memória RAM</strong></p>
-                            <p>Em atenção – 91.9%</p>
-                            <p>Alerta grave – 100%</p>
-
-
-                            <p><strong>DISCO</strong></p>
-                            <p>Em atenção – 70%</p>
-                            <p>Alerta grave – 80%</p>
-
-
-                            <p><strong>REDE</strong></p>
-                            <p>Alerta grave – Rede desconectada</p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-            <!-- Modal métricas alertas -->
-            <div class="popup-fundo oculto" id="modal_adicionarmaquina_config">
-                <div class="popup-header">
-                    <div class="popup">
-                        <div class="popup-header">
-                            <div class="titulo_modal">Personalização Métricas</div>
-                            <button class="fechar" onclick="fecharPop()"><img class="fechar"
-                                    src="../assets/imgs/iconeFechar.png"></button>
-                        </div>
-                        <div class="line"></div>
-                        <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
-                        </div>
-                        <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div>
-                        </div>
-                        <div class="box-input-modal">
-                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
-                                    style="color: red;">*</span>:</div>
-                            <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_minimo_atencao"
-                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_minimo_atencao">Preencha o campo</div>
-                            </div>
-                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
-                                    style="color: red;">*</span>:</div>
-                            <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_maximo_atencao"
-                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_maximo_atencao">Preencha o campo</div>
-                            </div>
-                        </div>
-                        <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div>
-                        </div>
-                        <div class="box-input-modal">
-                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
-                                    style="color: red;">*</span>:</div>
-                            <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_minimo_alerta"
-                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_minimo_alerta">Preencha o campo</div>
-                            </div>
-                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
-                                    style="color: red;">*</span>:</div>
-                            <div class="coluna-erro-modal-reduzido">
-                                <input type="number" class="input-modal" id="valor_maximo_alerta"
-                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
-                                <div class="texto-erro oculto" id="texto_erro_maximo_alerta">Preencha o campo</div>
-                            </div>
-                        </div>
-                        <div class="line"></div>
-                        <div class="ipt_metrica_padrao">
-                            <p> Usar configuração padrão</p><input type="checkbox" id="input_configuracao_padrao"
-                                onchange="puxarMetricasPadraoPersonalizado(this)">
-                        </div>
-                        <div class="box-botao-modal">
-                            <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
-                                serviço
-                            </div>
-                            <div class="box-botao-modal">
-                                <div class="texto-erro oculto" id="texto_erro_configuracao_alerta">Configure a operação
-                                    ideal</div>
-                                <button class="botao-modal"
-                                    onclick="parametrizarAlertasPersonalizado()">Próximo</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="tela-escurecida oculto">
+    <div class="popup-fundo oculto" id="modal_atualizarmaquina">
+      <div class="popup reduzido" id="modal_atualizar">
+        <div class="popup-header">
+          <div class="titulo_modal">Editar a máquina</div>
+          <button class="fechar" onclick="fecharPop()"><img class="fechar"
+              src="../assets/imgs/iconeFechar.png"></button>
         </div>
+        <div class="line"></div>
+        <div class="texto-marcacao-modal">Seleção dos serviços de monitoramento:</div>
+        <div class="box-selecao-servicos">
+          <div class="box-colunas-selecao">
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de CPU(%)</div>
+              <label for="uso_cpu_porcentagem" class="switch">
+                <input type="checkbox" id="uso_cpu_porcentagem" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de RAM(%)</div>
+              <label for="uso_ram_porcentagem" class="switch">
+                <input type="checkbox" id="uso_ram_porcentagem" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="barra-vertical-modal"></div>
+          <div class="box-colunas-selecao">
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de Disco(%)</div>
+              <label for="uso_disco_porcentagem" class="switch">
+                <input type="checkbox" id="uso_disco_porcentagem" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de Rede(O/I)</div>
+              <label for="uso_rede" class="switch">
+                <input type="checkbox" id="uso_rede" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
         </div>
+        <div class="box-botao-modal">
+          <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
+          </div>
+          <div class="botoes-modal">
+            <button class="botao-modal btn-personalizar" onclick="adicionandoServicosPadrao()">Redefinir Métricas
+              Padrão</button>
+            <button class="botao-modal" onclick="adicionandoServicosPersonalizados()">Personalizar
+              métricas</button>
+          </div>
+        </div>
+        <div class="tooltip-container">
+          <i class="i_metricas_padrao"><u>Visualizar métricas padrão</u></i>
+          <div class="tooltip">
+            <p>Com base em nossos estudos e análises, determinamos as métricas-padrão para os alertas,
+              sendo elas:</p>
+            <p><strong>CPU</strong></p>
+            <p>Em atenção – 58.1%</p>
+            <p>Alerta grave – 78.5%</p>
+
+
+            <p><strong>Memória RAM</strong></p>
+            <p>Em atenção – 91.9%</p>
+            <p>Alerta grave – 100%</p>
+
+
+            <p><strong>DISCO</strong></p>
+            <p>Em atenção – 70%</p>
+            <p>Alerta grave – 80%</p>
+
+
+            <p><strong>REDE</strong></p>
+            <p>Alerta grave – Rede desconectada</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- Modal métricas alertas -->
+    <div class="popup-fundo oculto" id="modal_adicionarmaquina_config">
+      <div class="popup-header">
+        <div class="popup">
+          <div class="popup-header">
+            <div class="titulo_modal">Personalização Métricas</div>
+            <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                src="../assets/imgs/iconeFechar.png"></button>
+          </div>
+          <div class="line"></div>
+          <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
+          </div>
+          <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div>
+          </div>
+          <div class="box-input-modal">
+            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_minimo_atencao" oninput="validarnumero(this)"
+                placeholder="Ex: 30%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_minimo_atencao">Preencha o campo</div>
+            </div>
+            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_maximo_atencao" oninput="validarnumero(this)"
+                placeholder="Ex: 90%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_maximo_atencao">Preencha o campo</div>
+            </div>
+          </div>
+          <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div>
+          </div>
+          <div class="box-input-modal">
+            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_minimo_alerta" oninput="validarnumero(this)"
+                placeholder="Ex: 30%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_minimo_alerta">Preencha o campo</div>
+            </div>
+            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_maximo_alerta" oninput="validarnumero(this)"
+                placeholder="Ex: 90%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_maximo_alerta">Preencha o campo</div>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="ipt_metrica_padrao">
+            <p> Usar configuração padrão</p><input type="checkbox" id="input_configuracao_padrao"
+              onchange="puxarMetricasPadraoPersonalizado(this)">
+          </div>
+          <div class="box-botao-modal">
+            <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
+              serviço
+            </div>
+            <div class="box-botao-modal">
+              <div class="texto-erro oculto" id="texto_erro_configuracao_alerta">Configure a operação
+                ideal</div>
+              <button class="botao-modal" onclick="parametrizarAlertasPersonalizado()">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
 
   <!-- Começo do Menu -->
   <div class="menu-lateral">
@@ -401,12 +401,12 @@
   <script src="../js/menu-lateral.js"></script>
   <script>
     document.getElementById("botao_editar_maquina").addEventListener('click', () => {
-        document.querySelector('.tela-escurecida').classList.remove('oculto')
-        document.getElementById("modal_atualizarmaquina").classList.remove('oculto')
-        document.getElementById('html_fonte').style.overflowY = "hidden"
-        var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
-        nomeIndetificao.style.border = '0.2vh solid #000'
-        nomeIndetificao.style.boxShadow = 'none'
+      document.querySelector('.tela-escurecida').classList.remove('oculto')
+      document.getElementById("modal_atualizarmaquina").classList.remove('oculto')
+      document.getElementById('html_fonte').style.overflowY = "hidden"
+      var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
+      nomeIndetificao.style.border = '0.2vh solid #000'
+      nomeIndetificao.style.boxShadow = 'none'
     })
 
     var idDac = sessionStorage.ID_DAC;
@@ -419,7 +419,7 @@
         window.location.href = "dashboard-cpu.html"
       } else if (select == "Memória") {
         window.location.href = "analiseRAM.html"
-      } else if (select == "Disco"){
+      } else if (select == "Disco") {
         window.location.href = "analiseDisco.html"
       }
     })
@@ -492,7 +492,7 @@
         method: "GET",
       }).then(resposta => resposta.json())
         .then(resposta => {
-          console.log(resposta);
+          console.log("Resultado Select CPU:",resposta);
           cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
         })
         .catch(erro => console.error("Erro:", erro));
@@ -502,7 +502,7 @@
         method: "GET",
       }).then(resposta => resposta.json())
         .then(resposta => {
-          console.log(resposta);
+          console.log("Resultado Select RAM:",resposta);
           ram.innerHTML = `${resposta[0].medidaCapturada}%`;
         })
         .catch(erro => console.error("Erro:", erro));
@@ -513,22 +513,22 @@
         .then(resposta => {
           console.log(resposta);
 
-          if(resposta == ""){
+          if (resposta == "") {
             rede.innerHTML = `Máquina Inativa`
             ram.innerHTML = `Máquina Sem Dados`
             cpu.innerHTML = `Máquina Sem Dados`
-              redeok.classList.remove("status-dot", "ok")
-              redeok.classList.add("status-dot", "alerta-grave")
-              status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
+            redeok.classList.remove("status-dot", "ok")
+            redeok.classList.add("status-dot", "alerta-grave")
+            status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
           }
 
-          if (resposta[0].dataCaptura ) {
+          if (resposta[0].dataCaptura) {
             const dataServidor = new Date(resposta[0].dataCaptura);
             const agora = new Date();
             const diferenca1 = agora - dataServidor;
             const diferenca2 = diferenca1 / 1000 / 60;
 
-            if (diferenca2 > 1 ) {
+            if (diferenca2 > 1) {
               rede.innerHTML = `NÃO CONECTADO`
               ram.innerHTML = `Máquina Inativa`
               cpu.innerHTML = `Máquina inativa`
@@ -547,7 +547,7 @@
         .catch(erro => console.error("Erro:", erro));
     }
     atualizarDados();
-    setInterval(atualizarDados, 2000);
+    setInterval(atualizarDados, 6000);
 
     // Variaveis Gráfico
     var ctx = document.getElementById("alertChart").getContext("2d")

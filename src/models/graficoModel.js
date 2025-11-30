@@ -17,7 +17,7 @@ function buscarKpiDac(idDac) {
 
 function buscarMedicoesSelecionadas(idDac) {
     const instrucaoSql = `
-        select * from medicoesSelecionadas where fkDac = ${idDac};
+        select * from MedicoesSelecionadas where fkDac = ${idDac};
     `;
     return database.executar(instrucaoSql);
 }
@@ -25,7 +25,7 @@ function buscarMedicoesSelecionadas(idDac) {
 function totalAlerta(idDac){
   var instrucaoSql = `
       select count(idAlerta) as totalAlertas
-      from alerta
+      from Alerta
       where fkDac = ${idDac}
       and dataInicio >= now() - interval 24 hour;
   `
@@ -34,16 +34,16 @@ function totalAlerta(idDac){
 
 function buscarCpu(idDac){
   var instrucaoSql = `
-      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 1
-      order by dataCaptura desc
-      limit 1;
+      SELECT medidaCapturada FROM Leitura WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = 1
+      ORDER BY dataCaptura DESC
+      LIMIT 1;
   `
    return database.executar(instrucaoSql);
 }
 
 function buscarRam(idDac){
   var instrucaoSql = `
-      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 6
+      select medidaCapturada from Leitura where fkDac = ${idDac} and fkMedicoesDisponiveis = 6
       order by dataCaptura desc
       limit 1;
   ` 
@@ -52,7 +52,7 @@ function buscarRam(idDac){
 
 function buscarDisco(idDac){
   var instrucaoSql = `
-      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 10
+      select medidaCapturada from Leitura where fkDac = ${idDac} and fkMedicoesDisponiveis = 10
       order by dataCaptura desc
       limit 1;
   ` 
@@ -61,7 +61,7 @@ function buscarDisco(idDac){
 
 function buscarRede(idDac){
   var instrucaoSql = `
-      select dataCaptura from  Leitura where fkDac = ${idDac}
+      select dataCaptura from Leitura where fkDac = ${idDac}
       order by dataCaptura desc
       limit 1;
   `
@@ -166,7 +166,7 @@ function duracaoAlertaCpu(idDac) {
         ),
         'Dados insuficientes'
     ) as duracao
-    from alerta a
+    from Alerta a
     where a.fkMedicoesDisponiveis = 1 and a.fkDac = ${idDac}
     and a.dataInicio >= now() - interval 24 hour
     and a.dataTermino is not null;
@@ -186,7 +186,7 @@ function duracaoAlertaRam(idDac) {
         ),
         'Dados insuficientes'
     ) as duracao
-    from alerta a
+    from Alerta a
     where a.fkMedicoesDisponiveis in (6, 8) and a.fkDac = ${idDac}
     and a.dataInicio >= now() - interval 24 hour
     and a.dataTermino is not null;
@@ -206,7 +206,7 @@ function duracaoAlertaDisco(idDac) {
         ),
         'Dados insuficientes'
     ) as duracao
-    from alerta a
+    from Alerta a
     where a.fkMedicoesDisponiveis = 10 and a.fkDac = ${idDac}
     and a.dataInicio >= now() - interval 24 hour
     and a.dataTermino is not null;
@@ -224,7 +224,7 @@ function cpu24h(idDac) {
         ),
         'Dados insuficientes'
     ) as mediauso
-    from leitura a
+    from Leitura a
     where a.dataCaptura >= now() - interval 24 hour
     and a.fkMedicoesDisponiveis = 1
     and a.fkDac = ${idDac};
@@ -242,7 +242,7 @@ function ram24h(idDac) {
         ),
         'Dados insuficientes'
     ) as mediauso
-    from leitura a
+    from Leitura a
     where a.dataCaptura >= now() - interval 24 hour
     and a.fkMedicoesDisponiveis = 6
     and a.fkDac = ${idDac};
@@ -260,7 +260,7 @@ function disco24h(idDac) {
         ),
         'Dados insuficientes'
     ) as mediauso
-    from leitura a
+    from Leitura a
     where a.dataCaptura >= now() - interval 24 hour
     and a.fkMedicoesDisponiveis = 10
     and a.fkDac = ${idDac};
