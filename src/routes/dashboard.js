@@ -30,5 +30,8 @@ router.post("/inserirmaquinaservicos", function (req, res) {
 router.post("/inserirmaquinametricaspersonalizadas", function (req, res) {
   dashboardController.inserirmaquinametricaspersonalizadas(req, res);
 });
+router.get("/puxarNome/:fkUnidade", function (req, res) {
+  dashboardController.puxarNome(req, res);
+});
 
 module.exports = router;

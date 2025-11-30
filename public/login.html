@@ -64,7 +64,7 @@
 
         console.log("FORM LOGIN: ", emailVar);
         console.log("FORM SENHA: ", senhaVar);
-
+        mensagem.innerHTML = `Carregando...`;
         fetch("/usuarios/autenticar", {
             method: "POST",
             headers: {

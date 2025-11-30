@@ -35,4 +35,12 @@ router.get(`/buscarestresse/:idDac`, function (req, res) {
     analiseramController.buscarestresse(req, res);
 });
 
+router.put(`/atualizarRecomendacaoIA`, function (req, res) {
+    analiseramController.atualizarRecomendacaoIA(req, res);
+});
+
+router.get(`/buscartextoIA/:idDac`, function (req, res) {
+    analiseramController.buscartextoIA(req, res);
+});
+
 module.exports = router;

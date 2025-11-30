@@ -120,7 +120,7 @@
         <!-- Fim do Menu -->
         <div class="filtros-box">
             <div class="texto-organizacao" id="div_nome_empresa">
-                Central de regulação de urgências de Diadema
+                nome
             </div>
             <div class="texto-topico">
                 Convites enviados para os funcionários:
@@ -316,6 +316,7 @@
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
     <script>
+        div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
         // Configuração dos filtros
         var filtrosAtivos = ["", "", ["", ""], ["", ""]]
         function fecharFiltro(index) {
@@ -620,8 +621,8 @@
                             email_convite.href = `mailto:${email.value}`
                             var data_formatada = new Date(data.value)
                             data_formatada = data_formatada.toLocaleDateString("pt-BR")
-                            //mandaremail(email.value, codigo_gerado, data_formatada)
-                            //inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
+                            mandaremail(email.value, codigo_gerado, data_formatada)
+                            inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
                             if (resposta.ok) {
                             } else {
                                 throw "Não foi possível mandar os dados para o banco";
@@ -1110,12 +1111,16 @@
 
 </html>`
             };
-            fetch('http://localhost:3000/enviar-email', {
+            fetch('/enviar-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dadosDoFormulario)
+                body: JSON.stringify({
+                    mensagem: dadosDoFormulario.mensagem,
+                    email: dadosDoFormulario.email,
+                    assunto: dadosDoFormulario.assunto
+                })
             })
                 .then(response => response.text())
                 .then(data => {

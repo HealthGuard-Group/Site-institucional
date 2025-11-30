@@ -87,7 +87,7 @@
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text">
-                                        olá
+                                        Tempo acumulado em que a memória operou acima do limite de atenção no último dia.
                                     </span>
                                 </span>
                             </div>
@@ -105,7 +105,7 @@
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text">
-                                        olá
+                                        Capacidade física total de memória RAM instalada na máquina.
                                     </span>
                                 </span>
                             </div>
@@ -123,7 +123,7 @@
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text">
-                                        olá
+                                        Espaço em disco reservado para atuar como memória de emergência quando a RAM esgota.
                                     </span>
                                 </span>
                             </div>
@@ -143,7 +143,7 @@
                             <span class="tooltip grafico-ajuste">
                                 <i class='bxr  bx-info-circle'></i>
                                 <span class="tooltip-text">
-                                    olá
+                                    Esse gráfico mostra a memória RAM e SWAP em tempo real
                                 </span>
                             </span>
                         </div>
@@ -185,7 +185,7 @@
                             <span class="tooltip ajuste-ranking">
                                 <i class='bxr  bx-info-circle'></i>
                                 <span class="tooltip-text">
-                                    olá
+                                    Lista os 5 processos que mais estão consumindo recursos no momento.
                                 </span>
                             </span>
                         </div>
@@ -200,25 +200,24 @@
                     </div>
                     <div class="box-ia">
                         <div class="ia-top">
-                            Recomendação de IA:
+                            Recomendação de IA
                             <span class="tooltip ajuste-ia">
                                 <i class='bxr  bx-info-circle'></i>
                                 <span class="tooltip-text">
-                                    olá
+                                    Diagnóstico inteligente gerado por IA para tomada de decisão rápida.
                                 </span>
                             </span>
                         </div>
                         <div class="ia-bottom">
-                            <div class="ia-text">
-                                Olá, percebemos que sua máquina não está tendo uma boa perfomance.
-                                Fizemos uma análise, e vimos que dentro do último mês essa máquina tevemos picos acima
-                                de 90% de memória SWAP em uso, no qual permaneceu em estado de pico por mais de 2 horas.
-                                Como sugestão seria recomendado um upgrade de máquina para 32GB de RAM, para que a
-                                máquina evite lentidões.
-                                Risco de travamento: Altíssimo
+                            <div class="ia-text" id="ia_text">
+                                <div class="ia-no-text-box">
+                                    <img src="../assets/imgs/Geminai icon.png" alt="icon-geminai" class="icon-geminai">
+                                    <div class="ia-no-text">A IA está pronta para ajudar. Gere uma nova análise agora
+                                        para verificar a saúde da sua máquina.</div>
+                                </div>
                             </div>
                             <div class="ia-button-box">
-                                <button class="button-ia">Gerar nova recomendação</button>
+                                <button class="button-ia" onclick="gerarRecomendacao()" id="botao_ia">Gerar nova recomendação</button>
                             </div>
                         </div>
                     </div>
@@ -239,6 +238,8 @@
     var vetor_ram = []  // Usa no gráfico
     var vetor_swap = [] // Usa no gráfico
     var vetor_data = [] // Usa no gráfico
+    var ramUso; // Uso IA
+    var swapUso; // Uso IA
     // Redirecionador Dashboard(Gráfico 1)
     document.getElementById("redirect_dashboard").addEventListener("click", () => {
         window.location.href = "grafico1.html"
@@ -308,7 +309,7 @@
                                 if (resposta[i].nomeNivel == "Atenção") {
                                     atencao.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
                                 } else {
-                                    alerta.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
+                                    alerta.innerHTML = `Alerta: ${resposta[i].valorMinimo}%`
                                 }
                             }
                         })
@@ -320,7 +321,7 @@
                         if (resposta[i].nomeNivel == "Atenção") {
                             atencao.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
                         } else {
-                            alerta.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
+                            alerta.innerHTML = `Alerta: ${resposta[i].valorMinimo}%`
                         }
                     }
                 }
@@ -342,11 +343,11 @@
                 var ranking = JSON.parse(resposta[0].medidaCapturada)
                 var div_rank = document.getElementById("ranking_div")
                 div_rank.innerHTML = `
-                <div class="option-ranking"><strong>1º -</strong> ${ranking[0].nome} <strong>${ranking[0].memoria_mb}MB</strong></div>
-                            <div class="option-ranking"><strong>2º -</strong> ${ranking[1].nome} <strong>${ranking[1].memoria_mb}MB</strong></div>
-                            <div class="option-ranking"><strong>3º -</strong> ${ranking[2].nome} <strong>${ranking[2].memoria_mb}MB</strong></div>
-                            <div class="option-ranking"><strong>4º -</strong> ${ranking[3].nome} <strong>${ranking[3].memoria_mb}MB</strong></div>
-                            <div class="option-ranking"><strong>5º -</strong> ${ranking[4].nome} <strong>${ranking[4].memoria_mb}MB</strong></div>
+                <div class="option-ranking" id="top1"><strong>1º -</strong> ${ranking[0].nome} <strong>${ranking[0].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top2"><strong>2º -</strong> ${ranking[1].nome} <strong>${ranking[1].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top3"><strong>3º -</strong> ${ranking[2].nome} <strong>${ranking[2].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top4"><strong>4º -</strong> ${ranking[3].nome} <strong>${ranking[3].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top5"><strong>5º -</strong> ${ranking[4].nome} <strong>${ranking[4].memoria_mb}MB</strong></div>
                 `
             })
             .catch(function (resposta) {
@@ -363,7 +364,6 @@
                 return resposta.json();
             })
             .then(resposta => {
-                console.log(resposta)
                 var total_estresse_segundo = 0
                 var agora = new Date()
                 var limite24h = new Date(agora.getTime() - (24 * 60 * 60 * 1000))
@@ -377,7 +377,7 @@
                     if (inicio < limite24h) {
                         inicio = limite24h
                     }
-                    
+
                     total_estresse_segundo += Math.round((fim - inicio) / 1000, 0)
                 }
                 var horas = Math.floor(total_estresse_segundo / 3600)
@@ -404,8 +404,10 @@
                     if (resposta[i].fkMedicoesDisponiveis == 8) {
                         vetor_swap.push(resposta[i].medidaCapturada)
                         vetor_data.push(formatarData(resposta[i].dataCaptura))
+                        swapUso = resposta[i].medidaCapturada
                     } else {
                         vetor_ram.push(resposta[i].medidaCapturada)
+                        ramUso = resposta[i].medidaCapturada
                     }
                 }
                 plotarGraficoRam()
@@ -414,6 +416,130 @@
                 console.log(`Erro no catch: ${resposta}`);
             });
     }
+    // Puxando texto IA
+    function atualizarTextoIA() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscartextoIA/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var div_texto = document.getElementById("ia_text")
+                if (resposta[0].recomendacaoIA == null || resposta[0].recomendacaoIA.length == 0) {
+                    div_texto.innerHTML = `<div class="ia-no-text-box">
+                                    <img src="../assets/imgs/Geminai icon.png" alt="icon-geminai" class="icon-geminai">
+                                    <div class="ia-no-text">A IA está pronta para ajudar. Gere uma nova análise agora
+                                        para verificar a saúde da sua máquina.</div>
+                                </div>`
+                } else {
+                    div_texto.innerHTML = resposta[0].recomendacaoIA
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Delay para a mensagem
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    // Gerando recomendação com IA
+    async function gerarRecomendacao() {
+        var idDac = sessionStorage.ID_DAC
+        var div_texto = document.getElementById("ia_text")
+        var ramTotal = document.getElementById("texto_kpi_ram").innerHTML;
+        var tempoEstresse = document.getElementById("texto_kpi_estresse").innerHTML;
+        div_texto.innerHTML = `<div class="ia-no-text-box">
+                                    <div class="loader"></div>
+                                    <div class="ia-no-text">Analisando os dados</div>
+                                </div>`
+        document.getElementById("botao_ia").classList.add("oculto")
+
+        var listaProcessos = `
+        ${document.getElementById("top1").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top2").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top3").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top4").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top5").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        `;
+
+        const mensagem = `
+        Atue como um Analista de Infraestrutura Sênior do sistema HealthGuard (monitoramento do SAMU).
+        Analise os métricas de hardware capturadas em tempo real desta máquina servidora e gere um diagnóstico.
+
+        DADOS COLETADOS AGORA:
+        - Memória RAM Total: ${ramTotal}
+        - Uso de RAM Atual: ${ramUso}%
+        - Uso de SWAP Atual: ${swapUso}%
+        - Tempo de Estresse (RAM > 90% nas últimas 24h): ${tempoEstresse}
+        - Top 5 Processos Consumidores:
+        ${listaProcessos}
+
+        DIRETRIZES DE ANÁLISE:
+        1. Contexto: Este é um ambiente crítico de emergência médica (SAMU). Priorize estabilidade.
+        2. Detecção de Anomalias:
+        - Se RAM < 75%: Considere "Saudável".
+        - Se RAM > 80% ou SWAP > 20%: Considere "Alerta".
+        3. Política de Software: Identifique softwares não essenciais para um servidor (ex: Spotify, Steam, Discord, Jogos) que estejam na lista de processos. Se houver, recomende o encerramento imediato.
+        4. Hardware: Só sugira upgrade de memória se não houver processos supérfluos consumindo recursos.
+
+        RESPOSTA ESPERADA (Seja breve e direto):
+        Gere um texto curto (máximo 3 linhas) com: Status atual (Saudável/Alerta/Crítico), qual processo é o vilão (se houver) e a ação técnica recomendada.
+        A mensagem pode ter no máximo 400 caracteres.
+        `;
+        try {
+            const response = await fetch("/ia/perguntar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    mensagem: mensagem
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro na requisição: " + response.status);
+            }
+
+            const dados = await response.json();
+            div_texto.innerHTML = `<div class="ia-no-text-box">
+                                    <div class="loader"></div>
+                                    <div class="ia-no-text">Gerando mensagem</div>
+                                </div>`
+            await delay(2000)
+            div_texto.innerHTML = dados.resposta
+            document.getElementById("botao_ia").classList.remove("oculto")
+            fetch("/analiseRAM/atualizarRecomendacaoIA", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idDac: idDac,
+                    texto: dados.resposta
+                })
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error("Erro ao atualizar");
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Atualizando com sucesso:", data);
+                })
+                .catch(err => {
+                    console.log("Erro:", err);
+                })
+
+        } catch (erro) {
+            console.error("Erro no front:", erro);
+            divResposta.innerText = "Erro ao contatar a IA. Tente novamente.";
+        }
+    }
+
     function plotarGraficoRam() {
         // Código do gráfico do Chart.js
         grafico = new Chart(ctx, {
@@ -500,8 +626,10 @@
                     if (resposta[i].fkMedicoesDisponiveis == 6) {
                         vetor_ram.push(resposta[i].medidaCapturada)
                         vetor_data.push(formatarData(resposta[i].dataCaptura))
+                        ramUso = resposta[i].medidaCapturada
                     } else {
                         vetor_swap.push(resposta[i].medidaCapturada)
+                        swapUso = resposta[i].medidaCapturada
                     }
                 }
                 if (ax_monitoramento) {

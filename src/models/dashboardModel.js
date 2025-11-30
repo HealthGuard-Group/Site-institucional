@@ -59,7 +59,7 @@ function inserirmaquinaservicos(maquina_nova, idUnidadeAtendimento, idDac) {
   console.log(maquina_nova)
   var instrucaoSql = `INSERT INTO MedicoesSelecionadas (fkUnidadeDeAtendimento,fkDac,fkMedicoesDisponiveis) VALUES (${idUnidadeAtendimento},${idDac},13),`;
   if (maquina_nova.servicos[0] == true) {
-    instrucaoSql += `(${idUnidadeAtendimento},${idDac},1),(${idUnidadeAtendimento},${idDac},2),(${idUnidadeAtendimento},${idDac},3),(${idUnidadeAtendimento},${idDac},4),(${idUnidadeAtendimento},${idDac},5),(${idUnidadeAtendimento},${idDac},12),`
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},1),(${idUnidadeAtendimento},${idDac},2),(${idUnidadeAtendimento},${idDac},3),(${idUnidadeAtendimento},${idDac},4),(${idUnidadeAtendimento},${idDac},5),(${idUnidadeAtendimento},${idDac},12),(${idUnidadeAtendimento},${idDac},18),`
   } if (maquina_nova.servicos[1] == true) {
     instrucaoSql += `(${idUnidadeAtendimento},${idDac},6),(${idUnidadeAtendimento},${idDac},7),(${idUnidadeAtendimento},${idDac},8),(${idUnidadeAtendimento},${idDac},9),(${idUnidadeAtendimento},${idDac},17),`
   } if (maquina_nova.servicos[2] == true) {
@@ -88,6 +88,12 @@ function inserirmaquinametricaspersonalizadas(maquina_nova, idUnidadeAtendimento
   return database.executar(instrucaoSql);
 }
 
+function puxarNome(fkUnidade) {
+  var instrucaoSql = `select nomeFantasia as razaoSocial from UnidadeDeAtendimento where idUnidadeDeAtendimento = ${fkUnidade};`;
+
+  return database.executar(instrucaoSql);
+}
+
 module.exports = {
   buscarLogAcesso,
   buscarNomeDaUnidade,
@@ -97,5 +103,6 @@ module.exports = {
   buscarcodigos,
   inserirmaquina,
   inserirmaquinaservicos,
-  inserirmaquinametricaspersonalizadas
+  inserirmaquinametricaspersonalizadas,
+  puxarNome
 };

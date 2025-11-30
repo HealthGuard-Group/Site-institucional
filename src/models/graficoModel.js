@@ -17,7 +17,7 @@ function buscarKpiDac(idDac) {
 
 function buscarMedicoesSelecionadas(idDac) {
     const instrucaoSql = `
-        select * from medicoesSelecionadas where fkDac = ${idDac};
+        select * from MedicoesSelecionadas where fkDac = ${idDac};
     `;
     return database.executar(instrucaoSql);
 }
@@ -25,7 +25,7 @@ function buscarMedicoesSelecionadas(idDac) {
 function totalAlerta(idDac){
   var instrucaoSql = `
       select count(idAlerta) as totalAlertas
-      from alerta
+      from Alerta
       where fkDac = ${idDac}
       and dataInicio >= now() - interval 24 hour;
   `
@@ -34,16 +34,16 @@ function totalAlerta(idDac){
 
 function buscarCpu(idDac){
   var instrucaoSql = `
-      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 1
-      order by dataCaptura desc
-      limit 1;
+      SELECT medidaCapturada FROM Leitura WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = 1
+      ORDER BY dataCaptura DESC
+      LIMIT 1;
   `
    return database.executar(instrucaoSql);
 }
 
 function buscarRam(idDac){
   var instrucaoSql = `
-      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 6
+      select medidaCapturada from Leitura where fkDac = ${idDac} and fkMedicoesDisponiveis = 6
       order by dataCaptura desc
       limit 1;
   ` 
@@ -52,7 +52,7 @@ function buscarRam(idDac){
 
 function buscarDisco(idDac){
   var instrucaoSql = `
-      select medidaCapturada from  Leitura where fkDac = ${idDac} and fkMedicoesSelecionadas = 10
+      select medidaCapturada from Leitura where fkDac = ${idDac} and fkMedicoesDisponiveis = 10
       order by dataCaptura desc
       limit 1;
   ` 
@@ -61,7 +61,7 @@ function buscarDisco(idDac){
 
 function buscarRede(idDac){
   var instrucaoSql = `
-      select dataCaptura from  Leitura where fkDac = ${idDac}
+      select dataCaptura from Leitura where fkDac = ${idDac}
       order by dataCaptura desc
       limit 1;
   `
@@ -130,6 +130,145 @@ function inativarMaquina(idDac) {
   return database.executar(instrucaoSql);
 }
 
+function alertasCpu(idDac) {
+    var instrucaoSql = `
+    select count(idAlerta) as total from Alerta
+    where fkMedicoesSelecionadas = 1 and fkDac = ${idDac} - interval 24 hour ;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function alertasRam(idDac) {
+    var instrucaoSql = `
+    select count(idAlerta)as total from Alerta
+    where fkMedicoesSelecionadas = 6 and 8 and fkDac = ${idDac} - interval 24 hour;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function alertasDisco(idDac) {
+    var instrucaoSql = `
+    select count(idAlerta) as total from Alerta
+    where fkMedicoesSelecionadas = 10 and fkDac = ${idDac} - interval 24 hour;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function duracaoAlertaCpu(idDac) {
+    var instrucaoSql = `
+    select 
+    ifnull(
+        concat(
+            floor(avg(timestampdiff(minute, a.dataInicio, a.dataTermino)) / 60),
+            'h ',
+            lpad(avg(timestampdiff(minute, a.dataInicio, a.dataTermino)) % 60, 2, '0'),
+            'min'
+        ),
+        'Dados insuficientes'
+    ) as duracao
+    from Alerta a
+    where a.fkMedicoesDisponiveis = 1 and a.fkDac = ${idDac}
+    and a.dataInicio >= now() - interval 24 hour
+    and a.dataTermino is not null;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function duracaoAlertaRam(idDac) {
+    var instrucaoSql = `
+    select 
+    ifnull(
+        concat(
+            floor(avg(timestampdiff(minute, a.dataInicio, a.dataTermino)) / 60),
+            'h ',
+            lpad(avg(timestampdiff(minute, a.dataInicio, a.dataTermino)) % 60, 2, '0'),
+            'min'
+        ),
+        'Dados insuficientes'
+    ) as duracao
+    from Alerta a
+    where a.fkMedicoesDisponiveis in (6, 8) and a.fkDac = ${idDac}
+    and a.dataInicio >= now() - interval 24 hour
+    and a.dataTermino is not null;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function duracaoAlertaDisco(idDac) {
+    var instrucaoSql = `
+    select 
+    ifnull(
+        concat(
+            floor(avg(timestampdiff(minute, a.dataInicio, a.dataTermino)) / 60),
+            'h ',
+            lpad(avg(timestampdiff(minute, a.dataInicio, a.dataTermino)) % 60, 2, '0'),
+            'min'
+        ),
+        'Dados insuficientes'
+    ) as duracao
+    from Alerta a
+    where a.fkMedicoesDisponiveis = 10 and a.fkDac = ${idDac}
+    and a.dataInicio >= now() - interval 24 hour
+    and a.dataTermino is not null;
+    `
+   return database.executar(instrucaoSql);
+}
+
+function cpu24h(idDac) {
+    var instrucaoSql = `
+    select 
+    ifnull(
+        concat(
+            round(avg(a.medidaCapturada), 2),
+            '%'
+        ),
+        'Dados insuficientes'
+    ) as mediauso
+    from Leitura a
+    where a.dataCaptura >= now() - interval 24 hour
+    and a.fkMedicoesDisponiveis = 1
+    and a.fkDac = ${idDac};
+    `
+   return database.executar(instrucaoSql);
+}
+
+function ram24h(idDac) {
+    var instrucaoSql = `
+    select 
+    ifnull(
+        concat(
+            round(avg(a.medidaCapturada), 2),
+            '%'
+        ),
+        'Dados insuficientes'
+    ) as mediauso
+    from Leitura a
+    where a.dataCaptura >= now() - interval 24 hour
+    and a.fkMedicoesDisponiveis = 6
+    and a.fkDac = ${idDac};
+    `
+   return database.executar(instrucaoSql);
+}
+
+function disco24h(idDac) {
+    var instrucaoSql = `
+    select 
+    ifnull(
+        concat(
+            round(avg(a.medidaCapturada), 2),
+            '%'
+        ),
+        'Dados insuficientes'
+    ) as mediauso
+    from Leitura a
+    where a.dataCaptura >= now() - interval 24 hour
+    and a.fkMedicoesDisponiveis = 10
+    and a.fkDac = ${idDac};
+    `
+   return database.executar(instrucaoSql);
+}
+
+
 
 module.exports = {
     exibirInfoDac,
@@ -146,5 +285,14 @@ module.exports = {
     tempoAtividade,
     mediaAlertas,
     ativarMaquina,
-    inativarMaquina
+    inativarMaquina,
+    alertasCpu,
+    alertasRam,
+    alertasDisco,
+    duracaoAlertaCpu,
+    duracaoAlertaRam,
+    duracaoAlertaDisco,
+    cpu24h,
+    ram24h,
+    disco24h
 };

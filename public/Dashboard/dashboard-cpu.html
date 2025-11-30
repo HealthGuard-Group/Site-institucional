@@ -63,13 +63,16 @@
     <div class="header">
                 <div class="header-esquerda">
                     <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
-                    <span id="nome_MaquinaDac">Monitoramento</span>
+                    <a href="monitoramento.html" >
+                    <span id="nome_MaquinaDac ">Monitoramento</span>
+                    </a>
                     <img src="../assets/imgs/botao_seta_preto.png" alt="">
+                    <a href="grafico1.html" >
                     <span id="nome_maquina"></span>
+                    <span id="status_MaquinaDac"> Status: </span>
+                    </a>
                     <img src="../assets/imgs/botao_seta_preto.png" alt="">
                     <span id="nome_MaquinaDac">Análise de CPU</span>
-                    <img src="../assets/imgs/botao_seta_preto.png" alt="">
-                    <span id="status_MaquinaDac"> Status: </span>
 
                 </div>
             </div>
@@ -87,15 +90,14 @@
 
             <div class="kpis" id="Processos">
                 <b> Processos Ativos </b>
-                <div class="dados-kpi">0</div>
+                <div class="dados-kpi" id="processosKpi">0</div>
 
             </div>
 
             <div class="kpis" id="frequencia">
-                <b> Frequência(MHz)<br>
-                    Atual/Máxima </b>
+                <b>Threads em execução </b>
                 <div class="dados-kpi">
-                    <span id="mhz_atual">atual</span>/<span id="mhz_max">Maxima</span>
+                  <span id="mhz_max">0</span>
                 </div>
 
 
@@ -103,7 +105,7 @@
 
             <div class="kpis" id="qtd-alertas">
                 <b> Alertas dos ultimos 7 dias </b>
-                <div class="dados-kpi">0</div>
+                <div class="dados-kpi" id="alertasKpi">0</div>
 
             </div>
 
@@ -134,28 +136,8 @@
                     <p> DD/MM/AAAA - HH:MM:SS </p>
                 </div>
 
-                <div style="background-color: #daa520;" class="alertas" id="alerta_1">
-                    Em atenção <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
-                </div>
 
-                <div style="background-color: #b30000;" class="alertas" id="alerta_1">
-                    Alerta Grave <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
-                </div>
-
-                <div style="background-color: #daa520;" class="alertas" id="alerta_1">
-                    Em atenção <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
-                </div>
-
-
-
-
-
-
-
-
+            
             </div>
 
 
@@ -169,26 +151,13 @@
 <script src="../js/validarSessao.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
-
-    // function puxardados(fkunidade, fkdac) {
-    //     fetch(`/analisecpu/puxardados/${fkunidade}/${fkdac}`, {
-    //         method: "GET",
-    //     })
-    //         .then(resposta => {
-    //             return resposta.json();
-    //         })
-    //         .then(resposta => {
-    //             console.log(resposta)
-    //         })
-
-    //         .catch(function (resposta) {
-    //             console.log(`Erro no catch: ${resposta}`);
-    //         });
-    // }
-
+    var chartCPU;
+    var chartHeatmap;
+    
      var idDac = sessionStorage.ID_DAC;
      var fkunidade;
-    console.log(idDac)
+
+     // inicia a dashboard puxando oque precisa 
     fetch(`/grafico/exibirInfoDac/${idDac}`, {
       method: "GET",
     })
@@ -199,6 +168,8 @@
         console.log(resposta)
         nome_maquina.innerHTML = `${resposta[0].nomeIdentificacao}`
         fkunidade = resposta[0].fkUnidadeDeAtendimento
+    
+        renderizarGraficos();
         atualizarDados(fkunidade)
         console.log(resposta[0].nomeIdentificacao)
         if (resposta[0].statusDac == "Alerta") {
@@ -219,15 +190,21 @@
         console.log(`Erro no catch: ${resposta}`);
       });
 function atualizarDados(fkunidade) {
-    var porc_cpu = puxarcpu(fkunidade)
-    console.log(porc_cpu[0].medidaCapturada)
-
-
+    puxar_processos(fkunidade)
+    puxar_Threads(fkunidade)
+    puxar_CPU(fkunidade)
+    puxar_qtdAlertas(fkunidade)
+    // puxar_dadosAlertas(fkunidade)
+    // loop para atualizar kpis
+    setTimeout(() => {
+        console.log('loop funcionadno')
+    atualizarDados(fkunidade)
+}, 5000);
 
 }
 
-function puxarcpu(fkunidade) {
-    fetch(`/analisecpu/puxardados/${fkunidade}/${idDac}`, {
+function puxar_processos(fkunidade) {
+    fetch(`/analisecpu/puxarprocessos/${fkunidade}/${idDac}`, {
       method: "GET",
     })
       .then(resposta => {
@@ -239,82 +216,164 @@ function puxarcpu(fkunidade) {
 .then(resposta => {
     console.log("Dados recebidos:", resposta);
     console.log(resposta[0].medidaCapturada)
+    processosKpi.innerHTML = resposta[0].medidaCapturada
 })
 .catch(function (erro) {
     console.log(`Erro no catch: ${erro}`);
 });
-
-
 }
    
-    // grafico cpu
-    var porc_cpu = 0
-    var cor = 'green'
+function puxar_Threads(fkunidade) {
+     fetch(`/analisecpu/puxarThreads/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("Threads:", resposta);
+    console.log(resposta[0].medidaCapturada)
+    mhz_max.innerHTML = resposta[0].medidaCapturada
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+}
 
+function puxar_CPU(fkunidade) {
+   fetch(`/analisecpu/puxarCPU/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("CPU:", resposta);
+    console.log(resposta[0].medidaCapturada)
+    var porc_cpu = Number(resposta[0].medidaCapturada);
+    var cor = 'green'
+    // configurações de alerta para definir cor
     if (porc_cpu > 40 && porc_cpu < 80) {
         cor = '#f1c402'
     } else if (porc_cpu > 80) {
         cor = '#b30000'
     }
+    
+    if (chartCPU) {
+                    chartCPU.updateOptions({ colors: [cor] });
+                    chartCPU.updateSeries([porc_cpu]);
+                }
 
-    var porcentagemCpuChart = {
-        series: [porc_cpu],
-        colors: [cor],
-        chart: {
-            type: 'radialBar',
-            offsetY: -20,
-            sparkline: {
-                enabled: true
+
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+}
+
+function puxar_qtdAlertas(fkunidade) {
+   
+        fetch(`/analisecpu/puxarQtdAlertas/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("Qtd Alertas:", resposta);
+    console.log(resposta[0].qtdalertas)
+   alertasKpi.innerHTML = resposta[0].qtdalertas
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+
+}
+ /*
+ function puxar_dadosAlertas(fkunidade) {
+    fetch e dentro do retorno do fetch:
+
+        for (let index = 0; index < array.length; index++) {
+            if(alerta == grave) {
+                Historico.innerHTML += `
+                 <div style="background-color: #b30000;" class="alertas" id="alerta_${index}">
+                    Alerta Grave <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+                `
+            } else if (alerta == atencao) {
+                Historico.innerHTML += `
+                  <div style="background-color: #daa520;" class="alertas" id="alerta_${index}">
+                    Em atenção <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>`
             }
-        },
-        plotOptions: {
-            radialBar: {
-                startAngle: -90,
-                endAngle: 90,
-                track: {
-                    background: "#e7e7e7",
-                    strokeWidth: '100%',
-                    margin: 15,
-                    dropShadow: {
-                        enabled: true,
-                        top: 2,
-                        left: 0,
-                        color: '#444',
-                        opacity: 1,
-                        blur: 2
-                    }
-                },
-                dataLabels: {
-                    name: {
-                        show: false
+            
+        }
+}
+*/
+
+function teste() {
+    Historico.innerHTML += `
+                  <div style="background-color: #daa520;" class="alertas" id="alerta_${index}">
+                    Em atenção <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>`
+}
+
+    function renderizarGraficos() {
+        var optionsCPU = {
+            series: [0], 
+            colors: ['green'],
+            chart: {
+                type: 'radialBar',
+                offsetY: -20,
+                sparkline: { enabled: true }
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    track: {
+                        background: "#e7e7e7",
+                        strokeWidth: '100%',
+                        margin: 15,
+                        dropShadow: { enabled: true, top: 2, left: 0, color: '#444', opacity: 1, blur: 2 }
                     },
-                    value: {
-                        offsetY: -2,
-                        fontSize: '4vh'
+                    dataLabels: {
+                        name: { show: false },
+                        value: { offsetY: -2, fontSize: '4vh' }
                     }
                 }
-            }
-        },
-        grid: {
-            padding: {
-                top: -10
-            }
-        },
-        fill: {
-            width: '100%',
-            gradient: {
-                shade: 'light',
-                shadeIntensity: 0.4,
-                inverseColors: false,
-                opacityFrom: 1,
-                opacityTo: 1,
-                stops: [0, 50, 53, 91]
             },
-        },
-        labels: ['Porcentagem da CPU'],
-    };
+            fill: {
+                width: '100%',
+                gradient: {
+                    shade: 'light',
+                    shadeIntensity: 0.4,
+                    inverseColors: false,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 50, 53, 91]
+                },
+            },
+            labels: ['Porcentagem da CPU'],
+        };
 
-    var heatmap = {
+        chartCPU = new ApexCharts(document.querySelector("#grafico-cpu"), optionsCPU);
+        chartCPU.render();
+
+
+          var optionsHeatmap = {
         series: [
             {
                 name: 'Núcleo 1',
@@ -388,7 +447,7 @@ function puxarcpu(fkunidade) {
                             from: 0,
                             to: 40,
                             name: '0k',
-                            color: '#00A100' // Verde
+                            color: '#00A100'
                         },
                         {
                             from: 41,
@@ -414,18 +473,10 @@ function puxarcpu(fkunidade) {
         },
     };
 
-    var chart = new ApexCharts(document.querySelector("#grafico-cpu"), porcentagemCpuChart);
-    chart.render();
-
-    chart.render().then(() => {
-        setTimeout(() => {
-            window.dispatchEvent(new Event('resize'));
-        }, 10);
-    });
-    var chart = new ApexCharts(document.querySelector("#grafico-heatmap"), heatmap);
-    chart.render();
-
-
+        chartHeatmap = new ApexCharts(document.querySelector("#grafico-heatmap"), optionsHeatmap);
+        chartHeatmap.render();
+    }
+        
 
 
 

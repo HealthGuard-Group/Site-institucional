@@ -63,4 +63,41 @@ router.put("/ativarMaquina/:idDac", graficoController.ativarMaquina)
 
 router.put("/inativarMaquina/:idDac", graficoController.inativarMaquina)
 
+router.get("/alertasCpu/:idDac", function (req, res) {
+  graficoController.alertasCpu(req, res);
+});
+
+router.get("/alertasRam/:idDac", function (req, res) {
+  graficoController.alertasRam(req, res);
+});
+
+router.get("/alertasDisco/:idDac", function (req, res) {
+  graficoController.alertasDisco(req, res);
+});
+
+router.get("/duracaoAlertaCpu/:idDac", function (req, res) {
+  graficoController.duracaoAlertaCpu(req, res);
+});
+
+router.get("/duracaoAlertaRam/:idDac", function (req, res) {
+  graficoController.duracaoAlertaRam(req, res);
+});
+
+router.get("/duracaoAlertaDisco/:idDac", function (req, res) {
+  graficoController.duracaoAlertaDisco(req, res);
+});
+
+router.get("/cpu24h/:idDac", function (req, res) {
+  graficoController.cpu24h(req, res);
+});
+
+router.get("/ram24h/:idDac", function (req, res) {
+  graficoController.ram24h(req, res);
+});
+
+router.get("/disco24h/:idDac", function (req, res) {
+  graficoController.disco24h(req, res);
+});
+
+
 module.exports = router;

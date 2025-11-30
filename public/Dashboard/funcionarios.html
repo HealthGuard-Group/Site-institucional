@@ -180,7 +180,7 @@
         <!-- Fim do Menu -->
         <div class="filtros-box">
             <div class="texto-organizacao" id="div_nome_empresa">
-                Central de regulação de urgências de Diadema
+               Nome empresa
             </div>
             <div class="texto-topico">
                 Lista de Funcionários:
@@ -389,6 +389,7 @@
     <script src="../js/validarSessao.js"></script>
     <script src="../js/menu-lateral.js"></script>
     <script>
+        div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
         var funcionarios; // Auxiliar que armazena os funcinários
         var index; // Armazena informações completas (indice) do usuario clicado
         var idUsuarioClicadoAcao; // Guarda o id do usuário clicado (editar ou remover) para exibir nome no modal

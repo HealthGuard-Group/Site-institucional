@@ -65,7 +65,7 @@
         <div class="container">
 
             <div class="texto-organizacao" id="div_nome_empresa">
-                Central de regulação de urgências de Diadema
+                Nome
             </div>
             <div class="texto-topico">
                 Histórico de alertas gerais:
@@ -143,13 +143,13 @@
 </html>
 
 <script>
+    div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
     var data_visualizacao;
 
     function puxarAlertasGeral() {
         var variaveis = puxarVariaveis()
         console.log(variaveis)
         variaveis = variaveis.idUnidadeAtendimento
-        console.log(variaveis)
         tabela_alertas.innerHTML = `
             <tr id="titulo-tabela">
                 <td id="tr-tipo-alerta">Tipo de alerta</td>

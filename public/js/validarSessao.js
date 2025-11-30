@@ -51,6 +51,7 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
     })
     .then(resposta => {
         fkLogAcesso = resposta[0].idLogAcesso
+        puxarUnidade()
         if (window.location.href.includes("monitoramento.html")) {
             telaMonitoramento()
         }
@@ -140,6 +141,7 @@ function telaAnaliseRam() {
     puxandoDadosGraficoRamSwap()
     puxarRankingRAM()
     puxandoKpiStress()
+    atualizarTextoIA()
     var loop = setInterval(() => {
         atualizarKpisRAM()
         puxandoKpiStress()
@@ -153,4 +155,20 @@ function telaGrafico1() {
     var loop = setInterval(() => {
         atualizarGraficoMonitoramento()
     },5000)
+}
+
+
+function puxarUnidade() {
+fetch(`/dashboard/puxarNome/${fkUnidade}`, {
+    method: "GET",
+})
+    .then(resposta => {
+        return resposta.json();
+    })
+    .then(resposta => {
+
+        console.log( "NOME UNIDADE: " + resposta[0].razaoSocial)
+        sessionStorage.NOME_UNIDADE = resposta[0].razaoSocial
+    })
+
 }

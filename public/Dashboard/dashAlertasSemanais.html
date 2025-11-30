@@ -66,7 +66,7 @@
         <section class="header_dash">
             <h1>Alertas Gerais da Semana</h1>
             <div class="header_semanaAtual">
-                <p> 01/10 ao 7/10</p>
+                <p id="intervaloSemana"></p>
             </div>
         </section>
 
@@ -81,12 +81,11 @@
                             desempenho no momento atual</span>
                     </span>
                 </div>
-                <div class="valor_kpi">
-                    20
+                <div class="valor_kpi" id="kpi_totalSemana">
                 </div>
             </div>
             <div class="kpi_dash">
-                <div class="titulo_kpi">
+                <div class="titulo_kpi" >
                     <h2>Desde o Último Alerta</h2>
                     <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
                         <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
@@ -95,8 +94,7 @@
                             desempenho no momento atual</span>
                     </span>
                 </div>
-                <div class="valor_kpi">
-                    20
+                <div class="valor_kpi" id="kpi_desdeUltimoAlerta">
                 </div>
             </div>
 
@@ -110,8 +108,7 @@
                             desempenho no momento atual</span>
                     </span>
                 </div>
-                <div class="valor_kpi">
-                    20
+                <div class="valor_kpi" id="kpi_naoVerificados">
                 </div>
             </div>
 
@@ -125,8 +122,7 @@
                             desempenho no momento atual</span>
                     </span>
                 </div>
-                <div class="valor_kpi">
-                    20
+                <div class="valor_kpi" id="kpi_ultimaMaquina">
                 </div>
             </div>
 
@@ -163,6 +159,8 @@
 <script src="../js/menu-lateral.js"></script>
 
 <script>
+       window.onload = () => {puxarKpisSemana()}
+       
     new Chart(document.getElementById('grafico_pizza'), {
         type: 'doughnut',
         data: {
@@ -244,6 +242,36 @@ new Chart(ctx, {
 });
 
 
-</script>
+function formatarData(dia) {
+    return dia.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit"
+    });
+}
 
+var hoje = new Date();
+var domingo = new Date();
+domingo.setDate(hoje.getDate() - hoje.getDay());
+
+intervaloSemana.innerHTML = formatarData(domingo) + " ao " + formatarData(hoje);
+
+
+function puxarKpisSemana() {
+    var idUnidadeAtendimento = sessionStorage.FK_UNIDADE;
+
+    fetch(`/dashAlertasSemanais/kpis/${idUnidadeAtendimento}`, { method: "GET" })
+        .then(res => res.json())
+        .then(res => {
+            var kpi = res[0];
+
+            kpi_totalSemana.innerHTML = kpi.totalSemana;
+            kpi_desdeUltimoAlerta.innerHTML = kpi.desdeUltimoAlerta + " min";
+            kpi_naoVerificados.innerHTML = kpi.naoVerificados;
+            kpi_ultimaMaquina.innerHTML = kpi.ultimaMaquina;
+        })
+        .catch(err => {
+            console.log("Erro:", err);
+        });
+}
+</script>
 </html>

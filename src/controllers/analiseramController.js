@@ -192,6 +192,57 @@ function buscarestresse(req, res) {
     }
 }
 
+function atualizarRecomendacaoIA(req, res) {
+    var idDac = req.body.idDac;
+    var texto = req.body.texto;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else if (texto == undefined) {
+        res.status(400).send("Seu texto está undefined!");
+    } else {
+
+        analiseramModel.atualizarRecomendacaoIA(idDac, texto)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar em atualizar a sua recomendação de IA! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function buscartextoIA(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        analiseramModel.buscartextoIA(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar o texto da IA! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 module.exports = {
     buscarnomemaquina,
     buscarmemoria,
@@ -200,5 +251,7 @@ module.exports = {
     puxardadosgraficoRAM,
     atualizardadosgraficoRAM,
     buscarranking,
-    buscarestresse
+    buscarestresse,
+    atualizarRecomendacaoIA,
+    buscartextoIA
 }
