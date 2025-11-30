@@ -8,12 +8,12 @@ var caminho_env = ambiente_processo === 'producao' ? '.env' : '.env.dev';
 require("dotenv").config({ path: caminho_env });
 
 var express = require("express");
-const nodemailer = require('nodemailer');
+var ClientGeminai = require("./src/recomendacaoIA");
+var enviarEmail = require("./src/enviarEmail");
 var cors = require("cors");
 var path = require("path");
 var PORTA_APP = process.env.APP_PORT;
 var HOST_APP = process.env.APP_HOST;
-var PORT = 3000;
 
 var app = express();
 
@@ -58,32 +58,44 @@ app.use("/alertasgeral", alertasgeralRouter)
 app.use("/dashAlertasSemanais", dashAlertasSemanaisRouter);
 
 app.post('/enviar-email', async (req, res) => {
-    const {email, assunto,mensagem } = req.body;
-    const transporter = nodemailer.createTransport({
-        service: 'gmail', 
-        auth: {
-            user: process.env.EMAIL, // Coloque o email aqui
-            pass: process.env.SENHA // Coloque a senha do aplicativo aqui
+    var email = req.body.email
+    var assunto = req.body.assunto
+    var mensagem = req.body.mensagem
+
+    if (email == undefined) {
+        res.status(400).send("email está undefined!");
+    } else if (assunto == undefined) {
+        res.status(400).send("assunto está undefined!");
+    } else if (mensagem == undefined) {
+        res.status(400).send("mensagem está undefined!");
+    } else {
+        const resultado = await enviarEmail(mensagem, email, assunto);
+
+        if (resultado.sucesso) {
+            res.status(200).send(resultado.mensagem);
+        } else {
+            res.status(500).send(resultado.mensagem);
         }
-    });
+    }
+});
 
-    const mailOptions = {
-        from: `"HealthGuard" <contatohealthguard@gmail.com>`,    
-        to: `${email}`, 
-        subject: `${assunto}`, 
-        
-        html: `
-            ${mensagem}
-        `
-    };
-    try {
-        await transporter.sendMail(mailOptions);
-        
-        res.status(200).send('E-mail enviado com sucesso!');
+app.post('/ia/perguntar', async (req, res) => {
+    var mensagem = req.body.mensagem;
 
-    } catch (error) {
-        console.error('Erro ao enviar e-mail:', error);
-        res.status(500).send('Falha ao enviar o e-mail. Tente novamente.');
+    if (mensagem == undefined) {
+        res.status(400).send("mensagem está undefined!");
+    } else {
+        console.log("Perguntando para a IA:", mensagem);
+
+        try {
+            const respostaDaIA = await ClientGeminai(mensagem);
+
+            res.json({ resposta: respostaDaIA });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ erro: "Erro interno na IA" });
+        }
     }
 });
 
@@ -103,10 +115,4 @@ app.listen(PORTA_APP, function () {
     \tSe .:desenvolvimento:. você está se conectando ao banco local. \n
     \tSe .:producao:. você está se conectando ao banco remoto. \n\n
     \t\tPara alterar o ambiente, comente ou descomente as linhas 1 ou 2 no arquivo 'app.js'\n\n`);
-});
-
-
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-    console.log(process.env.EMAIL, process.env.SENHA)
 });

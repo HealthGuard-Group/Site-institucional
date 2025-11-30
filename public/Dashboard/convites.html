@@ -620,8 +620,8 @@
                             email_convite.href = `mailto:${email.value}`
                             var data_formatada = new Date(data.value)
                             data_formatada = data_formatada.toLocaleDateString("pt-BR")
-                            //mandaremail(email.value, codigo_gerado, data_formatada)
-                            //inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
+                            mandaremail(email.value, codigo_gerado, data_formatada)
+                            inserirAcao(`Gerou convite de permissão ${permissao.value} para ${nome.value}, no qual foi enviado para o email ${email.value}`)
                             if (resposta.ok) {
                             } else {
                                 throw "Não foi possível mandar os dados para o banco";
@@ -1110,12 +1110,16 @@
 
 </html>`
             };
-            fetch('http://localhost:3000/enviar-email', {
+            fetch('/enviar-email', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(dadosDoFormulario)
+                body: JSON.stringify({
+                    mensagem: dadosDoFormulario.mensagem,
+                    email: dadosDoFormulario.email,
+                    assunto: dadosDoFormulario.assunto
+                })
             })
                 .then(response => response.text())
                 .then(data => {

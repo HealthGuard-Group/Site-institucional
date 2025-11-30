@@ -40,6 +40,17 @@ function buscarestresse(idDac) {
 
     return database.executar(instrucaoSql);
 }
+function atualizarRecomendacaoIA(idDac, texto) {
+    var instrucaoSql = `UPDATE Dac SET recomendacaoIA = '${texto}' WHERE idDac = ${idDac}`;
+
+    return database.executar(instrucaoSql);
+}
+function buscartextoIA(idDac) {
+    var instrucaoSql = `SELECT recomendacaoIA FROM Dac WHERE idDac = ${idDac}`;
+
+    return database.executar(instrucaoSql);
+}
+
 
 
 
@@ -51,5 +62,7 @@ module.exports = {
     puxardadosgraficoRAM,
     atualizardadosgraficoRAM,
     buscarranking,
-    buscarestresse
+    buscarestresse,
+    atualizarRecomendacaoIA,
+    buscartextoIA
 };
