@@ -12,13 +12,13 @@
 
 <body>
   <button onclick="history.back()" class="btn-voltar">
-        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="13 16 9 12 13 8"></polyline>
-        </svg>
-    </button>
+    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="13 16 9 12 13 8"></polyline>
+    </svg>
+  </button>
   <div class="left">
-    
+
     <img src="./assets/imgs/HealthGuard_Logomarca_BRANCA_fundo_transparente.png" alt="HealthGuard Logo">
     <h1>Crie sua conta!</h1>
     <p>Cada minuto é precioso, vamos mudar esse jogo! <br> Comece a monitorar suas máquinas.</p>
@@ -39,7 +39,8 @@
         </div>
         <div>
           <label>E-mail</label>
-          <input id="email_input" type="text" placeholder="healthguard@example.com" style="cursor: not-allowed;" disabled>
+          <input id="email_input" type="text" placeholder="healthguard@example.com" style="cursor: not-allowed;"
+            disabled>
         </div>
         <div>
           <label>Senha</label>
@@ -91,7 +92,7 @@
           console.log(resposta)
 
           if (resposta.length == 0) {
-            
+
           } else {
             email.value = resposta[0].emailSugerido
             nome.value = resposta[0].nomeSugerido
@@ -175,7 +176,6 @@
         mensagem.innerHTML += `Erro ao confirmar a senha<br>`
       }
 
-
       else if (isNaN(cpfVar) || cpfVar.length !== 11) {
         mensagem.innerHTML += `CPF inválido<br>`
       }
@@ -194,43 +194,69 @@
       else if (nome_input.value == "") {
         mensagem.innerHTML += `Preencha o nome`
       }
+
       else {
-        // Enviando o valor da nova input
+
         fetch("/usuarios/cadastrar", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            // crie um atributo que recebe o valor recuperado aqui
-            // Agora vá para o arquivo routes/usuario.js
             nomeServer: nomeVar,
             emailServer: emailVar,
             senhaServer: senhaVar,
             cpfServer: cpfVar,
             senhaServer: senhaVar,
             codigoServer: codigoVar,
-
           }),
         })
           .then(function (resposta) {
             console.log("resposta: ", resposta);
 
+
+
             if (resposta.ok) {
+              registrarLogAcao("Cadastro de usuário", "sucesso");
+
               mensagem.innerHTML = `Cadastro realizado com sucesso! Redirecionando para tela de Login...`;
               setTimeout(() => {
                 window.location = "login.html";
               }, 2000)
+
             } else {
+              registrarLogAcao("Cadastro de usuário", "falha");
+
               mensagem.innerHTML = `Houve um erro ao tentar realizar o cadastro!! <br><br> Verifique se todos os campos estão corretos`;
             }
           })
           .catch(function (resposta) {
             console.log(`#ERRO: ${resposta}`);
+
+
+            registrarLogAcao("Cadastro de usuário", "falha");
           });
 
         return false;
       }
     }
   }
+
+
+
+ function registrarLogAcao(acao, status) {
+  fetch("/logAcoes/registrar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fkUnidadeAtendimento: null,
+      fkLogAcesso: null,
+      fkUsuario: null,
+      acao: acao,
+      statusAcao: status
+    })
+  });
+}
+
+
 </script>
