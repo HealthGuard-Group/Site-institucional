@@ -143,6 +143,8 @@
 </html>
 
 <script>
+    var data_visualizacao;
+
     function puxarAlertasGeral() {
         var variaveis = puxarVariaveis()
         console.log(variaveis)
@@ -202,9 +204,9 @@
             }
 
             if (dados[i].dataVisualizacao == null) {
-                var data_visualizacao = "----------";
+                data_visualizacao = "----------";
             } else {
-                var data_visualizacao = new Date(dados[i].dataVisualizacao);
+                data_visualizacao = new Date(dados[i].dataVisualizacao);
                 data_visualizacao = data_visualizacao.toLocaleString("pt-BR", {
                     timeZone: "America/Sao_Paulo"
                 });
@@ -226,7 +228,7 @@
                         <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
                         <td class="td-verificador-alerta">${dados[i].verificador}</td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Verificar">
+                            <div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
                                 <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
                             </div>
                         </td>
@@ -243,7 +245,7 @@
                         <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
                         <td class="td-verificador-alerta">${dados[i].verificador}</td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Remover verificação">
+                            <div class="icone-verificacao" title="Alerta verificado">
                                 <img src="../assets/imgs/iconeOlhoVerde.png" alt="visualização">
                             </div>
                         </td>
@@ -260,7 +262,7 @@
                         <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
                         <td class="td-verificador-alerta">${dados[i].verificador}</td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Verificar">
+                            <div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
                                 <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
                             </div>
                         </td>
@@ -277,12 +279,51 @@
                         <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
                         <td class="td-verificador-alerta">${dados[i].verificador}</td>
                         <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Remover verificação">
-                                <img src="../assets/imgs/icone_verificado.png" alt="visualização">
+                            <div class="icone-verificacao" title="Alerta verificado">
+                                <img src="../assets/imgs/iconeOlhoVerde.png" alt="visualização">
                             </div>
                         </td>
                     </tr>`
             }
         }
     }
+
+    function marcarAlertaComoVerificado(idAlerta) {
+
+        var variaveis = puxarVariaveis();
+        var nomeVisualizador = variaveis.nomeUsuario;
+
+        console.log("PARAMETROS:", idAlerta, data_visualizacao, nomeVisualizador)
+
+
+        // document.querySelector('.tela-escurecida').classList.add('oculto')
+        // document.getElementById("popupConfirmacaoAlterar").classList.add("oculto")
+        // document.getElementById("popupConviteGerado").classList.add("oculto")
+        // document.getElementById('html_fonte').style.overflowY = "auto"
+
+        fetch(`/alertasgeral/marcarAlertaComoVerificado/${idAlerta}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                dataVisualizacao: data_visualizacao,
+                nomeVisualizador: nomeVisualizador
+            }),
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log("Alerta Visualidado com sucesso! ✅")
+                console.log(resposta)
+                puxarAlertasGeral()
+                // copiartexto()
+            })
+            .catch(function (resposta) {
+                console.log("UPDATE ALERTA ❌")
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
 </script>

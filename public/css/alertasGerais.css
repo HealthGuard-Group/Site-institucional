@@ -141,8 +141,8 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 2.5vw;
-    height: 2.5vw;
+    width: 2.3vw;
+    height: 2.3vw;
     /* background-color: rgb(116, 116, 116); */
     border-radius: 5px;
 }
