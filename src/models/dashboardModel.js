@@ -88,6 +88,12 @@ function inserirmaquinametricaspersonalizadas(maquina_nova, idUnidadeAtendimento
   return database.executar(instrucaoSql);
 }
 
+function puxarNome(fkUnidade) {
+  var instrucaoSql = `select razaoSocial from unidadeDeAtendimento where idUnidadeDeAtendimento = ${fkUnidade};`;
+
+  return database.executar(instrucaoSql);
+}
+
 module.exports = {
   buscarLogAcesso,
   buscarNomeDaUnidade,
@@ -97,5 +103,6 @@ module.exports = {
   buscarcodigos,
   inserirmaquina,
   inserirmaquinaservicos,
-  inserirmaquinametricaspersonalizadas
+  inserirmaquinametricaspersonalizadas,
+  puxarNome
 };

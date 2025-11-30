@@ -231,6 +231,30 @@ function inserirmaquinametricaspersonalizadas(req, res) {
   }
 }
 
+function puxarNome(req, res) {
+  var fkUnidade = req.params.fkUnidade;
+  if (fkUnidade == undefined) {
+    res.status(400).send("Seu fkUnidade está undefined!");
+  } else {
+
+    dashboardModel.puxarNome(fkUnidade)
+      .then(
+        function (resultado) {
+          res.json(resultado);
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao puxar o nome da unidade! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage);
+        }
+      );
+  }
+}
+
 module.exports = {
   buscarLogAcesso,
   buscarNomeDaUnidade,
@@ -240,5 +264,6 @@ module.exports = {
   buscarcodigos,
   inserirmaquina,
   inserirmaquinaservicos,
-  inserirmaquinametricaspersonalizadas
+  inserirmaquinametricaspersonalizadas,
+  puxarNome
 }
