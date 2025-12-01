@@ -29,6 +29,7 @@ var funcionariosRouter = require("./src/routes/funcionarios");
 var graficoRouter = require("./src/routes/grafico");
 var analiseramRouter = require("./src/routes/analiseram");
 var analisecpuRouter = require("./src/routes/analisecpu");
+var analisediscoRouter = require("./src/routes/analisedisco");
 var dashhgRouter = require("./src/routes/dashhg");
 var acessosRouter = require("./src/routes/acessos");
 var alertasgeralRouter = require("./src/routes/alertasgeral");
@@ -53,12 +54,13 @@ app.use("/dashboard", dashboardRouter);
 app.use("/convites", convitesRouter);
 app.use("/funcionarios", funcionariosRouter);
 app.use("/grafico", graficoRouter);
-app.use("/analiseram", analiseramRouter)
-app.use("/analisecpu", analisecpuRouter )
+app.use("/analiseram", analiseramRouter);
+app.use("/analisecpu", analisecpuRouter );
+app.use("/analisedisco", analisediscoRouter );
 app.use("/dashhg", dashhgRouter);
-app.use("/acessos", acessosRouter)
-app.use("/alertasgeral", alertasgeralRouter)
-app.use("/alertasindividual", alertasindividualRouter)
+app.use("/acessos", acessosRouter);
+app.use("/alertasgeral", alertasgeralRouter);
+app.use("/alertasindividual", alertasindividualRouter);
 app.use("/dashAlertasSemanais", dashAlertasSemanaisRouter);
 app.use("/logacoes", logAcoesRouter);
 

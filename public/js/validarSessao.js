@@ -67,6 +67,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("analiseRAM.html")) {
             telaAnaliseRam()
         }
+        if (window.location.href.includes("analiseDisco.html")) {
+            telaAnaliseDisco()
+        }
         if (window.location.href.includes("acessos.html")){
             buscarDadosLogs()
         }
@@ -149,6 +152,21 @@ function telaAnaliseRam() {
         puxarRankingRAM()
     },5000)
 }
+
+function telaAnaliseDisco() {
+    puxarNomeDaMaquina()
+    atualizarDadosDisco()
+    // puxandoMetricasAlertaDeRam(fkUnidade)
+    // atualizarKpisRAM()
+    // puxandoDadosGraficoRamSwap()
+    // puxarRankingRAM()
+    // puxandoKpiStress()
+    // atualizarTextoIA()
+    var loop = setInterval(() => {
+       atualizarDadosDisco()
+    },5000)
+}
+
 function telaGrafico1() {
     trocarMonitoramento()
     trocarGraficos()

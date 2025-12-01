@@ -66,11 +66,13 @@
             <div class="header">
                 <div class="header-esquerda">
                     <img src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
-                    <span id="nome_MaquinaDac">Monitoramento</span>
+                    <span id="rastro_navegacao_monitoramento"
+                        onclick="window.location.href='monitoramento.html'">Monitoramento</span>
                     <img src="../assets/imgs/botao_seta_preto.png" alt="">
-                    <span id="nome_MaquinaDac">Máquina A-01</span>
+                    <span id="rastro_navegacao_nome_maquina" onclick="window.location.href='grafico1.html'">Máquina
+                        A-01</span>
                     <img src="../assets/imgs/botao_seta_preto.png" alt="">
-                    <span id="nome_MaquinaDac">Análise de Disco</span>
+                    <span id="rastro_navegacao_analise_disco">Análise de Disco</span>
 
                     <!-- <span class="status alerta" id="status_MaquinaDac"></span> -->
                 </div>
@@ -94,7 +96,7 @@
                             </div>
                         </div>
                         <div class="dado-kpi">
-                            <b>78%</b>
+                            <b id="dado-porcentagem-disco">78%</b>
                         </div>
                     </div>
                     <div class="kpi kpi-2">
@@ -112,7 +114,7 @@
                             </div>
                         </div>
                         <div class="dado-kpi">
-                            <b>120 GB</b>
+                            <b id="dado-espaco-disponivel">120 GB</b>
                         </div>
                     </div>
                     <div class="kpi kpi-3">
@@ -131,7 +133,7 @@
                             </div>
                         </div>
                         <div class="dado-kpi">
-                            <b>1.2 K/s</b>
+                            <b id="dado-iops">1.2 K/s</b>
                         </div>
                     </div>
                     <div class="kpi kpi-4">
@@ -149,7 +151,7 @@
                             </div>
                         </div>
                         <div class="dado-kpi">
-                            <b>512 GB</b>
+                            <b id="dado-capacidade-total">512 GB</b>
                         </div>
                     </div>
                 </div>
@@ -206,7 +208,9 @@
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text tooltip-perto-da-borda">
-                                        Últimas 10 variações no percentual de uso do disco e tendência de uso baseado no conceito de regressão linear simples, com a finalidade de prever de forma aproximada as próximas variações
+                                        Últimas 10 variações no percentual de uso do disco e tendência de uso baseado no
+                                        conceito de regressão linear simples, com a finalidade de prever de forma
+                                        aproximada as próximas variações
                                     </span>
                                 </span>
                             </div>
@@ -227,14 +231,66 @@
 <script src="../js/validarSessao.js"></script>
 <script src="../js/menu-lateral.js"></script>
 
-<style>
-    #myChart1-pizza {
-        justify-content: start;
-        max-width: 90%;
-        max-height: 105%;
-        margin-top: -1%;
+<script>
+    function puxarNomeDaMaquina() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analisedisco/buscarnomemaquina/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var rastro_navegacao_nome_maquina = document.getElementById("rastro_navegacao_nome_maquina")
+                rastro_navegacao_nome_maquina.innerHTML = resposta[0].nomeIdentificacao
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
     }
-</style>
+
+    function atualizarDadosDisco() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analisedisco/buscarDadosDisco/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var kpi_porcentagem_disco = document.getElementById("dado-porcentagem-disco")
+                var kpi_espaco_disponivel = document.getElementById("dado-espaco-disponivel")
+                var kpi_iops = document.getElementById("dado-iops")
+                var kpi_capacidade_total = document.getElementById("dado-capacidade-total")
+                for (let i = 3; i >= 0; i--) {
+                    if (resposta[i].fkMedicoesDisponiveis == 10) {
+                        kpi_porcentagem_disco.innerHTML = Number(resposta[i].medidaCapturada).toFixed(1) + "%"
+                        var porcentagemDisco = resposta[i].medidaCapturada
+                    } else if (resposta[i].fkMedicoesDisponiveis == 14) {
+                        kpi_espaco_disponivel.innerHTML = Number(resposta[i].medidaCapturada).toFixed(1) + " GB"
+                        var espacoDisponivel = resposta[i].medidaCapturada
+                    } else if (resposta[i].fkMedicoesDisponiveis == 15) {
+                        if (resposta[i].medidaCapturada >= 1000) {
+                            kpi_iops.innerHTML = Number(resposta[i].medidaCapturada / 1000).toFixed(1) + "K/s"
+                        } else {
+                            kpi_iops.innerHTML = Number(resposta[i].medidaCapturada).toFixed(0) + "/s"
+                        }
+                    } else if (resposta[i].fkMedicoesDisponiveis == 16) {
+                        // PARTIÇÕES
+                    }
+                    var capacidadeTotal = espacoDisponivel / (1 - porcentagemDisco / 100);
+                    kpi_capacidade_total.innerHTML = capacidadeTotal.toFixed(1) + " GB";
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+</script>
+
+
 
 <script>
 
@@ -269,17 +325,6 @@
         layout: {
             padding: 20
         },
-        // datalabels: {
-        //     color: '#fff',
-        //     font: {
-        //         weight: 'bold',
-        //         size: 26
-        //     },
-        //     formatter: function (value, context) {
-        //         return value + "%"
-        //     }
-        // },
-        // plugins: [ChartDataLabels]
     };
 
     new Chart(ctx, {
@@ -288,14 +333,6 @@
         options: options
     });
 </script>
-
-<style>
-    #myChart2-barra {
-        max-width: 95%;
-        max-height: 95%;
-        margin-top: -1%;
-    }
-</style>
 
 <script>
     const ctx2 = document.getElementById('myChart2-barra').getContext('2d');
@@ -318,15 +355,11 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-            // legend: {
-            //     position: 'top',
-            //     labels: {
-            //         font: {
-            //             size: 14
-            //         },
-            //         color: '#333'
-            //     }
-            // },
+            legend: {
+                labels: {
+                    color: '#333'
+                }
+            },
         },
         scales: {
             x: {
@@ -354,15 +387,6 @@
     });
 </script>
 
-<style>
-    #myChart-linha {
-        max-width: 98%;
-        max-height: 100%;
-        width: 100%;
-        /* height: 100%; */
-        margin-top: 2%;
-    }
-</style>
 
 <script>
     const ctxLinha = document.getElementById('myChart-linha').getContext('2d');
@@ -439,13 +463,18 @@
                     tension: 0,
                     // fill: true,
                     order: 99
-                }
+                },
             ]
         },
         options: {
             responsive: true,
             plugins: {
-                legend: { position: 'top' },
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#333'
+                    }
+                },
                 annotation: {
                     annotations: {
                         colapso: {
@@ -462,13 +491,15 @@
                 x: {
                     title: {
                         display: true,
-                        text: 'Horário da Medição'
+                        text: 'Horário da Medição',
+                        color: '#333'
                     }
                 },
                 y: {
                     title: {
                         display: true,
-                        text: 'Percentual de Uso (%)'
+                        text: 'Percentual de Uso (%)',
+                        color: '#333'
                     },
                     // min: 0,     // mínimo
                     // max: 100,   // máximo
