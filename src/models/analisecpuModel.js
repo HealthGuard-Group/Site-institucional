@@ -87,11 +87,20 @@ WHERE fkDac = ${fkDAC}
 AND nomeNivel IN ('Atenção', 'Alerta');`
     return database.executar(instrucaoSql)
 }
+
+function puxarDadosAlertas(fkDAC) {
+    var instrucaoSql = `select nomeAlerta, dataInicio, pico from Alerta where fkDac = ${fkDAC} order by dataInicio desc limit 10;
+`
+    return database.executar(instrucaoSql)
+}
+
+
 module.exports = {
     puxarProcessos,
     puxarThreads,
     puxarCPU,
     puxarQtdAlertas,
     puxarPorNucleo,
-    puxarMetricas
+    puxarMetricas,
+    puxarDadosAlertas
 };

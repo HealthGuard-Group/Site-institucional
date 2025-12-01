@@ -61,21 +61,21 @@
     </div>
     <!-- Fim do menu lateral -->
     <div class="header">
-                <div class="header-esquerda">
-                    <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
-                    <a href="monitoramento.html" >
-                    <span id="nome_MaquinaDac ">Monitoramento</span>
-                    </a>
-                    <img src="../assets/imgs/botao_seta_preto.png" alt="">
-                    <a href="grafico1.html" >
-                    <span id="nome_maquina"></span>
-                    <span id="status_MaquinaDac"> Status: </span>
-                    </a>
-                    <img src="../assets/imgs/botao_seta_preto.png" alt="">
-                    <span id="nome_MaquinaDac">Análise de CPU</span>
+        <div class="header-esquerda">
+            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+            <a href="monitoramento.html">
+                <span id="nome_MaquinaDac ">Monitoramento</span>
+            </a>
+            <img src="../assets/imgs/botao_seta_preto.png" alt="">
+            <a href="grafico1.html">
+                <span id="nome_maquina"></span>
+                <span id="status_MaquinaDac"> Status: </span>
+            </a>
+            <img src="../assets/imgs/botao_seta_preto.png" alt="">
+            <span id="nome_MaquinaDac">Análise de CPU</span>
 
-                </div>
-            </div>
+        </div>
+    </div>
     <div class="conteudo">
 
 
@@ -97,7 +97,7 @@
             <div class="kpis" id="frequencia">
                 <b>Threads em execução </b>
                 <div class="dados-kpi">
-                  <span id="mhz_max">0</span>
+                    <span id="mhz_max">0</span>
                 </div>
 
 
@@ -115,31 +115,19 @@
 
             <div class="graficos">
                 <div id="titulo-graficos">
-                    <select name="" id="slc_grafico">
-                        <option value="">Mapa de calor</option>
-                        <option value="">Detalhado</option>
-                    </select>
                     <b>Acompanhamento em tempo real por Núcleo de CPU </b>
                 </div>
                 <div id="grafico-heatmap"></div>
             </div>
 
-            <div id="Historico">
+            <div id="Alertas">
                 <header>Ultimos alertas de CPU</header>
-                <div style="background-color: #b30000;" class="alertas" id="alerta_1">
-                    Alerta Grave <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                <div id="blocos">
+                    
+
                 </div>
 
-                <div style="background-color: #daa520;" class="alertas" id="alerta_1">
-                    Em atenção <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
-                </div>
-
-
-            
             </div>
-
 
         </div>
 
@@ -153,204 +141,202 @@
 <script>
     var chartCPU;
     var chartHeatmap;
-    
-     var idDac = sessionStorage.ID_DAC;
-     var fkunidade;
+
+    var idDac = sessionStorage.ID_DAC;
+    var fkunidade;
 
     // Metricas padrao
-        var atencao_inicio = 58.1;
-        var atencao_fim = 78.5
-        var alerta_inicio = 78.6
-        var alerta_fim = 100
+    var atencao_inicio = 58.1;
+    var atencao_fim = 78.5
+    var alerta_inicio = 78.6
+    var alerta_fim = 100
 
-     // inicia a dashboard puxando oque precisa 
+    // inicia a dashboard puxando oque precisa 
     fetch(`/grafico/exibirInfoDac/${idDac}`, {
-      method: "GET",
+        method: "GET",
     })
-      .then(resposta => {
-        return resposta.json();
-      })
-      .then(resposta => {
-        console.log(resposta)
-        nome_maquina.innerHTML = `${resposta[0].nomeIdentificacao}`
-        fkunidade = resposta[0].fkUnidadeDeAtendimento
-        puxarmetricas();
-        atualizarDados(fkunidade)
-        console.log(resposta[0].nomeIdentificacao)
-        if (resposta[0].statusDac == "Alerta") {
-          status_MaquinaDac.innerHTML = `<p style="color:#b30000">Status: ${resposta[0].statusDac}</p>`
-        }
-        else if (resposta[0].statusDac == "Ativo") {
-          status_MaquinaDac.innerHTML = `<p style="color:green">Status: ${resposta[0].statusDac}</p>`
-        }
-        else if (resposta[0].statusDac == "Inativo") {
-          status_MaquinaDac.innerHTML = `<p style="color:grey">Status: ${resposta[0].statusDac}</p>`
-        }
-        else if (resposta[0].statusDac == "Em configuração") {
-          window.location.href = "monitoramento.html"
-        }
-      })
+        .then(resposta => {
+            return resposta.json();
+        })
+        .then(resposta => {
+            console.log(resposta)
+            nome_maquina.innerHTML = `${resposta[0].nomeIdentificacao}`
+            fkunidade = resposta[0].fkUnidadeDeAtendimento
+            puxarmetricas();
+            atualizarDados(fkunidade)
+            console.log(resposta[0].nomeIdentificacao)
+            if (resposta[0].statusDac == "Alerta") {
+                status_MaquinaDac.innerHTML = `<p style="color:#b30000">Status: ${resposta[0].statusDac}</p>`
+            }
+            else if (resposta[0].statusDac == "Ativo") {
+                status_MaquinaDac.innerHTML = `<p style="color:green">Status: ${resposta[0].statusDac}</p>`
+            }
+            else if (resposta[0].statusDac == "Inativo") {
+                status_MaquinaDac.innerHTML = `<p style="color:grey">Status: ${resposta[0].statusDac}</p>`
+            }
+            else if (resposta[0].statusDac == "Em configuração") {
+                window.location.href = "monitoramento.html"
+            }
+        })
 
-      .catch(function (resposta) {
-        console.log(`Erro no catch: ${resposta}`);
-      });
+        .catch(function (resposta) {
+            console.log(`Erro no catch: ${resposta}`);
+        });
 
 
-function puxarmetricas() {
-      fetch(`/analisecpu/puxarMetricas/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-       if (!resposta.ok) {
-        throw new Error('Erro na requisição');
+    function puxarmetricas() {
+        fetch(`/analisecpu/puxarMetricas/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                if (resposta.length == 0) {
+                    renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim)
+                } else {
+                    atencao_inicio = resposta[0].valorMinimo
+                    atencao_fim = resposta[0].valorMaximo
+
+                    alerta_inicio = resposta[1].valorMinimo
+                    alerta_fim = resposta[1].valorMaximo
+                    renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim)
+                }
+
+
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
     }
-    return resposta.json();
-})
-.then(resposta => {
-    if (resposta.length == 0) {
-        renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim)
-    } else {
-         atencao_inicio = resposta[0].valorMinimo
-         atencao_fim = resposta[0].valorMaximo
 
-        alerta_inicio = resposta[1].valorMinimo
-        alerta_fim = resposta[1].valorMaximo
-        renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim)
+
+
+    function atualizarDados(fkunidade) {
+        puxar_processos(fkunidade)
+        puxar_Threads(fkunidade)
+        puxar_CPU(fkunidade)
+        puxar_qtdAlertas(fkunidade)
+        puxar_porNucleo(fkunidade)
+        puxar_dadosAlertas()
+
+        // loop para atualizar kpis
+        setTimeout(() => {
+            atualizarDados(fkunidade)
+        }, 10000);
+
     }
-    
-   
-})
-.catch(function (erro) {
-    console.log(`Erro no catch: ${erro}`);
-});
-}
 
-
-
-function atualizarDados(fkunidade) {
-    puxar_processos(fkunidade)
-    puxar_Threads(fkunidade)
-    puxar_CPU(fkunidade)
-    puxar_qtdAlertas(fkunidade)
-    puxar_porNucleo(fkunidade)
-    // puxar_dadosAlertas(fkunidade)
-
-    // loop para atualizar kpis
-    setTimeout(() => {
-    atualizarDados(fkunidade)
-}, 5000);
-
-}
-
-function puxar_processos(fkunidade) {
-    fetch(`/analisecpu/puxarprocessos/${fkunidade}/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-       if (!resposta.ok) {
-        throw new Error('Erro na requisição');
+    function puxar_processos(fkunidade) {
+        fetch(`/analisecpu/puxarprocessos/${fkunidade}/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                processosKpi.innerHTML = resposta[0].medidaCapturada
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
     }
-    return resposta.json();
-})
-.then(resposta => {
-    processosKpi.innerHTML = resposta[0].medidaCapturada
-})
-.catch(function (erro) {
-    console.log(`Erro no catch: ${erro}`);
-});
-}
-   
-function puxar_Threads(fkunidade) {
-     fetch(`/analisecpu/puxarThreads/${fkunidade}/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-       if (!resposta.ok) {
-        throw new Error('Erro na requisição');
-    }
-    return resposta.json();
-})
-.then(resposta => {
-    mhz_max.innerHTML = resposta[0].medidaCapturada
-})
-.catch(function (erro) {
-    console.log(`Erro no catch: ${erro}`);
-});
-}
 
-function puxar_CPU(fkunidade) {
-   fetch(`/analisecpu/puxarCPU/${fkunidade}/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-       if (!resposta.ok) {
-        throw new Error('Erro na requisição');
+    function puxar_Threads(fkunidade) {
+        fetch(`/analisecpu/puxarThreads/${fkunidade}/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                mhz_max.innerHTML = resposta[0].medidaCapturada
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
     }
-    return resposta.json();
-})
-.then(resposta => {
-    var porc_cpu = Number(resposta[0].medidaCapturada);
-    var cor = 'green'
-    // configurações de alerta para definir cor
-    if (porc_cpu > atencao_inicio && porc_cpu < atencao_fim) {
-        cor = '#f1c402'
-    } else if (porc_cpu > alerta_inicio) {
-        cor = '#b30000'
-    }
-    
-    if (chartCPU) {
+
+    function puxar_CPU(fkunidade) {
+        fetch(`/analisecpu/puxarCPU/${fkunidade}/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                var porc_cpu = Number(resposta[0].medidaCapturada);
+                var cor = 'green'
+                // configurações de alerta para definir cor
+                if (porc_cpu > atencao_inicio && porc_cpu < atencao_fim) {
+                    cor = '#f1c402'
+                } else if (porc_cpu > alerta_inicio) {
+                    cor = '#b30000'
+                }
+
+                if (chartCPU) {
                     chartCPU.updateOptions({ colors: [cor] });
                     chartCPU.updateSeries([porc_cpu]);
                 }
 
 
-})
-.catch(function (erro) {
-    console.log(`Erro no catch: ${erro}`);
-});
-}
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
+    }
 
-function puxar_qtdAlertas(fkunidade) {
-   
+    function puxar_qtdAlertas(fkunidade) {
+
         fetch(`/analisecpu/puxarQtdAlertas/${fkunidade}/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-       if (!resposta.ok) {
-        throw new Error('Erro na requisição');
-    }
-    return resposta.json();
-})
-.then(resposta => {
-   alertasKpi.innerHTML = resposta[0].qtdalertas
-})
-.catch(function (erro) {
-    console.log(`Erro no catch: ${erro}`);
-});
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                alertasKpi.innerHTML = resposta[0].qtdalertas
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
 
-}
-
-function puxar_porNucleo(fkunidade) {
-       fetch(`/analisecpu/puxarporNucleo/${fkunidade}/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-       if (!resposta.ok) {
-        throw new Error('Erro na requisição');
     }
-    return resposta.json();
-})
-.then(resposta => {
-    console.log("Array:", resposta);
-    var string_nucleo= resposta[0].medidaCapturada
-    var hora = resposta[0].dataCaptura
-    // formatar hora e guardar nessa variável
-    var hora_formatada = hora
-    var array_nucleo = JSON.parse(string_nucleo)
-    console.log(array_nucleo)
-    console.log(hora)
-    array_nucleo.forEach((usoCpu, index) => {
-                    
+
+    function puxar_porNucleo(fkunidade) {
+        fetch(`/analisecpu/puxarporNucleo/${fkunidade}/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log("Array:", resposta);
+                var string_nucleo = resposta[0].medidaCapturada
+                var hora = formatarData(resposta[0].dataCaptura)
+                var hora_formatada = hora
+                var array_nucleo = JSON.parse(string_nucleo)
+                console.log(array_nucleo)
+                array_nucleo.forEach((usoCpu, index) => {
+
                     if (!seriesDados[index]) {
                         seriesDados[index] = {
                             name: 'Núcleo ' + (index + 1),
@@ -363,55 +349,72 @@ function puxar_porNucleo(fkunidade) {
                     });
 
                     if (seriesDados[index].data.length > 30) {
-                        seriesDados[index].data.shift(); 
+                        seriesDados[index].data.shift();
                     }
                 });
 
                 chartHeatmap.updateSeries(seriesDados);
 
-})
-.catch(function (erro) {
-    console.log(`Erro no catch: ${erro}`);
-});
-}
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
+    }
 
-/*
- function puxar_dadosAlertas(fkunidade) {
-    fetch e dentro do retorno do fetch:
+    function puxar_dadosAlertas() {
+        fetch(`/analisecpu/puxarALERTAS/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                blocos.innerHTML = ''
+                for (let index = 0; index < resposta.length; index++) {
+                    var data_formatada = formatarData(resposta[index].dataInicio)
+                    if (resposta[index].nomeAlerta == 'Alerta') {
+                        blocos.innerHTML += `
+                  <div style="background-color: #b30000;" class="alertas" id="alerta_${index}">
+                        <h5>Alerta Grave <img src="../assets/imgs/icone_alerta.png" alt="icone-alerta"> </h5>
 
-        for (let index = 0; index < array.length; index++) {
-            if(alerta == grave) {
-                Historico.innerHTML += `
-                 <div style="background-color: #b30000;" class="alertas" id="alerta_${index}">
-                    Alerta Grave <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
-                </div>
+                        <p> ${data_formatada} </p>
+                        <p> Pico: <span id='pico_${index}'>${resposta[index].pico}</span>%</p>
+                    </div>
                 `
-            } else if (alerta == atencao) {
-                Historico.innerHTML += `
-                  <div style="background-color: #daa520;" class="alertas" id="alerta_${index}">
-                    Em atenção <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
-                </div>`
-            }
-            
-        }
-}
-*/
+                    } else if (resposta[index].nomeAlerta == 'Atenção') {
+                        blocos.innerHTML += `
+                <div style="background-color: #daa520;" class="alertas" id="alerta_${index}">
+                        <h5>Em Atenção <img src="../assets/imgs/iconeAlerta.png" alt="icone-alerta"> </h5>
 
-function teste() {
-    Historico.innerHTML += `
-                  <div style="background-color: #daa520;" class="alertas" id="alerta_${index}">
-                    Em atenção <br>
-                    <p> DD/MM/AAAA - HH:MM:SS </p>
-                </div>`
-}
+                        <p> ${data_formatada}</p>
+                        <p> Pico: <span id='pico_1'>${resposta[index].pico}</span>%</p>
+                    </div>`
+                    }
 
-var seriesDados = [];
+                }
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
+
+    }
+    function formatarData(dataISO) {
+        let data = new Date(dataISO);
+        let formatada = data.toLocaleString('pt-BR', {
+            timeZone: 'America/Sao_Paulo'
+        });
+        return formatada.replace(/\//g, '-').replace(',', '');
+    }
+
+    var seriesDados = [];
 
     function renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim) {
         var optionsCPU = {
-            series: [0], 
+            series: [0],
             colors: ['green'],
             chart: {
                 type: 'radialBar',
@@ -452,55 +455,55 @@ var seriesDados = [];
         chartCPU.render();
 
 
-          var optionsHeatmap = {
-        series: [],
-        chart: {
-            height: '80%',
-            type: 'heatmap',
-            width: '100%',
-            toolbar: { show: true }
-        },
-        plotOptions: {
-            heatmap: {
-                shadeIntensity: 0.5,
-                radius: 0,
-                useFillColorAsStroke: false,
-                colorScale: {
-                    ranges: [
-                        {
-                            from: 0,
-                            to: Number(atencao_inicio) - 0.01,
-                            name: 'Ok',
-                            color: '#00A100'
-                        },
-                        {
-                            from: atencao_inicio,
-                            to: atencao_fim,
-                            name: 'atenção',
-                            color: '#f1c402'
-                        },
-                        {
-                            from: alerta_inicio,
-                            to: alerta_fim,
-                            name: 'Alerta grave',
-                            color: '#b30000'
-                        }
-                    ]
+        var optionsHeatmap = {
+            series: [],
+            chart: {
+                height: '80%',
+                type: 'heatmap',
+                width: '100%',
+                toolbar: { show: true }
+            },
+            plotOptions: {
+                heatmap: {
+                    shadeIntensity: 0.5,
+                    radius: 0,
+                    useFillColorAsStroke: false,
+                    colorScale: {
+                        ranges: [
+                            {
+                                from: 0,
+                                to: Number(atencao_inicio) - 0.01,
+                                name: 'Ok',
+                                color: '#00A100'
+                            },
+                            {
+                                from: atencao_inicio,
+                                to: atencao_fim,
+                                name: 'atenção',
+                                color: '#f1c402'
+                            },
+                            {
+                                from: Number(atencao_fim) - 0.01,
+                                to: alerta_fim,
+                                name: 'Alerta grave',
+                                color: '#b30000'
+                            }
+                        ]
+                    }
                 }
-            }
-        },
-        dataLabels: {
-            enabled: false
-        },
-        stroke: {
-            width: 1
-        },
-    };
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                width: 1
+            },
+        };
 
         chartHeatmap = new ApexCharts(document.querySelector("#grafico-heatmap"), optionsHeatmap);
         chartHeatmap.render();
     }
-  
+
 
 
 </script>

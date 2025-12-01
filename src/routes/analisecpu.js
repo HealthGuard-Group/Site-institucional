@@ -22,5 +22,9 @@ router.get(`/puxarMetricas/:fkdac`, function (req, res) {
     analisecpuController.puxarMetricas(req, res);
 });
 
+router.get(`/puxarALERTAS/:fkdac`, function (req, res) {
+    analisecpuController.puxarDadosAlertas(req, res);
+});
+
 
 module.exports = router;
