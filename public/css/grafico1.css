@@ -540,15 +540,26 @@ label.link-descricao:hover {
 }
 
 .redirect-chart{
+  width: 11.5vw;
+  height: 4vh;
   cursor: pointer;
-  color: #5b5b5b;
-  font-size: 0.7vw;
-  text-decoration: underline;
+  font-size: 0.8vw;
+  background-color: #1c2e42;
+  padding: 2.5% 1.5%;
+  border-radius: 6.5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.redirect-chart img{
+  width: 15%;
+  margin-left: 6%;
 }
 
 .redirect-chart:hover{
-  color: #9a1522;
-  transition: 0.3s;
+  background-color: #103054;
+  transition: 0.2s;
 }
 
 @media (max-width: 900px) {
