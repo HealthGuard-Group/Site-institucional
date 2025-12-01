@@ -280,7 +280,7 @@
 
             document.querySelector(".cartao-insight .texto-insight").textContent = resultado.mensagens[Math.floor(Math.random() * resultado.mensagens.length)];
 
- 
+
             const blocoSugestoes = document.querySelector(".cartao-insight + .cartao-insight .texto-sugestoes");
             blocoSugestoes.textContent = resultado.sugestoes.join(" ");
 
@@ -385,6 +385,30 @@
 
         document.querySelectorAll(".cartao-downloads p")[0].onclick = gerarRelatorioDeAlertas;
         document.querySelectorAll(".cartao-downloads p")[1].onclick = exportarExcel;
+
+        const kpiTotalEventos = document.getElementById("descricaoTotalEventos");
+        const kpiUsuariosAtivos = document.getElementById("descricaoUsuariosAtivos");
+        const kpiMaquinasAlteradas = document.getElementById("descricaoMaquinasAlteradas");
+        const kpiFalhas = document.getElementById("descricaoFalhasEmAcoes");
+
+
+        fetch(`/kpisAcoes/listar`, {
+            method: "GET",
+        })
+            .then(resposta => resposta.json())
+            .then(dados => {
+                console.log("Resposta das KPIs:", dados[0]);
+
+
+                kpiTotalEventos.innerHTML = dados[0].totalEventos;
+                kpiUsuariosAtivos.innerHTML = dados[0].usuariosAtivos;
+                kpiMaquinasAlteradas.innerHTML = dados[0].maquinasAlteradas;
+                kpiFalhas.innerHTML = dados[0].falhas;
+
+
+                atualizarInsightESugestoes();
+            })
+            .catch(err => console.error("Erro no fetch KPIs:", err));
 
 
 
