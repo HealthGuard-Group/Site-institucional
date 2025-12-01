@@ -83,13 +83,13 @@ JOIN
 function puxarMetricas(fkDAC) {
     var instrucaoSql = ` SELECT nomeNivel, valorMinimo, valorMaximo 
 FROM MetricaAlerta 
-WHERE fkDac = ${fkDAC}
+WHERE fkMedicoesDisponiveis = 1 and fkDac = ${fkDAC}
 AND nomeNivel IN ('Atenção', 'Alerta');`
     return database.executar(instrucaoSql)
 }
 
 function puxarDadosAlertas(fkDAC) {
-    var instrucaoSql = `select nomeAlerta, dataInicio, pico from Alerta where fkDac = ${fkDAC} order by dataInicio desc limit 10;
+    var instrucaoSql = `select nomeAlerta, dataInicio, pico from Alerta where fkMedicoesDisponiveis = 1 and fkDac = ${fkDAC} order by dataInicio desc limit 10;
 `
     return database.executar(instrucaoSql)
 }
