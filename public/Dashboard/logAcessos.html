@@ -412,6 +412,34 @@
             })
             .catch(err => console.error("Erro no fetch KPIs:", err));
 
+        fetch(`/graficoAcoes/carga/1`)
+            .then(r => r.json())
+            .then(dados => {
+                let labels = dados.map(l => l.hora);
+                let valores = dados.map(l => l.qtd);
+
+                graficoCargaTrabalho.data.labels = labels;
+                graficoCargaTrabalho.data.datasets[0].data = valores;
+                graficoCargaTrabalho.update();
+            });
+
+        fetch(`/graficoAcoes/tipos/1`)
+            .then(r => r.json())
+            .then(d => {
+                graficoTiposAcao.data.datasets[0].data = [
+                    d.leitura, d.alteracao, d.seguranca
+                ];
+                graficoTiposAcao.update();
+            });
+
+        fetch(`/graficoAcoes/usuarios/1`)
+            .then(r => r.json())
+            .then(d => {
+                graficoUsuariosAtivos.data.labels = d.map(u => u.nome);
+                graficoUsuariosAtivos.data.datasets[0].data = d.map(u => u.qtd);
+                graficoUsuariosAtivos.update();
+            });
+
 
 
     </script>
