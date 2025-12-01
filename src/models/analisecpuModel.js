@@ -60,9 +60,38 @@ function puxarQtdAlertas(fkunidade, fkDAC) {
     var instrucaoSql = `select count(idAlerta) as qtdalertas from Alerta where fkMedicoesDisponiveis = 1 and fkDac = ${fkDAC}  and dataInicio > now() - interval 7 day;`;
     return database.executar(instrucaoSql);
 }
+
+function puxarPorNucleo(fkUNIDADE, fkDAC) {
+    var instrucaoSql = ` 
+     SELECT 
+    a.nomeFantasia, 
+    c.nomeIdentificacao, 
+    b.nomeDaMedicao, 
+   d.medidaCapturada,
+    d.dataCaptura  
+FROM 
+    UnidadeDeAtendimento AS a
+JOIN 
+    Dac AS c ON a.idUnidadeDeAtendimento = c.fkUnidadeDeAtendimento
+JOIN 
+    Leitura AS d ON c.idDac = d.fkDac
+JOIN 
+    MedicoesDisponiveis AS b ON d.fkMedicoesDisponiveis = b.idMedicoesDisponiveis where  d.fkUnidadeDeAtendimento = ${fkUNIDADE} and d.fkDac = ${fkDAC} and  b.nomeDaMedicao = 'Porcentagem CPU - nucleo' order by d.dataCaptura desc limit 1;`
+    return database.executar(instrucaoSql)
+}
+
+function puxarMetricas(fkDAC) {
+    var instrucaoSql = ` SELECT nomeNivel, valorMinimo, valorMaximo 
+FROM MetricaAlerta 
+WHERE fkDac = ${fkDAC}
+AND nomeNivel IN ('Atenção', 'Alerta');`
+    return database.executar(instrucaoSql)
+}
 module.exports = {
     puxarProcessos,
     puxarThreads,
     puxarCPU,
-    puxarQtdAlertas
+    puxarQtdAlertas,
+    puxarPorNucleo,
+    puxarMetricas
 };

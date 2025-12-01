@@ -157,6 +157,12 @@
      var idDac = sessionStorage.ID_DAC;
      var fkunidade;
 
+    // Metricas padrao
+        var atencao_inicio = 58.1;
+        var atencao_fim = 78.5
+        var alerta_inicio = 78.6
+        var alerta_fim = 100
+
      // inicia a dashboard puxando oque precisa 
     fetch(`/grafico/exibirInfoDac/${idDac}`, {
       method: "GET",
@@ -168,8 +174,7 @@
         console.log(resposta)
         nome_maquina.innerHTML = `${resposta[0].nomeIdentificacao}`
         fkunidade = resposta[0].fkUnidadeDeAtendimento
-    
-        renderizarGraficos();
+        puxarmetricas();
         atualizarDados(fkunidade)
         console.log(resposta[0].nomeIdentificacao)
         if (resposta[0].statusDac == "Alerta") {
@@ -189,15 +194,49 @@
       .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
       });
+
+
+function puxarmetricas() {
+      fetch(`/analisecpu/puxarMetricas/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    if (resposta.length == 0) {
+        renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim)
+    } else {
+         atencao_inicio = resposta[0].valorMinimo
+         atencao_fim = resposta[0].valorMaximo
+
+        alerta_inicio = resposta[1].valorMinimo
+        alerta_fim = resposta[1].valorMaximo
+        renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim)
+    }
+    
+   
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+}
+
+
+
 function atualizarDados(fkunidade) {
     puxar_processos(fkunidade)
     puxar_Threads(fkunidade)
     puxar_CPU(fkunidade)
     puxar_qtdAlertas(fkunidade)
+    puxar_porNucleo(fkunidade)
     // puxar_dadosAlertas(fkunidade)
+
     // loop para atualizar kpis
     setTimeout(() => {
-        console.log('loop funcionadno')
     atualizarDados(fkunidade)
 }, 5000);
 
@@ -214,8 +253,6 @@ function puxar_processos(fkunidade) {
     return resposta.json();
 })
 .then(resposta => {
-    console.log("Dados recebidos:", resposta);
-    console.log(resposta[0].medidaCapturada)
     processosKpi.innerHTML = resposta[0].medidaCapturada
 })
 .catch(function (erro) {
@@ -234,8 +271,6 @@ function puxar_Threads(fkunidade) {
     return resposta.json();
 })
 .then(resposta => {
-    console.log("Threads:", resposta);
-    console.log(resposta[0].medidaCapturada)
     mhz_max.innerHTML = resposta[0].medidaCapturada
 })
 .catch(function (erro) {
@@ -254,14 +289,12 @@ function puxar_CPU(fkunidade) {
     return resposta.json();
 })
 .then(resposta => {
-    console.log("CPU:", resposta);
-    console.log(resposta[0].medidaCapturada)
     var porc_cpu = Number(resposta[0].medidaCapturada);
     var cor = 'green'
     // configurações de alerta para definir cor
-    if (porc_cpu > 40 && porc_cpu < 80) {
+    if (porc_cpu > atencao_inicio && porc_cpu < atencao_fim) {
         cor = '#f1c402'
-    } else if (porc_cpu > 80) {
+    } else if (porc_cpu > alerta_inicio) {
         cor = '#b30000'
     }
     
@@ -289,8 +322,6 @@ function puxar_qtdAlertas(fkunidade) {
     return resposta.json();
 })
 .then(resposta => {
-    console.log("Qtd Alertas:", resposta);
-    console.log(resposta[0].qtdalertas)
    alertasKpi.innerHTML = resposta[0].qtdalertas
 })
 .catch(function (erro) {
@@ -298,7 +329,53 @@ function puxar_qtdAlertas(fkunidade) {
 });
 
 }
- /*
+
+function puxar_porNucleo(fkunidade) {
+       fetch(`/analisecpu/puxarporNucleo/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("Array:", resposta);
+    var string_nucleo= resposta[0].medidaCapturada
+    var hora = resposta[0].dataCaptura
+    // formatar hora e guardar nessa variável
+    var hora_formatada = hora
+    var array_nucleo = JSON.parse(string_nucleo)
+    console.log(array_nucleo)
+    console.log(hora)
+    array_nucleo.forEach((usoCpu, index) => {
+                    
+                    if (!seriesDados[index]) {
+                        seriesDados[index] = {
+                            name: 'Núcleo ' + (index + 1),
+                            data: []
+                        };
+                    }
+                    seriesDados[index].data.push({
+                        x: hora_formatada,
+                        y: usoCpu
+                    });
+
+                    if (seriesDados[index].data.length > 30) {
+                        seriesDados[index].data.shift(); 
+                    }
+                });
+
+                chartHeatmap.updateSeries(seriesDados);
+
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+}
+
+/*
  function puxar_dadosAlertas(fkunidade) {
     fetch e dentro do retorno do fetch:
 
@@ -330,7 +407,9 @@ function teste() {
                 </div>`
 }
 
-    function renderizarGraficos() {
+var seriesDados = [];
+
+    function renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim) {
         var optionsCPU = {
             series: [0], 
             colors: ['green'],
@@ -374,62 +453,7 @@ function teste() {
 
 
           var optionsHeatmap = {
-        series: [
-            {
-                name: 'Núcleo 1',
-                data: [
-                    { x: '10:00:00', y: 22 }, { x: '10:00:05', y: 45 }, { x: '10:00:10', y: 12 },
-                    { x: '10:00:15', y: 56 }, { x: '10:00:20', y: 81 }, { x: '10:00:25', y: 90 },
-                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 88 }, { x: '10:00:40', y: 78 },
-                    { x: '10:00:45', y: 20 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
-                ]
-            },
-            {
-                name: 'Núcleo 2',
-                data: [
-                    { x: '10:00:00', y: 43 }, { x: '10:00:05', y: 55 }, { x: '10:00:10', y: 40 },
-                    { x: '10:00:15', y: 60 }, { x: '10:00:20', y: 100 }, { x: '10:00:25', y: 81 },
-                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 95 }, { x: '10:00:40', y: 78 },
-                    { x: '10:00:45', y: 32 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
-                ]
-            },
-            {
-                name: 'Núcleo 3',
-                data: [
-                    { x: '10:00:00', y: 10 }, { x: '10:00:05', y: 15 }, { x: '10:00:10', y: 8 },
-                    { x: '10:00:15', y: 12 }, { x: '10:00:20', y: 86 }, { x: '10:00:25', y: 84 },
-                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 81 }, { x: '10:00:40', y: 78 },
-                    { x: '10:00:45', y: 32 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
-                ]
-            },
-            {
-                name: 'Núcleo 4',
-                data: [
-                    { x: '10:00:00', y: 65 }, { x: '10:00:05', y: 55 }, { x: '10:00:10', y: 42 },
-                    { x: '10:00:15', y: 33 }, { x: '10:00:20', y: 20 }, { x: '10:00:25', y: 15 },
-                    { x: '10:00:30', y: 45 }, { x: '10:00:35', y: 60 }, { x: '10:00:40', y: 70 },
-                    { x: '10:00:45', y: 85 }, { x: '10:00:50', y: 90 }, { x: '10:00:55', y: 95 }
-                ]
-            },
-            {
-                name: 'Núcleo 5',
-                data: [
-                    { x: '10:00:00', y: 12 }, { x: '10:00:05', y: 24 }, { x: '10:00:10', y: 36 },
-                    { x: '10:00:15', y: 48 }, { x: '10:00:20', y: 60 }, { x: '10:00:25', y: 72 },
-                    { x: '10:00:30', y: 84 }, { x: '10:00:35', y: 96 }, { x: '10:00:40', y: 50 },
-                    { x: '10:00:45', y: 40 }, { x: '10:00:50', y: 30 }, { x: '10:00:55', y: 20 }
-                ]
-            },
-            {
-                name: 'Núcleo 6',
-                data: [
-                    { x: '10:00:00', y: 98 }, { x: '10:00:05', y: 85 }, { x: '10:00:10', y: 75 },
-                    { x: '10:00:15', y: 65 }, { x: '10:00:20', y: 55 }, { x: '10:00:25', y: 45 },
-                    { x: '10:00:30', y: 35 }, { x: '10:00:35', y: 25 }, { x: '10:00:40', y: 15 },
-                    { x: '10:00:45', y: 5 }, { x: '10:00:50', y: 10 }, { x: '10:00:55', y: 15 }
-                ]
-            }
-        ],
+        series: [],
         chart: {
             height: '80%',
             type: 'heatmap',
@@ -445,19 +469,19 @@ function teste() {
                     ranges: [
                         {
                             from: 0,
-                            to: 40,
-                            name: '0k',
+                            to: Number(atencao_inicio) - 0.01,
+                            name: 'Ok',
                             color: '#00A100'
                         },
                         {
-                            from: 41,
-                            to: 80,
+                            from: atencao_inicio,
+                            to: atencao_fim,
                             name: 'atenção',
                             color: '#f1c402'
                         },
                         {
-                            from: 81,
-                            to: 100,
+                            from: alerta_inicio,
+                            to: alerta_fim,
                             name: 'Alerta grave',
                             color: '#b30000'
                         }
@@ -476,8 +500,7 @@ function teste() {
         chartHeatmap = new ApexCharts(document.querySelector("#grafico-heatmap"), optionsHeatmap);
         chartHeatmap.render();
     }
-        
-
+  
 
 
 </script>
