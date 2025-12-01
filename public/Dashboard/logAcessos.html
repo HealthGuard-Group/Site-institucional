@@ -76,25 +76,26 @@
                 <div class="kpi" tabindex="0" aria-describedby="descricaoTotalEventos">
                     <span class="descricao-kpi" id="descricaoTotalEventos">Total de Eventos</span>
                     <span class="icone-info">i</span>
-                    <span class="valor-kpi">23</span>
+                    <span class="valor-kpi" id="valorTotalEventos">23</span>
                 </div>
 
                 <div class="kpi" tabindex="0" aria-describedby="descricaoUsuariosAtivos">
                     <span class="descricao-kpi" id="descricaoUsuariosAtivos">Usuários Ativos</span>
                     <span class="icone-info">i</span>
-                    <span class="valor-kpi">15</span>
+                    <span class="valor-kpi" id="valorUsuariosAtivos">15</span>
                 </div>
 
                 <div class="kpi" tabindex="0" aria-describedby="descricaoMaquinasAlteradas">
                     <span class="descricao-kpi" id="descricaoMaquinasAlteradas">Máquinas Alteradas</span>
                     <span class="icone-info">i</span>
-                    <span class="valor-kpi">6</span>
+                    <span class="valor-kpi" id="valorMaquinasAlteradas">6</span>
+
                 </div>
 
                 <div class="kpi" tabindex="0" aria-describedby="descricaoFalhasEmAcoes">
                     <span class="descricao-kpi" id="descricaoFalhasEmAcoes">Falhas Em Ações</span>
                     <span class="icone-info">i</span>
-                    <span class="valor-kpi">4</span>
+                    <span class="valor-kpi" id="valorFalhas">4</span>
                 </div>
             </section>
 
@@ -280,7 +281,7 @@
 
             document.querySelector(".cartao-insight .texto-insight").textContent = resultado.mensagens[Math.floor(Math.random() * resultado.mensagens.length)];
 
- 
+
             const blocoSugestoes = document.querySelector(".cartao-insight + .cartao-insight .texto-sugestoes");
             blocoSugestoes.textContent = resultado.sugestoes.join(" ");
 
@@ -292,7 +293,7 @@
 
         function coletarDadosDasKpis() {
             return {
-                totalEventos: Number(document.querySelectorAll(".kpi .valor-kpi")[0].textContent),
+                totalEventos: Number(kpiTotalEventos.textContent),
                 usuariosAtivos: Number(document.querySelectorAll(".kpi .valor-kpi")[1].textContent),
                 maquinasAlteradas: Number(document.querySelectorAll(".kpi .valor-kpi")[2].textContent),
                 falhas: Number(document.querySelectorAll(".kpi .valor-kpi")[3].textContent)
@@ -385,6 +386,31 @@
 
         document.querySelectorAll(".cartao-downloads p")[0].onclick = gerarRelatorioDeAlertas;
         document.querySelectorAll(".cartao-downloads p")[1].onclick = exportarExcel;
+
+        const kpiTotalEventos = document.getElementById("valorTotalEventos");
+        const kpiUsuariosAtivos = document.getElementById("valorUsuariosAtivos");
+        const kpiMaquinasAlteradas = document.getElementById("valorMaquinasAlteradas");
+        const kpiFalhas = document.getElementById("valorFalhas");
+
+
+
+        fetch(`/kpisAcoes/listar`, {
+            method: "GET",
+        })
+            .then(resposta => resposta.json())
+            .then(dados => {
+                console.log("Resposta das KPIs:", dados[0]);
+
+
+                kpiTotalEventos.innerHTML = dados[0].totalEventos;
+                kpiUsuariosAtivos.innerHTML = dados[0].usuariosAtivos;
+                kpiMaquinasAlteradas.innerHTML = dados[0].maquinasAlteradas;
+                kpiFalhas.innerHTML = dados[0].falhas;
+
+
+                atualizarInsightESugestoes();
+            })
+            .catch(err => console.error("Erro no fetch KPIs:", err));
 
 
 

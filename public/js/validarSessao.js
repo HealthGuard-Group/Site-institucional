@@ -172,6 +172,7 @@ function telaGrafico1() {
     trocarGraficos()
     var loop = setInterval(() => {
         atualizarGraficoMonitoramento()
+        atualizarGraficoAlerta()
     },5000)
 }
 

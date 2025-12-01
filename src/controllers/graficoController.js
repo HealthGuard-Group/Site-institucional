@@ -564,6 +564,34 @@ function disco24h(req, res) {
     }
 }
 
+function puxarDadosGraficoAlerta(req, res) {
+    var idDac = req.params.idDac;
+    var idMonitoramento = req.params.idMonitoramento;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else if (idMonitoramento == undefined) {
+        res.status(400).send("Seu idMonitoramento está undefined!");
+    } else {
+
+        graficoModel.puxarDadosGraficoAlerta(idDac,idMonitoramento)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+
 
 module.exports = {
     exibirInfoDac,
@@ -589,5 +617,6 @@ module.exports = {
     duracaoAlertaDisco,
     cpu24h,
     ram24h,
-    disco24h
+    disco24h,
+    puxarDadosGraficoAlerta
 }

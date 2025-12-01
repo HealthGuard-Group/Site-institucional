@@ -152,191 +152,114 @@
 </html>
 
 <script>
-    var idDac = sessionStorage.ID_DAC;
-    console.log("ID DAC ",idDac)
-    var data_visualizacao;
+  var idDac = sessionStorage.ID_DAC;
+console.log("ID DAC ", idDac)
+var data_visualizacao;
 
-    function puxarAlertasIndividual() {
-        var variaveis = puxarVariaveis()
-        console.log(variaveis)
-        variaveis = variaveis.idUnidadeAtendimento
-        console.log(variaveis)
-        tabela_alertas.innerHTML = `
-            <tr id="titulo-tabela">
-                <td id="tr-tipo-alerta">Tipo de alerta</td>
-                <td id="tr-monitoramento-alerta">Monitoramento</td>
-                <td id="tr-nome-maquina">Máquina</td>
-                <td id="tr-data-inicio-alerta">Data de início</td>
-                <td id="tr-data-termino-alerta">Data de término</td>
-                <td id="tr-status-alerta">Status</td>
-                <td id="tr-data-verificacao-alerta">Data de verificação</td>
-                <td id="tr-verificador-alerta">Verificador</td>
-                <td id="tr-acoes-alerta">Ação</td>
-            </tr>`
-        fetch(`/alertasindividual/puxarAlertasIndividual/${variaveis}/${idDac}`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-            },
+function puxarAlertasIndividual() {
+    var variaveis = puxarVariaveis()
+    console.log(variaveis)
+    variaveis = variaveis.idUnidadeAtendimento
+    console.log(variaveis)
+    tabela_alertas.innerHTML = `
+        <tr id="titulo-tabela">
+            <td id="tr-tipo-alerta">Tipo de alerta</td>
+            <td id="tr-monitoramento-alerta">Monitoramento</td>
+            <td id="tr-nome-maquina">Máquina</td>
+            <td id="tr-data-inicio-alerta">Data de início</td>
+            <td id="tr-data-termino-alerta">Data de término</td>
+            <td id="tr-status-alerta">Status</td>
+            <td id="tr-data-verificacao-alerta">Data de verificação</td>
+            <td id="tr-verificador-alerta">Verificador</td>
+            <td id="tr-acoes-alerta">Ação</td>
+        </tr>`
+    fetch(`/alertasindividual/puxarAlertasIndividual/${variaveis}/${idDac}`, {
+        method: "GET",
+        headers: {
+            "Content-Type": "application/json",
+        },
+    })
+        .then(resposta => resposta.json())
+        .then(resposta => {
+            console.log(resposta)
+            atualizarTabela(resposta)
         })
-            .then(resposta => {
-                return resposta.json();
-            })
-            .then(resposta => {
-                console.log(resposta)
-                // var dados_filtrados = filtrarFuncionarios(resposta)
-                atualizarTabela(resposta)
-                // funcionarios = dados_filtrados;
+        .catch(function (resposta) {
+            console.log(`Erro no catch: ${resposta}`);
+        });
+}
 
-                // atualizarTabela(resposta)
-            })
-            .catch(function (resposta) {
-                console.log(`Erro no catch: ${resposta}`);
-            });
+function atualizarTabela(dados) {
+    console.log("Respota entrando na função:", dados)
+
+    for (let i = 0; i < dados.length; i++) {
+
+        let data_inicio = new Date(dados[i].dataInicio).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
+        let data_termino = dados[i].dataTermino == null ? "----------" :
+            new Date(dados[i].dataTermino).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
+        data_visualizacao = dados[i].dataVisualizacao == null ? "----------" :
+            new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+
+        if (dados[i].verificador == null) dados[i].verificador = "--------------------";
+
+        let statusCor = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'rgb(0, 170, 40)' : '#656464';
+        let iconeOlho = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'iconeOlhoVerde.png' : 'iconeOlhoCinza.png';
+        let acaoOnclick = dados[i].statusAlerta.toLowerCase() == 'verificado' ? '' : `onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})"`;
+
+        let iconeClasse = dados[i].nomeAlerta.toLowerCase() == 'alerta' ? 'icone-alerta' : 'icone-atencao';
+
+        tabela_alertas.innerHTML += `
+             <tr class="dados-tabela">
+                <td class="td-tipo-alerta"><span class="status-dot ${iconeClasse}"></span>${dados[i].nomeAlerta}</td>
+                <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                <td class="td-data-inicio-alerta">${data_inicio}</td>
+                <td class="td-data-termino-alerta">${data_termino}</td>
+                <td class="td-status-alerta"><b style="color: ${statusCor};">${dados[i].statusAlerta}</b></td>
+                <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                <td class="td-acoes-alerta">
+                    <div class="icone-verificacao" title="${dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'Alerta verificado' : 'Marcar como verificado'}" ${acaoOnclick}>
+                        <img src="../assets/imgs/${iconeOlho}" alt="visualização">
+                    </div>
+                </td>
+            </tr>`;
     }
+}
 
-    function atualizarTabela(dados) {
-        console.log("Respota entrando na função:", dados)
-        // let variaveis = puxarVariaveis()
+function marcarAlertaComoVerificado(idAlerta) {
 
+    var variaveis = puxarVariaveis();
+    var nomeVisualizador = variaveis.nomeUsuario;
 
-        for (let i = 0; i < dados.length; i++) {
+    console.log("PARAMETROS:", idAlerta, data_visualizacao, nomeVisualizador)
 
-            let data_inicio = new Date(dados[i].dataInicio);
-            data_inicio = data_inicio.toLocaleString("pt-BR", {
-                timeZone: "America/Sao_Paulo"
-            });
+    fetch(`/alertasindividual/marcarAlertaComoVerificado/${idAlerta}`, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            nomeVisualizador: nomeVisualizador
+        }),
+    })
+        .then(resposta => resposta.json())
+        .then(resposta => {
+            console.log("Alerta Verificado com sucesso! ✅")
+            console.log(resposta)
+            
+           
+            registrarLogAcao(`Alerta ID ${idAlerta} marcado como verificado por ${nomeVisualizador}`);
 
-
-            if (dados[i].dataTermino == null) {
-                var data_termino = "----------";
-            } else {
-                var data_termino = new Date(dados[i].dataTermino);
-                data_termino = data_termino.toLocaleString("pt-BR", {
-                    timeZone: "America/Sao_Paulo"
-                });
-            }
-
-            if (dados[i].dataVisualizacao == null) {
-                data_visualizacao = "----------";
-            } else {
-                data_visualizacao = new Date(dados[i].dataVisualizacao);
-                data_visualizacao = data_visualizacao.toLocaleString("pt-BR", {
-                    timeZone: "America/Sao_Paulo"
-                });
-            }
-
-            if (dados[i].verificador == null) {
-                dados[i].verificador = "--------------------";
-            }
-
-            if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
-                tabela_alertas.innerHTML += `
-                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot icone-alerta"></span>${dados[i].nomeAlerta}</td>
-                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
-                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
-                        <td class="td-data-inicio-alerta">${data_inicio}</td>
-                        <td class="td-data-termino-alerta">${data_termino}</td>
-                        <td class="td-status-alerta"><b style="color: #656464;">${dados[i].statusAlerta}</b></td>
-                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
-                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
-                                <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>`
-            } else if (dados[i].nomeAlerta.toLowerCase() == 'alerta' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
-                tabela_alertas.innerHTML += `
-                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot icone-alerta"></span>${dados[i].nomeAlerta}</td>
-                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
-                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
-                        <td class="td-data-inicio-alerta">${data_inicio}</td>
-                        <td class="td-data-termino-alerta">${data_termino}</td>
-                        <td class="td-status-alerta"><b style="color: rgb(0, 170, 40);">${dados[i].statusAlerta}</b></td>
-                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
-                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Alerta verificado">
-                                <img src="../assets/imgs/iconeOlhoVerde.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>`
-            } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'não verificado') {
-                tabela_alertas.innerHTML += `
-                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot icone-atencao"></span>${dados[i].nomeAlerta}</td>
-                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
-                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
-                        <td class="td-data-inicio-alerta">${data_inicio}</td>
-                        <td class="td-data-termino-alerta">${data_termino}</td>
-                        <td class="td-status-alerta"><b style="color: #656464;">${dados[i].statusAlerta}</b></td>
-                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
-                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
-                                <img src="../assets/imgs/iconeOlhoCinza.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>`
-            } else if (dados[i].nomeAlerta.toLowerCase() == 'atenção' && dados[i].statusAlerta.toLowerCase() == 'verificado') {
-                tabela_alertas.innerHTML += `
-                     <tr class="dados-tabela">
-                        <td class="td-tipo-alerta"><span class="status-dot icone-atencao"></span>${dados[i].nomeAlerta}</td>
-                        <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
-                        <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
-                        <td class="td-data-inicio-alerta">${data_inicio}</td>
-                        <td class="td-data-termino-alerta">${data_termino}</td>
-                        <td class="td-status-alerta"><b style="color:  rgb(0, 170, 40);">${dados[i].statusAlerta}</b></td>
-                        <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
-                        <td class="td-verificador-alerta">${dados[i].verificador}</td>
-                        <td class="td-acoes-alerta">
-                            <div class="icone-verificacao" title="Alerta verificado">
-                                <img src="../assets/imgs/iconeOlhoVerde.png" alt="visualização">
-                            </div>
-                        </td>
-                    </tr>`
-            }
-        }
-    }
-
-    function marcarAlertaComoVerificado(idAlerta) {
-
-        var variaveis = puxarVariaveis();
-        var nomeVisualizador = variaveis.nomeUsuario;
-
-        console.log("PARAMETROS:", idAlerta, data_visualizacao, nomeVisualizador)
-
-
-        // document.querySelector('.tela-escurecida').classList.add('oculto')
-        // document.getElementById("popupConfirmacaoAlterar").classList.add("oculto")
-        // document.getElementById("popupConviteGerado").classList.add("oculto")
-        // document.getElementById('html_fonte').style.overflowY = "auto"
-
-        fetch(`/alertasindividual/marcarAlertaComoVerificado/${idAlerta}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                nomeVisualizador: nomeVisualizador
-            }),
+            puxarAlertasIndividual()
         })
-            .then(resposta => {
-                return resposta.json();
-            })
-            .then(resposta => {
-                console.log("Alerta Verificado com sucesso! ✅")
-                console.log(resposta)
-                puxarAlertasIndividual()
-                // copiartexto()
-            })
-            .catch(function (resposta) {
-                console.log("UPDATE ALERTA ❌")
-                console.log(`Erro no catch: ${resposta}`);
-            });
-    }
+        .catch(function (resposta) {
+            console.log("UPDATE ALERTA ❌")
+            console.log(`Erro no catch: ${resposta}`);
+        });
+}
+
 
 </script>
