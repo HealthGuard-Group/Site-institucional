@@ -83,7 +83,7 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
             puxarAlertasIndividual()
         }
         if (window.location.href.includes("dashAlertasSemanais.html")){
-            puxarKpisSemana()
+            atualizarAlertasSemanais()
         }
     })
     .catch(function (resposta) {
@@ -179,6 +179,12 @@ function telaGrafico1() {
     },5000)
 }
 
+function atualizarAlertasSemanais(){
+    puxarKpisSemana()
+    var loop = setInterval(() =>{
+        puxarKpisSemana
+    },60000 )
+}
 
 function puxarUnidade() {
 fetch(`/dashboard/puxarNome/${fkUnidade}`, {
