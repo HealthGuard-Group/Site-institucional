@@ -15,12 +15,6 @@ router.get(`/puxarCPU/:fkunidade/:fkdac`, function (req, res) {
 router.get(`/puxarQtdAlertas/:fkunidade/:fkdac`, function (req, res) {
     analisecpuController.puxarAlertas(req, res);
 });
-router.get(`/puxarporNucleo/:fkunidade/:fkdac`, function (req, res) {
-    analisecpuController.puxarPorNucleo(req, res);
-});
-router.get(`/puxarMetricas/:fkdac`, function (req, res) {
-    analisecpuController.puxarMetricas(req, res);
-});
 
 
 module.exports = router;
