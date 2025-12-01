@@ -99,5 +99,9 @@ router.get("/disco24h/:idDac", function (req, res) {
   graficoController.disco24h(req, res);
 });
 
+router.get("/puxarDadosGraficoAlerta/:idDac/:idMonitoramento", function (req, res) {
+  graficoController.puxarDadosGraficoAlerta(req, res);
+});
+
 
 module.exports = router;
