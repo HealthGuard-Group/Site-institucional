@@ -259,7 +259,7 @@
         <div id="container-tabela">
             <table id="tabela_funcionarios">
                 <tr id="titulo-tabela">
-                    <td id="tr-seletor"></td>
+                    <!-- <td id="tr-seletor"></td> -->
                     <td id="tr-nome-completo">Nome Completo</td>
                     <td id="tr-email">E-mail</td>
                     <td id="tr-cpf-funcionario">CPF</td>
@@ -267,7 +267,6 @@
                     <td id="tr-acoes-funcionario">Ações</td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -282,7 +281,6 @@
                     </td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -297,7 +295,6 @@
                     </td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -312,7 +309,6 @@
                     </td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -327,7 +323,6 @@
                     </td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -342,7 +337,6 @@
                     </td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -357,7 +351,6 @@
                     </td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -372,7 +365,6 @@
                     </td>
                 </tr>
                 <tr class="dados-tabela">
-                    <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                     <td class="td-nome-completo">André Augusto Corado Leão</td>
                     <td class="td-email">andre@gmail.com</td>
                     <td class="td-cpf-funcionario">000.000.000-00</td>
@@ -499,7 +491,6 @@
             variaveis = variaveis.idUnidadeAtendimento
             tabela_funcionarios.innerHTML = `
             <tr id="titulo-tabela">
-                <td id="tr-seletor"></td>
                 <td id="tr-nome-completo">Nome Completo</td>
                 <td id="tr-email">E-mail</td>
                 <td id="tr-cpf-funcionario">CPF</td>
@@ -527,7 +518,6 @@
                 if (dados[i].idUsuario == variaveis.idUsuario) {
                     tabela_funcionarios.innerHTML += `
                     <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                         <td class="td-nome-completo">${dados[i].nomeUsuario}</td>
                         <td class="td-email">${dados[i].email}</td>
                         <td class="td-cpf-funcionario">${mascaraCPF(dados[i].cpf)}</td>
@@ -537,7 +527,6 @@
                 } else {
                     tabela_funcionarios.innerHTML += `
                     <tr class="dados-tabela">
-                        <td class="td-seletor"><input class="checkbox-padrao" type="checkbox"></td>
                         <td class="td-nome-completo">${dados[i].nomeUsuario}</td>
                         <td class="td-email">${dados[i].email}</td>
                         <td class="td-cpf-funcionario">${mascaraCPF(dados[i].cpf)}</td>

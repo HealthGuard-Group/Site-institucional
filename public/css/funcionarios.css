@@ -291,18 +291,7 @@ td {
     text-align: center;
     width: 25%;
 }
-#tr-seletor {
-    width: 9%;
-}
-.td-seletor {
-    width: 9%;
-    text-align: center;
-}
-.checkbox-padrao {
-    width: 15px;
-    height: 15px;
-    margin-top: 3px;
-}
+
 #tr-nome-completo {
     width: 40%;
 }
