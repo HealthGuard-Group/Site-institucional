@@ -169,38 +169,11 @@ function puxarMetricas(req, res) {
             );
     }
 }
-
-function puxarDadosAlertas(req, res) {
-    var fkDAC = req.params.fkdac
-
-    console.log(`Debug: Chegou no controller. Unidade: DAC: ${fkDAC}`);
-    
-     if (fkDAC == undefined) {
-        res.status(400).send("FK dac está undefined!");
-    } else {
-        analisecpuModel.puxarDadosAlertas(fkDAC)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
-                }
-            ).catch(
-                function (erro) {
-                    console.log(erro);
-                    console.log(
-                        "\nHouve um erro ao realizar a busca do convite! Erro: ",
-                        erro.sqlMessage
-                    );
-                    res.status(500).json(erro.sqlMessage);
-                }
-            );
-    }
-}
 module.exports = {
     puxarProcessos,
     puxarThreads,
     puxarCPU,
     puxarAlertas,
     puxarPorNucleo,
-    puxarMetricas,
-    puxarDadosAlertas
+    puxarMetricas
 }
