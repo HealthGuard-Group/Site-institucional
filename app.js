@@ -35,6 +35,7 @@ var alertasgeralRouter = require("./src/routes/alertasgeral");
 var alertasindividualRouter = require("./src/routes/alertasindividual");
 var dashAlertasSemanaisRouter = require("./src/routes/dashAlertasSemanais");
 var logAcoesRouter = require("./src/routes/logAcoes");
+var kpisAcoesRouter = require("./src/routes/kpisAcoes");
 
 
 app.use(express.json());
@@ -61,6 +62,7 @@ app.use("/alertasgeral", alertasgeralRouter)
 app.use("/alertasindividual", alertasindividualRouter)
 app.use("/dashAlertasSemanais", dashAlertasSemanaisRouter);
 app.use("/logacoes", logAcoesRouter);
+app.use("/kpisAcoes", kpisAcoesRouter); 
 
 
 app.post('/enviar-email', async (req, res) => {
