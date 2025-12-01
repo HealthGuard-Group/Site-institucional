@@ -85,6 +85,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("dashAlertasSemanais.html")){
             atualizarAlertasSemanais()
         }
+        if (window.location.href.includes("logAcessos.html")) {
+                telaLogAcessos()
+            }
     })
     .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
@@ -184,6 +187,30 @@ function atualizarAlertasSemanais(){
     var loop = setInterval(() =>{
         puxarKpisSemana()
     },60000 )
+}
+
+function telaLogAcessos() {
+    // funções que são chamadas um vez
+    atualizarInsightESugestoes()
+    obterDadosCarga()
+    plotarGraficoTipos()
+    plotarGraficoCarga()
+    obterDadosTipos()
+    obterDadosUsuarios()
+    plotarGraficoUsuarios()
+    coletarDadosDasKpis()
+    var loop = setInterval(() => {
+        // funções que precisam ser atalizadas
+        obterDadosCarga()
+        atualizarGraficoCarga()
+        obterDadosTipos()
+        atualizarInsightESugestoes()
+        atualizarGraficoTipos()
+        obterDadosUsuarios()
+        atualizarGraficoUsuarios()
+        gerarRelatorioDeAlertas()
+        coletarDadosDasKpis()
+    }, 5000)
 }
 
 function puxarUnidade() {
