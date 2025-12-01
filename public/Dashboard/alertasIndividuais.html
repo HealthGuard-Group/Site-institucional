@@ -250,10 +250,8 @@ function marcarAlertaComoVerificado(idAlerta) {
             console.log("Alerta Verificado com sucesso! ✅")
             console.log(resposta)
             
-           
-            registrarLogAcao(`Alerta ID ${idAlerta} marcado como verificado por ${nomeVisualizador}`);
-
             puxarAlertasIndividual()
+            registrarLogAcao(`Alerta ID ${idAlerta} marcado como verificado por ${nomeVisualizador}`);
         })
         .catch(function (resposta) {
             console.log("UPDATE ALERTA ❌")
