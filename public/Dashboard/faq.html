@@ -128,7 +128,7 @@
       <div class="suporte-area">
         <h3>Ainda não resolveu sua dúvida?</h3>
         <p>Abra um chamado pelo Jira para te ajudarmos!</p>
-            <button>Abrir Chamado</button>
+            <button onclick="abrir_chamado()">Abrir Chamado</button>
       </div>
 
     </div>
@@ -142,6 +142,10 @@
 <script src="../js/menu-lateral.js"></script>
 <script>
 
+function abrir_chamado() {
+window.location.href = 'https://healthguard-sptech.atlassian.net/servicedesk/customer/portals'
+
+}
   document.querySelectorAll(".faq-pergunta").forEach(btn => {
     btn.addEventListener("click", () => {
       btn.classList.toggle("ativo");
