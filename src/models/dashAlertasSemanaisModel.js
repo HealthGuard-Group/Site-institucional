@@ -11,6 +11,19 @@ function buscarKpisSemana(idUnidadeAtendimento) {
     return database.executar(instrucao);
 }
 
+function buscarAlertasPorSeveridade(idUnidadeAtendimento) {
+    const instrucao = `
+        SELECT ma.nomeNivel AS nivel, COUNT(*) AS total
+        FROM Alerta a
+        JOIN MedicoesSelecionadas ms ON a.fkMedicoesSelecionadas = ms.idMedicoesSelecionadas AND a.fkDac = ms.fkDac AND a.fkUnidadeDeAtendimento = ms.fkUnidadeDeAtendimento
+        JOIN MetricaAlerta ma ON ms.fkMedicoesDisponiveis = ma.fkMedicoesDisponiveis AND ms.fkUnidadeDeAtendimento = ma.fkUnidadeDeAtendimento
+        WHERE a.fkUnidadeDeAtendimento = ${idUnidadeAtendimento}
+        GROUP BY ma.nomeNivel;
+    `;
+    return database.executar(instrucao);
+}
+
 module.exports = { 
-    buscarKpisSemana
+    buscarKpisSemana,
+    buscarAlertasPorSeveridade
  };

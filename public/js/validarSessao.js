@@ -82,6 +82,9 @@ fetch(`/dashboard/buscarLogAcesso/${fkUnidade}/${fkUsuario}`, {
         if (window.location.href.includes("alertasIndividuais.html")){
             puxarAlertasIndividual()
         }
+        if (window.location.href.includes("dashAlertasSemanais.html")){
+            puxarKpisSemana()
+        }
     })
     .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);

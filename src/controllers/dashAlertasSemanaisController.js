@@ -15,6 +15,24 @@ function buscarKpisSemana(req, res) {
         });
 }
 
+function buscarAlertasPorSeveridade(req, res) {
+    var idUnidadeAtendimento = req.params.idUnidadeAtendimento;
+    if (!idUnidadeAtendimento) {
+        res.status(400).send("ID da unidade não definido!");
+        return;
+    }
+
+    dashAlertasSemanaisModel.buscarAlertasPorSeveridade(idUnidadeAtendimento)
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao buscar alertas por severidade: ", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
 module.exports = { 
-    buscarKpisSemana 
+    buscarKpisSemana,
+    buscarAlertasPorSeveridade
 };

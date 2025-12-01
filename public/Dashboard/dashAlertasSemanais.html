@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/global.css">
     <link rel="stylesheet" href="../css/menu_bar.css">
     <link rel="stylesheet" href="../css/dashAlertasSemanais.css">
+
 </head>
 
 <body onload="validarSessao()">
@@ -159,7 +160,6 @@
 <script src="../js/menu-lateral.js"></script>
 
 <script>
-       window.onload = () => {puxarKpisSemana()}
        
     new Chart(document.getElementById('grafico_pizza'), {
         type: 'doughnut',
@@ -243,35 +243,56 @@ new Chart(ctx, {
 
 
 function formatarData(dia) {
-    return dia.toLocaleDateString("pt-BR", {
-        day: "2-digit",
-        month: "2-digit"
-    });
+    return dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
 }
 
 var hoje = new Date();
-var domingo = new Date();
-domingo.setDate(hoje.getDate() - hoje.getDay());
+var inicioReferencia = new Date(2025, 10, 30);
 
-intervaloSemana.innerHTML = formatarData(domingo) + " ao " + formatarData(hoje);
+var inicioSemana = new Date(inicioReferencia);
+
+while (inicioSemana <= hoje) {
+    var proximaSemana = new Date(inicioSemana);
+    proximaSemana.setDate(inicioSemana.getDate() + 7);
+    if (proximaSemana > hoje) break;
+    inicioSemana = proximaSemana;
+}
+
+var fimSemana = new Date(inicioSemana);
+fimSemana.setDate(inicioSemana.getDate() + 6);
+
+intervaloSemana.innerHTML = formatarData(inicioSemana) + " ao " + formatarData(fimSemana);
+
+
+function formatarTempo(minutosTotais) {
+    var horas = Math.floor(minutosTotais / 60);
+    var minutos = minutosTotais % 60;
+    if (minutos < 10) {
+        minutos = "0" + minutos;
+    }
+    return horas + "h" + minutos + "min";
+}
 
 
 function puxarKpisSemana() {
-    var idUnidadeAtendimento = sessionStorage.FK_UNIDADE;
+    var fks = puxarVariaveis();
+    var idUnidadeAtendimento = fks.idUnidadeAtendimento;
+    console.log("idUnidadeAtendimento", idUnidadeAtendimento);
 
-    fetch(`/dashAlertasSemanais/kpis/${idUnidadeAtendimento}`, { method: "GET" })
-        .then(res => res.json())
-        .then(res => {
+    fetch(`/dashAlertasSemanais/kpis/${idUnidadeAtendimento}`, {
+         method: "GET" })
+        .then(function(res) { return res.json(); })
+        .then(function(res) {
             var kpi = res[0];
-
             kpi_totalSemana.innerHTML = kpi.totalSemana;
-            kpi_desdeUltimoAlerta.innerHTML = kpi.desdeUltimoAlerta + " min";
+            kpi_desdeUltimoAlerta.innerHTML = formatarTempo(kpi.desdeUltimoAlerta);
             kpi_naoVerificados.innerHTML = kpi.naoVerificados;
             kpi_ultimaMaquina.innerHTML = kpi.ultimaMaquina;
         })
-        .catch(err => {
+        .catch(function(err) {
             console.log("Erro:", err);
         });
 }
+
 </script>
 </html>

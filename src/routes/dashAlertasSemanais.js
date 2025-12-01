@@ -5,4 +5,6 @@ var dashAlertasSemanaisController = require("../controllers/dashAlertasSemanaisC
 
 router.get("/kpis/:idUnidadeAtendimento", dashAlertasSemanaisController.buscarKpisSemana);
 
+router.get("/severidade/:idUnidadeAtendimento", dashAlertasSemanaisController.buscarAlertasPorSeveridade);
+
 module.exports = router;
