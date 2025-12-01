@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perguntas Frequentes</title>
+ <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/menu_bar.css">
+  <link rel="stylesheet" href="../css/faq.css">
+</head>
+
+<body onload="validarSessao()">
+   <!-- Começo do Menu -->
+  <div class="menu-lateral">
+    <div class="pai-icones-superiores">
+      <div id="logo">
+        <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+          class="icone-logo-pequena">
+      </div>
+      <br>
+      <div class="icone-box" id="monitoramento_redirecionamento">
+        <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+        <div class="texto-icone oculto">Monitoramento</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="gestao_redirecionamento">
+        <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+        <div class="texto-icone oculto">Gestão de funcionários</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="alertas_redirecionamento">
+        <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+        <div class="texto-icone oculto">Histórico de Alertas</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="gestao_convites">
+        <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+        <div class="texto-icone oculto">Convites</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="suporte_redirecionamento">
+        <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+        <div class="texto-icone oculto">Suporte</div>
+      </div>
+    </div>
+    <div class="pai-icones-inferiores">
+      <hr class="separador-forte">
+      <div class="icone-box-inferior" id="tela_perfil">
+        <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+        <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+        <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+        <div class="texto-icone oculto">Sair da conta</div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim do Menu -->
+
+
+  <div class="container-geral">
+
+    <div class="conteudo-faq">
+
+      <h1 class="titulo-faq">Perguntas Frequentes</h1>
+      <p class="descricao-faq">
+        Aqui reunimos respostas para as dúvidas mais comuns dos usuários.  
+        Uma ferramenta de autoatendimento, que permite que os usuários encontrem informações rapidamente.
+      </p>
+
+   
+      <div class="faq-lista">
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Com que frequência os dados do monitoramento são atualizados?
+            <span class="seta">&#9662;</span>
+          </button>
+          <div class="faq-resposta">
+            A frequência de atualização depende da infraestrutura tecnológica. Dados operacionais críticos são atualizados de 5 a 30 segundos.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Posso exportar os dados para análise própria?
+            <span class="seta">&#9662;</span>
+          </button>
+          <div class="faq-resposta">
+            Sim, é possível exportar dados para uso externo, dependendo das permissões configuradas para o usuário.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Se eu notar alguma inconsistência nos dados, o que devo fazer?
+            <span class="seta">&#9662;</span>
+          </button>
+          <div class="faq-resposta">
+            Entre em contato com o suporte imediatamente para avaliação técnica.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Quais são os principais indicadores de desempenho utilizados?
+            <span class="seta">&#9662;</span>
+          </button>
+          <div class="faq-resposta">
+            Indicadores como disponibilidade, uso de CPU, tempo de resposta e alertas ativos.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-pergunta">
+            Existe alguma forma de ver dados comparativos com anteriores?
+            <span class="seta">&#9662;</span>
+          </button>
+          <div class="faq-resposta">
+            Sim. A plataforma possui área de relatórios comparativos para avaliar evolução e desempenho histórico.
+          </div>
+        </div>
+
+      </div>
+
+      <div class="suporte-area">
+        <h3>Ainda não resolveu sua dúvida?</h3>
+        <p>Abra um chamado pelo Jira para te ajudarmos!</p>
+            <button>Abrir Chamado</button>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
+<script src="../js/validarSessao.js"></script>
+<script src="../js/menu-lateral.js"></script>
+<script>
+
+  document.querySelectorAll(".faq-pergunta").forEach(btn => {
+    btn.addEventListener("click", () => {
+      btn.classList.toggle("ativo");
+      const resposta = btn.nextElementSibling;
+      resposta.style.display = resposta.style.display == "block" ? "none" : "block";
+    });
+  });
+</script>

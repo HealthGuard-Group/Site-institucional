@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="pt-br" id="html_fonte">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Monitoramento</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/monitoramento.css">
+    <!-- Link JavaScript -->
+</head>
+
+<body onload="validarSessao()">
+    <section class="tela">
+        <!-- Começo modais -->
+        <div class="tela-escurecida oculto">
+            <div id="popupFundo" class="popup-fundo oculto">
+                <div class="popup">
+                    <div class="popup-header">
+                        <div class="titulo_modal">Códigos de configuração gerados</div>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="area-filtros">
+                        <!-- ÁREA DESTINADA AOS FILTROS -->
+                        <div class="texto-funcionalidade alinhamento-centralizar-vertical">
+                            Filtros:
+                        </div>
+
+                        <div class="box-filtros">
+
+                            <div class="componente-filtro" id="campo-status-codigo">
+                                Status do código:
+                                <select name="status-codigo">
+                                    <option value="todos">Todos</option>
+                                    <option value="aceito">Aceito</option>
+                                    <option value="pendente">Pendente</option>
+                                    <option value="expirado">Expirado</option>
+                                </select>
+                            </div>
+
+                            <div class="componente-filtro" id="campo-data-codigo-gerado">
+                                Gerado entre:
+                                <input type="date" id="data-gerado-min"> e:
+                                <input type="date" id="data-gerado-max">
+                            </div>
+                        </div>
+
+                        <div class="box-filtros">
+                            <div class="componente-filtro" id="campo-data-codigo-expirado">
+                                Expirado entre:
+                                <input type="date" id="data-expirado-min"> e:
+                                <input type="date" id="data-expirado-max">
+                            </div>
+
+                            <button onclick="adicionarFiltro()" class="botao-aplicar-filtros">
+                                Aplicar filtros
+                            </button>
+                        </div>
+
+                        <div class="box-filtros-aplicados">
+                            <!-- <div class="filtro-aplicado">
+                                Status: Aceito &nbsp <img src="../assets/imgs/iconeFecharFiltro.png">
+                            </div>
+                            <div class="filtro-aplicado">
+                                Gerado entre: 10/10/1025 - 15/10/2025 &nbsp <img
+                                    src="../assets/imgs/iconeFecharFiltro.png">
+                            </div>
+                            <div class="filtro-aplicado">
+                                Expirado entre: 25/10/1025 - 27/10/2025 &nbsp <img
+                                    src="../assets/imgs/iconeFecharFiltro.png">
+                            </div> -->
+                        </div>
+
+                    </div>
+
+                    <!-- TABELA DE CÓDIGOS GERADOS -->
+                    <div id="container-tabela">
+                        <table id="tabela_codigos">
+                            <tr id="titulo-tabela">
+                                <td id="tr-cod-codigo">Código de Configuração</td>
+                                <td id="tr-data-criacao-codigo">Data de criação</td>
+                                <td id="tr-data-expiracao-codigo">Data de expiração</td>
+                                <td id="tr-status-codigo">Status</td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">ABC123DEF456GHI78901</td>
+                                <td class="td-data-criacao-codigo">24/10/2025 20:59</td>
+                                <td class="td-data-expiracao-codigo">30/10/2025 20:59</td>
+                                <td class="td-status-codigo"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">AYGDSIASKDPNKODASJ28</td>
+                                <td class="td-data-criacao-codigo">01/10/2025 17:55</td>
+                                <td class="td-data-expiracao-codigo">07/10/2025 17:55</td>
+                                <td class="td-status-codigo"><span style="color: rgb(233, 136, 0);">Pendente</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">ifiosijoASDUasjd1828</td>
+                                <td class="td-data-criacao-codigo">01/10/2025 15:34</td>
+                                <td class="td-data-expiracao-codigo">07/10/2025 15:34</td>
+                                <td class="td-status-codigo"><span style="color: rgb(214, 36, 36);">Expirado</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">idasisgias9238919287</td>
+                                <td class="td-data-criacao-codigo">01/10/2025 12:05</td>
+                                <td class="td-data-expiracao-codigo">07/10/2025 12:05</td>
+                                <td class="td-status-codigo"><span style="color:rgb(214, 36, 36);">Expirado</span></td>
+                            </tr>
+                            <tr class="dados-tabela">
+                                <td class="td-cod-codigo">hsjboaisofiiasoidasi</td>
+                                <td class="td-data-criacao-codigo">01/10/2025 08:40</td>
+                                <td class="td-data-expiracao-codigo">07/10/2025 08:40</td>
+                                <td class="td-status-codigo"><span style="color: rgb(0, 170, 40);">Aceito</span></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="popup-fundo oculto" id="modal_adicionarmaquina">
+                <div class="popup reduzido" id="modal_adicionar">
+                    <div class="popup-header">
+                        <div class="titulo_modal">Adicionar nova máquina</div>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="texto-marcacao-modal">Identificação da máquina:</div>
+                    <div class="box-input-modal">
+                        <div class="texto-modal">Digite o apelido da máquina<span class="texto-modal"
+                                style="color: red;">*</span>:</div>
+                        <div class="coluna-erro-modal">
+                            <input type="text" class="input-modal" id="nome_indetificao_maquina" maxlength="45"
+                                oninput="validacaoNomeIndetificao()" placeholder="Ex: Máquina 01">
+                            <div class="texto-erro oculto" id="texto_erro_nome_indentificao">Preencha o campo</div>
+                        </div>
+                    </div>
+                    <div class="texto-marcacao-modal">Seleção dos serviços de monitoramento:</div>
+                    <div class="box-selecao-servicos">
+                        <div class="box-colunas-selecao">
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de CPU(%)</div>
+                                <label for="uso_cpu_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_cpu_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de RAM(%)</div>
+                                <label for="uso_ram_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_ram_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="barra-vertical-modal"></div>
+                        <div class="box-colunas-selecao">
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de Disco(%)</div>
+                                <label for="uso_disco_porcentagem" class="switch">
+                                    <input type="checkbox" id="uso_disco_porcentagem" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="box-selecao-modal">
+                                <div class="texto-modal">Uso de Rede(O/I)</div>
+                                <label for="uso_rede" class="switch">
+                                    <input type="checkbox" id="uso_rede" class="input-checkbox">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-botao-modal">
+                        <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
+                        </div>
+                        <div class="botoes-modal">
+                            <button class="botao-modal btn-personalizar" onclick="adicionandoServicosPadrao()">Adicionar
+                                Máquina<br>(Métricas Padrão)</button>
+                            <button class="botao-modal" onclick="adicionandoServicosPersonalizados()">Personalizar
+                                métricas</button>
+                        </div>
+                    </div>
+                    <div class="tooltip-container">
+                        <i class="i_metricas_padrao"><u>Visualizar métricas padrão</u></i>
+                        <div class="tooltip">
+                            <p>Com base em nossos estudos e análises, determinamos as métricas-padrão para os alertas,
+                                sendo elas:</p>
+                            <p><strong>CPU</strong></p>
+                            <p>Em atenção – 58.1%</p>
+                            <p>Alerta grave – 78.5%</p>
+
+
+                            <p><strong>Memória RAM</strong></p>
+                            <p>Em atenção – 91.9%</p>
+                            <p>Alerta grave – 100%</p>
+
+
+                            <p><strong>DISCO</strong></p>
+                            <p>Em atenção – 70%</p>
+                            <p>Alerta grave – 80%</p>
+
+
+                            <p><strong>REDE</strong></p>
+                            <p>Alerta grave – Rede desconectada</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="popup-fundo oculto" id="modal_codigofinal">
+                <div class="popup modal-reduzido">
+                    <div class="popup-header">
+                        <div class="titulo_modal">Adicionar nova máquina</div>
+                        <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                src="../assets/imgs/iconeFechar.png"></button>
+                    </div>
+                    <div class="line"></div>
+                    <div class="texto-marcacao-modal">Sua máquina foi configurada com sucesso!</div>
+                    <div class="texto-modal">Para começar a realizar os monitoramento dos componentes, inserir o código
+                        abaixo no aplicativo de captura:</div>
+                    <div class="caixa-cinza">
+                        <div class="caixa-codigo">
+                            <div class="texto-codigo" id="div_codigo_gerado">A1B2C3D4E5F6G7H</div>
+                            <div class="box-imagem-copy">
+                                <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copiar">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal métricas alertas -->
+            <div class="popup-fundo oculto" id="modal_adicionarmaquina_config">
+                <div class="popup-header">
+                    <div class="popup">
+                        <div class="popup-header">
+                            <div class="titulo_modal">Personalização Métricas</div>
+                            <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                                    src="../assets/imgs/iconeFechar.png"></button>
+                        </div>
+                        <div class="line"></div>
+                        <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
+                        </div>
+                        <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div>
+                        </div>
+                        <div class="box-input-modal">
+                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_minimo_atencao"
+                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_minimo_atencao">Preencha o campo</div>
+                            </div>
+                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_maximo_atencao"
+                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_maximo_atencao">Preencha o campo</div>
+                            </div>
+                        </div>
+                        <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div>
+                        </div>
+                        <div class="box-input-modal">
+                            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_minimo_alerta"
+                                    oninput="validarnumero(this)" placeholder="Ex: 30%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_minimo_alerta">Preencha o campo</div>
+                            </div>
+                            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                                    style="color: red;">*</span>:</div>
+                            <div class="coluna-erro-modal-reduzido">
+                                <input type="number" class="input-modal" id="valor_maximo_alerta"
+                                    oninput="validarnumero(this)" placeholder="Ex: 90%" min="0" max="100">
+                                <div class="texto-erro oculto" id="texto_erro_maximo_alerta">Preencha o campo</div>
+                            </div>
+                        </div>
+                        <div class="line"></div>
+                        <div class="ipt_metrica_padrao">
+                            <p> Usar configuração padrão</p><input type="checkbox" id="input_configuracao_padrao"
+                                onchange="puxarMetricasPadraoPersonalizado(this)">
+                        </div>
+                        <div class="box-botao-modal">
+                            <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
+                                serviço
+                            </div>
+                            <div class="box-botao-modal">
+                                <div class="texto-erro oculto" id="texto_erro_configuracao_alerta">Configure a operação
+                                    ideal</div>
+                                <button class="botao-modal"
+                                    onclick="parametrizarAlertasPersonalizado()">Próximo</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <!--Fim modais -->
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_redirecionamento">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de funcionários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="alertas_redirecionamento">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_convites">
+                    <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Convites</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="suporte_redirecionamento">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior" id="tela_perfil">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+        <div class="kpis-box">
+            <div class="texto-organizacao" id="div_nome_empresa">
+                Nome da Unidade de Atendimento
+            </div>
+            <div class="texto-topico">
+                Resumo das Máquinas:
+            </div>
+            <div class="kpis-flexbox">
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas em configuração</div>
+                        <div class="numero-kpi-vermelho" id="kpi_configuracao">1</div>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas cadastradas</div>
+                        <div class="numero-kpi-preta" id="kpi_cadastradas">3</div>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas inativas</div>
+                        <div class="numero-kpi-vermelho" id="kpi_inativas">1</div>
+                    </div>
+                </div>
+                <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas em alerta / Máquinas ativas</div>
+                        <div class=""><span class="numero-kpi-vermelho" id="kpi_alerta">1</span>
+                            <span class="numero-kpi-preta">/</span>
+                            <span class="numero-kpi-preta" id="kpi_ativas">2</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="kpi-box">
+                    <div class="barra-vertical"></div>
+                    <div class="kpi-flexbox">
+                        <div class="texto-kpi">Máquinas em alerta</div>
+                        <div class="numero-kpi-vermelho">1</div>
+                    </div>
+                </div> -->
+            </div>
+            <div class="texto-topico alinhamento-centralizar-vertical">
+                Situação das máquinas:
+            </div>
+            <div class="box-filtro">
+                <div class="filtro-esquerda">
+                    <div class="texto-funcionalidade">
+                        Filtro:
+                    </div>
+                    <select name="" id="filtro_maquinas" class="select-filtro">
+                        <option value="todas">Todas as máquinas</option>
+                        <option value="alerta">Apenas máquinas em alerta</option>
+                        <option value="inativas">Apenas máquinas Inativas</option>
+                        <option value="ativas">Apenas máquinas Ativas(Sem Alerta)</option>
+                        <option value="ativas_alerta">Apenas máquinas Ativas(Com Alerta)</option>
+                        <option value="configuração">Apenas máquinas em configuração</option>
+                    </select>
+                </div>
+                <div class="filtro-direita-acoes">
+                    <button class="botao-codigo-cinza" id="botao_codigos_gerados" onclick="puxarCodigos()">
+                        Ver códigos de configuração gerados
+                    </button>
+                    <div class="div-botao-adicionar" id="botao_adicionar_maquina">
+                        <img src="../assets/imgs/Icone mais.png" alt="icone Mais" class="icone-mais">
+                        <div class="texto-botao-adicionar">
+                            Adicionar máquina
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pai-maquinas" id="div_maquinas">
+            <!-- <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 1
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina verde">
+                        Ok
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                </div>
+            </div> -->
+            <div class="maquina-box">
+                <div class="info_maquina">
+                    <h3>Máquina A-02</h3>
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                </div>
+                <div class="status_maquina">
+                    <b>
+                        <p>Status:<span class="texto-status-maquina vermelho"> Inativo</span></p>
+                    </b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+                </div>
+                <div class="detalhes_maquina">
+                    <i><u>Visualizar mais detalhes </u></i>
+                </div>
+            </div>
+
+            <!-- <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 2
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Inativo
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/iconeInativo.png" alt="Status" class="imagem-status">
+                </div>
+            </div>
+            <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 3
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Alerta CPU
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/iconeAlerta.png" alt="Status" class="imagem-status">
+                </div>
+            </div>
+            <div class="maquina-box">
+                <div class="coluna-informacoes">
+                    <div class="nome-maquina">
+                        Maquina 4
+                    </div>
+                    <div class="texto-marcacao-maquina">
+                        Status:
+                    </div>
+                    <div class="texto-status-maquina vermelho">
+                        Em configuração
+                    </div>
+                </div>
+                <div class="div-imagem-status">
+                    <img src="../assets/imgs/iconeConfiguracao.png" alt="Status" class="imagem-status">
+                </div>
+            </div>
+        </div> -->
+    </section>
+</body>
+
+</html>
+<script src="../js/validarSessao.js"></script>
+<script src="../js/menu-lateral.js"></script>
+<script>
+    // Redirecionador Dash
+    document.addEventListener('click', function (e) {
+        var elementoClicado = e.target;
+        if (elementoClicado.closest('.maquina-box')) {
+            var maquina = elementoClicado.closest('.maquina-box');
+            var nomeMaquina = maquina.querySelector('h3').textContent;
+            console.log(maquina)
+            console.log(nomeMaquina.replaceAll(" ", ""))
+            inserirAcao(`Acessando ${nomeMaquina.replaceAll(" ", "")}`);
+            sessionStorage.ID_DAC = maquina.id;
+            window.location.href = "grafico1.html"
+        }
+    });
+    // Buscar nome da central
+    function trocarNomeUnidade() {
+        fetch(`/dashboard/buscarNomeDaUnidade/${fkUnidade}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                if (resposta[0].nomeFantasia == null) {
+                    div_nome_empresa.innerHTML = resposta[0].razaoSocial
+                } else {
+                    div_nome_empresa.innerHTML = resposta[0].nomeFantasia
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    function atualizarkpismonitoramento() {
+        fetch(`/dashboard/buscarKpisMonitoramento/${fkUnidade}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                //console.log(resposta)
+                kpi_configuracao.innerHTML = resposta[0].configuracao
+                kpi_cadastradas.innerHTML = resposta[0].cadastradas
+                kpi_inativas.innerHTML = resposta[0].inativo
+                kpi_ativas.innerHTML = resposta[0].ativo
+                kpi_alerta.innerHTML = resposta[0].alerta
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    function atualizarMaquinas() {
+        fetch(`/dashboard/buscarMaquina/${fkUnidade}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                vetor_maquinas = resposta
+                var filtro = filtro_maquinas.value
+                if (filtro == "todas") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Ativo") {
+                            div_maquinas.innerHTML += `     <div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina verde"> Ativo</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+                </div>
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
+                </div>
+            </div>`
+                        }
+                        if (vetor_maquinas[i].statusDac == "Inativo") {
+                            div_maquinas.innerHTML += `  <div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/iconeInativo.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Inativo</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+                </div>
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
+                </div>
+            </div>`
+                        }
+                        if (vetor_maquinas[i].statusDac == "Alerta") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/Icone Alerta.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Alerta</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+                </div>
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
+                </div>
+            </div>`
+                        }
+                        if (vetor_maquinas[i].statusDac == "Em configuração") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/iconeConfiguracao.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Em Configuração</span></p></b>
+                </div>
+                
+            </div>`
+                        }
+
+                    }
+                }
+                if (filtro == "alerta" || filtro == "ativas_alerta") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Alerta") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/Icone Alerta.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Alerta</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+                </div>
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
+                </div>
+            </div>`
+                        }
+                    }
+                }
+                if (filtro == "inativas") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Inativo") {
+                            if (vetor_maquinas[i].statusDac == "Inativo") {
+                                div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/iconeInativo.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Inativo</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+                </div>
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
+                </div>
+            </div>`
+                            }
+                        }
+                    }
+                }
+                if (filtro == "ativas" || filtro == "ativas_alerta") {
+                    if (filtro == "ativas") {
+                        div_maquinas.innerHTML = ``
+                    }
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Ativo") {
+                            div_maquinas.innerHTML += `  <div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina verde"> Ativo</span></p></b>
+                </div>
+                <div class="status_componentes">
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+
+                    <div class="componente">
+                        <div class="status_bolinha"></div>
+                        <p>Uso de CPU (%)</p>
+                    </div>
+                </div>
+                    <div class="detalhes_maquina">
+                <i><u>Visualizar mais detalhes </u></i>
+                </div>
+            </div>`
+                        }
+                    }
+
+                }
+                if (filtro == "configuração") {
+                    div_maquinas.innerHTML = ``
+                    for (let i = 0; i < vetor_maquinas.length; i++) {
+                        if (vetor_maquinas[i].statusDac == "Em configuração") {
+                            div_maquinas.innerHTML += `<div class="maquina-box" id=${vetor_maquinas[i].idDac}>
+                <div class="info_maquina">
+                    <h3> ${vetor_maquinas[i].nomeIdentificacao}</h3>
+                    <img src="../assets/imgs/iconeConfiguracao.png" alt="Status" class="imagem-status">
+                     </div>
+                <div class="status_maquina">
+                   <b><p>Status:<span class="texto-status-maquina vermelho"> Em Configuração</span></p></b>
+                </div>
+                
+            </div>`
+                        }
+                    }
+                }
+
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Modal Adicionar máquina
+    var maquina_nova = {
+        nome: "",
+        servicos: ["", "", "", ""],
+        alertaAtencao: [["", ""], ["", ""], ["", ""]],
+        alerta: [["", ""], ["", ""], ["", ""]],
+        codigo: ""
+    }
+    var passo_metrica_personalizada = 0
+    function validacaoNomeIndetificao() {
+        var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
+        if (nome_indetificao_maquina.value.length > 0) {
+            nomeIndetificao.style.border = '0.2vh solid #0AA40A'
+            nomeIndetificao.style.boxShadow = '#0aa40a38 0px 2px 8px 0px'
+            return false
+        } else {
+            nomeIndetificao.style.border = '0.2vh solid #D30808'
+            nomeIndetificao.style.boxShadow = '#d308082d 0px 2px 8px 0px'
+            return true
+        }
+    }
+    function adicionandoServicosPadrao() {
+        //Validação
+        var ax_erro = false
+        var validacao_nome = validacaoNomeIndetificao()
+        var input_uso_cpu = document.getElementById("uso_cpu_porcentagem")
+        var input_uso_ram = document.getElementById("uso_ram_porcentagem")
+        var input_uso_disco = document.getElementById("uso_disco_porcentagem")
+        var input_uso_rede = document.getElementById("uso_rede")
+        var texto_erro_maquina = document.getElementById("texto_erro_nome_indentificao")
+        var texto_erro_servicos = document.getElementById("texto_erro_selecao_servicos")
+        if (validacao_nome) {
+            texto_erro_maquina.classList.remove("oculto")
+            texto_erro_maquina.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+            ax_erro = true
+        } else {
+            texto_erro_maquina.classList.add("oculto")
+        }
+        if (!input_uso_cpu.checked && !input_uso_ram.checked && !input_uso_disco.checked && !input_uso_rede.checked) {
+            texto_erro_servicos.classList.remove("oculto")
+            texto_erro_servicos.innerHTML = `<span style="color: red;">Selecione no mínimo 1 serviço</span>`
+            ax_erro = true
+        } else {
+            texto_erro_servicos.classList.add("oculto")
+        }
+        if (ax_erro) {
+            return
+        }
+        // Fim da Validação
+        // Adição das variaveis no Json para o insert
+        maquina_nova.nome = nome_indetificao_maquina.value
+        maquina_nova.servicos[0] = input_uso_cpu.checked
+        maquina_nova.servicos[1] = input_uso_ram.checked
+        maquina_nova.servicos[2] = input_uso_disco.checked
+        maquina_nova.servicos[3] = input_uso_rede.checked
+        // Puxando métricas padrão
+        console.log("Entrei na configuração padrão")
+        salvandoAlerta(false)
+    }
+    function adicionandoServicosPersonalizados() {
+        //Validação
+        var ax_erro = false
+        var validacao_nome = validacaoNomeIndetificao()
+        var input_uso_cpu = document.getElementById("uso_cpu_porcentagem")
+        var input_uso_ram = document.getElementById("uso_ram_porcentagem")
+        var input_uso_disco = document.getElementById("uso_disco_porcentagem")
+        var input_uso_rede = document.getElementById("uso_rede")
+        var texto_erro_maquina = document.getElementById("texto_erro_nome_indentificao")
+        var texto_erro_servicos = document.getElementById("texto_erro_selecao_servicos")
+        if (validacao_nome) {
+            texto_erro_maquina.classList.remove("oculto")
+            texto_erro_maquina.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+            ax_erro = true
+        } else {
+            texto_erro_maquina.classList.add("oculto")
+        }
+        if (!input_uso_cpu.checked && !input_uso_ram.checked && !input_uso_disco.checked && !input_uso_rede.checked) {
+            texto_erro_servicos.classList.remove("oculto")
+            texto_erro_servicos.innerHTML = `<span style="color: red;">Selecione no mínimo 1 serviço</span>`
+            ax_erro = true
+        } else {
+            texto_erro_servicos.classList.add("oculto")
+        }
+        if (ax_erro) {
+            return
+        }
+        // Fim da Validação
+        // Adição das variaveis no Json para o insert
+        maquina_nova.nome = nome_indetificao_maquina.value
+        maquina_nova.servicos[0] = input_uso_cpu.checked
+        maquina_nova.servicos[1] = input_uso_ram.checked
+        maquina_nova.servicos[2] = input_uso_disco.checked
+        maquina_nova.servicos[3] = input_uso_rede.checked
+        document.getElementById("modal_adicionarmaquina").classList.add("oculto")
+        document.getElementById("modal_adicionarmaquina_config").classList.remove("oculto")
+        passo_metrica_personalizada = 0
+        avancarPaginaAlertaPersonalizado()
+        console.log("Entrei na configuração personalizada")
+    }
+    function avancarPaginaAlertaPersonalizado() {
+        for (let i = 0; i < 3; i++) {
+            if (maquina_nova.servicos[passo_metrica_personalizada] == false) {
+                passo_metrica_personalizada++
+            } if (passo_metrica_personalizada >= 3) {
+                salvandoAlerta(true)
+                break
+            }
+        }
+        var texto_metricas = ["Definição das métricas de uso de CPU(%):", "Definição das métricas de uso de RAM(%):", "Definição das métricas de uso de Disco(%):"]
+        parametro_a_configurar.innerHTML = texto_metricas[passo_metrica_personalizada]
+        valor_minimo_atencao.value = ""
+        valor_maximo_atencao.value = ""
+        valor_minimo_alerta.value = ""
+        valor_maximo_alerta.value = ""
+        input_configuracao_padrao.checked = false
+        valor_minimo_atencao.disabled = false
+        valor_maximo_atencao.disabled = false
+        valor_minimo_alerta.disabled = false
+        valor_maximo_alerta.disabled = false
+        passo_metrica_personalizada++
+    }
+    function parametrizarAlertasPersonalizado() {
+        // Validação
+        var min_atencao = Number(document.getElementById("valor_minimo_atencao").value)
+        var max_atencao = Number(document.getElementById("valor_maximo_atencao").value)
+        var min_alerta = Number(document.getElementById("valor_minimo_alerta").value)
+        var max_alerta = Number(document.getElementById("valor_maximo_alerta").value)
+        var texto_min_atencao = document.getElementById("texto_erro_minimo_atencao")
+        var texto_max_atencao = document.getElementById("texto_erro_maximo_atencao")
+        var texto_min_alerta = document.getElementById("texto_erro_minimo_alerta")
+        var texto_max_alerta = document.getElementById("texto_erro_maximo_alerta")
+        var input_metrica_padrao = document.getElementById("input_configuracao_padrao").checked
+        var ax_erro = false
+        if (!input_metrica_padrao) {
+            if (min_alerta == 0 && max_alerta == 0) {
+                texto_min_alerta.classList.remove("oculto")
+                texto_max_alerta.classList.remove("oculto")
+                texto_min_alerta.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+                texto_max_alerta.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+                ax_erro = true
+            } else if (min_alerta >= max_alerta) {
+                texto_min_alerta.classList.remove("oculto")
+                texto_max_alerta.classList.remove("oculto")
+                texto_min_alerta.innerHTML = `<span style="color: red;">Deve ser menor que o limite máximo</span>`
+                texto_max_alerta.innerHTML = `<span style="color: red;">Deve ser maior que o limite mínimo</span>`
+                ax_erro = true
+            } else if (min_alerta <= max_atencao) {
+                texto_min_alerta.classList.remove("oculto")
+                texto_max_alerta.classList.add("oculto")
+                texto_min_alerta.innerHTML = `<span style="color: red;">Deve ser maior que o limite da Atenção(${max_atencao}%)</span>`
+                ax_erro = true
+            }
+            else {
+                texto_min_alerta.classList.add("oculto")
+                texto_max_alerta.classList.add("oculto")
+            }
+            if (min_atencao == 0 && max_atencao == 0) {
+                texto_min_atencao.classList.remove("oculto")
+                texto_max_atencao.classList.remove("oculto")
+                texto_min_atencao.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+                texto_max_atencao.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+            } else if (min_atencao >= max_atencao) {
+                texto_min_atencao.classList.remove("oculto")
+                texto_max_atencao.classList.remove("oculto")
+                texto_min_atencao.innerHTML = `<span style="color: red;">Deve ser menor que o limite máximo</span>`
+                texto_max_atencao.innerHTML = `<span style="color: red;">Deve ser maior que o limite mínimo</span>`
+            } else if (max_atencao >= min_alerta) {
+                texto_min_atencao.classList.add("oculto")
+                texto_max_atencao.classList.remove("oculto")
+                texto_max_atencao.innerHTML = `<span style="color: red;">Deve ser menor que o início do Alerta (${min_alerta}%)</span>`
+            } else {
+                texto_min_atencao.classList.add("oculto")
+                texto_max_atencao.classList.add("oculto")
+            }
+            if (ax_erro) {
+                return
+            }
+        }
+        // Fim Validação
+        console.log(passo_metrica_personalizada)
+        maquina_nova.alertaAtencao[passo_metrica_personalizada - 1][0] = min_atencao
+        maquina_nova.alertaAtencao[passo_metrica_personalizada - 1][1] = max_atencao
+        maquina_nova.alerta[passo_metrica_personalizada - 1][0] = min_alerta
+        maquina_nova.alerta[passo_metrica_personalizada - 1][1] = max_alerta
+        console.log("Passei da validação")
+        avancarPaginaAlertaPersonalizado()
+    }
+    function salvandoAlerta(personalizado) {
+        console.log("Entrei")
+        var fks = puxarVariaveis()
+        var idUnidadeAtendimento = fks.idUnidadeAtendimento
+        maquina_nova.codigo = gerarCodigoAleatorio(20)
+        fetch("/dashboard/inserirmaquina", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                maquina_nova: maquina_nova,
+                idUnidadeAtendimento: idUnidadeAtendimento
+            }),
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var idDac = resposta[0].idDac
+                fetch("/dashboard/inserirmaquinaservicos", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        maquina_nova: maquina_nova,
+                        idUnidadeAtendimento: idUnidadeAtendimento,
+                        idDac: idDac
+                    }),
+                })
+                    .then(function (resposta) {
+                        console.log("resposta: ", resposta);
+                        if (personalizado) {
+                            console.log("Entrei no personalizado")
+                            fetch("/dashboard/inserirmaquinametricaspersonalizadas", {
+                                method: "POST",
+                                headers: {
+                                    "Content-Type": "application/json",
+                                },
+                                body: JSON.stringify({
+                                    maquina_nova: maquina_nova,
+                                    idUnidadeAtendimento: idUnidadeAtendimento,
+                                    idDac: idDac
+                                }),
+                            })
+                                .then(function (resposta) {
+                                    console.log("resposta: ", resposta);
+                                })
+                                .catch(function (resposta) {
+                                    console.log(`#ERRO: ${resposta}`);
+                                    alert("Erro no catch");
+                                });
+                        }
+                        div_codigo_gerado.innerHTML = maquina_nova.codigo
+                    })
+                    .catch(function (resposta) {
+                        console.log(`#ERRO: ${resposta}`);
+                        alert("Erro no catch");
+                    });
+            })
+            .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                alert("Erro no catch");
+            });
+        document.getElementById("modal_codigofinal").classList.remove("oculto")
+        document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
+        document.getElementById("modal_adicionarmaquina").classList.add("oculto")
+    }
+    function validarnumero(input) {
+        if (input.value < 0) {
+            input.value = 0
+        } if (input.value > 100) {
+            input.value = 100
+        }
+    }
+    function puxarMetricasPadraoPersonalizado(input) {
+        var texto_min_atencao = document.getElementById("texto_erro_minimo_atencao")
+        var texto_max_atencao = document.getElementById("texto_erro_maximo_atencao")
+        var texto_min_alerta = document.getElementById("texto_erro_minimo_alerta")
+        var texto_max_alerta = document.getElementById("texto_erro_maximo_alerta")
+        var valor_input = input.checked
+        if (valor_input) {
+            texto_min_alerta.classList.add("oculto")
+            texto_max_alerta.classList.add("oculto")
+            texto_min_atencao.classList.add("oculto")
+            texto_max_atencao.classList.add("oculto")
+            valor_minimo_atencao.disabled = true
+            valor_maximo_atencao.disabled = true
+            valor_minimo_alerta.disabled = true
+            valor_maximo_alerta.disabled = true
+            fetch(`/dashboard/buscarMetricasPadrao/${fkUnidade}`, {
+                method: "GET",
+            })
+                .then(resposta => {
+                    return resposta.json();
+                })
+                .then(resposta => {
+                    if (passo_metrica_personalizada == 0) {
+                        for (let i = 0; i < resposta.length; i++) {
+                            if (resposta[i].fkMedicoesDisponiveis == 1) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                                } else {
+                                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                                }
+                            }
+                        }
+                    } if (passo_metrica_personalizada == 1) {
+                        for (let i = 0; i < resposta.length; i++) {
+                            if (resposta[i].fkMedicoesDisponiveis == 6) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                                } else {
+                                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                                }
+                            }
+                        }
+                    } if (passo_metrica_personalizada == 2) {
+                        for (let i = 0; i < resposta.length; i++) {
+                            if (resposta[i].fkMedicoesDisponiveis == 10) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                                } else {
+                                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                                }
+                            }
+                        }
+                    }
+                })
+                .catch(function (resposta) {
+                    console.log(`Erro no catch: ${resposta}`);
+                });
+        } else {
+            valor_minimo_atencao.disabled = false
+            valor_maximo_atencao.disabled = false
+            valor_minimo_alerta.disabled = false
+            valor_maximo_alerta.disabled = false
+            valor_minimo_atencao.value = ""
+            valor_maximo_atencao.value = ""
+            valor_minimo_alerta.value = ""
+            valor_maximo_alerta.value = ""
+        }
+    }
+    function gerarCodigoAleatorio(tamanhoCodigo) {
+        var caracteres = [
+            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
+            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+        ];
+        var codigo = ""
+        for (let i = 0; i < tamanhoCodigo; i++) {
+            let random = Math.floor(Math.random() * caracteres.length)
+            codigo += caracteres[random]
+        }
+        return codigo
+    }
+    // POP-UP DE CÓDIGOS GERADOS
+    document.getElementById("botao_codigos_gerados").addEventListener('click', () => {
+        document.querySelector('.tela-escurecida').classList.remove('oculto')
+        document.getElementById("popupFundo").classList.remove('oculto')
+        document.getElementById('html_fonte').style.overflowY = "hidden"
+    })
+    function fecharPop() {
+        document.getElementById("modal_codigofinal").classList.add("oculto")
+        document.querySelector('.tela-escurecida').classList.add('oculto')
+        document.getElementById("popupFundo").classList.add('oculto')
+        document.getElementById("modal_adicionarmaquina").classList.add('oculto')
+        document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
+        document.getElementById('html_fonte').style.overflowY = "auto"
+        nome_indetificao_maquina.value = ""
+        validacaoNomeIndetificao()
+        document.getElementById('uso_cpu_porcentagem').checked = false
+        document.getElementById('uso_ram_porcentagem').checked = false
+        document.getElementById('uso_disco_porcentagem').checked = false
+        document.getElementById('uso_rede').checked = false
+    }
+    document.getElementById("botao_adicionar_maquina").addEventListener('click', () => {
+        document.querySelector('.tela-escurecida').classList.remove('oculto')
+        document.getElementById("modal_adicionarmaquina").classList.remove('oculto')
+        document.getElementById('html_fonte').style.overflowY = "hidden"
+        var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
+        nomeIndetificao.style.border = '0.2vh solid #000'
+        nomeIndetificao.style.boxShadow = 'none'
+    })
+
+    // FILTROS MODAL "CONVITES GERADOS"
+    var filtrosAtivos = {
+        status: "",
+        gerado: ["", ""],
+        expirado: ["", ""]
+    }
+
+
+    function montarExibicaoFiltros() {
+        const div = document.querySelector(".box-filtros-aplicados")
+        div.innerHTML = ""
+
+        if (filtrosAtivos.status) {
+            const texto = filtrosAtivos.status.charAt(0).toUpperCase() + filtrosAtivos.status.slice(1)
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Status: ${texto}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('status')">
+            </div>`
+        }
+
+        if (filtrosAtivos.gerado[0] && filtrosAtivos.gerado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Gerado entre: ${formatarData(filtrosAtivos.gerado[0])} - ${formatarData(filtrosAtivos.gerado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('gerado')">
+            </div>`
+        }
+
+        if (filtrosAtivos.expirado[0] && filtrosAtivos.expirado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Expirado entre: ${formatarData(filtrosAtivos.expirado[0])} - ${formatarData(filtrosAtivos.expirado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('expirado')">
+            </div>`
+        }
+    }
+
+    function adicionarFiltro() {
+        const sel = document.querySelector('select[name="status-codigo"]')
+        const gMin = document.getElementById("data-gerado-min")
+        const gMax = document.getElementById("data-gerado-max")
+        const eMin = document.getElementById("data-expirado-min")
+        const eMax = document.getElementById("data-expirado-max")
+
+        filtrosAtivos = { status: "", gerado: ["", ""], expirado: ["", ""] }
+
+        if (sel.value !== "todos") filtrosAtivos.status = sel.value
+
+        if (gMin.value && gMax.value) {
+            let [d1, d2] = [gMin.value, gMax.value]
+            if (new Date(d1) > new Date(d2)) [d1, d2] = [d2, d1]
+            filtrosAtivos.gerado = [d1, d2]
+        }
+
+        if (eMin.value && eMax.value) {
+            let [d1, d2] = [eMin.value, eMax.value]
+            if (new Date(d1) > new Date(d2)) [d1, d2] = [d2, d1]
+            filtrosAtivos.expirado = [d1, d2]
+        }
+
+        montarExibicaoFiltros()
+        filtrarTabela()
+    }
+
+    function parseDataTabela(texto) {
+        const partes = texto.split(" ")[0].split("/")
+        if (partes.length !== 3) return null
+        return new Date(`${partes[2]}-${partes[1]}-${partes[0]}T00:00:00`)
+    }
+
+    function filtrarTabela() {
+        const linhas = document.querySelectorAll("#tabela_codigos .dados-tabela")
+
+        for (const linha of linhas) {
+            const status = linha.querySelector(".td-status-codigo span")?.textContent.trim().toLowerCase() || ""
+            const criado = linha.querySelector(".td-data-criacao-codigo")?.textContent.trim() || ""
+            const expirado = linha.querySelector(".td-data-expiracao-codigo")?.textContent.trim() || ""
+
+            let mostrar = true
+
+            if (filtrosAtivos.status && status !== filtrosAtivos.status) mostrar = false
+
+            if (filtrosAtivos.gerado[0] && filtrosAtivos.gerado[1]) {
+                const d = parseDataTabela(criado)
+                const dMin = new Date(filtrosAtivos.gerado[0] + "T00:00:00")
+                const dMax = new Date(filtrosAtivos.gerado[1] + "T23:59:59")
+                if (!d || d < dMin || d > dMax) mostrar = false
+            }
+
+            if (filtrosAtivos.expirado[0] && filtrosAtivos.expirado[1]) {
+                const d = parseDataTabela(expirado)
+                const dMin = new Date(filtrosAtivos.expirado[0] + "T00:00:00")
+                const dMax = new Date(filtrosAtivos.expirado[1] + "T23:59:59")
+                if (!d || d < dMin || d > dMax) mostrar = false
+            }
+
+            linha.style.display = mostrar ? "" : "none"
+        }
+    }
+
+    function formatarData(date) {
+        if (typeof date === "string" && date.includes("-")) {
+            const [ano, mes, dia] = date.split("-")
+            return `${dia}/${mes}/${ano}`
+        }
+
+        const d = new Date(date);
+        return d.toLocaleDateString("pt-BR")
+    }
+
+    function limparExibicaoFiltros() {
+        document.querySelector(".box-filtros-aplicados").innerHTML = ""
+    }
+
+    function resetarFiltrosVisuaisEInternos() {
+        document.querySelector('select[name="status-codigo"]').value = "todos"
+
+        const ids = ["data-gerado-min", "data-gerado-max", "data-expirado-min", "data-expirado-max"]
+        for (const id of ids) {
+            document.getElementById(id).value = ""
+        }
+
+        filtrosAtivos = { status: "", gerado: ["", ""], expirado: ["", ""] }
+
+        limparExibicaoFiltros()
+
+        const linhas = document.querySelectorAll("##tabela_codigos .dados-tabela")
+        for (const l of linhas) {
+            l.style.display = ""
+        }
+    }
+
+    function fecharFiltro(tipo) {
+        if (tipo === "status") filtrosAtivos.status = ""
+        if (tipo === "gerado") filtrosAtivos.gerado = ["", ""]
+        if (tipo === "expirado") filtrosAtivos.expirado = ["", ""]
+
+        const ids = {
+            status: 'select[name="status-codigo"]',
+            gerado: ['#data-gerado-min', '#data-gerado-max'],
+            expirado: ['#data-expirado-min', '#data-expirado-max']
+        }
+
+        if (tipo === "status") document.querySelector(ids.status).value = "todos"
+        if (tipo === "gerado") {
+            for (const sel of ids.gerado) {
+                document.querySelector(sel).value = ""
+            }
+        }
+
+        if (tipo === "expirado") {
+            for (const sel of ids.expirado) {
+                document.querySelector(sel).value = ""
+            }
+        }
+
+        const semFiltros = !filtrosAtivos.status && !filtrosAtivos.gerado[0] && !filtrosAtivos.expirado[0]
+        if (semFiltros) {
+            resetarFiltrosVisuaisEInternos()
+        } else {
+            montarExibicaoFiltros()
+            filtrarTabela()
+        }
+    }
+
+    function montarExibicaoFiltros() {
+        const div = document.querySelector(".box-filtros-aplicados")
+        div.innerHTML = ""
+
+        if (filtrosAtivos.status) {
+            const texto = filtrosAtivos.status.charAt(0).toUpperCase() + filtrosAtivos.status.slice(1)
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Status: ${texto}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('status')">
+            </div>`
+        }
+
+        if (filtrosAtivos.gerado[0] && filtrosAtivos.gerado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Gerado entre: ${formatarData(filtrosAtivos.gerado[0])} - ${formatarData(filtrosAtivos.gerado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('gerado')">
+            </div>`
+        }
+
+        if (filtrosAtivos.expirado[0] && filtrosAtivos.expirado[1]) {
+            div.innerHTML += `
+            <div class="filtro-aplicado">
+                Expirado entre: ${formatarData(filtrosAtivos.expirado[0])} - ${formatarData(filtrosAtivos.expirado[1])}
+                <img src="../assets/imgs/iconeFecharFiltro.png" onclick="fecharFiltro('expirado')">
+            </div>`
+        }
+    }
+
+    function puxarCodigos() {
+        var variaveis = puxarVariaveis()
+        variaveis = variaveis.idUnidadeAtendimento
+        tabela_codigos.innerHTML = `
+                <tr id="titulo-tabela">
+                    <td id="tr-cod-codigo">Código de Configuração</td>
+                    <td id="tr-data-criacao-codigo">Data de criação</td>
+                    <td id="tr-data-expiracao-codigo">Data de expiração</td>
+                    <td id="tr-status-codigo">Status</td>
+                </tr>`
+        fetch(`/dashboard/buscarcodigos/${variaveis}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var codigos_filtrados = resposta
+                // var dados_filtrados = filtrarFuncionarios(resposta)
+                atualizarTabela(codigos_filtrados)
+                // funcionarios = dados_filtrados;
+
+                // atualizarTabela(resposta)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+    function atualizarTabela(dados) {
+        let variaveis = puxarVariaveis()
+
+        for (let i = 0; i < dados.length; i++) {
+
+            let data_criacao = new Date(dados[i].dataCriacao)
+            data_criacao = data_criacao.toLocaleDateString('pt-BR')
+            let data_expiracao = new Date(dados[i].dataExpiracao)
+            data_expiracao = data_expiracao.toLocaleDateString('pt-BR')
+
+            if (dados[i].status == 'Pendente') {
+                tabela_codigos.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-cod-codigo">${dados[i].codigo}</td>
+                        <td class="td-data-criacao-codigo">${data_criacao}</td>
+                        <td class="td-data-expiracao-codigo">${data_expiracao}</td>
+                        <td class="td-status-codigo"><span style="color: rgb(233, 136, 0);">${dados[i].status}</span></td>
+                    </tr>`
+            } else if (dados[i].status == 'Expirado') {
+                tabela_codigos.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-cod-codigo">${dados[i].codigo}</td>
+                        <td class="td-data-criacao-codigo">${data_criacao}</td>
+                        <td class="td-data-expiracao-codigo">${data_expiracao}</td>
+                        <td class="td-status-codigo"><span style="color:rgb(214, 36, 36);">${dados[i].status}</span></td>
+                    </tr>`
+            } else {
+                tabela_codigos.innerHTML += `
+                    <tr class="dados-tabela">
+                        <td class="td-cod-codigo">${dados[i].codigo}</td>
+                        <td class="td-data-criacao-codigo">${data_criacao}</td>
+                        <td class="td-data-expiracao-codigo">${data_expiracao}</td>
+                        <td class="td-status-codigo"><span style="color: rgb(0, 170, 40);">${dados[i].status}</span></td>
+                    </tr>`
+            }
+        }
+    }
+
+</script>

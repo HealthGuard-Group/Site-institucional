@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Análise de RAM</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/analiseRAM.css">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body onload="validarSessao()">
+    <section class="tela">
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_redirecionamento">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de funcionários</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="alertas_redirecionamento">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_convites">
+                    <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Convites</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="suporte_redirecionamento">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior" id="tela_perfil">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <div class="dashboard-box">
+            <div class="info-maquina-box">
+                <div class="info-maquina-box-left">
+                    <img src="../assets/imgs/seta-esquerda.png" alt="seta-esquerda" class="icon-seta-redirect"
+                        id="redirect_dashboard">
+                    <div class="box-bread-crumbs">
+                        <a href="monitoramento.html" class="texto-bread-crumbs">Monitoramento</a>
+                        <img src="../assets/imgs/botao_seta_preto.png" alt="seta" class="seta-top">
+                        <a href="grafico1.html" class="texto-bread-crumbs" id="div_nome_maquina">Máquina A-01</a>
+                        <img src="../assets/imgs/botao_seta_preto.png" alt="seta" class="seta-top">
+                        <a href="#" class="texto-bread-crumbs">Análise de RAM</a>
+                    </div>
+                </div>
+                <div class="info-maquina-box-right">
+                </div>
+            </div>
+            <div class="big-content-dashboard">
+                <div class="big-content-left">
+                    <div class="kpis-box">
+                        <div class="kpi-box">
+                            <div class="kpi-top">
+                                <div class="title-kpi">
+                                    Tempo de estresse de RAM nas últimas 24h
+                                </div>
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        Tempo acumulado em que a memória operou acima do limite de atenção no último dia.
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="kpi-bottom">
+                                <div class="kpi-text" id="texto_kpi_estresse">
+                                    2h30m
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-top">
+                                <div class="title-kpi">
+                                    Memória RAM total
+                                </div>
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        Capacidade física total de memória RAM instalada na máquina.
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="kpi-bottom">
+                                <div class="kpi-text" id="texto_kpi_ram">
+                                    16GB
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kpi-box">
+                            <div class="kpi-top">
+                                <div class="title-kpi">
+                                    Memória swap total
+                                </div>
+                                <span class="tooltip">
+                                    <i class='bxr  bx-info-circle'></i>
+                                    <span class="tooltip-text">
+                                        Espaço em disco reservado para atuar como memória de emergência quando a RAM esgota.
+                                    </span>
+                                </span>
+                            </div>
+                            <div class="kpi-bottom">
+                                <div class="kpi-text" id="texto_kpi_swap">
+                                    16GB
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grafico-box">
+                        <div class="top-grafico">
+                            <div class="title-grafico">
+                                Monitoramento em tempo real de uso da
+                                memória SWAP e RAM(%)
+                            </div>
+                            <span class="tooltip grafico-ajuste">
+                                <i class='bxr  bx-info-circle'></i>
+                                <span class="tooltip-text">
+                                    Esse gráfico mostra a memória RAM e SWAP em tempo real
+                                </span>
+                            </span>
+                        </div>
+                        <div class="bottom-grafico">
+                            <div class="grafico">
+                                <canvas id="mychart"></canvas>
+                            </div>
+                            <div class="legenda">
+                                <div class="box-legenda" style="border-top: solid blue 0.8vh;">
+                                    <div class="title-legenda">
+                                        Memória RAM
+                                    </div>
+                                    <div class="subtitle-legenda" id="div_alerta">
+                                        Alerta: 90%
+                                    </div>
+                                    <div class="subtitle-legenda" id="div_atencao">
+                                        Atenção: 70%
+                                    </div>
+                                </div>
+                                <div class="box-legenda" style="border-top: solid purple 0.8vh;">
+                                    <div class="title-legenda">
+                                        Memória Swap
+                                    </div>
+                                    <div class="subtitle-legenda">
+                                        Alerta: 30%
+                                    </div>
+                                    <div class="subtitle-legenda">
+                                        Atenção: 10%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="big-content-right">
+                    <div class="ranking-box">
+                        <div class="raking-top">
+                            Ranking dos maiores consumidores de RAM
+                            <span class="tooltip ajuste-ranking">
+                                <i class='bxr  bx-info-circle'></i>
+                                <span class="tooltip-text">
+                                    Lista os 5 processos que mais estão consumindo recursos no momento.
+                                </span>
+                            </span>
+                        </div>
+
+                        <div class="raking-bottom" id="ranking_div">
+                            <div class="option-ranking"><strong>1º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>2º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>3º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>4º -</strong> Google Chrome</div>
+                            <div class="option-ranking"><strong>5º -</strong> Google Chrome</div>
+                        </div>
+                    </div>
+                    <div class="box-ia">
+                        <div class="ia-top">
+                            Recomendação de IA
+                            <span class="tooltip ajuste-ia">
+                                <i class='bxr  bx-info-circle'></i>
+                                <span class="tooltip-text">
+                                    Diagnóstico inteligente gerado por IA para tomada de decisão rápida.
+                                </span>
+                            </span>
+                        </div>
+                        <div class="ia-bottom">
+                            <div class="ia-text" id="ia_text">
+                                <div class="ia-no-text-box">
+                                    <img src="../assets/imgs/Geminai icon.png" alt="icon-geminai" class="icon-geminai">
+                                    <div class="ia-no-text">A IA está pronta para ajudar. Gere uma nova análise agora
+                                        para verificar a saúde da sua máquina.</div>
+                                </div>
+                            </div>
+                            <div class="ia-button-box">
+                                <button class="button-ia" onclick="gerarRecomendacao()" id="botao_ia">Gerar nova recomendação</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+    </section>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="../js/validarSessao.js"></script>
+<script src="../js/menu-lateral.js"></script>
+<script>
+    // Váriaveis Globais
+    const ctx = document.getElementById("mychart").getContext("2d") // Gráfico
+    var grafico = ""    // Gráfico
+    var vetor_ram = []  // Usa no gráfico
+    var vetor_swap = [] // Usa no gráfico
+    var vetor_data = [] // Usa no gráfico
+    var ramUso; // Uso IA
+    var swapUso; // Uso IA
+    // Redirecionador Dashboard(Gráfico 1)
+    document.getElementById("redirect_dashboard").addEventListener("click", () => {
+        window.location.href = "grafico1.html"
+    })
+    // Função puxar máquina selecionada
+    function puxarNomeDaMaquina() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarnomemaquina/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var div_maquina = document.getElementById("div_nome_maquina")
+                div_maquina.innerHTML = resposta[0].nomeIdentificacao
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Função para atualizar as KPI's
+    function atualizarKpisRAM() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarmemoria/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var div_ram = document.getElementById("texto_kpi_ram")
+                var div_swap = document.getElementById("texto_kpi_swap")
+                for (let i = 0; i < resposta.length; i++) {
+                    if (resposta[i].fkMedicoesDisponiveis == 7) {
+                        div_ram.innerHTML = resposta[i].medidaCapturada + "GB"
+                    } else {
+                        div_swap.innerHTML = resposta[i].medidaCapturada + "GB"
+                    }
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Função de puxar os dados do alerta de RAM
+    function puxandoMetricasAlertaDeRam(idUnidade) {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarmetricasrammaquina/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var alerta = document.getElementById("div_alerta")
+                var atencao = document.getElementById("div_atencao")
+                if (resposta.length == 0) {
+                    fetch(`/analiseram/buscarmetricasrammaquinaunidade/${idUnidade}`, {
+                        method: "GET",
+                    })
+                        .then(resposta => {
+                            return resposta.json();
+                        })
+                        .then(resposta => {
+                            for (let i = 0; i < resposta.length; i++) {
+                                if (resposta[i].nomeNivel == "Atenção") {
+                                    atencao.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
+                                } else {
+                                    alerta.innerHTML = `Alerta: ${resposta[i].valorMinimo}%`
+                                }
+                            }
+                        })
+                        .catch(function (resposta) {
+                            console.log(`Erro no catch: ${resposta}`);
+                        });
+                } else {
+                    for (let i = 0; i < resposta.length; i++) {
+                        if (resposta[i].nomeNivel == "Atenção") {
+                            atencao.innerHTML = `Atenção: ${resposta[i].valorMinimo}%`
+                        } else {
+                            alerta.innerHTML = `Alerta: ${resposta[i].valorMinimo}%`
+                        }
+                    }
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Puxando o Ranking
+    function puxarRankingRAM() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarranking/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var ranking = JSON.parse(resposta[0].medidaCapturada)
+                var div_rank = document.getElementById("ranking_div")
+                div_rank.innerHTML = `
+                <div class="option-ranking" id="top1"><strong>1º -</strong> ${ranking[0].nome} <strong>${ranking[0].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top2"><strong>2º -</strong> ${ranking[1].nome} <strong>${ranking[1].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top3"><strong>3º -</strong> ${ranking[2].nome} <strong>${ranking[2].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top4"><strong>4º -</strong> ${ranking[3].nome} <strong>${ranking[3].memoria_mb}MB</strong></div>
+                            <div class="option-ranking" id="top5"><strong>5º -</strong> ${ranking[4].nome} <strong>${ranking[4].memoria_mb}MB</strong></div>
+                `
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Puxando KPi de estresse
+    function puxandoKpiStress() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscarestresse/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var total_estresse_segundo = 0
+                var agora = new Date()
+                var limite24h = new Date(agora.getTime() - (24 * 60 * 60 * 1000))
+                for (let i = 0; i < resposta.length; i++) {
+                    var inicio = new Date(resposta[i].dataInicio)
+                    if (resposta[i].dataTermino == null) {
+                        var fim = new Date()
+                    } else {
+                        var fim = new Date(resposta[i].dataTermino)
+                    }
+                    if (inicio < limite24h) {
+                        inicio = limite24h
+                    }
+
+                    total_estresse_segundo += Math.round((fim - inicio) / 1000, 0)
+                }
+                var horas = Math.floor(total_estresse_segundo / 3600)
+                var minutos = Math.floor((total_estresse_segundo % 3600) / 60)
+                var segundos = total_estresse_segundo % 60
+                var div_estresse = document.getElementById("texto_kpi_estresse")
+                div_estresse.innerHTML = `${horas}h${minutos}m${segundos}s`
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Atualizando o gráfico
+    function puxandoDadosGraficoRamSwap() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/puxardadosgraficoRAM/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                for (let i = resposta.length - 1; i >= 0; i--) {
+                    if (resposta[i].fkMedicoesDisponiveis == 8) {
+                        vetor_swap.push(resposta[i].medidaCapturada)
+                        vetor_data.push(formatarData(resposta[i].dataCaptura))
+                        swapUso = resposta[i].medidaCapturada
+                    } else {
+                        vetor_ram.push(resposta[i].medidaCapturada)
+                        ramUso = resposta[i].medidaCapturada
+                    }
+                }
+                plotarGraficoRam()
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Puxando texto IA
+    function atualizarTextoIA() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/buscartextoIA/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log(resposta)
+                var div_texto = document.getElementById("ia_text")
+                if (resposta[0].recomendacaoIA == null || resposta[0].recomendacaoIA.length == 0) {
+                    div_texto.innerHTML = `<div class="ia-no-text-box">
+                                    <img src="../assets/imgs/Geminai icon.png" alt="icon-geminai" class="icon-geminai">
+                                    <div class="ia-no-text">A IA está pronta para ajudar. Gere uma nova análise agora
+                                        para verificar a saúde da sua máquina.</div>
+                                </div>`
+                } else {
+                    div_texto.innerHTML = resposta[0].recomendacaoIA
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Delay para a mensagem
+    const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    // Gerando recomendação com IA
+    async function gerarRecomendacao() {
+        var idDac = sessionStorage.ID_DAC
+        var div_texto = document.getElementById("ia_text")
+        var ramTotal = document.getElementById("texto_kpi_ram").innerHTML;
+        var tempoEstresse = document.getElementById("texto_kpi_estresse").innerHTML;
+        div_texto.innerHTML = `<div class="ia-no-text-box">
+                                    <div class="loader"></div>
+                                    <div class="ia-no-text">Analisando os dados</div>
+                                </div>`
+        document.getElementById("botao_ia").classList.add("oculto")
+
+        var listaProcessos = `
+        ${document.getElementById("top1").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top2").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top3").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top4").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        ${document.getElementById("top5").innerHTML.replaceAll("<strong>", "").replaceAll("</strong>", "")}
+        `;
+
+        const mensagem = `
+        Atue como um Analista de Infraestrutura Sênior do sistema HealthGuard (monitoramento do SAMU).
+        Analise os métricas de hardware capturadas em tempo real desta máquina servidora e gere um diagnóstico.
+
+        DADOS COLETADOS AGORA:
+        - Memória RAM Total: ${ramTotal}
+        - Uso de RAM Atual: ${ramUso}%
+        - Uso de SWAP Atual: ${swapUso}%
+        - Tempo de Estresse (RAM > 90% nas últimas 24h): ${tempoEstresse}
+        - Top 5 Processos Consumidores:
+        ${listaProcessos}
+
+        DIRETRIZES DE ANÁLISE:
+        1. Contexto: Este é um ambiente crítico de emergência médica (SAMU). Priorize estabilidade.
+        2. Detecção de Anomalias:
+        - Se RAM < 75%: Considere "Saudável".
+        - Se RAM > 80% ou SWAP > 20%: Considere "Alerta".
+        3. Política de Software: Identifique softwares não essenciais para um servidor (ex: Spotify, Steam, Discord, Jogos) que estejam na lista de processos. Se houver, recomende o encerramento imediato.
+        4. Hardware: Só sugira upgrade de memória se não houver processos supérfluos consumindo recursos.
+
+        RESPOSTA ESPERADA (Seja breve e direto):
+        Gere um texto curto (máximo 3 linhas) com: Status atual (Saudável/Alerta/Crítico), qual processo é o vilão (se houver) e a ação técnica recomendada.
+        A mensagem pode ter no máximo 400 caracteres.
+        `;
+        try {
+            const response = await fetch("/ia/perguntar", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    mensagem: mensagem
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error("Erro na requisição: " + response.status);
+            }
+
+            const dados = await response.json();
+            div_texto.innerHTML = `<div class="ia-no-text-box">
+                                    <div class="loader"></div>
+                                    <div class="ia-no-text">Gerando mensagem</div>
+                                </div>`
+            await delay(2000)
+            div_texto.innerHTML = dados.resposta
+            document.getElementById("botao_ia").classList.remove("oculto")
+            fetch("/analiseRAM/atualizarRecomendacaoIA", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    idDac: idDac,
+                    texto: dados.resposta
+                })
+            })
+                .then(res => {
+                    if (!res.ok) {
+                        throw new Error("Erro ao atualizar");
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log("Atualizando com sucesso:", data);
+                })
+                .catch(err => {
+                    console.log("Erro:", err);
+                })
+
+        } catch (erro) {
+            console.error("Erro no front:", erro);
+            divResposta.innerText = "Erro ao contatar a IA. Tente novamente.";
+        }
+    }
+
+    function plotarGraficoRam() {
+        // Código do gráfico do Chart.js
+        grafico = new Chart(ctx, {
+            type: "line",
+
+            data: {
+
+                labels: vetor_data,
+
+                datasets: [
+                    {
+                        label: "Uso memória RAM(%)",
+                        data: vetor_ram,
+                        borderColor: "blue",
+                        backgroundColor: "blue",
+                        tension: 0.1
+                    },
+                    {
+                        label: "Uso memória SWAP(%)",
+                        data: vetor_swap,
+                        borderColor: "purple",
+                        backgroundColor: "purple",
+                        tension: 0.1
+                    }
+                ]
+            },
+
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: function (valor) {
+                                return valor + "%"
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: "Uso em porcentagem (%)",
+                            color: "#000000",
+                            font: {
+                                size: 16,
+                                weight: "bold"
+                            }
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: "Data da Captura",
+                            color: "#000000",
+                            font: {
+                                size: 16,
+                                weight: "bold"
+                            }
+                        }
+                    }
+                }
+            }
+        })
+    }
+    function atualizarGraficoRam() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analiseram/atualizardadosgraficoRAM/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                var ax_monitoramento = true
+                if (vetor_data.length == 10) {
+                    vetor_data.shift()
+                    vetor_ram.shift()
+                    vetor_swap.shift()
+                }
+                for (let i = 0; i < resposta.length; i++) {
+                    if (formatarData(resposta[i].dataCaptura) == vetor_data[vetor_data.length - 1]) {
+                        ax_monitoramento = false
+                        break;
+                    }
+                    if (resposta[i].fkMedicoesDisponiveis == 6) {
+                        vetor_ram.push(resposta[i].medidaCapturada)
+                        vetor_data.push(formatarData(resposta[i].dataCaptura))
+                        ramUso = resposta[i].medidaCapturada
+                    } else {
+                        vetor_swap.push(resposta[i].medidaCapturada)
+                        swapUso = resposta[i].medidaCapturada
+                    }
+                }
+                if (ax_monitoramento) {
+                    grafico.update()
+                }
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+    // Funções Auxiliares
+    function formatarData(data) {
+        const fuso = {
+            timeZone: 'America/Sao_Paulo',
+            hour12: false
+        }
+        var data_formatada = new Date(data)
+        data_formatada = data_formatada.toLocaleTimeString("pt-BR", fuso)
+        return data_formatada
+    }
+</script>
+
+</html>

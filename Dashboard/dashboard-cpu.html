@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Especificação CPU</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/analisecpu.css">
+</head>
+
+<body onload="validarSessao()">
+    <!-- Inicio menu lateral  -->
+    <div class="menu-lateral" id="menu">
+        <div class="pai-icones-superiores">
+            <div id="logo">
+                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                    class="icone-logo-pequena">
+            </div>
+            <br>
+            <div class="icone-box" id="monitoramento_redirecionamento">
+                <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                <div class="texto-icone oculto">Monitoramento</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_redirecionamento">
+                <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Gestão de funcionários</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="alertas_redirecionamento">
+                <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                <div class="texto-icone oculto">Histórico de Alertas</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_convites">
+                <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Convites</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="suporte_redirecionamento">
+                <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                <div class="texto-icone oculto">Suporte</div>
+            </div>
+        </div>
+        <div class="pai-icones-inferiores">
+            <hr class="separador-forte">
+            <div class="icone-box-inferior" id="tela_perfil">
+                <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                <div class="texto-icone oculto">Sair da conta</div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim do menu lateral -->
+    <div class="header">
+                <div class="header-esquerda">
+                    <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+                    <a href="monitoramento.html" >
+                    <span id="nome_MaquinaDac ">Monitoramento</span>
+                    </a>
+                    <img src="../assets/imgs/botao_seta_preto.png" alt="">
+                    <a href="grafico1.html" >
+                    <span id="nome_maquina"></span>
+                    <span id="status_MaquinaDac"> Status: </span>
+                    </a>
+                    <img src="../assets/imgs/botao_seta_preto.png" alt="">
+                    <span id="nome_MaquinaDac">Análise de CPU</span>
+
+                </div>
+            </div>
+    <div class="conteudo">
+
+
+        <div id="kpis-superior">
+            <div class="kpis" id="Uso-CPU">
+
+                <b>Uso da CPU</b>
+                <div class="dados-kpi" id="grafico-cpu"></div>
+
+
+            </div>
+
+            <div class="kpis" id="Processos">
+                <b> Processos Ativos </b>
+                <div class="dados-kpi" id="processosKpi">0</div>
+
+            </div>
+
+            <div class="kpis" id="frequencia">
+                <b>Threads em execução </b>
+                <div class="dados-kpi">
+                  <span id="mhz_max">0</span>
+                </div>
+
+
+            </div>
+
+            <div class="kpis" id="qtd-alertas">
+                <b> Alertas dos ultimos 7 dias </b>
+                <div class="dados-kpi" id="alertasKpi">0</div>
+
+            </div>
+
+        </div>
+        <div class="divs-inferior">
+
+
+            <div class="graficos">
+                <div id="titulo-graficos">
+                    <select name="" id="slc_grafico">
+                        <option value="">Mapa de calor</option>
+                        <option value="">Detalhado</option>
+                    </select>
+                    <b>Acompanhamento em tempo real por Núcleo de CPU </b>
+                </div>
+                <div id="grafico-heatmap"></div>
+            </div>
+
+            <div id="Historico">
+                <header>Ultimos alertas de CPU</header>
+                <div style="background-color: #b30000;" class="alertas" id="alerta_1">
+                    Alerta Grave <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+
+                <div style="background-color: #daa520;" class="alertas" id="alerta_1">
+                    Em atenção <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+
+
+            
+            </div>
+
+
+        </div>
+
+    </div>
+</body>
+
+</html>
+<script src="../js/menu-lateral.js"></script>
+<script src="../js/validarSessao.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    var chartCPU;
+    var chartHeatmap;
+    
+     var idDac = sessionStorage.ID_DAC;
+     var fkunidade;
+
+     // inicia a dashboard puxando oque precisa 
+    fetch(`/grafico/exibirInfoDac/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+        return resposta.json();
+      })
+      .then(resposta => {
+        console.log(resposta)
+        nome_maquina.innerHTML = `${resposta[0].nomeIdentificacao}`
+        fkunidade = resposta[0].fkUnidadeDeAtendimento
+    
+        renderizarGraficos();
+        atualizarDados(fkunidade)
+        console.log(resposta[0].nomeIdentificacao)
+        if (resposta[0].statusDac == "Alerta") {
+          status_MaquinaDac.innerHTML = `<p style="color:#b30000">Status: ${resposta[0].statusDac}</p>`
+        }
+        else if (resposta[0].statusDac == "Ativo") {
+          status_MaquinaDac.innerHTML = `<p style="color:green">Status: ${resposta[0].statusDac}</p>`
+        }
+        else if (resposta[0].statusDac == "Inativo") {
+          status_MaquinaDac.innerHTML = `<p style="color:grey">Status: ${resposta[0].statusDac}</p>`
+        }
+        else if (resposta[0].statusDac == "Em configuração") {
+          window.location.href = "monitoramento.html"
+        }
+      })
+
+      .catch(function (resposta) {
+        console.log(`Erro no catch: ${resposta}`);
+      });
+function atualizarDados(fkunidade) {
+    puxar_processos(fkunidade)
+    puxar_Threads(fkunidade)
+    puxar_CPU(fkunidade)
+    puxar_qtdAlertas(fkunidade)
+    // puxar_dadosAlertas(fkunidade)
+    // loop para atualizar kpis
+    setTimeout(() => {
+        console.log('loop funcionadno')
+    atualizarDados(fkunidade)
+}, 5000);
+
+}
+
+function puxar_processos(fkunidade) {
+    fetch(`/analisecpu/puxarprocessos/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("Dados recebidos:", resposta);
+    console.log(resposta[0].medidaCapturada)
+    processosKpi.innerHTML = resposta[0].medidaCapturada
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+}
+   
+function puxar_Threads(fkunidade) {
+     fetch(`/analisecpu/puxarThreads/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("Threads:", resposta);
+    console.log(resposta[0].medidaCapturada)
+    mhz_max.innerHTML = resposta[0].medidaCapturada
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+}
+
+function puxar_CPU(fkunidade) {
+   fetch(`/analisecpu/puxarCPU/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("CPU:", resposta);
+    console.log(resposta[0].medidaCapturada)
+    var porc_cpu = Number(resposta[0].medidaCapturada);
+    var cor = 'green'
+    // configurações de alerta para definir cor
+    if (porc_cpu > 40 && porc_cpu < 80) {
+        cor = '#f1c402'
+    } else if (porc_cpu > 80) {
+        cor = '#b30000'
+    }
+    
+    if (chartCPU) {
+                    chartCPU.updateOptions({ colors: [cor] });
+                    chartCPU.updateSeries([porc_cpu]);
+                }
+
+
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+}
+
+function puxar_qtdAlertas(fkunidade) {
+   
+        fetch(`/analisecpu/puxarQtdAlertas/${fkunidade}/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+       if (!resposta.ok) {
+        throw new Error('Erro na requisição');
+    }
+    return resposta.json();
+})
+.then(resposta => {
+    console.log("Qtd Alertas:", resposta);
+    console.log(resposta[0].qtdalertas)
+   alertasKpi.innerHTML = resposta[0].qtdalertas
+})
+.catch(function (erro) {
+    console.log(`Erro no catch: ${erro}`);
+});
+
+}
+ /*
+ function puxar_dadosAlertas(fkunidade) {
+    fetch e dentro do retorno do fetch:
+
+        for (let index = 0; index < array.length; index++) {
+            if(alerta == grave) {
+                Historico.innerHTML += `
+                 <div style="background-color: #b30000;" class="alertas" id="alerta_${index}">
+                    Alerta Grave <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>
+                `
+            } else if (alerta == atencao) {
+                Historico.innerHTML += `
+                  <div style="background-color: #daa520;" class="alertas" id="alerta_${index}">
+                    Em atenção <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>`
+            }
+            
+        }
+}
+*/
+
+function teste() {
+    Historico.innerHTML += `
+                  <div style="background-color: #daa520;" class="alertas" id="alerta_${index}">
+                    Em atenção <br>
+                    <p> DD/MM/AAAA - HH:MM:SS </p>
+                </div>`
+}
+
+    function renderizarGraficos() {
+        var optionsCPU = {
+            series: [0], 
+            colors: ['green'],
+            chart: {
+                type: 'radialBar',
+                offsetY: -20,
+                sparkline: { enabled: true }
+            },
+            plotOptions: {
+                radialBar: {
+                    startAngle: -90,
+                    endAngle: 90,
+                    track: {
+                        background: "#e7e7e7",
+                        strokeWidth: '100%',
+                        margin: 15,
+                        dropShadow: { enabled: true, top: 2, left: 0, color: '#444', opacity: 1, blur: 2 }
+                    },
+                    dataLabels: {
+                        name: { show: false },
+                        value: { offsetY: -2, fontSize: '4vh' }
+                    }
+                }
+            },
+            fill: {
+                width: '100%',
+                gradient: {
+                    shade: 'light',
+                    shadeIntensity: 0.4,
+                    inverseColors: false,
+                    opacityFrom: 1,
+                    opacityTo: 1,
+                    stops: [0, 50, 53, 91]
+                },
+            },
+            labels: ['Porcentagem da CPU'],
+        };
+
+        chartCPU = new ApexCharts(document.querySelector("#grafico-cpu"), optionsCPU);
+        chartCPU.render();
+
+
+          var optionsHeatmap = {
+        series: [
+            {
+                name: 'Núcleo 1',
+                data: [
+                    { x: '10:00:00', y: 22 }, { x: '10:00:05', y: 45 }, { x: '10:00:10', y: 12 },
+                    { x: '10:00:15', y: 56 }, { x: '10:00:20', y: 81 }, { x: '10:00:25', y: 90 },
+                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 88 }, { x: '10:00:40', y: 78 },
+                    { x: '10:00:45', y: 20 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
+                ]
+            },
+            {
+                name: 'Núcleo 2',
+                data: [
+                    { x: '10:00:00', y: 43 }, { x: '10:00:05', y: 55 }, { x: '10:00:10', y: 40 },
+                    { x: '10:00:15', y: 60 }, { x: '10:00:20', y: 100 }, { x: '10:00:25', y: 81 },
+                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 95 }, { x: '10:00:40', y: 78 },
+                    { x: '10:00:45', y: 32 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
+                ]
+            },
+            {
+                name: 'Núcleo 3',
+                data: [
+                    { x: '10:00:00', y: 10 }, { x: '10:00:05', y: 15 }, { x: '10:00:10', y: 8 },
+                    { x: '10:00:15', y: 12 }, { x: '10:00:20', y: 86 }, { x: '10:00:25', y: 84 },
+                    { x: '10:00:30', y: 32 }, { x: '10:00:35', y: 81 }, { x: '10:00:40', y: 78 },
+                    { x: '10:00:45', y: 32 }, { x: '10:00:50', y: 81 }, { x: '10:00:55', y: 78 }
+                ]
+            },
+            {
+                name: 'Núcleo 4',
+                data: [
+                    { x: '10:00:00', y: 65 }, { x: '10:00:05', y: 55 }, { x: '10:00:10', y: 42 },
+                    { x: '10:00:15', y: 33 }, { x: '10:00:20', y: 20 }, { x: '10:00:25', y: 15 },
+                    { x: '10:00:30', y: 45 }, { x: '10:00:35', y: 60 }, { x: '10:00:40', y: 70 },
+                    { x: '10:00:45', y: 85 }, { x: '10:00:50', y: 90 }, { x: '10:00:55', y: 95 }
+                ]
+            },
+            {
+                name: 'Núcleo 5',
+                data: [
+                    { x: '10:00:00', y: 12 }, { x: '10:00:05', y: 24 }, { x: '10:00:10', y: 36 },
+                    { x: '10:00:15', y: 48 }, { x: '10:00:20', y: 60 }, { x: '10:00:25', y: 72 },
+                    { x: '10:00:30', y: 84 }, { x: '10:00:35', y: 96 }, { x: '10:00:40', y: 50 },
+                    { x: '10:00:45', y: 40 }, { x: '10:00:50', y: 30 }, { x: '10:00:55', y: 20 }
+                ]
+            },
+            {
+                name: 'Núcleo 6',
+                data: [
+                    { x: '10:00:00', y: 98 }, { x: '10:00:05', y: 85 }, { x: '10:00:10', y: 75 },
+                    { x: '10:00:15', y: 65 }, { x: '10:00:20', y: 55 }, { x: '10:00:25', y: 45 },
+                    { x: '10:00:30', y: 35 }, { x: '10:00:35', y: 25 }, { x: '10:00:40', y: 15 },
+                    { x: '10:00:45', y: 5 }, { x: '10:00:50', y: 10 }, { x: '10:00:55', y: 15 }
+                ]
+            }
+        ],
+        chart: {
+            height: '80%',
+            type: 'heatmap',
+            width: '100%',
+            toolbar: { show: true }
+        },
+        plotOptions: {
+            heatmap: {
+                shadeIntensity: 0.5,
+                radius: 0,
+                useFillColorAsStroke: false,
+                colorScale: {
+                    ranges: [
+                        {
+                            from: 0,
+                            to: 40,
+                            name: '0k',
+                            color: '#00A100'
+                        },
+                        {
+                            from: 41,
+                            to: 80,
+                            name: 'atenção',
+                            color: '#f1c402'
+                        },
+                        {
+                            from: 81,
+                            to: 100,
+                            name: 'Alerta grave',
+                            color: '#b30000'
+                        }
+                    ]
+                }
+            }
+        },
+        dataLabels: {
+            enabled: false
+        },
+        stroke: {
+            width: 1
+        },
+    };
+
+        chartHeatmap = new ApexCharts(document.querySelector("#grafico-heatmap"), optionsHeatmap);
+        chartHeatmap.render();
+    }
+        
+
+
+
+</script>

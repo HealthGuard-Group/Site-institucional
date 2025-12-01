@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Dashboard </title>
+  <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+  <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/menu_bar.css">
+  <link rel="stylesheet" href="../css/grafico1.css">
+  <link rel="stylesheet" href="../css/monitoramento.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="../js/validarSessao.js"></script>
+
+</head>
+
+<body onload="validarSessao()">
+  <div class="tela-escurecida oculto">
+    <div class="popup-fundo oculto" id="modal_atualizarmaquina">
+      <div class="popup reduzido" id="modal_atualizar">
+        <div class="popup-header">
+          <div class="titulo_modal">Editar a máquina</div>
+          <button class="fechar" onclick="fecharPop()"><img class="fechar"
+              src="../assets/imgs/iconeFechar.png"></button>
+        </div>
+        <div class="line"></div>
+        <div class="texto-marcacao-modal">Seleção dos serviços de monitoramento:</div>
+        <div class="box-selecao-servicos">
+          <div class="box-colunas-selecao">
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de CPU(%)</div>
+              <label for="uso_cpu_porcentagem" class="switch">
+                <input type="checkbox" id="uso_cpu_porcentagem" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de RAM(%)</div>
+              <label for="uso_ram_porcentagem" class="switch">
+                <input type="checkbox" id="uso_ram_porcentagem" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="barra-vertical-modal"></div>
+          <div class="box-colunas-selecao">
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de Disco(%)</div>
+              <label for="uso_disco_porcentagem" class="switch">
+                <input type="checkbox" id="uso_disco_porcentagem" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="box-selecao-modal">
+              <div class="texto-modal">Uso de Rede(O/I)</div>
+              <label for="uso_rede" class="switch">
+                <input type="checkbox" id="uso_rede" class="input-checkbox">
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="box-botao-modal">
+          <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
+          </div>
+          <div class="botoes-modal">
+            <button class="botao-modal btn-personalizar" onclick="adicionandoServicosPadrao()">Redefinir Métricas
+              Padrão</button>
+            <button class="botao-modal" onclick="adicionandoServicosPersonalizados()">Personalizar
+              métricas</button>
+          </div>
+        </div>
+        <div class="tooltip-container">
+          <i class="i_metricas_padrao"><u>Visualizar métricas padrão</u></i>
+          <div class="tooltip">
+            <p>Com base em nossos estudos e análises, determinamos as métricas-padrão para os alertas,
+              sendo elas:</p>
+            <p><strong>CPU</strong></p>
+            <p>Em atenção – 58.1%</p>
+            <p>Alerta grave – 78.5%</p>
+
+
+            <p><strong>Memória RAM</strong></p>
+            <p>Em atenção – 91.9%</p>
+            <p>Alerta grave – 100%</p>
+
+
+            <p><strong>DISCO</strong></p>
+            <p>Em atenção – 70%</p>
+            <p>Alerta grave – 80%</p>
+
+
+            <p><strong>REDE</strong></p>
+            <p>Alerta grave – Rede desconectada</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <!-- Modal métricas alertas -->
+    <div class="popup-fundo oculto" id="modal_adicionarmaquina_config">
+      <div class="popup-header">
+        <div class="popup">
+          <div class="popup-header">
+            <div class="titulo_modal">Personalização Métricas</div>
+            <button class="fechar" onclick="fecharPop()"><img class="fechar"
+                src="../assets/imgs/iconeFechar.png"></button>
+          </div>
+          <div class="line"></div>
+          <div class="texto-marcacao-modal" id="parametro_a_configurar">Definição das métricas de CPU(%):
+          </div>
+          <div class="texto-marcacao-modal">Em atenção <div class="icon atencao"></div>
+          </div>
+          <div class="box-input-modal">
+            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_minimo_atencao" oninput="validarnumero(this)"
+                placeholder="Ex: 30%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_minimo_atencao">Preencha o campo</div>
+            </div>
+            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_maximo_atencao" oninput="validarnumero(this)"
+                placeholder="Ex: 90%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_maximo_atencao">Preencha o campo</div>
+            </div>
+          </div>
+          <div class="texto-marcacao-modal">Em Alerta <div class="icon alerta"></div>
+          </div>
+          <div class="box-input-modal">
+            <div class="texto-modal-personalizacao">Valor mínimo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_minimo_alerta" oninput="validarnumero(this)"
+                placeholder="Ex: 30%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_minimo_alerta">Preencha o campo</div>
+            </div>
+            <div class="texto-modal-personalizacao">Valor máximo(%)<span class="texto-modal"
+                style="color: red;">*</span>:</div>
+            <div class="coluna-erro-modal-reduzido">
+              <input type="number" class="input-modal" id="valor_maximo_alerta" oninput="validarnumero(this)"
+                placeholder="Ex: 90%" min="0" max="100">
+              <div class="texto-erro oculto" id="texto_erro_maximo_alerta">Preencha o campo</div>
+            </div>
+          </div>
+          <div class="line"></div>
+          <div class="ipt_metrica_padrao">
+            <p> Usar configuração padrão</p><input type="checkbox" id="input_configuracao_padrao"
+              onchange="puxarMetricasPadraoPersonalizado(this)">
+          </div>
+          <div class="box-botao-modal">
+            <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um
+              serviço
+            </div>
+            <div class="box-botao-modal">
+              <div class="texto-erro oculto" id="texto_erro_configuracao_alerta">Configure a operação
+                ideal</div>
+              <button class="botao-modal" onclick="parametrizarAlertasPersonalizado()">Próximo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <!-- Começo do Menu -->
+  <div class="menu-lateral">
+    <div class="pai-icones-superiores">
+      <div id="logo">
+        <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+          class="icone-logo-pequena">
+      </div>
+      <br>
+      <div class="icone-box" id="monitoramento_redirecionamento">
+        <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+        <div class="texto-icone oculto">Monitoramento</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="gestao_redirecionamento">
+        <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+        <div class="texto-icone oculto">Gestão de funcionários</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="alertas_redirecionamento">
+        <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+        <div class="texto-icone oculto">Histórico de Alertas</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="gestao_convites">
+        <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+        <div class="texto-icone oculto">Convites</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box" id="suporte_redirecionamento">
+        <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+        <div class="texto-icone oculto">Suporte</div>
+      </div>
+    </div>
+    <div class="pai-icones-inferiores">
+      <hr class="separador-forte">
+      <div class="icone-box-inferior" id="tela_perfil">
+        <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+        <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+      </div>
+      <hr class="separador">
+      <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+        <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+        <div class="texto-icone oculto">Sair da conta</div>
+      </div>
+    </div>
+  </div>
+  <!-- Fim do Menu -->
+  <div class="container">
+    <div class="conteudo-principal">
+      <div class="header-pai">
+
+        <div class="header">
+          <div class="header-esquerda">
+            <img src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+            <span id="pagina-monitoramento">Monitoramento</span>
+            <img src="../assets/imgs/botao_seta_preto.png" alt="">
+
+            <span id="nome_MaquinaDac"></span>
+            <span class="status alerta" id="status_MaquinaDac"></span>
+          </div>
+
+          <input type="checkbox" id="btn_descricao">
+          <!-- <label class="link-descricao" for="btn_descricao">Exibir descrição</label> -->
+          <div class="descricao">
+            <p id="descricao_MaquinaDac"></p>
+          </div>
+        </div>
+
+        <div onclick="excluir_maquina()" class="botao-excluir-maquina">
+          <img src="../assets/imgs/icone-lixeira2.png">
+        </div>
+      </div>
+
+
+      <div class="dashboard-cards">
+        <div class="card-monitoramento">
+
+          <div class="title">
+            <p>Monitoramento em tempo real </p>
+            <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+              <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados nessa
+                máquina e o seu
+                desempenho no momento atual</span>
+            </span>
+          </div>
+
+          <div class="div_componentes">
+            <div> <span class="status-dot ok"> </span> Uso de CPU: <strong id="cpu"></strong></div>
+            <div> <span class="status-dot alerta-grave"></span>Uso de Memória RAM: <strong id="ram"></strong></div>
+            <div> <span id="redeok" class="status-dot ok"></span>Status da Rede: <strong id="rede"></strong></div>
+          </div>
+          <button class="btn-editar" id="botao_editar_maquina">Editar</button>
+        </div>
+
+        <div class="kpi-topo">
+          <div class="card alerta-card">
+            <div class="title">
+              <p>Componente com mais alertas</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Componente monitorado que mais apresentou falhas nas útltimas 24h</span>
+              </span>
+            </div>
+            <div class="text" id="comp_alertas" style="color:#b30000; font-weight: 700;"></div>
+          </div>
+
+
+          <div class="card alerta-card">
+            <div class="title">
+              <p>Tempo de Atividade</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Tempo ativo total do componente desde o momento que começou o
+                  monitoramento </span>
+              </span>
+            </div>
+            <div class="tempo-atividade">15h30min</div>
+          </div>
+
+
+          <div class="card alerta-card">
+            <div class="title">
+              <p>Quantidade de alertas</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Quantidade de alertas totais obtidos nas últimas 24h</span>
+              </span>
+            </div>
+            <div class="number" id="totalalertas"></div>
+          </div>
+
+          <div class="card alerta-card">
+            <div class="title">
+              <p>Média de alertas por dia</p>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Calculo de média de todos os alertas diários obtidos nos últimos 6
+                  dias</span>
+              </span>
+            </div>
+            <div class="number">35</div>
+          </div>
+        </div>
+
+        <div class="card-alertas-totais">
+          <div class="title">
+            <p>Alertas não vistos</p>
+            <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+              <span class="tooltip-text">Lista com alertas recentes, agrupados por gravidade.</span>
+            </span>
+          </div>
+          <div class="alerts-list">
+            <div class="alerta-grave">
+              Alerta Grave <span class="bolinha-grave">1</span> </div>
+            <div class="alerta-critico">
+              Em atenção
+              <span class="bolinha-critico">5</span>
+            </div>
+          </div>
+          <button class="btn-historico" id="link-historico-alertas"
+            onclick="window.location.href='alertasIndividuais.html'">Histórico de Alertas <i
+              class='bxr  bx-arrow-right-stroke'></i> </button>
+        </div>
+      </div>
+
+
+      <div class="botao-sessao">
+        <div class="config-alerta">
+          <div class="config-left">
+            <span class="titulo">
+              <strong> Componentes a monitorar: </strong>
+            </span>
+            <select id="componentSelect" onchange="trocarMonitoramento()">
+              <option value="CPU" selected>CPU</option>
+              <option value="Memória">Memória RAM</option>
+              <option value="Disco">Disco</option>
+            </select>
+
+            <div class="config-alertas-status">
+              <span class="status-dot alerta-grave"></span> Alerta Grave
+              <span class="status-dot alerta-critico"></span> Em atenção
+              <span class="status-dot ok"></span> OK
+            </div>
+
+            <div class="metrica">
+              <div class="metric-lado">Tempo de Inatividade (Nas últimas 24h)</div>
+              <div class="number" id="inatividade">8h30min</div>
+            </div>
+            <div class="metrica">
+              <div class="metric-lado">Quantidade de alertas (Nas últimas 24h) </div>
+              <div class="number" id="qtdAlertas">7</div>
+            </div>
+            <div class="metrica">
+              <div class="metrica-lado">Tempo médio entre alertas (Nas últimas 24h)</div>
+              <div class="number" id="tempoMedio">30min</div>
+            </div>
+          </div>
+          <div class="metricas-valores">
+            <span class="grave"> <strong> 88% a 100%</strong></span>
+            <span class="critico"> <strong> 72% a 87% </strong></span>
+            <span class="ok"><strong> 0% a 71%</strong></span>
+
+
+
+          </div>
+          <div class="barra-vertical" aria-hidden="true"></div>
+        </div>
+
+        <div class="chart-area">
+          <div class="chart-header">
+            <div class="chart-controls">
+              <div id="chartTitle">Alertas emitidos nos últimos 7 dias</div>
+
+              <select id="tipoGraficoTopo" aria-label="Escolher tipo de gráfico" onchange="trocarGraficos()">
+                <option value="alertas" selected>Gráfico de Alertas</option>
+                <option value="monitoramento">Monitoramento em Tempo Real</option>
+              </select>
+              <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                <span class="tooltip-text">Escolha de tipo de gráficos que podem ser selecionados de acordo com os
+                  insigths desejados</span>
+              </span>
+              <div class="redirect-chart">Exibir mais detalhes</div>
+            </div>
+          </div>
+
+          <canvas id="alertChart"></canvas>
+
+          <canvas id="monitorChart" class="canvas-hidden"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/menu-lateral.js"></script>
+  <script>
+    document.getElementById("botao_editar_maquina").addEventListener('click', () => {
+      document.querySelector('.tela-escurecida').classList.remove('oculto')
+      document.getElementById("modal_atualizarmaquina").classList.remove('oculto')
+      document.getElementById('html_fonte').style.overflowY = "hidden"
+      var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
+      nomeIndetificao.style.border = '0.2vh solid #000'
+      nomeIndetificao.style.boxShadow = 'none'
+    })
+
+    var idDac = sessionStorage.ID_DAC;
+    console.log("Id Dac:", idDac)
+
+    // //Redirecionador para Dash individuais
+    document.querySelector(".redirect-chart").addEventListener("click", () => {
+      var select = componentSelect.value
+      if (select == "CPU") {
+        window.location.href = "dashboard-cpu.html"
+      } else if (select == "Memória") {
+        window.location.href = "analiseRAM.html"
+      } else if (select == "Disco") {
+        window.location.href = "analiseDisco.html"
+      }
+    })
+    //
+
+    fetch(`/grafico/exibirInfoDac/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+        return resposta.json();
+      })
+      .then(resposta => {
+        console.log(resposta)
+
+        nome_MaquinaDac.innerHTML = `${resposta[0].nomeIdentificacao}`
+        if (resposta[0].statusDac == "Alerta") {
+          status_MaquinaDac.innerHTML = `<p style="color:#b30000">Status: ${resposta[0].statusDac}</p>`
+        }
+        else if (resposta[0].statusDac == "Ativo") {
+          status_MaquinaDac.innerHTML = `<p style="color:green">Status: ${resposta[0].statusDac}</p>`
+        }
+        else if (resposta[0].statusDac == "Inativo") {
+          status_MaquinaDac.innerHTML = `<p style="color:grey">Status: ${resposta[0].statusDac}</p>`
+        }
+        else if (resposta[0].statusDac == "Em configuração") {
+          window.location.href = "monitoramento.html"
+        }
+
+        descricao_MaquinaDac.innerHTML = `${resposta[0].descricao}`
+      })
+
+      .catch(function (resposta) {
+        console.log(`Erro no catch: ${resposta}`);
+      });
+
+    fetch(`/grafico/buscarKpiDac/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+        return resposta.json();
+      })
+      .then(resposta => {
+        console.log(resposta)
+        if (resposta[0] == null) {
+          comp_alertas.innerHTML = `Sem componente`
+        } else {
+          comp_alertas.innerHTML = `${resposta[0].componente}`
+        }
+      })
+
+      .catch(function (resposta) {
+        console.log(`Erro no catch: ${resposta}`);
+      });
+
+    fetch(`/grafico/totalAlerta/${idDac}`, {
+      method: "GET",
+    })
+      .then(resposta => {
+        return resposta.json();
+      })
+      .then(resposta => {
+        console.log(resposta)
+
+        totalalertas.innerHTML = `${resposta[0].totalAlertas}`
+      })
+
+
+    function atualizarDados() {
+      fetch(`/grafico/buscarCpu/${idDac}`, {
+        method: "GET",
+      }).then(resposta => resposta.json())
+        .then(resposta => {
+          console.log("Resultado Select CPU:",resposta);
+          cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
+        })
+        .catch(erro => console.error("Erro:", erro));
+
+
+      fetch(`/grafico/buscarRam/${idDac}`, {
+        method: "GET",
+      }).then(resposta => resposta.json())
+        .then(resposta => {
+          console.log("Resultado Select RAM:",resposta);
+          ram.innerHTML = `${resposta[0].medidaCapturada}%`;
+        })
+        .catch(erro => console.error("Erro:", erro));
+
+      fetch(`/grafico/buscarRede/${idDac}`, {
+        method: "GET",
+      }).then(resposta => resposta.json())
+        .then(resposta => {
+          console.log(resposta);
+
+          if (resposta == "") {
+            rede.innerHTML = `Máquina Inativa`
+            ram.innerHTML = `Máquina Sem Dados`
+            cpu.innerHTML = `Máquina Sem Dados`
+            redeok.classList.remove("status-dot", "ok")
+            redeok.classList.add("status-dot", "alerta-grave")
+            status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
+          }
+
+          if (resposta[0].dataCaptura) {
+            const dataServidor = new Date(resposta[0].dataCaptura);
+            const agora = new Date();
+            const diferenca1 = agora - dataServidor;
+            const diferenca2 = diferenca1 / 1000 / 60;
+
+            if (diferenca2 > 1) {
+              rede.innerHTML = `NÃO CONECTADO`
+              ram.innerHTML = `Máquina Inativa`
+              cpu.innerHTML = `Máquina inativa`
+              redeok.classList.remove("status-dot", "ok")
+              redeok.classList.add("status-dot", "alerta-grave")
+              status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
+            } else {
+              rede.innerHTML = `CONECTADO`;
+              redeok.classList.remove("status-dot", "alerta-grave")
+              redeok.classList.add("status-dot", "ok")
+              status_MaquinaDac.innerHTML = `<p style="color:green">Status: Ativa</p>`
+            }
+
+          }
+        })
+        .catch(erro => console.error("Erro:", erro));
+    }
+    atualizarDados();
+    setInterval(atualizarDados, 6000);
+
+    // Variaveis Gráfico
+    var ctx = document.getElementById("alertChart").getContext("2d")
+    var cty = document.getElementById("monitorChart").getContext("2d")
+    var graficoAlerta = ""
+    var graficoMonitoramento = ""
+    var dadosGraficoAlerta = {
+      CPU: {
+        grave: [8, 10, 18, 24, 2, 3, 5],
+        critico: [7, 12, 16, 20, 5, 10, 2]
+      },
+      Memória: {
+        grave: [5, 8, 10, 15, 3, 1, 0],
+        critico: [4, 10, 15, 18, 4, 7, 1]
+      },
+      Disco: {
+        grave: [2, 3, 2, 1, 2, 1, 0],
+        critico: [1, 2, 1, 0, 1, 0, 0]
+      }
+    }
+    var dadosMonitoramento = [40, 55, 68, 75, 82, 78, 85]
+    var dataAlerta = ['24/10', '25/10', '26/10', '27/10', '28/10', '29/10', '30/10']
+    var dataMonitoramento = ['11:30', '11:35', '11:40', '11:45', '11:50', '11:55', '12:00']
+    function plotarGraficosDash() {
+      var configuracaoBackgroundMonitoramento = {
+        id: 'backgroundColorPlugin',
+        beforeDraw: (chart) => {
+          const { ctx, chartArea, scales } = chart
+          if (!chartArea) return
+
+          const { top, bottom, left, right } = chartArea
+          const yScale = scales.y
+          const getY = (valor) => yScale.getPixelForValue(valor)
+
+          ctx.save();
+          // Zona Verde (< 73)
+          ctx.fillStyle = 'rgba(19, 155, 54, 0.7)'
+          ctx.fillRect(left, getY(73), right - left, bottom - getY(71))
+
+          // Zona Amarela (73 - 87)
+          ctx.fillStyle = 'rgba(243, 190, 58, 0.8)'
+          ctx.fillRect(left, getY(87), right - left, getY(73) - getY(87))
+
+          // Zona Vermelha (> 87)
+          ctx.fillStyle = 'rgba(220, 23, 23, 0.7)'
+          ctx.fillRect(left, top, right - left, getY(87) - top)
+
+          ctx.restore()
+        }
+      }
+      graficoAlerta = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: dataAlerta,
+          datasets: [
+            { label: 'Atenção', data: dadosGraficoAlerta.CPU.grave, backgroundColor: '#b30000', stack: 'Stack 0' },
+            { label: 'Alerta', data: dadosGraficoAlerta.CPU.critico, backgroundColor: '#daa520', stack: 'Stack 0' },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { stacked: true },
+            y: { stacked: true, beginAtZero: true }
+          },
+          plugins: { legend: { display: false } }
+        }
+      })
+      graficoMonitoramento = new Chart(cty, {
+        type: 'line',
+        data: {
+          labels: dataMonitoramento,
+          datasets: [{
+            label: "Uso de CPU",
+            data: dadosMonitoramento,
+            borderColor: '#000',
+            backgroundColor: '#000',
+            fill: false,
+            tension: 0.25,
+            pointRadius: 4,
+            pointHoverRadius: 5
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              min: 0, max: 100,
+              ticks: { stepSize: 10 },
+              title: { display: true, text: 'Uso (%)' }
+            }
+          },
+          plugins: {
+            legend: { display: true },
+            title: { display: true, text: 'Monitoramento em Tempo Real' }
+          }
+        },
+        plugins: [configuracaoBackgroundMonitoramento]
+      })
+    }
+
+    function trocarMonitoramento() {
+      var select = document.getElementById("componentSelect").value
+
+      if (select == "CPU") {
+        graficoMonitoramento.data.datasets[0].label = "Uso de CPU"
+        graficoMonitoramento.data.datasets[0].data = [40, 55, 68, 75, 82, 78, 85]
+        graficoAlerta.data.datasets[0].data = dadosGraficoAlerta.CPU.grave
+        graficoAlerta.data.datasets[1].data = dadosGraficoAlerta.CPU.critico
+
+      } else if (select == "Memória") {
+        graficoMonitoramento.data.datasets[0].label = "Uso de Memória"
+        graficoMonitoramento.data.datasets[0].data = [15, 22, 35, 30, 42, 38, 45]
+        graficoAlerta.data.datasets[0].data = dadosGraficoAlerta.Memória.grave
+        graficoAlerta.data.datasets[1].data = dadosGraficoAlerta.Memória.critico
+
+      } else if (select == "Disco") {
+        graficoMonitoramento.data.datasets[0].label = "Uso de Disco"
+        graficoMonitoramento.data.datasets[0].data = [60, 72, 85, 92, 95, 88, 98]
+        graficoAlerta.data.datasets[0].data = dadosGraficoAlerta.Disco.grave
+        graficoAlerta.data.datasets[1].data = dadosGraficoAlerta.Disco.critico
+      }
+
+      graficoMonitoramento.update()
+      graficoAlerta.update()
+    }
+
+    function trocarGraficos() {
+      var select = document.getElementById("tipoGraficoTopo").value;
+      if (select == "alertas") {
+        document.getElementById("alertChart").classList.remove("canvas-hidden");
+        document.getElementById("monitorChart").classList.add("canvas-hidden");
+      } else if (select == "monitoramento") {
+        document.getElementById("alertChart").classList.add("canvas-hidden");
+        document.getElementById("monitorChart").classList.remove("canvas-hidden");
+      }
+    }
+
+    plotarGraficosDash()
+    trocarGraficos()
+    trocarMonitoramento()
+
+
+
+    function excluir_maquina() {
+      console.log('entrou na função')
+      fetch(`/grafico/excluirMaquina/${idDac}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("Erro ao remover");
+          }
+          return res.json();
+        })
+        .then(data => {
+
+          alert('Maquina removida com sucesso! ')
+          setTimeout(() => {
+            window.location.href = 'monitoramento.html';
+          }, 3000);
+
+
+        })
+        .catch(err => {
+
+        })
+
+
+
+    }
+  </script>
+</body>
+
+</html>

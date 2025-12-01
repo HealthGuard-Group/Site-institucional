@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Alertas Semanais</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link href='https://cdn.boxicons.com/fonts/basic/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/dashAlertasSemanais.css">
+</head>
+
+<body onload="validarSessao()">
+    <!-- Começo do Menu -->
+    <div class="menu-lateral">
+        <div class="pai-icones-superiores">
+            <div id="logo">
+                <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                    class="icone-logo-pequena">
+            </div>
+            <br>
+            <div class="icone-box" id="monitoramento_redirecionamento">
+                <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                <div class="texto-icone oculto">Monitoramento</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_redirecionamento">
+                <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Gestão de funcionários</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="alertas_redirecionamento">
+                <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                <div class="texto-icone oculto">Histórico de Alertas</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="gestao_convites">
+                <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                <div class="texto-icone oculto">Convites</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box" id="suporte_redirecionamento">
+                <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                <div class="texto-icone oculto">Suporte</div>
+            </div>
+        </div>
+        <div class="pai-icones-inferiores">
+            <hr class="separador-forte">
+            <div class="icone-box-inferior" id="tela_perfil">
+                <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+            </div>
+            <hr class="separador">
+            <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                <div class="texto-icone oculto">Sair da conta</div>
+            </div>
+        </div>
+    </div>
+    <!-- Fim do Menu -->
+
+    <main class="main_bd_dash">
+        <section class="header_dash">
+            <h1>Alertas Gerais da Semana</h1>
+            <div class="header_semanaAtual">
+                <p id="intervaloSemana"></p>
+            </div>
+        </section>
+
+        <section class="container_kpis_dash">
+            <div class="kpi_dash">
+                <div class="titulo_kpi">
+                    <h2>Total de Alertas da Semana</h2>
+                    <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
+                            nessa
+                            máquina e o seu
+                            desempenho no momento atual</span>
+                    </span>
+                </div>
+                <div class="valor_kpi" id="kpi_totalSemana">
+                </div>
+            </div>
+            <div class="kpi_dash">
+                <div class="titulo_kpi" >
+                    <h2>Desde o Último Alerta</h2>
+                    <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
+                            nessa
+                            máquina e o seu
+                            desempenho no momento atual</span>
+                    </span>
+                </div>
+                <div class="valor_kpi" id="kpi_desdeUltimoAlerta">
+                </div>
+            </div>
+
+            <div class="kpi_dash">
+                <div class="titulo_kpi">
+                    <h2>Total de Alertas não Verificados</h2>
+                    <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
+                            nessa
+                            máquina e o seu
+                            desempenho no momento atual</span>
+                    </span>
+                </div>
+                <div class="valor_kpi" id="kpi_naoVerificados">
+                </div>
+            </div>
+
+            <div class="kpi_dash">
+                <div class="titulo_kpi">
+                    <h2>Última Máquina Alertada</h2>
+                    <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
+                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
+                            nessa
+                            máquina e o seu
+                            desempenho no momento atual</span>
+                    </span>
+                </div>
+                <div class="valor_kpi" id="kpi_ultimaMaquina">
+                </div>
+            </div>
+
+        </section>
+
+        <main class="main_container_dash">
+            <div class="container_left_dash">
+                <div class="div_graficoSeveridade">
+                    <h2>Alertas por Nível de Severidade</h2>
+                    <div class="div_grfalertas">
+                        <canvas id="grafico_pizza"></canvas>
+                    </div>
+                </div>
+                <div class="div_rankingalertas">
+                    <div class="div_ranking">
+                        <h2>Top 5 Máquinas com Mais Alertas</h2>
+                        <canvas id="grafico_ranking"></canvas>
+                    </div>
+
+                </div>
+            </div>
+            <div class="container_right_dash">
+                <div class="div_graficolinha">
+                    <h2>Tendência de Alertas por Dia</h2>
+                <canvas id="grafico_linha"></canvas>
+
+                </div>
+            </div>
+        </main>
+    </main>
+</body>
+
+<script src="../js/validarSessao.js"></script>
+<script src="../js/menu-lateral.js"></script>
+
+<script>
+       window.onload = () => {puxarKpisSemana()}
+       
+    new Chart(document.getElementById('grafico_pizza'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Atenção', 'Alerta'],
+            datasets: [{
+                data: [300, 100],
+                backgroundColor: [
+                    'rgba(218, 165, 32, 1)',
+                    'rgba(218, 0, 0, 1)'
+                ]
+            }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    position: 'right',
+                }
+            }
+        }
+    });
+
+    new Chart(document.getElementById('grafico_ranking'), {
+  type: 'bar',
+  data: {
+    labels: ['Máquina 01', 'Máquina 02', 'Máquina 03', 'Máquina 04', 'Máquina 05'],
+    datasets: [{
+      data: [45, 38, 30, 22, 18],
+      backgroundColor: 'rgb(54, 162, 235)'
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { ticks: { display: false }, grid: { display: false } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+
+const ctx = document.getElementById('grafico_linha');
+
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul"],
+    datasets: [
+      {
+        label: "Dataset 1",
+        data: [65, 59, 80, 81, 56, 55, 40],
+        borderColor: "rgba(200,200,200,1)",
+        backgroundColor: "rgba(200,200,200,0.15)",
+        tension: 0.4,
+        fill: true,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(200,200,200,1)"
+      }
+    ]
+  },
+  options: {
+    plugins: {
+      legend: { display: false }
+    },
+    scales: {
+      x: {
+        grid: {
+          color: "rgba(0,0,0,0.05)"
+        }
+      },
+      y: {
+        beginAtZero: false,
+        grid: {
+          color: "rgba(0,0,0,0.05)"
+        }
+      }
+    }
+  }
+});
+
+
+function formatarData(dia) {
+    return dia.toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit"
+    });
+}
+
+var hoje = new Date();
+var domingo = new Date();
+domingo.setDate(hoje.getDate() - hoje.getDay());
+
+intervaloSemana.innerHTML = formatarData(domingo) + " ao " + formatarData(hoje);
+
+
+function puxarKpisSemana() {
+    var idUnidadeAtendimento = sessionStorage.FK_UNIDADE;
+
+    fetch(`/dashAlertasSemanais/kpis/${idUnidadeAtendimento}`, { method: "GET" })
+        .then(res => res.json())
+        .then(res => {
+            var kpi = res[0];
+
+            kpi_totalSemana.innerHTML = kpi.totalSemana;
+            kpi_desdeUltimoAlerta.innerHTML = kpi.desdeUltimoAlerta + " min";
+            kpi_naoVerificados.innerHTML = kpi.naoVerificados;
+            kpi_ultimaMaquina.innerHTML = kpi.ultimaMaquina;
+        })
+        .catch(err => {
+            console.log("Erro:", err);
+        });
+}
+</script>
+</html>

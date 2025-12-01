@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en" id="html_fonte">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard - Histórico de alertas</title>
+    <link rel="shortcut icon" type="imagex/png" href="../assets/icon/healthguard_icone.png">
+    <link rel="stylesheet" href="../css/global.css">
+    <link rel="stylesheet" href="../css/menu_bar.css">
+    <link rel="stylesheet" href="../css/alertasGerais.css">
+    <!-- Link JavaScript -->
+</head>
+
+<body onload="validarSessao()">
+
+    <section class="tela">
+        <!-- Começo do Menu -->
+        <div class="menu-lateral">
+            <div class="pai-icones-superiores">
+                <div id="logo">
+                    <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
+                        class="icone-logo-pequena">
+                </div>
+                <br>
+                <div class="icone-box" id="monitoramento_redirecionamento">
+                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
+                    <div class="texto-icone oculto">Monitoramento</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_redirecionamento">
+                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Gestão de funcionários</div>
+                </div>
+                <div class="icone-box" id="alertas_redirecionamento">
+                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
+                    <div class="texto-icone oculto">Histórico de Alertas</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="gestao_convites">
+                    <img src="../assets/imgs/icone-convite2.png" alt="Foto" class="icone-menu-2">
+                    <div class="texto-icone oculto">Convites</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box" id="suporte_redirecionamento">
+                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
+                    <div class="texto-icone oculto">Suporte</div>
+                </div>
+            </div>
+            <div class="pai-icones-inferiores">
+                <hr class="separador-forte">
+                <div class="icone-box-inferior" id="tela_perfil">
+                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
+                    <div class="texto-icone oculto" id="nome_usuario">Perfil</div>
+                </div>
+                <hr class="separador">
+                <div class="icone-box-inferior" id="sair_conta_redirecionamento">
+                    <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
+                    <div class="texto-icone oculto">Sair da conta</div>
+                </div>
+            </div>
+        </div>
+        <!-- Fim do Menu -->
+
+        <div class="container">
+
+            <div class="texto-organizacao" id="div_nome_empresa">
+                Nome
+            </div>
+            <div class="texto-topico">
+                Histórico de alertas gerais:
+            </div>
+            <div class="area-filtros">
+                <!-- ÁREA DESTINADA AOS FILTROS -->
+                <div class="texto-funcionalidade alinhamento-centralizar-vertical">
+                    Filtro:
+                </div>
+                <select name="" id="filtro_maquinas" class="select-filtro">
+                    <option value="todas">Todos os alertas</option>
+                    <option value="alerta">Alertas Grave</option>
+                    <option value="inativas">Alertas Críticos</option>
+                </select>
+            </div>
+
+            <div id="container-tabela">
+                <table id="tabela_alertas">
+                    <tr id="titulo-tabela">
+                        <td id="tr-tipo-alerta">Tipo de alerta</td>
+                        <td id="tr-monitoramento-alerta">Monitoramento</td>
+                        <td id="tr-nome-maquina">Máquina</td>
+                        <td id="tr-data-inicio-alerta">Data de início</td>
+                        <td id="tr-data-termino-alerta">Data de término</td>
+                        <td id="tr-status-alerta">Status</td>
+                        <td id="tr-data-verificacao-alerta">Data de verificação</td>
+                        <td id="tr-verificador-alerta">Verificador</td>
+                        <td id="tr-acoes-alerta">Ação</td>
+                    </tr>
+
+                    <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot alerta"></span>Alerta</td>
+                        <td class="td-monitoramento-alerta">Percentual de uso de cpu</td>
+                        <td class="td-nome-maquina">Máquina A-08</td>
+                        <td class="td-data-inicio-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-data-termino-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">Não Verificado</b></td>
+                        <td class="td-data-verificacao-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-verificador-alerta">Arthur Felipe Amaral da Silva </td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao">
+                                <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="dados-tabela">
+                        <td class="td-tipo-alerta"><span class="status-dot atencao"></span>Atenção</td>
+                        <td class="td-monitoramento-alerta">Percentual de uso de cpu</td>
+                        <td class="td-nome-maquina">Máquina A-08</td>
+                        <td class="td-data-inicio-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-data-termino-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-status-alerta"><b style="color: #656464;">Não Verificado</b></td>
+                        <td class="td-data-verificacao-alerta">30/10/2025 12:00:05</td>
+                        <td class="td-verificador-alerta">Arthur Felipe Amaral da Silva </td>
+                        <td class="td-acoes-alerta">
+                            <div class="icone-verificacao">
+                                <img src="../assets/imgs/icone_não_verificado.png" alt="visualização">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <script src="../js/validarSessao.js"></script>
+    <script src="../js/menu-lateral.js"></script>
+
+</body>
+
+</html>
+
+<script>
+div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
+var data_visualizacao;
+
+
+function registrarLogAcao(acao, descricao) {
+    var variaveis = puxarVariaveis();
+    fetch(`/logs/registrar`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idUsuario: variaveis.idUsuario,
+            acao: acao,
+            descricao: descricao
+        }),
+    })
+    .then(resposta => resposta.json())
+    .then(resposta => console.log("Log registrado:", resposta))
+    .catch(err => console.log("Erro ao registrar log:", err));
+}
+
+function puxarAlertasGeral() {
+    var variaveis = puxarVariaveis()
+    console.log(variaveis)
+    variaveis = variaveis.idUnidadeAtendimento
+    tabela_alertas.innerHTML = `
+        <tr id="titulo-tabela">
+            <td id="tr-tipo-alerta">Tipo de alerta</td>
+            <td id="tr-monitoramento-alerta">Monitoramento</td>
+            <td id="tr-nome-maquina">Máquina</td>
+            <td id="tr-data-inicio-alerta">Data de início</td>
+            <td id="tr-data-termino-alerta">Data de término</td>
+            <td id="tr-status-alerta">Status</td>
+            <td id="tr-data-verificacao-alerta">Data de verificação</td>
+            <td id="tr-verificador-alerta">Verificador</td>
+            <td id="tr-acoes-alerta">Ação</td>
+        </tr>`
+    fetch(`/alertasgeral/puxarAlertasGeral/${variaveis}`, {
+        method: "GET",
+    })
+        .then(resposta => resposta.json())
+        .then(resposta => {
+            console.log(resposta)
+            atualizarTabela(resposta)
+        })
+        .catch(function (resposta) {
+            console.log(`Erro no catch: ${resposta}`);
+        });
+}
+
+function atualizarTabela(dados) {
+    console.log("Respota entrando na função:", dados)
+    for (let i = 0; i < dados.length; i++) {
+
+        let data_inicio = new Date(dados[i].dataInicio);
+        data_inicio = data_inicio.toLocaleString("pt-BR", {
+            timeZone: "America/Sao_Paulo"
+        });
+
+        let data_termino = dados[i].dataTermino
+            ? new Date(dados[i].dataTermino).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+            : "----------";
+
+        data_visualizacao = dados[i].dataVisualizacao
+            ? new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
+            : "----------";
+
+        if (dados[i].verificador == null) dados[i].verificador = "--------------------";
+
+        let statusCor = (dados[i].statusAlerta.toLowerCase() == "verificado") ? "rgb(0, 170, 40)" : "#656464";
+        let iconeOlho = (dados[i].statusAlerta.toLowerCase() == "verificado") ? "iconeOlhoVerde.png" : "iconeOlhoCinza.png";
+        let acaoVerificar = (dados[i].statusAlerta.toLowerCase() == "verificado")
+            ? `<div class="icone-verificacao" title="Alerta verificado">
+                    <img src="../assets/imgs/${iconeOlho}" alt="visualização">
+               </div>`
+            : `<div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
+                    <img src="../assets/imgs/${iconeOlho}" alt="visualização">
+               </div>`;
+
+        let classeAlerta = (dados[i].nomeAlerta.toLowerCase() == "alerta") ? "icone-alerta" : "icone-atencao";
+
+        tabela_alertas.innerHTML += `
+            <tr class="dados-tabela">
+                <td class="td-tipo-alerta"><span class="status-dot ${classeAlerta}"></span>${dados[i].nomeAlerta}</td>
+                <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+                <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+                <td class="td-data-inicio-alerta">${data_inicio}</td>
+                <td class="td-data-termino-alerta">${data_termino}</td>
+                <td class="td-status-alerta"><b style="color: ${statusCor};">${dados[i].statusAlerta}</b></td>
+                <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+                <td class="td-verificador-alerta">${dados[i].verificador}</td>
+                <td class="td-acoes-alerta">${acaoVerificar}</td>
+            </tr>`;
+    }
+}
+
+function marcarAlertaComoVerificado(idAlerta) {
+    var variaveis = puxarVariaveis();
+    var nomeVisualizador = variaveis.nomeUsuario;
+
+    fetch(`/alertasgeral/marcarAlertaComoVerificado/${idAlerta}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nomeVisualizador: nomeVisualizador }),
+    })
+        .then(resposta => resposta.json())
+        .then(resposta => {
+            console.log("Alerta Verificado com sucesso! ✅", resposta)
+            registrarLogAcao("Marcar alerta como verificado", `Alerta ID: ${idAlerta}, Verificador: ${nomeVisualizador}`);
+            puxarAlertasGeral()
+        })
+        .catch(function (resposta) {
+            console.log("UPDATE ALERTA ❌")
+            console.log(`Erro no catch: ${resposta}`);
+        });
+}
+
+</script>
