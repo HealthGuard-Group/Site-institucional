@@ -182,7 +182,7 @@ function telaGrafico1() {
 function atualizarAlertasSemanais(){
     puxarKpisSemana()
     var loop = setInterval(() =>{
-        puxarKpisSemana
+        puxarKpisSemana()
     },60000 )
 }
 
