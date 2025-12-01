@@ -256,10 +256,10 @@
           </div>
 
           <div class="div_componentes">
-            <div id="cpu1"> <span class="status-dot ok"> </span> Uso de CPU: <strong id="cpu"></strong></div>
-            <div id="ram1"> <span class="status-dot alerta-grave"></span>Uso de Memoria RAM: <strong id="ram"></strong></div>
-            <div id="disco1"> <span class="status-dot alerta-grave"></span>Uso do Disco Rígido: <strong id="disco"></strong></div>
-            <div id="rede1"> <span id="redeok" class="status-dot ok"></span>Status da Rede: <strong id="rede"></strong></div>
+            <div id="cpu1"> <span class="status-dot "> </span> Uso de CPU: <strong id="cpu"></strong></div>
+            <div id="ram1"> <span class="status-dot "></span>Uso de Memoria RAM: <strong id="ram"></strong></div>
+            <div id="disco1"> <span class="status-dot "></span>Uso do Disco Rígido: <strong id="disco"></strong></div>
+            <div id="rede1"> <span id="redeok" class="status-dot "></span>Status da Rede: <strong id="rede"></strong></div>
           </div>
           <button class="btn-editar" id="botao_editar_maquina">Editar</button>
         </div>
@@ -346,8 +346,8 @@
             </select>
 
             <div class="config-alertas-status">
-              <span class="status-dot alerta-grave"></span> Alerta Grave
-              <span class="status-dot alerta-critico"></span> Em atenção
+              <span class="status-dot alerta-critico"></span> Alerta Grave
+              <span class="status-dot alerta-grave"></span> Em atenção
               <span class="status-dot ok"></span> OK
             </div>
 
@@ -541,8 +541,55 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
+var atencaoCpu = 0
+var graveCpu = 0
+
+var atencaoRam = 0
+var graveRam = 0
+
+var atencaoDisco = 0
+var graveDisco = 0
+
+
 
     function atualizarDados() {
+
+
+
+      fetch(`/grafico/metricaCpu/${idDac}`, { method: "GET" })
+        .then(resposta => resposta.json())
+        .then(resposta => {
+          console.log(resposta);
+          resposta.forEach(nivel => {
+            if(nivel.nomeNivel === "Atenção") atencaoCpu = nivel.valorMaximo;
+            if(nivel.nomeNivel === "Alerta") graveCpu = nivel.valorMaximo;
+            });
+    })
+    .catch(erro => console.error("Erro:", erro));
+
+    
+    fetch(`/grafico/metricaRam/${idDac}`, { method: "GET" })
+        .then(resposta => resposta.json())
+        .then(resposta => {
+          resposta.forEach(nivel => {
+            if(nivel.nomeNivel === "Atenção") atencaoRam = nivel.valorMaximo;
+            if(nivel.nomeNivel === "Alerta") graveRam = nivel.valorMaximo;
+          });
+    })
+    .catch(erro => console.error("Erro:", erro));
+
+    fetch(`/grafico/metricaDisco/${idDac}`, { method: "GET" })
+        .then(resposta => resposta.json())
+        .then(resposta => {
+          resposta.forEach(nivel => {
+            if(nivel.nomeNivel === "Atenção") atencaoDisco = nivel.valorMaximo;
+            if(nivel.nomeNivel === "Alerta") graveDisco = nivel.valorMaximo;
+          });
+    })
+    .catch(erro => console.error("Erro:", erro));
+
+
+
 
       fetch(`/grafico/totalAlerta/${idDac}`, {
       method: "GET",
@@ -760,6 +807,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(resposta => {
                   console.log(resposta);
                   cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
+
+                  if (resposta[0].medidaCapturada <= atencaoCpu) {
+                      cpu1.querySelector(".status-dot").className = "status-dot status-dot ok";
+
+                  } else if (resposta[0].medidaCapturada <= graveCpu) {
+                      cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
+
+                  }else{
+                      cpu1.querySelector(".status-dot").className = "status-dot alerta-critico";
+                  }
                 })
                 .catch(erro => console.error("Erro:", erro));
 
@@ -770,6 +827,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(resposta => {
                   console.log(resposta);
                   ram.innerHTML = `${resposta[0].medidaCapturada}%`;
+
+                  if (resposta[0].medidaCapturada <= atencaoRam) {
+                      ram1.querySelector(".status-dot").className = "status-dot ok";
+
+                  } else if (resposta[0].medidaCapturada <= graveRam) {
+                      ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
+
+                  }else{
+                      ram1.querySelector(".status-dot").className = "status-dot alerta-critico";
+                  }
                 })
                 .catch(erro => console.error("Erro:", erro));
 
@@ -780,6 +847,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 .then(resposta => {
                   console.log(resposta);
                   disco.innerHTML = `${resposta[0].medidaCapturada}%`
+
+                  if (resposta[0].medidaCapturada <= atencaoDisco) {
+                      disco1.querySelector(".status-dot").className = "status-dot ok";
+
+                  } else if (resposta[0].medidaCapturada <= graveDisco) {
+                      disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
+
+                  }else{
+                      disco1.querySelector(".status-dot").className = "status-dot alerta-critico";
+                  }
+
                 })
                 .catch(erro => console.error("Erro:", erro))
 

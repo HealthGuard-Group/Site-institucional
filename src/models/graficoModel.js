@@ -298,6 +298,27 @@ AND dataInicio >= NOW() - INTERVAL 7 DAY AND fkMedicoesDisponiveis = ${idMonitor
     return database.executar(instrucaoSql);
 }
 
+function metricacpu(idDac){
+    var instrucaoSql = `
+        select nomeNivel, valorMinimo, valorMaximo from metricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 1;
+    `
+        return database.executar(instrucaoSql);
+}
+
+function metricaram(idDac){
+    var instrucaoSql = `
+        select nomeNivel, valorMinimo, valorMaximo from metricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 6;
+    `
+        return database.executar(instrucaoSql);
+}
+
+function metricadisco(idDac){
+    var instrucaoSql = `
+        select nomeNivel, valorMinimo, valorMaximo from metricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 10;
+    `
+        return database.executar(instrucaoSql);
+}
+
 
 
 module.exports = {
@@ -325,5 +346,8 @@ module.exports = {
     cpu24h,
     ram24h,
     disco24h,
-    puxarDadosGraficoAlerta
+    puxarDadosGraficoAlerta,
+    metricacpu,
+    metricaram,
+    metricadisco
 };

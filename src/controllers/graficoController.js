@@ -591,6 +591,78 @@ function puxarDadosGraficoAlerta(req, res) {
     }
 }
 
+function metricacpu(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.metricacpu(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function metricaram(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.metricaram(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function metricadisco(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.metricadisco(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao inserir log! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 
 
 module.exports = {
@@ -618,5 +690,8 @@ module.exports = {
     cpu24h,
     ram24h,
     disco24h,
-    puxarDadosGraficoAlerta
+    puxarDadosGraficoAlerta,
+    metricacpu,
+    metricaram,
+    metricadisco
 }

@@ -103,5 +103,16 @@ router.get("/puxarDadosGraficoAlerta/:idDac/:idMonitoramento", function (req, re
   graficoController.puxarDadosGraficoAlerta(req, res);
 });
 
+router.get("/metricacpu/:idDac", function (req, res) {
+  graficoController.metricacpu(req, res);
+});
+
+router.get("/metricaram/:idDac", function (req, res) {
+  graficoController.metricaram(req, res);
+});
+
+router.get("/metricadisco/:idDac", function (req, res) {
+  graficoController.metricadisco(req, res);
+});
 
 module.exports = router;
