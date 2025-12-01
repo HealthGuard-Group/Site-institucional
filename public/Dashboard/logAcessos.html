@@ -201,81 +201,78 @@
         let proximaAtualizacaoCarga;
 
         function obterDadosCarga() {
-            if (proximaAtualizacaoCarga != undefined) {
+            if (proximaAtualizacaoCarga) {
                 clearTimeout(proximaAtualizacaoCarga);
             }
 
             fetch(`/graficoAcoes/carga/1`, { cache: 'no-store' })
                 .then(r => r.json())
                 .then(resposta => {
-                    resposta.reverse();
                     plotarGraficoCarga(resposta);
                 })
                 .catch(err => console.error("Erro carga:", err));
         }
 
-        function plotarGraficoCarga(resposta) {
-            let labels = [];
-            let dados = {
-                labels,
-                datasets: [{
-                    label: 'Carga de Trabalho',
-                    data: [],
-                    borderColor: '#b70000',
-                    backgroundColor: 'rgba(183,0,0,0.2)',
-                    tension: 0.4,
-                    fill: true
-                }]
-            };
 
-            resposta.forEach(registro => {
-                labels.push(registro.hora);
-                dados.datasets[0].data.push(registro.qtd);
-            });
+  function plotarGraficoCarga(resposta) {
+    const labels = resposta.map(r => r.hora);
+    const valores = resposta.map(r => r.qtd);
 
+    const dados = {
+        labels,
+        datasets: [{
+            label: 'Carga de Trabalho',
+            data: valores,
+            borderColor: '#b70000',
+            backgroundColor: 'rgba(183,0,0,0.2)',
+            tension: 0.4,
+            fill: true
+        }]
+    };
 
-            if (window.graficoCarga) {
-                window.graficoCarga.destroy();
-            }
+    if (window.graficoCarga) {
+        window.graficoCarga.destroy();
+    }
 
-            const config = { type: 'line', data: dados };
+    window.graficoCarga = new Chart(
+        document.getElementById("graficoCargaTrabalho"),
+        { type: 'line', data: dados }
+    );
 
-            window.graficoCarga = new Chart(
-                document.getElementById("graficoCargaTrabalho"),
-                config
-            );
+    proximaAtualizacaoCarga = setTimeout(
+        () => atualizarGraficoCarga(dados, window.graficoCarga),
+        2000
+    );
+}
 
-            proximaAtualizacaoCarga = setTimeout(
-                () => atualizarGraficoCarga(dados, window.graficoCarga),
-                2000
-            );
-        }
 
 
         function atualizarGraficoCarga(dados, chart) {
-            fetch(`/graficoAcoes/carga/1`, { cache: "no-store" })
-                .then(r => r.json())
-                .then(novo => {
-                    let registro = novo[novo.length - 1];
+    fetch(`/graficoAcoes/carga/1`, { cache: "no-store" })
+        .then(r => r.json())
+        .then(novo => {
+            const ultimoRegistro = novo[novo.length - 1];
 
-                    if (registro.hora === dados.labels[dados.labels.length - 1]) {
-                        console.log("Sem novos dados para carga.");
-                    } else {
-                        dados.labels.shift();
-                        dados.labels.push(registro.hora);
+            const ultimaHoraGrafico = dados.labels[dados.labels.length - 1];
 
-                        dados.datasets[0].data.shift();
-                        dados.datasets[0].data.push(registro.qtd);
+            if (ultimoRegistro.hora !== ultimaHoraGrafico) {
+               
+                dados.labels.push(ultimoRegistro.hora);
+                dados.datasets[0].data.push(ultimoRegistro.qtd);
 
-                        chart.update();
-                    }
+                dados.labels.shift();
+                dados.datasets[0].data.shift();
 
-                    proximaAtualizacaoCarga = setTimeout(
-                        () => atualizarGraficoCarga(dados, chart),
-                        2000
-                    );
-                });
-        }
+                chart.update();
+            }
+
+            proximaAtualizacaoCarga = setTimeout(
+                () => atualizarGraficoCarga(dados, chart),
+                2000
+            );
+        })
+        .catch(err => console.error("Erro update carga:", err));
+}
 
 
 
