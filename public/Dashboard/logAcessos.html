@@ -103,8 +103,6 @@
             <section class="area-filtros" aria-label="Filtros para os dados">
                 <span class="texto-filtrar-por">Últimas 24h de atividades.</span>
 
-                </select>
-
 
             </section>
 
@@ -172,23 +170,32 @@
     <script src="../js/menu-lateral.js"></script>
     <script>
 
+        const kpiTotalEventos = document.getElementById("valorTotalEventos");
+        const kpiUsuariosAtivos = document.getElementById("valorUsuariosAtivos");
+        const kpiMaquinasAlteradas = document.getElementById("valorMaquinasAlteradas");
+        const kpiFalhas = document.getElementById("valorFalhas");
+
 
         fetch(`/kpisAcoes/listar`, {
             method: "GET",
         })
             .then(resposta => resposta.json())
             .then(dados => {
-                console.log("Resposta das KPIs:", dados[0]);
+                if (!dados || dados.length == 0) {
+                    console.error("Resposta vazia do backend!");
+                    return;
+                }
 
+                console.log("Resposta das KPIs:", dados[0]);
 
                 kpiTotalEventos.innerHTML = dados[0].totalEventos;
                 kpiUsuariosAtivos.innerHTML = dados[0].usuariosAtivos;
                 kpiMaquinasAlteradas.innerHTML = dados[0].maquinasAlteradas;
                 kpiFalhas.innerHTML = dados[0].falhas;
 
-
                 atualizarInsightESugestoes();
             })
+
             .catch(err => console.error("Erro no fetch KPIs:", err));
 
         let proximaAtualizacaoCarga;
@@ -226,17 +233,24 @@
                 dados.datasets[0].data.push(registro.qtd);
             });
 
+
+            if (window.graficoCarga) {
+                window.graficoCarga.destroy();
+            }
+
             const config = { type: 'line', data: dados };
+
             window.graficoCarga = new Chart(
                 document.getElementById("graficoCargaTrabalho"),
                 config
             );
 
             proximaAtualizacaoCarga = setTimeout(
-                () => atualizarGraficoCarga(dados, graficoCarga),
+                () => atualizarGraficoCarga(dados, window.graficoCarga),
                 2000
             );
         }
+
 
         function atualizarGraficoCarga(dados, chart) {
             fetch(`/graficoAcoes/carga/1`, { cache: "no-store" })
@@ -438,12 +452,13 @@
             document.querySelector(".cartao-insight .texto-insight").textContent = resultado.mensagens[Math.floor(Math.random() * resultado.mensagens.length)];
 
 
-            const blocoSugestoes = document.querySelector(".cartao-insight + .cartao-insight .texto-sugestoes");
+            const blocoSugestoes = document.querySelector(".cartao-insight:nth-of-type(2) .texto-sugestoes");
+
             blocoSugestoes.textContent = resultado.sugestoes.join(" ");
 
         }
 
-       // atualizarInsightESugestoes();
+        // atualizarInsightESugestoes();
 
 
 
@@ -455,10 +470,6 @@
                 falhas: Number(document.querySelectorAll(".kpi .valor-kpi")[3].textContent)
             };
         }
-
-
-
-        atualizarInsight();
 
         function exportarExcel() {
 
@@ -542,11 +553,6 @@
 
         document.querySelectorAll(".cartao-downloads p")[0].onclick = gerarRelatorioDeAlertas;
         document.querySelectorAll(".cartao-downloads p")[1].onclick = exportarExcel;
-
-        const kpiTotalEventos = document.getElementById("valorTotalEventos");
-        const kpiUsuariosAtivos = document.getElementById("valorUsuariosAtivos");
-        const kpiMaquinasAlteradas = document.getElementById("valorMaquinasAlteradas");
-        const kpiFalhas = document.getElementById("valorFalhas");
 
 
 
