@@ -133,9 +133,9 @@ function inativarMaquina(idDac) {
 function alertasCpu(idDac) {
     var instrucaoSql = `
     select count(idAlerta) as total from Alerta
-where fkMedicoesDisponiveis = 10
-and fkDac = ${idDac}
-and dataInicio >= now() - interval 24 hour;
+    where fkMedicoesDisponiveis = 1
+    and fkDac = ${idDac}
+    and dataInicio >= now() - interval 24 hour;
     `
     return database.executar(instrucaoSql);
 }
@@ -143,9 +143,9 @@ and dataInicio >= now() - interval 24 hour;
 function alertasRam(idDac) {
     var instrucaoSql = `
     select count(idAlerta) as total from Alerta
-where fkMedicoesDisponiveis in (6,8)
-and fkDac = ${idDac}
-and dataInicio >= now() - interval 24 hour;
+    where fkMedicoesDisponiveis in (6,8)
+    and fkDac = ${idDac}
+    and dataInicio >= now() - interval 24 hour;
     `
     return database.executar(instrucaoSql);
 }
