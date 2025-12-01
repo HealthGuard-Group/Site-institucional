@@ -30,19 +30,20 @@ module.exports = {
         return db.executar(sql);
     },
 
-    cargaTrabalho(idUnidade) {
-        const sql = `
-            SELECT 
-                DATE_FORMAT(horarioDaAcao, '%H:00') AS hora,
-                COUNT(*) AS qtd
-            FROM LogAcoes
-            WHERE fkUnidadeAtendimento = ${idUnidade}
-              AND horarioDaAcao >= NOW() - INTERVAL 6 HOUR
-            GROUP BY HOUR(horarioDaAcao)
-            ORDER BY HOUR(horarioDaAcao);
-        `;
-        return db.executar(sql);
-    },
+   cargaTrabalho(idUnidade) {
+    const sql = `
+        SELECT 
+            DATE_FORMAT(horarioDaAcao, '%H:00') AS hora,
+            COUNT(*) AS qtd
+        FROM LogAcoes
+        WHERE fkUnidadeAtendimento = ${idUnidade}
+          AND horarioDaAcao >= NOW() - INTERVAL 6 HOUR
+        GROUP BY HOUR(horarioDaAcao)
+        ORDER BY HOUR(horarioDaAcao);
+    `;
+    return db.executar(sql);
+},
+
 
     tiposAcao(idUnidade) {
         const sql = `
