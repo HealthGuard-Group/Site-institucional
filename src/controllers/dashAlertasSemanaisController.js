@@ -32,7 +32,45 @@ function buscarAlertasPorSeveridade(req, res) {
         });
 }
 
+function buscarRankingMaquinas(req, res) {
+    var idUnidadeAtendimento = req.params.idUnidadeAtendimento;
+    if (!idUnidadeAtendimento) {
+        res.status(400).send("ID da unidade não definido!");
+        return;
+    }
+
+    dashAlertasSemanaisModel.buscarRankingMaquinas(idUnidadeAtendimento)
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao buscar maquinas: ", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+function buscarAlertaSemana(req, res) {
+    var idUnidadeAtendimento = req.params.idUnidadeAtendimento;
+    if (!idUnidadeAtendimento) {
+        res.status(400).send("ID da unidade não definido!");
+        return;
+    }
+
+    dashAlertasSemanaisModel.buscarRankingMaquinas(idUnidadeAtendimento)
+        .then(resultado => {
+            res.json(resultado);
+        })
+        .catch(erro => {
+            console.log("Erro ao buscar alertas: ", erro);
+            res.status(500).json(erro.sqlMessage);
+        });
+}
+
+
 module.exports = { 
     buscarKpisSemana,
-    buscarAlertasPorSeveridade
+    buscarAlertasPorSeveridade,
+    buscarRankingMaquinas,
+    buscarAlertaSemana
 };
+

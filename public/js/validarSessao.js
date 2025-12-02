@@ -189,14 +189,16 @@ function telaGrafico1() {
     }, 5000)
 }
 
-function atualizarAlertasSemanais() {
+function atualizarAlertasSemanais(){
     puxarKpisSemana()
-    plotarGraficoSeveridade()
-    var loop = setInterval(() => {
+    obterDadosGraficoPizza(fkUnidade)
+    obterDadosGraficoRanking(fkUnidade)
+    obterDadosGraficoLinha(fkUnidade)
+    var loop = setInterval(() =>{
         puxarKpisSemana()
-        plotarGraficoSeveridade()
-        atualizarGraficoSeveridade()
-    }, 3000)
+        atualizarGraficoPizza(fkUnidade)
+        atualizarGraficoRanking(fkUnidade)
+    },6000 )
 }
 
 function telaLogAcessos() {

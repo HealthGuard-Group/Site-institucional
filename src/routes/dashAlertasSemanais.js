@@ -7,4 +7,9 @@ router.get("/kpis/:idUnidadeAtendimento", dashAlertasSemanaisController.buscarKp
 
 router.get("/severidade/:idUnidadeAtendimento", dashAlertasSemanaisController.buscarAlertasPorSeveridade);
 
+router.get("/ranking/:idUnidadeAtendimento", dashAlertasSemanaisController.buscarRankingMaquinas);
+
+router.get("/semana/:idUnidadeAtendimento", dashAlertasSemanaisController.buscarAlertaSemana);
+
+
 module.exports = router;

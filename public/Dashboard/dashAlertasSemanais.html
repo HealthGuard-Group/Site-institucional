@@ -76,10 +76,8 @@
                 <div class="titulo_kpi">
                     <h2>Total de Alertas da Semana</h2>
                     <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
-                            nessa
-                            máquina e o seu
-                            desempenho no momento atual</span>
+                        <span class="tooltip-text"> Quantidade total de alertas emitidos nos últimos 7 dias em todas
+                            máquinas.</span>
                     </span>
                 </div>
                 <div class="valor_kpi" id="kpi_totalSemana">
@@ -89,10 +87,8 @@
                 <div class="titulo_kpi">
                     <h2>Desde o Último Alerta</h2>
                     <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
-                            nessa
-                            máquina e o seu
-                            desempenho no momento atual</span>
+                        <span class="tooltip-text"> Tempo decorrido desde o último alerta registrado para qualquer
+                            máquina da unidade.</span>
                     </span>
                 </div>
                 <div class="valor_kpi" id="kpi_desdeUltimoAlerta">
@@ -103,10 +99,8 @@
                 <div class="titulo_kpi">
                     <h2>Total de Alertas não Verificados</h2>
                     <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
-                            nessa
-                            máquina e o seu
-                            desempenho no momento atual</span>
+                        <span class="tooltip-text"> Quantidade de alertas que ainda não foram verificados pela
+                            equipe.</span>
                     </span>
                 </div>
                 <div class="valor_kpi" id="kpi_naoVerificados">
@@ -117,10 +111,7 @@
                 <div class="titulo_kpi">
                     <h2>Última Máquina Alertada</h2>
                     <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
-                        <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
-                            nessa
-                            máquina e o seu
-                            desempenho no momento atual</span>
+                        <span class="tooltip-text">Identificação da máquina que recebeu o alerta mais recente.</span>
                     </span>
                 </div>
                 <div class="valor_kpi" id="kpi_ultimaMaquina">
@@ -160,104 +151,6 @@
 <script src="../js/menu-lateral.js"></script>
 
 <script>
-    var dadosGraficoSeveridadeAtencao = 0
-    var dadosGraficoSeveridadeAlerta = 0
-
-    function plotarGraficoSeveridade() {
-
-        var fks = puxarVariaveis();
-        console.log(fks)
-        var idUnidadeAtendimento = fks.idUnidadeAtendimento;
-
-        console.log("idUnidadeAtendimento", idUnidadeAtendimento);
-
-        fetch(`/dashAlertasSemanais/severidade/${idUnidadeAtendimento}`, {
-            method: "GET"
-        })
-            .then(function (res) { return res.json(); })
-            .then(function (res) {
-                dadosGraficoSeveridadeAtencao = res[0].total;
-                dadosGraficoSeveridadeAlerta = res[1].total;
-
-                console.log("KPI:", dadosGraficoSeveridadeAtencao)
-                console.log("KPI:", dadosGraficoSeveridadeAlerta)
-
-                console.log("KPI1:", dadosGraficoSeveridadeAtencao)
-                console.log("KPI1:", dadosGraficoSeveridadeAlerta)
-
-                new Chart(document.getElementById('grafico_pizza'), {
-                    type: 'doughnut',
-                    data: {
-                        labels: ['Atenção', 'Alerta'],
-                        datasets: [{
-                            data: [Number(dadosGraficoSeveridadeAtencao), Number(dadosGraficoSeveridadeAlerta)],
-                            backgroundColor: [
-                                'rgba(218, 165, 32, 1)',
-                                'rgba(218, 0, 0, 1)'
-                            ]
-                        }]
-                    },
-                    options: {
-                        plugins: {
-                            legend: {
-                                position: 'right',
-                            }
-                        }
-                    }
-                });
-            })
-        
-    }
-
-    
- function atualizarGraficoSeveridade(dadosGraficoSeveridadeAtencao, dadosGraficoSeveridadeAlerta) {
-
-    grafico_pizza = new Chart(document.getElementById('grafico_pizza'), {
-        type: 'doughnut',
-        data: {
-            labels: ['Atenção', 'Alerta'],
-            datasets: [{
-                data: [Number(dadosGraficoSeveridadeAtencao), Number(dadosGraficoSeveridadeAlerta)],
-                backgroundColor: [
-                    'rgba(218, 165, 32, 1)',
-                    'rgba(218, 0, 0, 1)'
-                ]
-            }]
-        },
-        options: {
-            plugins: {
-                legend: {
-                    position: 'right'
-                }
-            }
-        }
-    });
-}
- function atualizarGraficoSeveridade(dadosGraficoSeveridadeAtencao, dadosGraficoSeveridadeAlerta) {
-    grafico_pizza.data.datasets[0].data = dadosGraficoSeveridadeAtencao;
-    grafico_pizza.data.datasets[1].data = dadosGraficoSeveridadeAlerta;
-
-    grafico_pizza.update();
-}
-
-    new Chart(document.getElementById('grafico_ranking'), {
-        type: 'bar',
-        data: {
-            labels: ['Máquina 01', 'Máquina 02', 'Máquina 03', 'Máquina 04', 'Máquina 05'],
-            datasets: [{
-                data: [45, 38, 30, 22, 18],
-                backgroundColor: 'rgb(54, 162, 235)'
-            }]
-        },
-        options: {
-            indexAxis: 'y',
-            plugins: { legend: { display: false } },
-            scales: {
-                x: { ticks: { display: false }, grid: { display: false } },
-                y: { grid: { display: false } }
-            }
-        }
-    });
 
 
     const ctx = document.getElementById('grafico_linha');
@@ -299,27 +192,14 @@
         }
     });
 
-
     function formatarData(dia) {
         return dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
     }
-
     var hoje = new Date();
-    var inicioReferencia = new Date(2025, 10, 30);
+    var inicioSemana = new Date(hoje);
+    inicioSemana.setDate(hoje.getDate() - 7);
 
-    var inicioSemana = new Date(inicioReferencia);
-
-    while (inicioSemana <= hoje) {
-        var proximaSemana = new Date(inicioSemana);
-        proximaSemana.setDate(inicioSemana.getDate() + 7);
-        if (proximaSemana > hoje) break;
-        inicioSemana = proximaSemana;
-    }
-
-    var fimSemana = new Date(inicioSemana);
-    fimSemana.setDate(inicioSemana.getDate() + 6);
-
-    intervaloSemana.innerHTML = formatarData(inicioSemana) + " ao " + formatarData(fimSemana);
+    intervaloSemana.innerHTML = formatarData(inicioSemana) + " ao " + formatarData(hoje);
 
 
     function formatarTempo(minutosTotais) {
@@ -350,6 +230,210 @@
             })
             .catch(function (err) {
                 console.log("Erro:", err);
+            });
+    }
+
+
+    function obterDadosGraficoPizza(idUnidadeAtendimento) {
+
+
+        fetch(`/dashAlertasSemanais/severidade/${idUnidadeAtendimento}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    var dados = JSON.stringify(resposta)
+                    console.log(`Dados recebidos: ${dados}`);
+                    dados = JSON.parse(dados)
+                    console.log("abluble:", dados)
+                    dados.reverse();
+
+                    plotarGraficoPizza(dados);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function plotarGraficoPizza(resposta) {
+        console.log("Como chegou os dados no plotar", resposta)
+        console.log('iniciando plotagem do gráfico...');
+        console.log([resposta[0].total, resposta[1].total])
+        var dados = {
+            labels: ['Atenção', 'Alerta'],
+            datasets: [
+                {
+                    backgroundColor: [
+                        'rgba(218, 165, 32, 1)',
+                        'rgba(218, 0, 0, 1)'
+                    ],
+                    data: [resposta[0].total, resposta[1].total]
+                }
+            ]
+        };
+
+        console.log(JSON.stringify(dados));
+
+        var canvas = document.getElementById('grafico_pizza');
+        var ctx = canvas.getContext('2d');
+
+
+        grafico_pizza = new Chart(ctx, {
+            type: 'doughnut',
+            data: dados,
+            options: {
+                plugins: {
+                    legend: {
+                        position: 'right',
+                    }
+                }
+            }
+        });
+        console.log(grafico_pizza)
+        console.log(dados)
+
+    }
+
+
+    function atualizarGraficoPizza(idUnidadeAtendimento, dados) {
+        grafico_pizza.destroy();
+
+        fetch(`/dashAlertasSemanais/severidade/${idUnidadeAtendimento}`, { cache: 'no-store' }).then(function (response) {
+            var novo_registros = ""
+            if (response.ok) {
+                response.json().then(function (novoRegistro) {
+                    console.log(`Dados recebidos: ${JSON.stringify(novoRegistro)}`);
+                    novo_registros = JSON.stringify(novoRegistro)
+                    console.log("Novo registro fudido:", novo_registros)
+                    novo_registros = JSON.parse(novo_registros)
+                    console.log(`Dados atuais do gráfico: ${novo_registros}`);
+                    plotarGraficoPizza(novo_registros)
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function obterDadosGraficoRanking(idUnidadeAtendimento) {
+        fetch(`/dashAlertasSemanais/ranking/${idUnidadeAtendimento}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    var dados = JSON.stringify(resposta)
+                    console.log(`Dados recebidos: ${dados}`);
+                    dados = JSON.parse(dados)
+                    console.log("abluble:", dados)
+
+                    plotarGraficoRanking(dados);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    var v_NomesMaquinas = []
+    var v_TotalMaquinas = []
+    var grafico_ranking = 0
+
+
+    function plotarGraficoRanking(resposta) {
+
+        for (var i = 0; i < resposta.length; i++) {
+            v_NomesMaquinas.push(resposta[i].nomeIdentificacao)
+            v_TotalMaquinas.push(resposta[i].totalAlertas)
+        }
+
+
+        console.log("Como chegou os dados no plotar", resposta)
+        console.log('iniciando plotagem do gráfico...');
+        var dados = {
+            labels: v_NomesMaquinas,
+            datasets: [{
+                data: v_TotalMaquinas,
+                backgroundColor: 'rgb(54, 162, 235)'
+            }]
+        };
+
+        console.log(JSON.stringify(dados));
+
+        var canvas = document.getElementById('grafico_ranking');
+        var ctx = canvas.getContext('2d');
+
+
+        grafico_ranking = new Chart(ctx, {
+            type: 'bar',
+            data: dados,
+            options: {
+                indexAxis: 'y',
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { display: false }, grid: { display: false } },
+                    y: { grid: { display: false } }
+                }
+            }
+        });
+        console.log(grafico_ranking)
+        console.log(dados)
+
+    }
+
+
+    function atualizarGraficoRanking(idUnidadeAtendimento) {
+        v_NomesMaquinas.splice(0, v_NomesMaquinas.length)
+        v_TotalMaquinas.splice(0, v_TotalMaquinas.length)
+
+        fetch(`/dashAlertasSemanais/ranking/${idUnidadeAtendimento}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    var dados = JSON.stringify(resposta)
+                    console.log(`Dados recebidos: ${dados}`);
+                    dados = JSON.parse(dados)
+                    console.log("Dados atualizar ranking:",dados)
+
+                    
+            for (var i = 0; i < resposta.length; i++) {
+                v_NomesMaquinas.push(resposta[i].nomeIdentificacao)
+                v_TotalMaquinas.push(resposta[i].totalAlertas)
+            }
+
+            grafico_ranking.update()
+                    
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
+            });
+    }
+
+    function obterDadosGraficoLinha(idUnidadeAtendimento) {
+        fetch(`/dashAlertasSemanais/semana/${idUnidadeAtendimento}`, { cache: 'no-store' }).then(function (response) {
+            if (response.ok) {
+                response.json().then(function (resposta) {
+                    var dados = JSON.stringify(resposta)
+                    console.log(`Dados recebidos: ${dados}`);
+                    dados = JSON.parse(dados)
+                    console.log("Dados do gráfico de linhas:", dados)
+
+                    // plotarGraficoRanking(dados);
+                });
+            } else {
+                console.error('Nenhum dado encontrado ou erro na API');
+            }
+        })
+            .catch(function (error) {
+                console.error(`Erro na obtenção dos dados p/ gráfico: ${error.message}`);
             });
     }
 
