@@ -663,6 +663,84 @@ function metricadisco(req, res) {
     }
 }
 
+function puxarAlertasNaoVistos(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.puxarAlertasNaoVistos(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar os alertas não vistos! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function puxandoMetricaPadraoDac(req, res) {
+    var idDac = req.params.idDac;
+    var idMonitoramento = req.params.idMonitoramento;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else if (idMonitoramento == undefined) {
+        res.status(400).send("Seu idMonitoramento está undefined!");
+    } else {
+
+        graficoModel.puxandoMetricaPadraoDac(idDac,idMonitoramento)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar métricas padrão do DAC! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function puxandoMetricaPadrao(req, res) {
+    var idUnidade = req.params.idUnidadeAtendimento;
+    var idMonitoramento = req.params.idMonitoramento;
+    if (idUnidade == undefined) {
+        res.status(400).send("Seu idUnidade está undefined!");
+    } else if (idMonitoramento == undefined) {
+        res.status(400).send("Seu idMonitoramento está undefined!");
+    } else {
+
+        graficoModel.puxandoMetricaPadrao(idUnidade,idMonitoramento)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar métricas padrão da Empresa! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 
 
 module.exports = {
@@ -693,5 +771,8 @@ module.exports = {
     puxarDadosGraficoAlerta,
     metricacpu,
     metricaram,
-    metricadisco
+    metricadisco,
+    puxarAlertasNaoVistos,
+    puxandoMetricaPadraoDac,
+    puxandoMetricaPadrao
 }

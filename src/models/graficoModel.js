@@ -274,7 +274,7 @@ function disco24h(idDac) {
     return database.executar(instrucaoSql);
 }
 
-function puxarDadosGraficoAlerta(idDac,idMonitoramento) {
+function puxarDadosGraficoAlerta(idDac, idMonitoramento) {
     var instrucaoSql = `
     SELECT 
     COUNT(CASE WHEN DATEDIFF(NOW(), dataInicio) = 0 AND nomeAlerta = 'Atenção' THEN 1 END) as dia_1_atencao,
@@ -298,25 +298,50 @@ AND dataInicio >= NOW() - INTERVAL 7 DAY AND fkMedicoesDisponiveis = ${idMonitor
     return database.executar(instrucaoSql);
 }
 
-function metricacpu(idDac){
+function metricacpu(idDac) {
     var instrucaoSql = `
-        select nomeNivel, valorMinimo, valorMaximo from metricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 1;
+        select nomeNivel, valorMinimo, valorMaximo from MetricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 1;
     `
-        return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
-function metricaram(idDac){
+function metricaram(idDac) {
     var instrucaoSql = `
-        select nomeNivel, valorMinimo, valorMaximo from metricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 6;
+        select nomeNivel, valorMinimo, valorMaximo from MetricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 6;
     `
-        return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 
-function metricadisco(idDac){
+function metricadisco(idDac) {
     var instrucaoSql = `
-        select nomeNivel, valorMinimo, valorMaximo from metricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 10;
+        select nomeNivel, valorMinimo, valorMaximo from MetricaAlerta where fkDac = ${idDac} and fkMedicoesDisponiveis = 10;
     `
-        return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
+}
+
+function puxarAlertasNaoVistos(idDac) {
+    var instrucaoSql = `
+        SELECT 
+	COUNT(CASE WHEN nomeAlerta = "Alerta" THEN 1 END) as Alertas,
+	COUNT(CASE WHEN nomeAlerta = "Atenção" THEN 1 END) as Atenção
+    FROM Alerta
+    WHERE fkDac = ${idDac} AND dataVisualizacao IS NULL;
+    `
+    return database.executar(instrucaoSql);
+}
+
+function puxandoMetricaPadraoDac(idDac, idMonitoramento) {
+    var instrucaoSql = `
+    SELECT valorMinimo,valorMaximo FROM MetricaAlerta WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = ${idMonitoramento};
+    `
+    return database.executar(instrucaoSql);
+}
+
+function puxandoMetricaPadrao(idUnidade, idMonitoramento) {
+    var instrucaoSql = `
+    SELECT valorMinimo,valorMaximo FROM MetricaAlerta WHERE fkUnidadeDeAtendimento = ${idUnidade} AND fkMedicoesDisponiveis = ${idMonitoramento};
+    `
+    return database.executar(instrucaoSql);
 }
 
 
@@ -349,5 +374,8 @@ module.exports = {
     puxarDadosGraficoAlerta,
     metricacpu,
     metricaram,
-    metricadisco
+    metricadisco,
+    puxarAlertasNaoVistos,
+    puxandoMetricaPadraoDac,
+    puxandoMetricaPadrao
 };

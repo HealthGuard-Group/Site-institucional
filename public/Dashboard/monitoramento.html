@@ -14,6 +14,12 @@
 
 <body onload="validarSessao()">
     <section class="tela">
+        <div class="tela-box-copiar oculto">
+            <div class="box-copiar">
+                <img src="../assets/imgs/Icone ok.png" alt="" class="icon-ok">
+                <div class="texto-copiar">Código copiado com sucesso</div>
+            </div>
+        </div>
         <!-- Começo modais -->
         <div class="tela-escurecida oculto">
             <div id="popupFundo" class="popup-fundo oculto">
@@ -228,7 +234,7 @@
                         <div class="caixa-codigo">
                             <div class="texto-codigo" id="div_codigo_gerado">A1B2C3D4E5F6G7H</div>
                             <div class="box-imagem-copy">
-                                <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copiar">
+                                <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copiar" onclick="copiartexto()">
                             </div>
                         </div>
                     </div>
@@ -550,6 +556,15 @@
             window.location.href = "grafico1.html"
         }
     });
+    // Copiar texto
+    function copiartexto() {
+        var codigo = document.getElementById("div_codigo_gerado").innerText
+        navigator.clipboard.writeText(codigo)
+        document.querySelector(".tela-box-copiar").classList.remove("oculto")
+        setTimeout(() => {
+            document.querySelector(".tela-box-copiar").classList.add("oculto")
+        }, 3000)
+    }
     // Buscar nome da central
     function trocarNomeUnidade() {
         fetch(`/dashboard/buscarNomeDaUnidade/${fkUnidade}`, {
@@ -1155,7 +1170,7 @@
                     return resposta.json();
                 })
                 .then(resposta => {
-                    if (passo_metrica_personalizada == 0) {
+                    if (passo_metrica_personalizada == 1) {
                         for (let i = 0; i < resposta.length; i++) {
                             if (resposta[i].fkMedicoesDisponiveis == 1) {
                                 if (resposta[i].nomeNivel == "Atenção") {
@@ -1167,7 +1182,7 @@
                                 }
                             }
                         }
-                    } if (passo_metrica_personalizada == 1) {
+                    } if (passo_metrica_personalizada == 2) {
                         for (let i = 0; i < resposta.length; i++) {
                             if (resposta[i].fkMedicoesDisponiveis == 6) {
                                 if (resposta[i].nomeNivel == "Atenção") {
@@ -1179,7 +1194,7 @@
                                 }
                             }
                         }
-                    } if (passo_metrica_personalizada == 2) {
+                    } if (passo_metrica_personalizada == 3) {
                         for (let i = 0; i < resposta.length; i++) {
                             if (resposta[i].fkMedicoesDisponiveis == 10) {
                                 if (resposta[i].nomeNivel == "Atenção") {

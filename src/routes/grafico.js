@@ -115,4 +115,16 @@ router.get("/metricadisco/:idDac", function (req, res) {
   graficoController.metricadisco(req, res);
 });
 
+router.get("/puxarAlertasNaoVistos/:idDac", function (req, res) {
+  graficoController.puxarAlertasNaoVistos(req, res);
+});
+
+router.get("/puxandoMetricaPadraoDac/:idDac/:idMonitoramento", function (req, res) {
+  graficoController.puxandoMetricaPadraoDac(req, res);
+});
+
+router.get("/puxandoMetricaPadrao/:idUnidadeAtendimento/:idMonitoramento", function (req, res) {
+  graficoController.puxandoMetricaPadrao(req, res);
+});
+
 module.exports = router;

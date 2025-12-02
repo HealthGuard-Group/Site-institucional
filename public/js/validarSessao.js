@@ -176,9 +176,11 @@ function telaAnaliseDisco() {
 function telaGrafico1() {
     trocarMonitoramento()
     trocarGraficos()
+    atualizarAlertasNaoVistos()
     var loop = setInterval(() => {
         atualizarGraficoMonitoramento()
         atualizarGraficoAlerta()
+        atualizarAlertasNaoVistos()
     },5000)
 }
 

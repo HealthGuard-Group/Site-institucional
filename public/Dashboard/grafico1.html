@@ -259,7 +259,8 @@
             <div id="cpu1"> <span class="status-dot "> </span> Uso de CPU: <strong id="cpu"></strong></div>
             <div id="ram1"> <span class="status-dot "></span>Uso de Memoria RAM: <strong id="ram"></strong></div>
             <div id="disco1"> <span class="status-dot "></span>Uso do Disco Rígido: <strong id="disco"></strong></div>
-            <div id="rede1"> <span id="redeok" class="status-dot "></span>Status da Rede: <strong id="rede"></strong></div>
+            <div id="rede1"> <span id="redeok" class="status-dot "></span>Status da Rede: <strong id="rede"></strong>
+            </div>
           </div>
           <button class="btn-editar" id="botao_editar_maquina">Editar</button>
         </div>
@@ -319,10 +320,10 @@
           </div>
           <div class="alerts-list">
             <div class="alerta-grave">
-              Alerta Grave <span class="bolinha-grave">1</span> </div>
+              Alerta<span class="bolinha-grave" id="nao_visto_alerta">1</span> </div>
             <div class="alerta-critico">
               Em atenção
-              <span class="bolinha-critico">5</span>
+              <span class="bolinha-critico" id="nao_visto_atencao">5</span>
             </div>
           </div>
           <button class="btn-historico" id="link-historico-alertas"
@@ -388,7 +389,8 @@
                 <span class="tooltip-text">Escolha de tipo de gráficos que podem ser selecionados de acordo com os
                   insigths desejados</span>
               </span>
-              <div class="redirect-chart">Exibir mais detalhes <img src="../assets/imgs/iconeBotaoAnaliseDashboards.png" alt=""></div>
+              <div class="redirect-chart">Exibir mais detalhes <img src="../assets/imgs/iconeBotaoAnaliseDashboards.png"
+                  alt=""></div>
             </div>
           </div>
 
@@ -476,79 +478,79 @@
         console.log(`Erro no catch: ${resposta}`);
       });
 
-          async function buscarMedicoesSelecionadasFront(idDac) {
-  try {
-    const response = await fetch(`/grafico/buscarMedicoesSelecionadas/${idDac}`)
-    if (!response.ok) throw new Error('Erro ao buscar medições')
-    return await response.json()
-  } catch (erro) {
-    console.error("Erro no fetch:", erro)
-    return [];
-  }
-}
-
-async function atualizarComponentes(idDac) {
-  try {
-    const medicoes = await buscarMedicoesSelecionadasFront(idDac)
-    console.log("Medições recebidas:", medicoes)
-
-    document.querySelectorAll('.div_componentes > div').forEach(div => div.style.display = 'none')
-    document.querySelectorAll('#componentSelect option').forEach(op => op.style.display = 'none')
-
-    const idsDiv = { 
-      1: 'cpu1', 
-      6: 'ram1', 
-      10: 'disco1',
-      11:  'rede1'
-    }
-
-    const idsOption = {
-      1: 'cpu_op',
-      6: 'ram_op',
-      10: 'disco_op',
-      11: 'rede_op'
-    }
-
-    for ( i = 0; i < medicoes.length; i++) {
-      const medicao = medicoes[i]
-
-      const idDiv = idsDiv[medicao.fkMedicoesDisponiveis]
-      if (idDiv) {
-        document.getElementById(idDiv).style.display = 'block'
-      }
-
-      const idOp = idsOption[medicao.fkMedicoesDisponiveis]
-      if (idOp) {
-        document.getElementById(idOp).style.display = 'block'
+    async function buscarMedicoesSelecionadasFront(idDac) {
+      try {
+        const response = await fetch(`/grafico/buscarMedicoesSelecionadas/${idDac}`)
+        if (!response.ok) throw new Error('Erro ao buscar medições')
+        return await response.json()
+      } catch (erro) {
+        console.error("Erro no fetch:", erro)
+        return [];
       }
     }
 
-    const select = document.getElementById('componentSelect')
-    const visibleOptions = [...select.options].filter(op => op.style.display !== 'none')
-    if (visibleOptions.length > 0) {
-      select.value = visibleOptions[0].value
+    async function atualizarComponentes(idDac) {
+      try {
+        const medicoes = await buscarMedicoesSelecionadasFront(idDac)
+        console.log("Medições recebidas:", medicoes)
+
+        document.querySelectorAll('.div_componentes > div').forEach(div => div.style.display = 'none')
+        document.querySelectorAll('#componentSelect option').forEach(op => op.style.display = 'none')
+
+        const idsDiv = {
+          1: 'cpu1',
+          6: 'ram1',
+          10: 'disco1',
+          11: 'rede1'
+        }
+
+        const idsOption = {
+          1: 'cpu_op',
+          6: 'ram_op',
+          10: 'disco_op',
+          11: 'rede_op'
+        }
+
+        for (i = 0; i < medicoes.length; i++) {
+          const medicao = medicoes[i]
+
+          const idDiv = idsDiv[medicao.fkMedicoesDisponiveis]
+          if (idDiv) {
+            document.getElementById(idDiv).style.display = 'block'
+          }
+
+          const idOp = idsOption[medicao.fkMedicoesDisponiveis]
+          if (idOp) {
+            document.getElementById(idOp).style.display = 'block'
+          }
+        }
+
+        const select = document.getElementById('componentSelect')
+        const visibleOptions = [...select.options].filter(op => op.style.display !== 'none')
+        if (visibleOptions.length > 0) {
+          select.value = visibleOptions[0].value
+        }
+
+      } catch (erro) {
+        console.error("Erro ao atualizar componentes:", erro)
+      }
     }
 
-  } catch (erro) {
-    console.error("Erro ao atualizar componentes:", erro)
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const idDac = sessionStorage.ID_DAC
-  atualizarComponentes(idDac)
-})
+    document.addEventListener('DOMContentLoaded', () => {
+      const idDac = sessionStorage.ID_DAC
+      atualizarComponentes(idDac)
+    })
 
 
 
-var atencaoCpu = 0
-var graveCpu = 0
+    var atencaoCpu = 0
+    var graveCpu = 0
 
-var atencaoRam = 0
-var graveRam = 0
+    var atencaoRam = 0
+    var graveRam = 0
 
-var atencaoDisco = 0
-var graveDisco = 0
+    var atencaoDisco = 0
+    var graveDisco = 0
 
 
 
@@ -561,151 +563,151 @@ var graveDisco = 0
         .then(resposta => {
           console.log(resposta);
           resposta.forEach(nivel => {
-            if(nivel.nomeNivel === "Atenção") atencaoCpu = nivel.valorMaximo;
-            if(nivel.nomeNivel === "Alerta") graveCpu = nivel.valorMaximo;
-            });
-    })
-    .catch(erro => console.error("Erro:", erro));
+            if (nivel.nomeNivel === "Atenção") atencaoCpu = nivel.valorMaximo;
+            if (nivel.nomeNivel === "Alerta") graveCpu = nivel.valorMaximo;
+          });
+        })
+        .catch(erro => console.error("Erro:", erro));
 
-    
-    fetch(`/grafico/metricaRam/${idDac}`, { method: "GET" })
+
+      fetch(`/grafico/metricaRam/${idDac}`, { method: "GET" })
         .then(resposta => resposta.json())
         .then(resposta => {
           resposta.forEach(nivel => {
-            if(nivel.nomeNivel === "Atenção") atencaoRam = nivel.valorMaximo;
-            if(nivel.nomeNivel === "Alerta") graveRam = nivel.valorMaximo;
+            if (nivel.nomeNivel === "Atenção") atencaoRam = nivel.valorMaximo;
+            if (nivel.nomeNivel === "Alerta") graveRam = nivel.valorMaximo;
           });
-    })
-    .catch(erro => console.error("Erro:", erro));
+        })
+        .catch(erro => console.error("Erro:", erro));
 
-    fetch(`/grafico/metricaDisco/${idDac}`, { method: "GET" })
+      fetch(`/grafico/metricaDisco/${idDac}`, { method: "GET" })
         .then(resposta => resposta.json())
         .then(resposta => {
           resposta.forEach(nivel => {
-            if(nivel.nomeNivel === "Atenção") atencaoDisco = nivel.valorMaximo;
-            if(nivel.nomeNivel === "Alerta") graveDisco = nivel.valorMaximo;
+            if (nivel.nomeNivel === "Atenção") atencaoDisco = nivel.valorMaximo;
+            if (nivel.nomeNivel === "Alerta") graveDisco = nivel.valorMaximo;
           });
-    })
-    .catch(erro => console.error("Erro:", erro));
+        })
+        .catch(erro => console.error("Erro:", erro));
 
 
 
 
       fetch(`/grafico/totalAlerta/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-        return resposta.json();
+        method: "GET",
       })
-      .then(resposta => {
-        console.log(resposta)
+        .then(resposta => {
+          return resposta.json();
+        })
+        .then(resposta => {
+          console.log(resposta)
 
-        totalalertas.innerHTML = `${resposta[0].totalAlertas}`
-      })
-      .catch(erro => console.error("Erro:", erro));
+          totalalertas.innerHTML = `${resposta[0].totalAlertas}`
+        })
+        .catch(erro => console.error("Erro:", erro));
 
       fetch(`/grafico/mediaAlertas/${idDac}`, {
-      method: "GET",
-    })
-      .then(resposta => {
-        return resposta.json();
+        method: "GET",
       })
-      .then(resposta => {
-        console.log(resposta)
-        mediaAlerta.innerHTML = `${resposta[0].mediaalertasdiarios}`
-      })
-      .catch(erro => console.error("Erro:", erro));
+        .then(resposta => {
+          return resposta.json();
+        })
+        .then(resposta => {
+          console.log(resposta)
+          mediaAlerta.innerHTML = `${resposta[0].mediaalertasdiarios}`
+        })
+        .catch(erro => console.error("Erro:", erro));
 
 
 
 
 
-       if (componentSelect.value === "CPU") {
-        
+      if (componentSelect.value === "CPU") {
+
         fetch(`/grafico/alertasCpu/${idDac}`, {
-        method: "GET",
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          qtdAlertas.innerHTML = `${resposta[0].total}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            qtdAlertas.innerHTML = `${resposta[0].total}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
-      fetch(`/grafico/duracaoAlertaCpu/${idDac}`, {
-        method: "GET",
+        fetch(`/grafico/duracaoAlertaCpu/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          tempoMedio.innerHTML = `${resposta[0].duracao}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            tempoMedio.innerHTML = `${resposta[0].duracao}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
 
-      fetch(`/grafico/cpu24h/${idDac}`, {
-        method: "GET",
+        fetch(`/grafico/cpu24h/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          usomedio.innerHTML = `${resposta[0].mediauso}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            usomedio.innerHTML = `${resposta[0].mediauso}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
 
 
 
-        } 
-        else if (componentSelect.value === "Memoria") {
+      }
+      else if (componentSelect.value === "Memoria") {
 
-          fetch(`/grafico/alertasRam/${idDac}`, {
-        method: "GET",
+        fetch(`/grafico/alertasRam/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          qtdAlertas.innerHTML = `${resposta[0].total}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            qtdAlertas.innerHTML = `${resposta[0].total}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
 
-      fetch(`/grafico/duracaoAlertaRam/${idDac}`, {
-        method: "GET",
+        fetch(`/grafico/duracaoAlertaRam/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          tempoMedio.innerHTML = `${resposta[0].duracao}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            tempoMedio.innerHTML = `${resposta[0].duracao}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
 
-      fetch(`/grafico/ram24h/${idDac}`, {
-        method: "GET",
+        fetch(`/grafico/ram24h/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          usomedio.innerHTML = `${resposta[0].mediauso}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            usomedio.innerHTML = `${resposta[0].mediauso}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
 
 
-        }
+      }
 
 
 
@@ -713,48 +715,48 @@ var graveDisco = 0
 
 
 
-        else if (componentSelect.value === "Disco") {
-          fetch(`/grafico/alertasDisco/${idDac}`, {
-        method: "GET",
+      else if (componentSelect.value === "Disco") {
+        fetch(`/grafico/alertasDisco/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          qtdAlertas.innerHTML = `${resposta[0].total}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            qtdAlertas.innerHTML = `${resposta[0].total}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
-      fetch(`/grafico/duracaoAlertaDisco/${idDac}`, {
-        method: "GET",
+        fetch(`/grafico/duracaoAlertaDisco/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          tempoMedio.innerHTML = `${resposta[0].duracao}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            tempoMedio.innerHTML = `${resposta[0].duracao}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
 
-      fetch(`/grafico/disco24h/${idDac}`, {
-        method: "GET",
+        fetch(`/grafico/disco24h/${idDac}`, {
+          method: "GET",
         })
           .then(resposta => {
-          return resposta.json()
+            return resposta.json()
           })
-        .then(resposta => {
-          console.log(resposta)
-          usomedio.innerHTML = `${resposta[0].mediauso}`
-        })
-      .catch(erro => console.error("Erro:", erro))
+          .then(resposta => {
+            console.log(resposta)
+            usomedio.innerHTML = `${resposta[0].mediauso}`
+          })
+          .catch(erro => console.error("Erro:", erro))
 
-        }
-        else {
-          console.warn("Componente inválido!");
-  }
+      }
+      else {
+        console.warn("Componente inválido!");
+      }
 
       fetch(`/grafico/buscarRede/${idDac}`, {
         method: "GET",
@@ -762,7 +764,7 @@ var graveDisco = 0
         .then(resposta => {
           console.log(resposta);
 
-          if(resposta == ""){
+          if (resposta == "") {
             fetch(`/grafico/inativarMaquina/${idDac}`, { method: "PUT" });
             rede.innerHTML = `Máquina Inativa`
             ram.innerHTML = `Máquina Sem Dados`
@@ -773,18 +775,18 @@ var graveDisco = 0
             tempoatvd.innerHTML = `<div style="color:#b30000; font-weight:700;">Máquina Inativa</div>`;
 
 
-              redeok.classList.remove("status-dot", "ok")
-              redeok.classList.add("status-dot", "alerta-grave")
-              status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
+            redeok.classList.remove("status-dot", "ok")
+            redeok.classList.add("status-dot", "alerta-grave")
+            status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
           }
 
-          if (resposta[0].dataCaptura ) {
+          if (resposta[0].dataCaptura) {
             const dataServidor = new Date(resposta[0].dataCaptura);
             const agora = new Date();
             const diferenca1 = agora - dataServidor;
             const diferenca2 = diferenca1 / 1000 / 60;
 
-            if (diferenca2 > 1 ) {
+            if (diferenca2 > 1) {
               fetch(`/grafico/inativarMaquina/${idDac}`, { method: "PUT" });
               rede.innerHTML = `NÃO CONECTADO`
               ram.innerHTML = `Máquina Inativa`
@@ -809,13 +811,13 @@ var graveDisco = 0
                   cpu.innerHTML = `${resposta[0].medidaCapturada}%`;
 
                   if (resposta[0].medidaCapturada <= atencaoCpu) {
-                      cpu1.querySelector(".status-dot").className = "status-dot status-dot ok";
+                    cpu1.querySelector(".status-dot").className = "status-dot status-dot ok";
 
                   } else if (resposta[0].medidaCapturada <= graveCpu) {
-                      cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
+                    cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
 
-                  }else{
-                      cpu1.querySelector(".status-dot").className = "status-dot alerta-critico";
+                  } else {
+                    cpu1.querySelector(".status-dot").className = "status-dot alerta-critico";
                   }
                 })
                 .catch(erro => console.error("Erro:", erro));
@@ -829,13 +831,13 @@ var graveDisco = 0
                   ram.innerHTML = `${resposta[0].medidaCapturada}%`;
 
                   if (resposta[0].medidaCapturada <= atencaoRam) {
-                      ram1.querySelector(".status-dot").className = "status-dot ok";
+                    ram1.querySelector(".status-dot").className = "status-dot ok";
 
                   } else if (resposta[0].medidaCapturada <= graveRam) {
-                      ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
+                    ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
 
-                  }else{
-                      ram1.querySelector(".status-dot").className = "status-dot alerta-critico";
+                  } else {
+                    ram1.querySelector(".status-dot").className = "status-dot alerta-critico";
                   }
                 })
                 .catch(erro => console.error("Erro:", erro));
@@ -849,13 +851,13 @@ var graveDisco = 0
                   disco.innerHTML = `${resposta[0].medidaCapturada}%`
 
                   if (resposta[0].medidaCapturada <= atencaoDisco) {
-                      disco1.querySelector(".status-dot").className = "status-dot ok";
+                    disco1.querySelector(".status-dot").className = "status-dot ok";
 
                   } else if (resposta[0].medidaCapturada <= graveDisco) {
-                      disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
+                    disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
 
-                  }else{
-                      disco1.querySelector(".status-dot").className = "status-dot alerta-critico";
+                  } else {
+                    disco1.querySelector(".status-dot").className = "status-dot alerta-critico";
                   }
 
                 })
@@ -883,12 +885,12 @@ var graveDisco = 0
         })
         .catch(erro => console.error("Erro:", erro));
 
-      
 
-      
+
+
     }
     atualizarDados();
-    setInterval(atualizarDados, 2000);
+    setInterval(atualizarDados, 6000);
 
     // Variaveis Gráfico
     var ctx = document.getElementById("alertChart").getContext("2d")
@@ -913,6 +915,7 @@ var graveDisco = 0
     var dataAlerta = []
     var dataMonitoramento = []
     var legendaMonitoramento = ""
+    var configuracaoBackgroundMonitoramento = ""
     // Funções Auxiliares
     function formatarData(data) {
       const fuso = {
@@ -925,27 +928,6 @@ var graveDisco = 0
     }
     //
     function plotarGraficosDash() {
-      var configuracaoBackgroundMonitoramento = {
-        id: 'backgroundColorPlugin',
-        beforeDraw: (chart) => {
-          const { ctx, chartArea, scales } = chart
-          if (!chartArea) return
-          const { top, bottom, left, right } = chartArea
-          const yScale = scales.y
-          const getY = (valor) => yScale.getPixelForValue(valor)
-          ctx.save();
-          // Valor ideal
-          ctx.fillStyle = 'rgba(19, 155, 54, 0.7)'
-          ctx.fillRect(left, getY(73), right - left, bottom - getY(71))
-          // Valor Atenção
-          ctx.fillStyle = 'rgba(243, 190, 58, 0.8)'
-          ctx.fillRect(left, getY(87), right - left, getY(73) - getY(87))
-          // Valor Alerta
-          ctx.fillStyle = 'rgba(220, 23, 23, 0.7)'
-          ctx.fillRect(left, top, right - left, getY(87) - top)
-          ctx.restore()
-        }
-      }
       graficoMonitoramento = new Chart(cty, {
         type: 'line',
         data: {
@@ -1085,7 +1067,7 @@ var graveDisco = 0
       }
     }
 
-    function puxarDadosGraficoDash(idMonitoramento) {
+    async function puxarDadosGraficoDash(idMonitoramento) {
       if (idMonitoramento == 1) {
         legendaMonitoramento = "Uso de CPU"
       } else if (idMonitoramento == 2) {
@@ -1093,6 +1075,59 @@ var graveDisco = 0
       } else if (idMonitoramento == 3) {
         legendaMonitoramento = "Uso de Disco"
       }
+      var metrica = ""
+      await fetch(`/grafico/puxandoMetricaPadraoDac/${idDac}/${idMonitoramento}`, {
+        method: "GET",
+      })
+        .then(resposta => {
+          return resposta.json();
+        })
+        .then(resposta => {
+          console.log("Métricas puxadas", resposta)
+          if (resposta == null || resposta.length == 0) {
+            var fks = puxarVariaveis()
+            var idUnidadeAtendimento = fks.idUnidadeAtendimento
+            fetch(`/grafico/puxandoMetricaPadrao/${idUnidadeAtendimento}/${idMonitoramento}`, {
+              method: "GET",
+            })
+              .then(resposta => {
+                return resposta.json();
+              })
+              .then(resposta => {
+                metrica = resposta
+              })
+              .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+              });
+          } else {
+            metrica = resposta
+          }
+        })
+        .catch(function (resposta) {
+          console.log(`Erro no catch: ${resposta}`);
+        });
+      configuracaoBackgroundMonitoramento = {
+        id: 'backgroundColorPlugin',
+        beforeDraw: (chart) => {
+          const { ctx, chartArea, scales } = chart
+          if (!chartArea) return
+          const { top, bottom, left, right } = chartArea
+          const yScale = scales.y
+          const getY = (valor) => yScale.getPixelForValue(valor)
+          ctx.save();
+          // Valor ideal
+          ctx.fillStyle = 'rgba(19, 155, 54, 0.7)'
+          ctx.fillRect(left, getY(metrica[0].valorMinimo), right - left, bottom - getY(metrica[0].valorMinimo))
+          // Valor Atenção
+          ctx.fillStyle = 'rgba(243, 190, 58, 0.8)'
+          ctx.fillRect(left, getY(metrica[0].valorMaximo), right - left, getY(metrica[0].valorMinimo) - getY(metrica[0].valorMaximo))
+          // Valor Alerta
+          ctx.fillStyle = 'rgba(220, 23, 23, 0.7)'
+          ctx.fillRect(left, top, right - left, getY(metrica[1].valorMinimo) - top)
+          ctx.restore()
+        }
+      }
+
       fetch(`/grafico/puxarDadosGraficoDash/${idDac}/${idMonitoramento}`, {
         method: "GET",
       })
@@ -1181,9 +1216,24 @@ var graveDisco = 0
         .catch(err => {
 
         })
+    }
 
-
-
+    function atualizarAlertasNaoVistos() {
+      var div_alerta = document.getElementById("nao_visto_alerta")
+      var div_atencao = document.getElementById("nao_visto_atencao")
+      fetch(`/grafico/puxarAlertasNaoVistos/${idDac}`, {
+        method: "GET",
+      })
+        .then(resposta => {
+          return resposta.json();
+        })
+        .then(resposta => {
+          div_alerta.innerHTML = resposta[0].Alertas
+          div_atencao.innerHTML = resposta[0].Atenção
+        })
+        .catch(function (resposta) {
+          console.log(`Erro no catch: ${resposta}`);
+        });
     }
   </script>
 </body>
