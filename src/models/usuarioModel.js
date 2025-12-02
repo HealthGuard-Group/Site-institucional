@@ -2,21 +2,31 @@ var database = require("../database/config")
 
 function autenticar(email, senha) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
-    var instrucaoSql = `SELECT 
+    var instrucaoSql = `SELECT
     u.idUsuario,
     u.nome AS nomeUsuario,
     p.idPermissoes,
-    cv.fkUnidadeDeAtendimento,
-    la.idLogAcesso
-    FROM Usuario u
-    JOIN Permissoes p 
+    (
+        SELECT fkUnidadeDeAtendimento
+        FROM CodigoValidacaoUsuario cv
+        WHERE cv.fkPermissoes = p.idPermissoes
+          AND cv.statusCodigoValidacaoUsuario = 'Aceito'
+          AND cv.dataExpiracao >= NOW()
+        ORDER BY cv.idCodigoValidacao DESC
+        LIMIT 1
+    ) AS fkUnidadeDeAtendimento,
+    (
+        SELECT idLogAcesso
+        FROM LogAcesso la
+        WHERE la.fkUsuario = u.idUsuario
+        ORDER BY la.idLogAcesso DESC
+        LIMIT 1
+    ) AS idLogAcesso
+FROM Usuario u
+JOIN Permissoes p 
     ON u.fkPermissoes = p.idPermissoes
-    LEFT JOIN CodigoValidacaoUsuario cv 
-    ON cv.fkPermissoes = p.idPermissoes
-    LEFT JOIN LogAcesso la 
-    ON la.fkUsuario = u.idUsuario
-    WHERE u.email = '${email}' AND u.senha = sha2('${senha}',256)
-    LIMIT 1
+WHERE u.email = '${email}'
+  AND u.senha = sha2('${senha}',256);;
     ;
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
