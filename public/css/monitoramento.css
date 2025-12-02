@@ -553,8 +553,9 @@ td {
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
     border-radius: 2vh;
     width: 20%;
-    height: 22vh;
-    padding: 0.5vw 1vw;
+    height: 15vh;
+    display: flex;
+    padding: 0vw 1vw;
     transition: .3s;
 }
 .maquina-box:hover{
@@ -562,7 +563,7 @@ td {
     transform: scale(1.1);
     box-shadow: rgba(99, 99, 99, 0.432) 0px 2px 8px 0px;
 }
-/* .coluna-informacoes{
+.coluna-informacoes{
     width: 80%;
     height: 100%;
 
@@ -583,8 +584,8 @@ td {
 .texto-status-maquina{
     font-size: 1vw;
     font-weight: bold;
-} */
-/* .div-imagem-status{
+}
+.div-imagem-status{
     height: 100%;
     width: 20%;
     padding-top: 1vh;
@@ -592,57 +593,7 @@ td {
 
     display: flex;
     justify-content: center;
-} */
-
-.info_maquina{
-    display: flex;
-    width: 100%;
-    padding: 2px;
-    position: relative;
 }
-
-.imagem-status{
-    right: 0;
-    position: absolute;
-}
-
-.status_maquina{
-    padding: 6px 0 ;
-    font-size: 0.9em;
-}
-
-.status_componentes{
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    grid-template-rows: 1fr 1fr;
-    font-size: 0.8em;
-    gap: 5px;
-    text-align: center;
-    width: 100%;
-}
-
-.componente{
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.status_bolinha{
-    width: 10px;
-    border-radius: 50%;
-    height: 10px;
-    background-color: #0AA40A;
-}
-
-.detalhes_maquina{
-    font-size: 0.7em;
-    display: flex;
-    width: 100%;
-    align-items: end;
-    justify-content: end;
-    padding: 15px;
-}
-
 .imagem-status{
     height: 4vh;
 }
