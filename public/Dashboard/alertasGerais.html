@@ -75,10 +75,10 @@
                 <div class="texto-funcionalidade alinhamento-centralizar-vertical">
                     Filtro:
                 </div>
-                <select name="" id="filtro_maquinas" class="select-filtro">
+                <select name="" id="filtro_maquinas" class="select-filtro" onchange="puxarAlertasGeral()">
                     <option value="todas">Todos os alertas</option>
                     <option value="alerta">Alertas Grave</option>
-                    <option value="inativas">Alertas Críticos</option>
+                    <option value="atencao">Alertas atenção</option>
                 </select>
             </div>
 
@@ -187,7 +187,8 @@ function puxarAlertasGeral() {
         .then(resposta => resposta.json())
         .then(resposta => {
             console.log(resposta)
-            atualizarTabela(resposta)
+            var dados_filtrados = filtrar(resposta)
+            atualizarTabela(dados_filtrados)
         })
         .catch(function (resposta) {
             console.log(`Erro no catch: ${resposta}`);
@@ -259,6 +260,27 @@ function marcarAlertaComoVerificado(idAlerta) {
             console.log("UPDATE ALERTA ❌")
             console.log(`Erro no catch: ${resposta}`);
         });
+}
+
+function filtrar(dados) {
+    var select = document.getElementById("filtro_maquinas").value
+    var dados_filtrados = []
+    if (select == "todas") {
+        return dados
+    } else if (select == "alerta") {
+        for(let i = 0; i < dados.length; i++){
+            if (dados[i].nomeAlerta == "Alerta") {
+                dados_filtrados.push(dados[i])
+            }
+        }
+    } else if (select == "atencao") {
+        for(let i = 0; i < dados.length; i++){
+            if (dados[i].nomeAlerta == "Atenção") {
+                dados_filtrados.push(dados[i])
+            }
+        }
+    }
+    return dados_filtrados
 }
 
 </script>

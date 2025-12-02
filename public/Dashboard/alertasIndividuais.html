@@ -73,7 +73,6 @@
                         <span>Máquina A-08</span>
                         <span class="status alerta">Status: Alerta grave </span>
                     </div>
-                    <div class="link-descricao" onclick="alert('Descrição')">Exibir descrição</div>
                 </div>
                 <div class="texto-topico">
                     Histórico de alertas individuais:
@@ -83,10 +82,10 @@
                     <div class="texto-funcionalidade alinhamento-centralizar-vertical">
                         Filtro:
                     </div>
-                    <select name="" id="filtro_maquinas" class="select-filtro">
+                    <select name="" id="filtro_maquinas" class="select-filtro" onchange="puxarAlertasIndividual()">
                         <option value="todas">Todos os alertas</option>
                         <option value="alerta">Alertas Grave</option>
-                        <option value="inativas">Alertas Críticos</option>
+                        <option value="atencao">Alertas atenção</option>
                     </select>
                 </div>
 
@@ -152,16 +151,16 @@
 </html>
 
 <script>
-  var idDac = sessionStorage.ID_DAC;
-console.log("ID DAC ", idDac)
-var data_visualizacao;
+    var idDac = sessionStorage.ID_DAC;
+    console.log("ID DAC ", idDac)
+    var data_visualizacao;
 
-function puxarAlertasIndividual() {
-    var variaveis = puxarVariaveis()
-    console.log(variaveis)
-    variaveis = variaveis.idUnidadeAtendimento
-    console.log(variaveis)
-    tabela_alertas.innerHTML = `
+    function puxarAlertasIndividual() {
+        var variaveis = puxarVariaveis()
+        console.log(variaveis)
+        variaveis = variaveis.idUnidadeAtendimento
+        console.log(variaveis)
+        tabela_alertas.innerHTML = `
         <tr id="titulo-tabela">
             <td id="tr-tipo-alerta">Tipo de alerta</td>
             <td id="tr-monitoramento-alerta">Monitoramento</td>
@@ -173,44 +172,45 @@ function puxarAlertasIndividual() {
             <td id="tr-verificador-alerta">Verificador</td>
             <td id="tr-acoes-alerta">Ação</td>
         </tr>`
-    fetch(`/alertasindividual/puxarAlertasIndividual/${variaveis}/${idDac}`, {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-        .then(resposta => resposta.json())
-        .then(resposta => {
-            console.log(resposta)
-            atualizarTabela(resposta)
+        fetch(`/alertasindividual/puxarAlertasIndividual/${variaveis}/${idDac}`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            },
         })
-        .catch(function (resposta) {
-            console.log(`Erro no catch: ${resposta}`);
-        });
-}
+            .then(resposta => resposta.json())
+            .then(resposta => {
+                console.log(resposta)
+                var dados_filtrados = filtrar(resposta)
+                atualizarTabela(dados_filtrados)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
 
-function atualizarTabela(dados) {
-    console.log("Respota entrando na função:", dados)
+    function atualizarTabela(dados) {
+        console.log("Respota entrando na função:", dados)
 
-    for (let i = 0; i < dados.length; i++) {
+        for (let i = 0; i < dados.length; i++) {
 
-        let data_inicio = new Date(dados[i].dataInicio).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+            let data_inicio = new Date(dados[i].dataInicio).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
 
-        let data_termino = dados[i].dataTermino == null ? "----------" :
-            new Date(dados[i].dataTermino).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+            let data_termino = dados[i].dataTermino == null ? "----------" :
+                new Date(dados[i].dataTermino).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
 
-        data_visualizacao = dados[i].dataVisualizacao == null ? "----------" :
-            new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+            data_visualizacao = dados[i].dataVisualizacao == null ? "----------" :
+                new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
 
-        if (dados[i].verificador == null) dados[i].verificador = "--------------------";
+            if (dados[i].verificador == null) dados[i].verificador = "--------------------";
 
-        let statusCor = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'rgb(0, 170, 40)' : '#656464';
-        let iconeOlho = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'iconeOlhoVerde.png' : 'iconeOlhoCinza.png';
-        let acaoOnclick = dados[i].statusAlerta.toLowerCase() == 'verificado' ? '' : `onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})"`;
+            let statusCor = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'rgb(0, 170, 40)' : '#656464';
+            let iconeOlho = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'iconeOlhoVerde.png' : 'iconeOlhoCinza.png';
+            let acaoOnclick = dados[i].statusAlerta.toLowerCase() == 'verificado' ? '' : `onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})"`;
 
-        let iconeClasse = dados[i].nomeAlerta.toLowerCase() == 'alerta' ? 'icone-alerta' : 'icone-atencao';
+            let iconeClasse = dados[i].nomeAlerta.toLowerCase() == 'alerta' ? 'icone-alerta' : 'icone-atencao';
 
-        tabela_alertas.innerHTML += `
+            tabela_alertas.innerHTML += `
              <tr class="dados-tabela">
                 <td class="td-tipo-alerta"><span class="status-dot ${iconeClasse}"></span>${dados[i].nomeAlerta}</td>
                 <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
@@ -226,38 +226,59 @@ function atualizarTabela(dados) {
                     </div>
                 </td>
             </tr>`;
+        }
     }
-}
 
-function marcarAlertaComoVerificado(idAlerta) {
+    function marcarAlertaComoVerificado(idAlerta) {
 
-    var variaveis = puxarVariaveis();
-    var nomeVisualizador = variaveis.nomeUsuario;
+        var variaveis = puxarVariaveis();
+        var nomeVisualizador = variaveis.nomeUsuario;
 
-    console.log("PARAMETROS:", idAlerta, data_visualizacao, nomeVisualizador)
+        console.log("PARAMETROS:", idAlerta, data_visualizacao, nomeVisualizador)
 
-    fetch(`/alertasindividual/marcarAlertaComoVerificado/${idAlerta}`, {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            nomeVisualizador: nomeVisualizador
-        }),
-    })
-        .then(resposta => resposta.json())
-        .then(resposta => {
-            console.log("Alerta Verificado com sucesso! ✅")
-            console.log(resposta)
-            
-            puxarAlertasIndividual()
-            registrarLogAcao(`Alerta ID ${idAlerta} marcado como verificado por ${nomeVisualizador}`);
+        fetch(`/alertasindividual/marcarAlertaComoVerificado/${idAlerta}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                nomeVisualizador: nomeVisualizador
+            }),
         })
-        .catch(function (resposta) {
-            console.log("UPDATE ALERTA ❌")
-            console.log(`Erro no catch: ${resposta}`);
-        });
-}
+            .then(resposta => resposta.json())
+            .then(resposta => {
+                console.log("Alerta Verificado com sucesso! ✅")
+                console.log(resposta)
+
+                puxarAlertasIndividual()
+                registrarLogAcao(`Alerta ID ${idAlerta} marcado como verificado por ${nomeVisualizador}`);
+            })
+            .catch(function (resposta) {
+                console.log("UPDATE ALERTA ❌")
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+    function filtrar(dados) {
+        var select = document.getElementById("filtro_maquinas").value
+        var dados_filtrados = []
+        if (select == "todas") {
+            return dados
+        } else if (select == "alerta") {
+            for (let i = 0; i < dados.length; i++) {
+                if (dados[i].nomeAlerta == "Alerta") {
+                    dados_filtrados.push(dados[i])
+                }
+            }
+        } else if (select == "atencao") {
+            for (let i = 0; i < dados.length; i++) {
+                if (dados[i].nomeAlerta == "Atenção") {
+                    dados_filtrados.push(dados[i])
+                }
+            }
+        }
+        return dados_filtrados
+    }
 
 
 </script>
