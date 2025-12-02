@@ -184,9 +184,12 @@ function telaGrafico1() {
 
 function atualizarAlertasSemanais(){
     puxarKpisSemana()
+    plotarGraficoSeveridade()
     var loop = setInterval(() =>{
         puxarKpisSemana()
-    },60000 )
+        plotarGraficoSeveridade()
+        atualizarGraficoSeveridade()
+    },3000 )
 }
 
 function telaLogAcessos() {

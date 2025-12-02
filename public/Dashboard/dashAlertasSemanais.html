@@ -86,7 +86,7 @@
                 </div>
             </div>
             <div class="kpi_dash">
-                <div class="titulo_kpi" >
+                <div class="titulo_kpi">
                     <h2>Desde o Último Alerta</h2>
                     <span class="tooltip"> <i class='bxr  bx-info-circle'></i>
                         <span class="tooltip-text">Painel com a visão geral de todos os componentes sendo monitorados
@@ -148,7 +148,7 @@
             <div class="container_right_dash">
                 <div class="div_graficolinha">
                     <h2>Tendência de Alertas por Dia</h2>
-                <canvas id="grafico_linha"></canvas>
+                    <canvas id="grafico_linha"></canvas>
 
                 </div>
             </div>
@@ -160,13 +160,64 @@
 <script src="../js/menu-lateral.js"></script>
 
 <script>
-       
-    new Chart(document.getElementById('grafico_pizza'), {
+    var dadosGraficoSeveridadeAtencao = 0
+    var dadosGraficoSeveridadeAlerta = 0
+
+    function plotarGraficoSeveridade() {
+
+        var fks = puxarVariaveis();
+        console.log(fks)
+        var idUnidadeAtendimento = fks.idUnidadeAtendimento;
+
+        console.log("idUnidadeAtendimento", idUnidadeAtendimento);
+
+        fetch(`/dashAlertasSemanais/severidade/${idUnidadeAtendimento}`, {
+            method: "GET"
+        })
+            .then(function (res) { return res.json(); })
+            .then(function (res) {
+                dadosGraficoSeveridadeAtencao = res[0].total;
+                dadosGraficoSeveridadeAlerta = res[1].total;
+
+                console.log("KPI:", dadosGraficoSeveridadeAtencao)
+                console.log("KPI:", dadosGraficoSeveridadeAlerta)
+
+                console.log("KPI1:", dadosGraficoSeveridadeAtencao)
+                console.log("KPI1:", dadosGraficoSeveridadeAlerta)
+
+                new Chart(document.getElementById('grafico_pizza'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Atenção', 'Alerta'],
+                        datasets: [{
+                            data: [Number(dadosGraficoSeveridadeAtencao), Number(dadosGraficoSeveridadeAlerta)],
+                            backgroundColor: [
+                                'rgba(218, 165, 32, 1)',
+                                'rgba(218, 0, 0, 1)'
+                            ]
+                        }]
+                    },
+                    options: {
+                        plugins: {
+                            legend: {
+                                position: 'right',
+                            }
+                        }
+                    }
+                });
+            })
+        
+    }
+
+    
+ function atualizarGraficoSeveridade(dadosGraficoSeveridadeAtencao, dadosGraficoSeveridadeAlerta) {
+
+    grafico_pizza = new Chart(document.getElementById('grafico_pizza'), {
         type: 'doughnut',
         data: {
             labels: ['Atenção', 'Alerta'],
             datasets: [{
-                data: [300, 100],
+                data: [Number(dadosGraficoSeveridadeAtencao), Number(dadosGraficoSeveridadeAlerta)],
                 backgroundColor: [
                     'rgba(218, 165, 32, 1)',
                     'rgba(218, 0, 0, 1)'
@@ -176,125 +227,134 @@
         options: {
             plugins: {
                 legend: {
-                    position: 'right',
+                    position: 'right'
+                }
+            }
+        }
+    });
+}
+ function atualizarGraficoSeveridade(dadosGraficoSeveridadeAtencao, dadosGraficoSeveridadeAlerta) {
+    grafico_pizza.data.datasets[0].data = dadosGraficoSeveridadeAtencao;
+    grafico_pizza.data.datasets[1].data = dadosGraficoSeveridadeAlerta;
+
+    grafico_pizza.update();
+}
+
+    new Chart(document.getElementById('grafico_ranking'), {
+        type: 'bar',
+        data: {
+            labels: ['Máquina 01', 'Máquina 02', 'Máquina 03', 'Máquina 04', 'Máquina 05'],
+            datasets: [{
+                data: [45, 38, 30, 22, 18],
+                backgroundColor: 'rgb(54, 162, 235)'
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { display: false }, grid: { display: false } },
+                y: { grid: { display: false } }
+            }
+        }
+    });
+
+
+    const ctx = document.getElementById('grafico_linha');
+
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul"],
+            datasets: [
+                {
+                    label: "Dataset 1",
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                    borderColor: "rgba(200,200,200,1)",
+                    backgroundColor: "rgba(200,200,200,0.15)",
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 5,
+                    pointBackgroundColor: "rgba(200,200,200,1)"
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                legend: { display: false }
+            },
+            scales: {
+                x: {
+                    grid: {
+                        color: "rgba(0,0,0,0.05)"
+                    }
+                },
+                y: {
+                    beginAtZero: false,
+                    grid: {
+                        color: "rgba(0,0,0,0.05)"
+                    }
                 }
             }
         }
     });
 
-    new Chart(document.getElementById('grafico_ranking'), {
-  type: 'bar',
-  data: {
-    labels: ['Máquina 01', 'Máquina 02', 'Máquina 03', 'Máquina 04', 'Máquina 05'],
-    datasets: [{
-      data: [45, 38, 30, 22, 18],
-      backgroundColor: 'rgb(54, 162, 235)'
-    }]
-  },
-  options: {
-    indexAxis: 'y',
-    plugins: { legend: { display: false } },
-    scales: {
-      x: { ticks: { display: false }, grid: { display: false } },
-      y: { grid: { display: false } }
+
+    function formatarData(dia) {
+        return dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
     }
-  }
-});
+
+    var hoje = new Date();
+    var inicioReferencia = new Date(2025, 10, 30);
+
+    var inicioSemana = new Date(inicioReferencia);
+
+    while (inicioSemana <= hoje) {
+        var proximaSemana = new Date(inicioSemana);
+        proximaSemana.setDate(inicioSemana.getDate() + 7);
+        if (proximaSemana > hoje) break;
+        inicioSemana = proximaSemana;
+    }
+
+    var fimSemana = new Date(inicioSemana);
+    fimSemana.setDate(inicioSemana.getDate() + 6);
+
+    intervaloSemana.innerHTML = formatarData(inicioSemana) + " ao " + formatarData(fimSemana);
 
 
-const ctx = document.getElementById('grafico_linha');
-
-new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul"],
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [65, 59, 80, 81, 56, 55, 40],
-        borderColor: "rgba(200,200,200,1)",
-        backgroundColor: "rgba(200,200,200,0.15)",
-        tension: 0.4,
-        fill: true,
-        pointRadius: 5,
-        pointBackgroundColor: "rgba(200,200,200,1)"
-      }
-    ]
-  },
-  options: {
-    plugins: {
-      legend: { display: false }
-    },
-    scales: {
-      x: {
-        grid: {
-          color: "rgba(0,0,0,0.05)"
+    function formatarTempo(minutosTotais) {
+        var horas = Math.floor(minutosTotais / 60);
+        var minutos = minutosTotais % 60;
+        if (minutos < 10) {
+            minutos = "0" + minutos;
         }
-      },
-      y: {
-        beginAtZero: false,
-        grid: {
-          color: "rgba(0,0,0,0.05)"
-        }
-      }
+        return horas + "h" + minutos + "min";
     }
-  }
-});
 
 
-function formatarData(dia) {
-    return dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
-}
+    function puxarKpisSemana() {
+        var fks = puxarVariaveis();
+        var idUnidadeAtendimento = fks.idUnidadeAtendimento;
+        console.log("idUnidadeAtendimento", idUnidadeAtendimento);
 
-var hoje = new Date();
-var inicioReferencia = new Date(2025, 10, 30);
-
-var inicioSemana = new Date(inicioReferencia);
-
-while (inicioSemana <= hoje) {
-    var proximaSemana = new Date(inicioSemana);
-    proximaSemana.setDate(inicioSemana.getDate() + 7);
-    if (proximaSemana > hoje) break;
-    inicioSemana = proximaSemana;
-}
-
-var fimSemana = new Date(inicioSemana);
-fimSemana.setDate(inicioSemana.getDate() + 6);
-
-intervaloSemana.innerHTML = formatarData(inicioSemana) + " ao " + formatarData(fimSemana);
-
-
-function formatarTempo(minutosTotais) {
-    var horas = Math.floor(minutosTotais / 60);
-    var minutos = minutosTotais % 60;
-    if (minutos < 10) {
-        minutos = "0" + minutos;
-    }
-    return horas + "h" + minutos + "min";
-}
-
-
-function puxarKpisSemana() {
-    var fks = puxarVariaveis();
-    var idUnidadeAtendimento = fks.idUnidadeAtendimento;
-    console.log("idUnidadeAtendimento", idUnidadeAtendimento);
-
-    fetch(`/dashAlertasSemanais/kpis/${idUnidadeAtendimento}`, {
-         method: "GET" })
-        .then(function(res) { return res.json(); })
-        .then(function(res) {
-            var kpi = res[0];
-            kpi_totalSemana.innerHTML = kpi.totalSemana;
-            kpi_desdeUltimoAlerta.innerHTML = formatarTempo(kpi.desdeUltimoAlerta);
-            kpi_naoVerificados.innerHTML = kpi.naoVerificados;
-            kpi_ultimaMaquina.innerHTML = kpi.ultimaMaquina;
+        fetch(`/dashAlertasSemanais/kpis/${idUnidadeAtendimento}`, {
+            method: "GET"
         })
-        .catch(function(err) {
-            console.log("Erro:", err);
-        });
-}
+            .then(function (res) { return res.json(); })
+            .then(function (res) {
+                var kpi = res[0];
+                kpi_totalSemana.innerHTML = kpi.totalSemana;
+                kpi_desdeUltimoAlerta.innerHTML = formatarTempo(kpi.desdeUltimoAlerta);
+                kpi_naoVerificados.innerHTML = kpi.naoVerificados;
+                kpi_ultimaMaquina.innerHTML = kpi.ultimaMaquina;
+            })
+            .catch(function (err) {
+                console.log("Erro:", err);
+            });
+    }
 
 
 
 </script>
+
 </html>
