@@ -235,7 +235,11 @@
     // Variáveis auxiliares
     var porcentagemDisco; // % em uso
     var porcentagemDisponivelDisco;
+    var graficoUsoDisco = null;
+    var graficoUsoParticoes = null;
     var dadosParticoes;
+    var nomesParticoes = [];
+    var percentuaisParticoes = [];
 
     function puxarNomeDaMaquina() {
         var idDac = sessionStorage.ID_DAC
@@ -256,6 +260,9 @@
     }
 
     function atualizarDadosDisco() {
+
+        // plotarGraficoUsoParticoes() // Inicializa quase assim que a página carrega
+
         var idDac = sessionStorage.ID_DAC
         fetch(`/analisedisco/buscarDadosDisco/${idDac}`, {
             method: "GET",
@@ -278,7 +285,12 @@
 
                         console.log("% uso", porcentagemDisco)
                         console.log("% disponivel", porcentagemDisponivelDisco)
-                        plotarGraficoUsoDisco() 
+
+                        if (!graficoUsoDisco) {
+                            plotarGraficoUsoDisco()
+                        } else {
+                            atualizarGraficoUsoDisco(porcentagemDisponivelDisco, porcentagemDisco)
+                        }
                     } else if (resposta[i].fkMedicoesDisponiveis == 14) {
                         kpi_espaco_disponivel.innerHTML = truncarDecimal(Number(resposta[i].medidaCapturada), 1) + " GB"
                         var espacoDisponivel = resposta[i].medidaCapturada
@@ -289,10 +301,26 @@
                             kpi_iops.innerHTML = Math.trunc(Number(resposta[i].medidaCapturada)) + "/s"
                         }
                     } else if (resposta[i].fkMedicoesDisponiveis == 16) {
-                        console.log("oiiiii")
-                            console.log("ANTES",resposta[i].medidaCapturada)
-                            dadosParticoes = JSON.parse(resposta[i]["medidaCapturada"])
-                            console.log("PARTIÇÕES", dadosParticoes)
+                        var string = resposta[i].medidaCapturada
+                        string = string.replaceAll("\\", "\\\\")
+                        dadosParticoes = JSON.parse(string)
+                        console.log("PARTIÇÕES", dadosParticoes)
+
+                        nomesParticoes = [];
+                        var percentuaisParticoes = []
+
+                        for (let particaoAtual in dadosParticoes) {
+                            var particao = dadosParticoes[particaoAtual];
+
+                            nomesParticoes.push(particao.montagem);
+                            percentuaisParticoes.push(particao.percentual);
+                        }
+                        console.log(nomesParticoes, percentuaisParticoes)
+                        if (!graficoUsoParticoes) {
+                            plotarGraficoUsoParticoes()
+                        } else {
+                            atualizarGraficoUsoParticoes(nomesParticoes, percentuaisParticoes)
+                        }
                     }
                     var capacidadeTotal = espacoDisponivel / (1 - porcentagemDisco / 100);
                     kpi_capacidade_total.innerHTML = Math.trunc(capacidadeTotal) + " GB";
@@ -303,7 +331,7 @@
             });
     }
 
-    
+
     function plotarGraficoUsoDisco() {
         const ctx = document.getElementById('myChart1-pizza').getContext('2d');
         console.log("Etapa plotar gráfico")
@@ -341,11 +369,16 @@
         };
 
 
-        new Chart(ctx, {
+        graficoUsoDisco = new Chart(ctx, {
             type: 'doughnut',
             data: data,
             options: options
         });
+    }
+
+    function atualizarGraficoUsoDisco(porcentagemDisponivelDisco, porcentagemDisco) {
+        graficoUsoDisco.data.datasets[0].data = [porcentagemDisponivelDisco, porcentagemDisco];
+        graficoUsoDisco.update();
     }
 
 
@@ -355,59 +388,65 @@
         return resultado;
     }
 
-</script>
+    function plotarGraficoUsoParticoes() {
 
-<script>
-    const ctx2 = document.getElementById('myChart2-barra').getContext('2d');
+        const ctx2 = document.getElementById('myChart2-barra').getContext('2d');
 
-    const dataBarra = {
-        labels: ['C:/', 'D:/', 'E:/'],
-        datasets: [{
-            label: 'Percentual usado',
-            data: [25, 30, 20],
-            backgroundColor: [
-                'rgba(27, 53, 89, 1)',
-            ],
-            borderWidth: 1,
-            borderRadius: 6
-        }]
-    };
+        const dataBarra = {
+            labels: nomesParticoes,
+            datasets: [{
+                label: 'Percentual usado',
+                data: percentuaisParticoes,
+                backgroundColor: [
+                    'rgba(27, 53, 89, 1)',
+                ],
+                borderWidth: 1,
+                borderRadius: 6
+            }]
+        };
 
-    const optionsBarra = {
-        indexAxis: 'y', // transforma em barras horizontais
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                labels: {
-                    color: '#333'
-                }
-            },
-        },
-        scales: {
-            x: {
-                beginAtZero: true,
-                ticks: {
-                    font: {
-                        size: 12
+        const optionsBarra = {
+            indexAxis: 'y', // transforma em barras horizontais
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#333'
                     }
-                }
+                },
             },
-            y: {
-                ticks: {
-                    font: {
-                        size: 12
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: {
+                        font: {
+                            size: 12
+                        }
+                    }
+                },
+                y: {
+                    ticks: {
+                        font: {
+                            size: 12
+                        }
                     }
                 }
             }
-        }
-    };
+        };
 
-    new Chart(ctx2, {
-        type: 'bar',
-        data: dataBarra,
-        options: optionsBarra
-    });
+        graficoUsoParticoes = new Chart(ctx2, {
+            type: 'bar',
+            data: dataBarra,
+            options: optionsBarra
+        });
+    }
+
+    function atualizarGraficoUsoParticoes(nomesParticoes, percentuaisParticoes) {
+        graficoUsoParticoes.data.labels = nomesParticoes;
+        graficoUsoParticoes.data.datasets[0].data = percentuaisParticoes;
+        graficoUsoParticoes.update();
+    }
 </script>
 
 

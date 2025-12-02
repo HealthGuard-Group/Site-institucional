@@ -175,7 +175,7 @@ function telaAnaliseDisco() {
     // atualizarTextoIA()
     var loop = setInterval(() => {
         atualizarDadosDisco()
-    }, 5000)
+    }, 1000)
 }
 
 function telaGrafico1() {
