@@ -109,7 +109,7 @@ JOIN
 JOIN 
     Leitura AS d ON c.idDac = d.fkDac
 JOIN 
-    MedicoesDisponiveis AS b ON d.fkMedicoesDisponiveis = b.idMedicoesDisponiveis where d.fkDac = ${fkDAC} and  b.nomeDaMedicao = 'Porcentagem CPU - nucleo' order by d.dataCaptura asc limit 30;`
+    MedicoesDisponiveis AS b ON d.fkMedicoesDisponiveis = b.idMedicoesDisponiveis where d.fkDac = ${fkDAC} and  b.nomeDaMedicao = 'Porcentagem CPU - nucleo' order by d.dataCaptura desc limit 30;`
     return database.executar(instrucaoSql)
 }
 

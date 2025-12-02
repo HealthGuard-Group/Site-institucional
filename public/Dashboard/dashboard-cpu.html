@@ -423,10 +423,10 @@ function puxar_primeiros() {
                 return resposta.json();
             })
             .then(resposta => {
-                for (let i = 0; i < resposta.length; i++) {
+                for (let i = resposta.length; i >= 0; i--) {
                 console.log("Array:", resposta);
-                var string_nucleo = resposta[i].medidaCapturada
-                var hora = formatarData(resposta[i].dataCaptura)
+                var string_nucleo = resposta[i - 1].medidaCapturada
+                var hora = formatarData(resposta[i - 1].dataCaptura)
                 var hora_formatada = hora
                 var array_nucleo = JSON.parse(string_nucleo)
                 console.log(array_nucleo)
