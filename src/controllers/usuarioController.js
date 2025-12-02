@@ -84,6 +84,7 @@ function inseriracao(req, res) {
     var idUsuario = req.body.idUsuario;
     var idLogAcesso = req.body.idLogAcesso;
     var acao = req.body.acao
+    var status = req.body.statusAcao
 
     if (idUnidade == undefined) {
         res.status(400).send("Seu idUnidade está undefined!");
@@ -93,8 +94,10 @@ function inseriracao(req, res) {
         res.status(400).send("Sua idLogAcesso está undefined!");
     } else if (acao == undefined) {
         res.status(400).send("Seu acao está undefined!");
+    } else if (status == undefined) {
+        res.status(400).send("Seu status está undefined!");
     } else {
-        usuarioModel.inseriracao(idUnidade, idUsuario, idLogAcesso, acao)
+        usuarioModel.inseriracao(idUnidade, idUsuario, idLogAcesso, acao, status)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -270,7 +273,7 @@ function puxardadosuser(req, res) {
 
     if (id == undefined) {
         res.status(400).send("Seu id está undefined!");
-    }  else {
+    } else {
         usuarioModel.puxardadosuser(id)
             .then(
                 function (resultado) {
@@ -303,7 +306,7 @@ function updatedados(req, res) {
         res.status(400).send("Seu email está undefined!");
     } else if (cpf == undefined) {
         res.status(400).send("Seu cpf está undefined!");
-    } else  {
+    } else {
         usuarioModel.updatedados(idUsuario, nome, email, cpf)
             .then(
                 function (resultado) {
@@ -345,9 +348,9 @@ function validacaosenha(req, res) {
 
     if (email == undefined) {
         res.status(400).send("Seu email está undefined!");
-    }  else   if (senha == undefined) {
+    } else if (senha == undefined) {
         res.status(400).send("Sua senha está undefined!");
-    }  else {
+    } else {
         usuarioModel.validacaosenha(email, senha)
             .then(
                 function (resultado) {

@@ -10,7 +10,7 @@ function buscarDadosLogs(idUnidadeAtendimento){
     FROM LogAcoes AS la
     JOIN Usuario AS u
     ON la.fkUsuario = u.idUsuario
-    WHERE la.fkUnidadeAtendimento = ${idUnidadeAtendimento};`;
+    WHERE la.fkUnidadeAtendimento = ${idUnidadeAtendimento} ORDER BY la.horarioDaAcao DESC;`;
     
     return database.executar(instrucaoSql);
  }

@@ -191,8 +191,8 @@
           <td class="coluna">E-mail</td>
           <td class="coluna">Descrição</td>
           <td class="coluna">Resultado</td>
-          <td class="coluna">Máquina</td>
         </tr>`
+    //<td class="coluna">Máquina</td>
     fetch(`/acessos/buscarDadosLogs/${variaveis}`, {
       method: "GET",
     })
@@ -201,11 +201,7 @@
       })
       .then(resposta => {
         console.log(resposta)
-        // var dados_filtrados = filtrarFuncionarios(resposta)
         atualizarTabela(resposta)
-        // funcionarios = dados_filtrados;
-
-        // atualizarTabela(resposta)
       })
       .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
@@ -213,26 +209,50 @@
   }
 
   function atualizarTabela(dados) {
-    console.log("Respota entrando na função:", dados)
-    // let variaveis = puxarVariaveis()
-   // let hora = new Date(dados[i].horarioDaAcao)
-    //hora = horarioDaAcao.toLocaleDateString('pt-BR')
-
-
+    console.log("Resposta entrando na função:", dados)
     for (let i = 0; i < dados.length; i++) {
 
-      tabela.innerHTML += `
+      if (dados[i].statusAcao == "Sucesso") {
+        tabela.innerHTML += `
           <tr class="linha">
-          <td class="coluna">${dados[i].horarioDaAcao}</td>
+          <td class="coluna">${formatarData(dados[i].horarioDaAcao)}</td>
           <td class="coluna">${dados[i].nome}</td>
           <td class="coluna">${dados[i].email}</td>
           <td class="coluna">${dados[i].acao}</td>
           <td class="coluna sucesso"><span class="bolinha verde"></span><span style="color: #00aa28;">Sucesso</span>
           </td>
-          <td class="coluna">Máquina A-02</td>
         </tr>`
-
+      }
+      //<td class="coluna">Máquina A-02</td>
+      else {
+        tabela.innerHTML += `
+          <tr class="linha">
+          <td class="coluna">${formatarData(dados[i].horarioDaAcao)}</td>
+          <td class="coluna">${dados[i].nome}</td>
+          <td class="coluna">${dados[i].email}</td>
+          <td class="coluna">${dados[i].acao}</td>
+          <td class="coluna sucesso"><span class="bolinha vermelha"></span><span style="color: #b30000;">Falha</span>
+          </td>
+        </tr>`
+      }
     }
+
+  }
+
+  function formatarData(data) {
+    const fuso = {
+      timeZone: 'America/Sao_Paulo',
+      hour12: false,
+      year: '2-digit',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    }
+    var data_formatada = new Date(data)
+    data_formatada = data_formatada.toLocaleDateString("pt-BR", fuso)
+    return data_formatada
   }
 
 

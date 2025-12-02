@@ -31,39 +31,39 @@ WHERE u.email = '${email}'
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql)
-    .then((resultado) => {
+        .then((resultado) => {
 
-                        var idLogAcesso = resultado[0].idLogAcesso;
-                        var fkUnidadeDeAtendimento = resultado[0].fkUnidadeDeAtendimento
-                        var idUsuario = resultado[0].idUsuario;
+            var idLogAcesso = resultado[0].idLogAcesso;
+            var fkUnidadeDeAtendimento = resultado[0].fkUnidadeDeAtendimento
+            var idUsuario = resultado[0].idUsuario;
 
-                            var inserirLogAcoes = `
+            var inserirLogAcoes = `
                                 INSERT INTO LogAcoes (fkUnidadeAtendimento, fkUsuario, fkLogAceso, acao)
                                 VALUES (${fkUnidadeDeAtendimento}, ${idUsuario}, ${idLogAcesso}, 'Realizando Login');
                             `
-                            return database.executar(inserirLogAcoes).then(() => resultado)
-                    }).
-                    catch(erro => {
-        console.error("Erro ao Inserir ação do usuário:", erro)
-        throw erro;
-    })
+            return database.executar(inserirLogAcoes).then(() => resultado)
+        }).
+        catch(erro => {
+            console.error("Erro ao Inserir ação do usuário:", erro)
+            throw erro;
+        })
 }
 
 // Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
 function cadastrar(nome, email, senha, cpf, codigo) {
     console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, email, senha, cpf, codigo);
-    
+
     // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
     //  e na ordem de inserção dos dados.
 
-        var consultaPermissao = `
+    var consultaPermissao = `
         SELECT fkUnidadeDeAtendimento, fkPermissoes
         FROM CodigoValidacaoUsuario
         WHERE codigo like '${codigo}'
         AND dataExpiracao >= NOW()
         AND statusCodigoValidacaoUsuario like 'Pendente';  
     `
-;
+        ;
 
     return database.executar(consultaPermissao)
         .then(resultado => {
@@ -97,103 +97,109 @@ function cadastrar(nome, email, senha, cpf, codigo) {
                         console.log("Executando o Log de acesso:\n" + inserirLogAcesso);
 
                         return database.executar(inserirLogAcesso)
-                        .then(() => {
-                            var pegarIdLog = `
+                            .then(() => {
+                                var pegarIdLog = `
                                 SELECT idLogAcesso FROM LogAcesso 
                                 WHERE fkUsuario = ${idUsuario}
                                 ORDER BY idLogAcesso DESC LIMIT 1;
                             `;
-                            return database.executar(pegarIdLog);
-                        })
-                        .then(resultadoLog => {
-                            var idLogAcesso = resultadoLog[0].idLogAcesso;
+                                return database.executar(pegarIdLog);
+                            })
+                            .then(resultadoLog => {
+                                var idLogAcesso = resultadoLog[0].idLogAcesso;
 
-                            var inserirLogAcoes = `
+                                var inserirLogAcoes = `
                                 INSERT INTO LogAcoes (fkUnidadeAtendimento, fkUsuario, fkLogAceso, acao)
                                 VALUES (${fkUnidadeDeAtendimento}, ${idUsuario}, ${idLogAcesso}, 'Criando Conta');
                             `;
-                            console.log("Executando LogAcoes:\n" + inserirLogAcoes);
+                                console.log("Executando LogAcoes:\n" + inserirLogAcoes);
 
-                            return database.executar(inserirLogAcoes);
-                        })
-                        .then(() => {
-                            var atualizarCodigo = `
+                                return database.executar(inserirLogAcoes);
+                            })
+                            .then(() => {
+                                var atualizarCodigo = `
                                 UPDATE CodigoValidacaoUsuario
                                 SET statusCodigoValidacaoUsuario = 'Aceito'
                                 WHERE codigo = '${codigo}';
                             `;
-                            console.log("Atualizando status do código...");
-                            return database.executar(atualizarCodigo);
-                        });
-                });
-        } else {
-            throw new Error("Código inválido ou expirado. Não foi possível cadastrar o usuário.");
-        }
-    })
-    .catch(erro => {
-        console.error("Erro ao cadastrar usuário:", erro);
-        throw erro;
-    });
+                                console.log("Atualizando status do código...");
+                                return database.executar(atualizarCodigo);
+                            });
+                    });
+            } else {
+                throw new Error("Código inválido ou expirado. Não foi possível cadastrar o usuário.");
+            }
+        })
+        .catch(erro => {
+            console.error("Erro ao cadastrar usuário:", erro);
+            throw erro;
+        });
 }
 function inseriracao(idUnidade, idUsuario, idLogAcesso, acao) {
-  var instrucaoSql = `INSERT INTO LogAcoes(fkUnidadeAtendimento,fkLogAceso,fkUsuario,acao) 
-  VALUES (${idUnidade},${idLogAcesso},"${idUsuario}","${acao}")`;
+    var instrucaoSql = ``;
+    if (acao) {
+        instrucaoSql = `INSERT INTO LogAcoes(fkUnidadeAtendimento,fkLogAceso,fkUsuario,acao,statusAcao) 
+  VALUES (${idUnidade},${idLogAcesso},"${idUsuario}","${acao}","Sucesso")`;
+    } else {
+        instrucaoSql = `INSERT INTO LogAcoes(fkUnidadeAtendimento,fkLogAceso,fkUsuario,acao,statusAcao) 
+  VALUES (${idUnidade},${idLogAcesso},"${idUsuario}","${acao}","Falha")`;
+    }
 
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 function buscarconvite(codigo) {
-  var instrucaoSql = `SELECT nomeSugerido,emailSugerido FROM CodigoValidacaoUsuario WHERE codigo = '${codigo}' AND statusCodigoValidacaoUsuario = 'Pendente'`;
+    var instrucaoSql = `SELECT nomeSugerido,emailSugerido FROM CodigoValidacaoUsuario WHERE codigo = '${codigo}' AND statusCodigoValidacaoUsuario = 'Pendente'`;
 
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 function verificarUsuario(email) {
-  var instrucaoSql = `SELECT idUsuario,nome,email,fkpermissoes FROM Usuario WHERE email = '${email}'`;
+    var instrucaoSql = `SELECT idUsuario,nome,email,fkpermissoes FROM Usuario WHERE email = '${email}'`;
 
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 function atualizarcodigorecuperacao(codigo, fkpermissoes, idUsuario) {
-  var instrucaoSql = `UPDATE CodigoRecuperacaoSenha SET codigo = '${codigo}', dataCriacao = default WHERE fkUsuario = '${idUsuario}' AND fkPermissoes = ${fkpermissoes}`;
+    var instrucaoSql = `UPDATE CodigoRecuperacaoSenha SET codigo = '${codigo}', dataCriacao = default WHERE fkUsuario = '${idUsuario}' AND fkPermissoes = ${fkpermissoes}`;
 
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 function inserircodigorecuperacao(codigo, fkpermissoes, idUsuario) {
-  var instrucaoSql = `INSERT INTO CodigoRecuperacaoSenha VALUES
+    var instrucaoSql = `INSERT INTO CodigoRecuperacaoSenha VALUES
 (DEFAULT,'${fkpermissoes}','${idUsuario}',"${codigo}",DEFAULT);`;
 
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 function verificarCodigo(codigo) {
-  var instrucaoSql = `select * FROM CodigoRecuperacaoSenha WHERE datacriacao >= (now() - INTERVAL 20 MINUTE) AND codigo = '${codigo}';`;
+    var instrucaoSql = `select * FROM CodigoRecuperacaoSenha WHERE datacriacao >= (now() - INTERVAL 20 MINUTE) AND codigo = '${codigo}';`;
 
-  return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql);
 }
 function atualizarsenha(senha, idUsuario) {
-  var instrucaoSql = `UPDATE Usuario SET senha = sha2('${senha}',256) WHERE idUsuario = '${idUsuario}'`;
+    var instrucaoSql = `UPDATE Usuario SET senha = sha2('${senha}',256) WHERE idUsuario = '${idUsuario}'`;
 
-  return database.executar(instrucaoSql);
-} 
+    return database.executar(instrucaoSql);
+}
 
 function puxardadosuser(id) {
     var instrucaoSql = `select * from Usuario where idUsuario = ${id} `;
     return database.executar(instrucaoSql);
-    
-    
+
+
 }
 function updatedados(idUsuario, nome, email, cpf) {
-     var instrucaoSql = `update Usuario set nome = '${nome}',email = '${email}', cpf = '${cpf}' where idUsuario = ${idUsuario} ; `
-     return database.executar(instrucaoSql);
+    var instrucaoSql = `update Usuario set nome = '${nome}',email = '${email}', cpf = '${cpf}' where idUsuario = ${idUsuario} ; `
+    return database.executar(instrucaoSql);
 }
 function excluir_conta(idUsuario) {
-     var instrucaoSql = `Delete from Usuario where idUsuario = ${idUsuario}; `
-     return database.executar(instrucaoSql);
+    var instrucaoSql = `Delete from Usuario where idUsuario = ${idUsuario}; `
+    return database.executar(instrucaoSql);
 }
 
 function validacaosenha(email, senha) {
     console.log('select')
     var instrucaoSql = `select idUsuario from Usuario where email = '${email}'and senha = sha2('${senha}' ,256) limit 1;    `;
     return database.executar(instrucaoSql);
-    
-    
+
+
 }
 
 module.exports = {
