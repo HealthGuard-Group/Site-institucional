@@ -770,13 +770,12 @@
             ram.innerHTML = `Máquina Sem Dados`
             cpu.innerHTML = `Máquina Sem Dados`
             disco.innerHTML = `Máquina Inativa`
-
-
             tempoatvd.innerHTML = `<div style="color:#b30000; font-weight:700;">Máquina Inativa</div>`;
-
-
             redeok.classList.remove("status-dot", "ok")
             redeok.classList.add("status-dot", "alerta-grave")
+            cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
+              ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
+              disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
             status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
           }
 
@@ -792,6 +791,11 @@
               ram.innerHTML = `Máquina Inativa`
               disco.innerHTML = `Máquina Inativa`
               cpu.innerHTML = `Máquina inativa`
+              tempoatvd.innerHTML = `<div style="color:color:#b30000">Máquina inativa</div>`
+              cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
+              ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
+              disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
+
               redeok.classList.remove("status-dot", "ok")
               redeok.classList.add("status-dot", "alerta-grave")
               status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
