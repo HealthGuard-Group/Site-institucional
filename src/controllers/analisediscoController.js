@@ -48,6 +48,30 @@ function buscarDadosDisco(req, res) {
     }
 }
 
+function puxarDadosGraficoUsoDisco(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        analiseramModel.puxarDadosGraficoUsoDisco(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar a dados de USO DO DISCO! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 // function buscarmetricasrammaquina(req, res) {
 //     var idDac = req.params.idDac;
 //     if (idDac == undefined) {
@@ -96,29 +120,6 @@ function buscarDadosDisco(req, res) {
 //     }
 // }
 
-// function puxardadosgraficoRAM(req, res) {
-//     var idDac = req.params.idDac;
-//     if (idDac == undefined) {
-//         res.status(400).send("Seu idDac está undefined!");
-//     } else {
-
-//         analiseramModel.puxardadosgraficoRAM(idDac)
-//             .then(
-//                 function (resultado) {
-//                     res.json(resultado);
-//                 }
-//             ).catch(
-//                 function (erro) {
-//                     console.log(erro);
-//                     console.log(
-//                         "\nHouve um erro ao puxar a dados de RAM e SWAP! Erro: ",
-//                         erro.sqlMessage
-//                     );
-//                     res.status(500).json(erro.sqlMessage);
-//                 }
-//             );
-//     }
-// }
 
 // function atualizardadosgraficoRAM(req, res) {
 //     var idDac = req.params.idDac;

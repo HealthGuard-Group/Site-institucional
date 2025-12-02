@@ -232,6 +232,11 @@
 <script src="../js/menu-lateral.js"></script>
 
 <script>
+    // Variáveis auxiliares
+    var porcentagemDisco; // % em uso
+    var porcentagemDisponivelDisco;
+    var dadosParticoes;
+
     function puxarNomeDaMaquina() {
         var idDac = sessionStorage.ID_DAC
         fetch(`/analisedisco/buscarnomemaquina/${idDac}`, {
@@ -264,74 +269,92 @@
                 var kpi_espaco_disponivel = document.getElementById("dado-espaco-disponivel")
                 var kpi_iops = document.getElementById("dado-iops")
                 var kpi_capacidade_total = document.getElementById("dado-capacidade-total")
+                console.log("Atualizando Dados")
                 for (let i = 3; i >= 0; i--) {
                     if (resposta[i].fkMedicoesDisponiveis == 10) {
-                        kpi_porcentagem_disco.innerHTML = Number(resposta[i].medidaCapturada).toFixed(1) + "%"
-                        var porcentagemDisco = resposta[i].medidaCapturada
+                        kpi_porcentagem_disco.innerHTML = truncarDecimal(Number(resposta[i].medidaCapturada), 1) + "%"
+                        porcentagemDisco = resposta[i].medidaCapturada
+                        porcentagemDisponivelDisco = 100.0 - porcentagemDisco;
+
+                        console.log("% uso", porcentagemDisco)
+                        console.log("% disponivel", porcentagemDisponivelDisco)
+                        plotarGraficoUsoDisco() 
                     } else if (resposta[i].fkMedicoesDisponiveis == 14) {
-                        kpi_espaco_disponivel.innerHTML = Number(resposta[i].medidaCapturada).toFixed(1) + " GB"
+                        kpi_espaco_disponivel.innerHTML = truncarDecimal(Number(resposta[i].medidaCapturada), 1) + " GB"
                         var espacoDisponivel = resposta[i].medidaCapturada
                     } else if (resposta[i].fkMedicoesDisponiveis == 15) {
                         if (resposta[i].medidaCapturada >= 1000) {
-                            kpi_iops.innerHTML = Number(resposta[i].medidaCapturada / 1000).toFixed(1) + "K/s"
+                            kpi_iops.innerHTML = truncarDecimal(Number(resposta[i].medidaCapturada / 1000), 1) + "K/s"
                         } else {
-                            kpi_iops.innerHTML = Number(resposta[i].medidaCapturada).toFixed(0) + "/s"
+                            kpi_iops.innerHTML = Math.trunc(Number(resposta[i].medidaCapturada)) + "/s"
                         }
                     } else if (resposta[i].fkMedicoesDisponiveis == 16) {
-                        // PARTIÇÕES
+                        console.log("oiiiii")
+                            console.log("ANTES",resposta[i].medidaCapturada)
+                            dadosParticoes = JSON.parse(resposta[i]["medidaCapturada"])
+                            console.log("PARTIÇÕES", dadosParticoes)
                     }
                     var capacidadeTotal = espacoDisponivel / (1 - porcentagemDisco / 100);
-                    kpi_capacidade_total.innerHTML = capacidadeTotal.toFixed(1) + " GB";
+                    kpi_capacidade_total.innerHTML = Math.trunc(capacidadeTotal) + " GB";
                 }
             })
             .catch(function (resposta) {
                 console.log(`Erro no catch: ${resposta}`);
             });
     }
-</script>
 
+    
+    function plotarGraficoUsoDisco() {
+        const ctx = document.getElementById('myChart1-pizza').getContext('2d');
+        console.log("Etapa plotar gráfico")
+        console.log(porcentagemDisco)
+        const data = {
+            labels: ['Espaço disponível (%)', 'Espaço usado (%)'],
+            datasets: [{
+                data: [porcentagemDisponivelDisco, porcentagemDisco],
+                backgroundColor: [
+                    '#05cd49',
+                    'rgba(27, 53, 89, 1)',
+                ],
+                borderWidth: 1
+            }]
+        };
 
-
-<script>
-
-    const ctx = document.getElementById('myChart1-pizza').getContext('2d');
-
-    const data = {
-        labels: ['Espaço usado', 'Espaço disponível'],
-        datasets: [{
-            data: [78, 30],
-            backgroundColor: [
-                'rgba(27, 53, 89, 1)',
-                '#05cd49',
-            ],
-            borderWidth: 1
-        }]
-    };
-
-    const options = {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                position: 'right', // legenda ao lado
-                labels: {
-                    // font: {
-                    //     size: 14
-                    // },
-                    color: '#333'
-                }
+        const options = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right', // legenda ao lado
+                    labels: {
+                        // font: {
+                        //     size: 14
+                        // },
+                        color: '#333'
+                    },
+                    reverse: true
+                },
             },
-        },
-        layout: {
-            padding: 20
-        },
-    };
+            layout: {
+                padding: 20
+            },
+        };
 
-    new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: options
-    });
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: data,
+            options: options
+        });
+    }
+
+
+    function truncarDecimal(numero, casasDecimais) {
+        const fator = Math.pow(10, casasDecimais); // Calcula o fator de multiplicação
+        const resultado = Math.floor(numero * fator) / fator;
+        return resultado;
+    }
+
 </script>
 
 <script>
