@@ -90,14 +90,14 @@
 
             <div class="kpis" id="Processos">
                 <b> Processos Ativos </b>
-                <div class="dados-kpi" id="processosKpi">0</div>
+                <div class="dados-kpi" id="processosKpi">Carregando...</div>
 
             </div>
 
             <div class="kpis" id="frequencia">
                 <b>Threads em execução </b>
                 <div class="dados-kpi">
-                    <span id="mhz_max">0</span>
+                    <span id="mhz_max">Carregando...</span>
                 </div>
 
 
@@ -105,7 +105,7 @@
 
             <div class="kpis" id="qtd-alertas">
                 <b> Alertas dos ultimos 7 dias </b>
-                <div class="dados-kpi" id="alertasKpi">0</div>
+                <div class="dados-kpi" id="alertasKpi">Carregando...</div>
 
             </div>
 
@@ -123,7 +123,7 @@
             <div id="Alertas">
                 <header>Ultimos alertas de CPU</header>
                 <div id="blocos">
-                    
+                    Carregando...
 
                 </div>
 
@@ -164,6 +164,7 @@
             nome_maquina.innerHTML = `${resposta[0].nomeIdentificacao}`
             fkunidade = resposta[0].fkUnidadeDeAtendimento
             puxarmetricas();
+            puxar_primeiros();
             atualizarDados(fkunidade)
             console.log(resposta[0].nomeIdentificacao)
             if (resposta[0].statusDac == "Alerta") {
@@ -411,6 +412,55 @@
         return formatada.replace(/\//g, '-').replace(',', '');
     }
 
+function puxar_primeiros() {
+ fetch(`/analisecpu/iniciarpuxarporNucleo/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                if (!resposta.ok) {
+                    throw new Error('Erro na requisição');
+                }
+                return resposta.json();
+            })
+            .then(resposta => {
+                for (let i = 0; i < resposta.length; i++) {
+                console.log("Array:", resposta);
+                var string_nucleo = resposta[i].medidaCapturada
+                var hora = formatarData(resposta[i].dataCaptura)
+                var hora_formatada = hora
+                var array_nucleo = JSON.parse(string_nucleo)
+                console.log(array_nucleo)
+
+                array_nucleo.forEach((usoCpu, index) => {
+
+                    if (!seriesDados[index]) {
+                        seriesDados[index] = {
+                            name: 'Núcleo ' + (index + 1),
+                            data: []
+                        };
+                    }
+                    seriesDados[index].data.push({
+                        x: hora_formatada,
+                        y: usoCpu
+                    });
+
+                    if (seriesDados[index].data.length > 30) {
+                        seriesDados[index].data.shift();
+                    }
+                });
+
+                chartHeatmap.updateSeries(seriesDados);
+                }
+
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
+            });
+
+
+
+}
+    
     var seriesDados = [];
 
     function renderizarGraficos(atencao_inicio, atencao_fim, alerta_inicio, alerta_fim) {

@@ -94,6 +94,24 @@ function puxarDadosAlertas(fkDAC) {
     return database.executar(instrucaoSql)
 }
 
+function iniciarpuxarporNucleo(fkDAC) {
+    var instrucaoSql = ` 
+     SELECT 
+    a.nomeFantasia, 
+    c.nomeIdentificacao, 
+    b.nomeDaMedicao, 
+   d.medidaCapturada,
+    d.dataCaptura  
+FROM 
+    UnidadeDeAtendimento AS a
+JOIN 
+    Dac AS c ON a.idUnidadeDeAtendimento = c.fkUnidadeDeAtendimento
+JOIN 
+    Leitura AS d ON c.idDac = d.fkDac
+JOIN 
+    MedicoesDisponiveis AS b ON d.fkMedicoesDisponiveis = b.idMedicoesDisponiveis where d.fkDac = ${fkDAC} and  b.nomeDaMedicao = 'Porcentagem CPU - nucleo' order by d.dataCaptura asc limit 30;`
+    return database.executar(instrucaoSql)
+}
 
 module.exports = {
     puxarProcessos,
@@ -102,5 +120,6 @@ module.exports = {
     puxarQtdAlertas,
     puxarPorNucleo,
     puxarMetricas,
-    puxarDadosAlertas
+    puxarDadosAlertas,
+    iniciarpuxarporNucleo
 };

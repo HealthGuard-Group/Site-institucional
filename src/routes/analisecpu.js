@@ -26,5 +26,10 @@ router.get(`/puxarALERTAS/:fkdac`, function (req, res) {
     analisecpuController.puxarDadosAlertas(req, res);
 });
 
+router.get(`/iniciarpuxarporNucleo/:fkdac`, function (req, res) {
+    analisecpuController.iniciarpuxarporNucleo(req, res);
+});
+
+
 
 module.exports = router;
