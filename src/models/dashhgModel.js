@@ -45,7 +45,8 @@ function chamados(){
     var instrucaoSql = `
     
     SELECT COUNT(CASE WHEN acao = 'Abrindo chamado' THEN 1 END) AS chamados
-    FROM logAcoes;
+    FROM logAcoes
+    WHERE horarioDaAcao >= now() - interval 1 HOUR;
     
     `
     return database.executar(instrucaoSql)
@@ -84,26 +85,20 @@ function rankingChamados(){
     SELECT 
     ua.nomeFantasia AS Nome,
     COUNT(DISTINCT CASE 
-    WHEN la.acao LIKE '%chamado%' OR la.acao LIKE '%Chamado%' 
-    THEN la.idLogAcoes 
+        WHEN la.acao LIKE '%chamado%' OR la.acao LIKE '%Chamado%' 
+        THEN la.idLogAcoes 
     END) AS Chamados,
-    COUNT(DISTINCT u.idUsuario) AS Usuarios
-    FROM UnidadeDeAtendimento ua
-    LEFT JOIN Dac d 
-    ON d.fkUnidadeDeAtendimento = ua.idUnidadeDeAtendimento
-    LEFT JOIN LogAcoes la 
+    COUNT(DISTINCT lu.fkUsuario) AS Usuarios
+FROM UnidadeDeAtendimento ua
+LEFT JOIN Dac d 
+    ON ua.idUnidadeDeAtendimento = d.fkUnidadeDeAtendimento
+LEFT JOIN LogAcoes la 
     ON la.fkUnidadeAtendimento = ua.idUnidadeDeAtendimento
-    LEFT JOIN Usuario u
-    ON u.fkPermissoes IN (
-    SELECT cv.fkPermissoes 
-    FROM CodigoValidacaoUsuario cv
-    WHERE cv.fkUnidadeDeAtendimento = ua.idUnidadeDeAtendimento
-    AND cv.statusCodigoValidacaoUsuario = 'Aceito'
-    )
-    WHERE u.statusUsuario = 'Ativo'
-    GROUP BY ua.idUnidadeDeAtendimento, ua.nomeFantasia
-    ORDER BY Chamados DESC
-    limit 3;
+LEFT JOIN LogAcesso lu
+    ON lu.fkUnidadeDeAtendimento = ua.idUnidadeDeAtendimento
+GROUP BY ua.idUnidadeDeAtendimento, ua.nomeFantasia
+ORDER BY Chamados DESC
+LIMIT 3;
     
     `
 
@@ -114,5 +109,8 @@ module.exports = {
   empresasCadastradas,
   quantidadeUsuarios,
   percentual,
-  usuariosDia
+  usuariosDia,
+  chamados,
+  rankingAlertas,
+  rankingChamados
 };

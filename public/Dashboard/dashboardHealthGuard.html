@@ -11,13 +11,15 @@
   <link rel="stylesheet" href="../css/menu_bar.css">
   <link rel="stylesheet" href="../css/dashboardHealthGuard.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script src="../js/validarSessao.js"></script>
 
 </head>
 
 <body onload="">
 
+    
+
   <div class="menu-lateral">
+
             <div class="pai-icones-superiores">
                 <div id="logo">
                     <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
@@ -25,42 +27,39 @@
                 </div>
                 <br>
                 <div class="icone-box" id="monitoramento_redirecionamento">
-                    <img src="../assets/imgs/icone_monitoramento.png" alt="Foto" class="icone-menu-1">
-                    <div class="texto-icone oculto">Monitoramento</div>
                 </div>
                 <hr class="separador">
                 <div class="icone-box">
-                    <img src="../assets/imgs/icone_gestao_usuarios.png" alt="Foto" class="icone-menu-2">
-                    <div class="texto-icone oculto">Gestão de usuários</div>
                 </div>
                 <hr class="separador">
                 <div class="icone-box">
-                    <img src="../assets/imgs/icone_alerta.png" alt="Foto" class="icone-menu-3">
-                    <div class="texto-icone oculto">Histórico de Alertas</div>
                 </div>
                 <hr class="separador">
                 <div class="icone-box">
-                    <img src="../assets/imgs/icone_suporte.png" alt="Foto" class="icone-menu-4">
-                    <div class="texto-icone oculto">Suporte</div>
                 </div>
             </div>
             <div class="pai-icones-inferiores">
                 <hr class="separador-forte">
                 <div class="icone-box-inferior" id="tela_perfil">
-                    <img src="../assets/imgs/icone_perfil.png" alt="Foto" class="icone-menu-5">
-                    <div class="texto-icone oculto">Perfil</div>
+                    <div class="texto-icone oculto"></div>
                 </div>
                 <hr class="separador">
                 <div class="icone-box-inferior" id="sair_conta_redirecionamento">
                     <img src="../assets/imgs/icone_log-out.png" alt="Foto" class="icone-menu-6">
-                    <div class="texto-icone oculto">Sair da conta</div>
+                    <div class="texto-icone oculto" id="bt-sair" onclick="sair()"style="cursor:pointer;">Sair da conta</div>
                 </div>
             </div>
         </div>
 
 
+       
 <div class="menu">
-<h2>Visão do Negócio</h2>
+<div class="header">
+          <div class="header-esquerda">
+            <img src="../assets/imgs/seta-esquerda.png" id="bt-voltar" onclick="history.back()"style="cursor:pointer;">
+            <span id="">Visão do Negócio</span>
+        </div>
+        </div>
 
 
 <div class="kpi-container">
@@ -78,7 +77,7 @@
     </div>
     <div class="kpi-box">
         <h3>Total de chamados abertos nos últimos 7 dias pelos usuários</h3>
-        <p>5</p>
+        <p id="kpi4"></p>
     </div>
 
 </div>
@@ -100,15 +99,15 @@
     </div>
 
     <div class="linha">
-        <span>1°</span><span>Unidade Vila Sonia</span><span>176</span><span>98</span>
+        <span>1°</span><span id="alertasUnidade1"></span><span id="alertas1"></span><span id="maquinas1"></span>
     </div>
 
     <div class="linha">
-        <span>2°</span><span>Unidade Vila Sonia</span><span>121</span><span>12</span>
+        <span>2°</span><span id="alertasUnidade2"></span><span id="alertas2"></span><span id="maquinas2"></span>
     </div>
 
     <div class="linha">
-        <span>3°</span><span>Unidade Vila Sonia</span><span>69</span><span>110</span>
+        <span>3°</span><span id="alertasUnidade3"></span><span id="alertas3"></span><span id="maquinas3"></span>
     </div>
 
     <h4 class="h42">Unidades com mais chamados nesse mês</h4>
@@ -121,15 +120,15 @@
     </div>
 
     <div class="linha">
-        <span>1°</span><span>Unidade Vila Sonia</span><span>12</span><span>90</span>
+        <span>1°</span><span id="chamadosUnidade1"></span><span id="chamados1"></span><span id="usuarios1"></span>
     </div>
 
     <div class="linha">
-        <span>2°</span><span>Unidade Vila Sonia</span><span>32</span><span>88</span>
+        <span>2°</span><span id="chamadosUnidade2"></span><span id="chamados2"></span><span id="usuarios2"></span>
     </div>
 
     <div class="linha">
-        <span>3°</span><span>Unidade Vila Sonia</span><span>61</span><span>71</span>
+        <span>3°</span><span id="chamadosUnidade3"></span><span id="chamados3"></span><span id="usuarios3"></span>
     </div>
 
 </div>
@@ -138,10 +137,17 @@
 
 </div>
 
+  <script src="../js/menu-lateral.js"></script>
 
 <script>
  
     var usuariostotal = 0;
+
+        function sair() {
+        window.location.href = "../index.html"
+    }
+
+    function atualizar(){
      
     fetch(`/dashhg/empresasCadastradas/`, {
         method: "GET",
@@ -176,8 +182,68 @@
             })
         .catch(err => console.error("Erro no fetch:", err))
 
+        fetch(`/dashhg/chamados/`, {
+        method: "GET",
+    })
+        .then(resposta => resposta.json())
+        .then(dados => {
+            console.log("Resposta da API:", dados[0])
+            kpi4.innerHTML = dados[0].chamados
+            })
+        .catch(err => console.error("Erro no fetch:", err))
+
+        fetch(`/dashhg/rankingAlertas/`, {
+        method: "GET",
+    })
+        .then(resposta => resposta.json())
+        .then(dados => {
+            console.log("Resposta da API:", dados[0])
+            alertasUnidade1.innerHTML = dados[0].nome
+            alertas1.innerHTML = dados[0].alertas
+            maquinas1.innerHTML = dados[0].maquinas
+
+            alertasUnidade2.innerHTML = dados[1].nome
+            alertas2.innerHTML = dados[1].alertas
+            maquinas2.innerHTML = dados[1].maquinas
+
+            alertasUnidade3.innerHTML = dados[2].nome
+            alertas3.innerHTML = dados[2].alertas
+            maquinas3.innerHTML = dados[2].maquinas
+            })
+        .catch(err => console.error("Erro no fetch:", err))
+
+        fetch(`/dashhg/rankingChamados/`, {
+        method: "GET",
+    })
+        .then(resposta => resposta.json())
+        .then(dados => {
+            console.log("Resposta da API:", dados[0])
+            chamadosUnidade1.innerHTML = dados[0].Nome
+            chamados1.innerHTML = dados[0].Chamados
+            usuarios1.innerHTML = dados[0].Usuarios
+
+            chamadosUnidade2.innerHTML = dados[1].Nome
+            chamados2.innerHTML = dados[1].Chamados
+            usuarios2.innerHTML = dados[1].Usuarios
+
+            chamadosUnidade3.innerHTML = dados[2].Nome
+            chamados3.innerHTML = dados[2].Chamados
+            usuarios3.innerHTML = dados[2].Usuarios
+            })
+        .catch(err => console.error("Erro no fetch:", err))
             
     
+
+
+
+
+
+
+
+
+
+
+
    fetch(`/dashhg/usuariosDia`, {
     method: "GET"
     })
@@ -221,7 +287,7 @@
                         backgroundColor: '#1a1a1a',
                         borderColor: '#1a1a1a',
                         fill: false,
-                        tension: 0.2
+                        tension: 0.5
                         
                     }]
                 },
@@ -235,8 +301,13 @@
             })
         })
         .catch(erro => console.error("Erro ao carregar gráfico:", erro))
+    
+    }
 
-
+    atualizar()
+setInterval(() => {
+    atualizar()
+}, 2000);
 </script>
 
 </body>

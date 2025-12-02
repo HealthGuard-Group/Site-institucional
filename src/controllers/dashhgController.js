@@ -77,9 +77,72 @@ dashboardHGModel.usuariosDia()
         }
       );
     }
+
+function chamados(req, res){
+dashboardHGModel.chamados()
+      .then(
+        function (resultado) {
+          
+          res.status(200).json(resultado)
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao inserir log! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage)
+        }
+      );
+    }
+
+
+    
+function rankingAlertas(req, res){
+dashboardHGModel.rankingAlertas()
+      .then(
+        function (resultado) {
+          
+          res.status(200).json(resultado)
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao inserir log! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage)
+        }
+      );
+    }
+
+    function rankingChamados(req, res){
+    dashboardHGModel.rankingChamados()
+      .then(
+        function (resultado) {
+          
+          res.status(200).json(resultado)
+        }
+      ).catch(
+        function (erro) {
+          console.log(erro);
+          console.log(
+            "\nHouve um erro ao inserir log! Erro: ",
+            erro.sqlMessage
+          );
+          res.status(500).json(erro.sqlMessage)
+        }
+      );
+    }
+  
 module.exports = {
   empresasCadastradas,
   quantidadeUsuarios,
   percentual,
-  usuariosDia
+  usuariosDia,
+  chamados,
+  rankingAlertas,
+  rankingChamados
 }
