@@ -56,7 +56,7 @@ function buscarAlertaSemana(req, res) {
         return;
     }
 
-    dashAlertasSemanaisModel.buscarRankingMaquinas(idUnidadeAtendimento)
+    dashAlertasSemanaisModel.buscarAlertaSemana(idUnidadeAtendimento)
         .then(resultado => {
             res.json(resultado);
         })

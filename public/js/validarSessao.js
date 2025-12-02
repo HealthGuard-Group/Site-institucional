@@ -198,7 +198,8 @@ function atualizarAlertasSemanais(){
         puxarKpisSemana()
         atualizarGraficoPizza(fkUnidade)
         atualizarGraficoRanking(fkUnidade)
-    },6000 )
+        atualizarGraficoLinha(fkUnidade)
+    },60000 )
 }
 
 function telaLogAcessos() {
