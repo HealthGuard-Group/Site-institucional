@@ -38,6 +38,78 @@ function usuariosDia(){
     order by dia;`;
     return database.executar(usuariosDiasSql)
 }
+
+
+
+function chamados(){
+    var instrucaoSql = `
+    
+    SELECT COUNT(CASE WHEN acao = 'Abrindo chamado' THEN 1 END) AS chamados
+    FROM logAcoes;
+    
+    `
+    return database.executar(instrucaoSql)
+
+}
+
+
+function rankingAlertas(){
+    var instrucaoSql = `
+    
+    SELECT 
+    ROW_NUMBER() OVER (ORDER BY COUNT(a.idAlerta) DESC) AS posicao,
+    ua.nomeFantasia AS nome,
+    COUNT(a.idAlerta) AS alertas,
+    COUNT(DISTINCT d.idDac) AS maquinas
+	FROM UnidadeDeAtendimento ua
+	JOIN Dac d 
+    ON d.fkUnidadeDeAtendimento = ua.idUnidadeDeAtendimento
+	LEFT JOIN Alerta a 
+    ON a.fkDac = d.idDac
+    AND DATE(a.dataInicio) = CURDATE()  
+	GROUP BY ua.idUnidadeDeAtendimento, ua.nomeFantasia
+	ORDER BY alertas DESC
+	LIMIT 3;
+    `
+
+    return database.executar(instrucaoSql)
+
+}
+
+
+
+function rankingChamados(){
+    var instrucaoSql = `
+    
+    SELECT 
+    ua.nomeFantasia AS Nome,
+    COUNT(DISTINCT CASE 
+    WHEN la.acao LIKE '%chamado%' OR la.acao LIKE '%Chamado%' 
+    THEN la.idLogAcoes 
+    END) AS Chamados,
+    COUNT(DISTINCT u.idUsuario) AS Usuarios
+    FROM UnidadeDeAtendimento ua
+    LEFT JOIN Dac d 
+    ON d.fkUnidadeDeAtendimento = ua.idUnidadeDeAtendimento
+    LEFT JOIN LogAcoes la 
+    ON la.fkUnidadeAtendimento = ua.idUnidadeDeAtendimento
+    LEFT JOIN Usuario u
+    ON u.fkPermissoes IN (
+    SELECT cv.fkPermissoes 
+    FROM CodigoValidacaoUsuario cv
+    WHERE cv.fkUnidadeDeAtendimento = ua.idUnidadeDeAtendimento
+    AND cv.statusCodigoValidacaoUsuario = 'Aceito'
+    )
+    WHERE u.statusUsuario = 'Ativo'
+    GROUP BY ua.idUnidadeDeAtendimento, ua.nomeFantasia
+    ORDER BY Chamados DESC
+    limit 3;
+    
+    `
+
+    return database.executar(instrucaoSql)
+
+}
 module.exports = {
   empresasCadastradas,
   quantidadeUsuarios,
