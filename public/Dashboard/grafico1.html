@@ -222,19 +222,16 @@
 
         <div class="header">
           <div class="header-esquerda">
-            <img src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
-            <span id="pagina-monitoramento">Monitoramento</span>
-            <img src="../assets/imgs/botao_seta_preto.png" alt="">
+            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+            <a href="monitoramento.html">
+                <span id="nome_MaquinaDac ">Monitoramento</span>
+            </a>
+           <img src="../assets/imgs/botao_seta_preto.png" alt="">
 
             <span id="nome_MaquinaDac"></span>
             <span class="status alerta" id="status_MaquinaDac"></span>
           </div>
-
-          <input type="checkbox" id="btn_descricao">
-          <!-- <label class="link-descricao" for="btn_descricao">Exibir descrição</label> -->
-          <div class="descricao">
-            <p id="descricao_MaquinaDac"></p>
-          </div>
+          
         </div>
 
         <div onclick="excluir_maquina()" class="botao-excluir-maquina">
@@ -347,8 +344,8 @@
             </select>
 
             <div class="config-alertas-status">
-              <span class="status-dot alerta-critico"></span> Alerta Grave
-              <span class="status-dot alerta-grave"></span> Em atenção
+              <span class="status-dot alerta-critico"></span> Alerta
+              <span class="status-dot alerta-grave"></span> Atenção
               <span class="status-dot ok"></span> OK
             </div>
 

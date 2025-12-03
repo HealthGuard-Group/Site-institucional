@@ -437,7 +437,7 @@
         <div class="pai-maquinas" id="div_maquinas">
         <div class="maquina-box">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
+                    <div class="nome-maquina" >
                         Maquina 3
                     </div>
                     <div class="texto-marcacao-maquina">
@@ -464,7 +464,7 @@
         var elementoClicado = e.target;
         if (elementoClicado.closest('.maquina-box')) {
             var maquina = elementoClicado.closest('.maquina-box');
-            var nomeMaquina = maquina.querySelector('h3').textContent;
+            var nomeMaquina = maquina.querySelector('.nome-maquina').textContent;
             console.log(maquina)
             console.log(nomeMaquina.replaceAll(" ", ""))
             inserirAcao(`Acessando ${nomeMaquina.replaceAll(" ", "")}`);

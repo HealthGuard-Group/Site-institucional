@@ -17,11 +17,10 @@ function buscarKpisSemana(idUnidadeAtendimento) {
 
 function buscarAlertasPorSeveridade(idUnidadeAtendimento) {
     var instrucao = `
-        SELECT ma.nomeNivel AS nivel, COUNT(*) AS total
-        FROM Alerta a JOIN MedicoesSelecionadas ms ON a.fkMedicoesSelecionadas=ms.idMedicoesSelecionadas AND a.fkDac=ms.fkDac AND a.fkUnidadeDeAtendimento=ms.fkUnidadeDeAtendimento
-        JOIN MetricaAlerta ma ON ms.fkMedicoesDisponiveis=ma.fkMedicoesDisponiveis AND ms.fkUnidadeDeAtendimento=ma.fkUnidadeDeAtendimento
-        WHERE a.fkUnidadeDeAtendimento=${idUnidadeAtendimento} AND a.dataInicio>=DATE_SUB(CURDATE(),INTERVAL 7 DAY)
-        GROUP BY ma.nomeNivel;
+  SELECT nomeAlerta AS nivel, COUNT(*) AS total
+  FROM Alerta WHERE fkUnidadeDeAtendimento = ${idUnidadeAtendimento}
+  AND dataInicio >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)
+  AND nomeAlerta IN ('Atenção', 'Alerta') GROUP BY nomeAlerta;
     `;
     return database.executar(instrucao);
 }
