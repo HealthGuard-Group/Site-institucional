@@ -1,9 +1,13 @@
+html {
+    background-color: #f8f8f8;
+}
+
 #alertas_redirecionamento {
     background-color: #9a1522;
 }
 
 .header {
-    width: 100%;
+    width: 90%;
     background-color: #fff;
     display: flex;
     align-items: center;
@@ -74,6 +78,7 @@ color: #9a1522;}
     height: 7vh;
     justify-content: start;
     align-items: center;
+    margin-top: 1%;
     margin-bottom: 1%;
     gap: 1vw;
 }
@@ -119,7 +124,7 @@ color: #9a1522;}
 
 .tabela {
     background-color: white;
-    height: 66vh;
+    height: 56vh;
     width: 90%;
     overflow: auto;
     color: rgb(69, 69, 69);
