@@ -143,33 +143,33 @@
 </html>
 
 <script>
-div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
-var data_visualizacao;
+    div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
+    var data_visualizacao;
 
 
-function registrarLogAcao(acao, descricao) {
-    var variaveis = puxarVariaveis();
-    fetch(`/logs/registrar`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            idUsuario: variaveis.idUsuario,
-            acao: acao,
-            descricao: descricao
-        }),
-    })
-    .then(resposta => resposta.json())
-    .then(resposta => console.log("Log registrado:", resposta))
-    .catch(err => console.log("Erro ao registrar log:", err));
-}
+    function registrarLogAcao(acao, descricao) {
+        var variaveis = puxarVariaveis();
+        fetch(`/logs/registrar`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                idUsuario: variaveis.idUsuario,
+                acao: acao,
+                descricao: descricao
+            }),
+        })
+            .then(resposta => resposta.json())
+            .then(resposta => console.log("Log registrado:", resposta))
+            .catch(err => console.log("Erro ao registrar log:", err));
+    }
 
-function puxarAlertasGeral() {
-    var variaveis = puxarVariaveis()
-    console.log(variaveis)
-    variaveis = variaveis.idUnidadeAtendimento
-    tabela_alertas.innerHTML = `
+    function puxarAlertasGeral() {
+        var variaveis = puxarVariaveis()
+        console.log(variaveis)
+        variaveis = variaveis.idUnidadeAtendimento
+        tabela_alertas.innerHTML = `
         <tr id="titulo-tabela">
             <td id="tr-tipo-alerta">Tipo de alerta</td>
             <td id="tr-monitoramento-alerta">Monitoramento</td>
@@ -181,53 +181,82 @@ function puxarAlertasGeral() {
             <td id="tr-verificador-alerta">Verificador</td>
             <td id="tr-acoes-alerta">Ação</td>
         </tr>`
-    fetch(`/alertasgeral/puxarAlertasGeral/${variaveis}`, {
-        method: "GET",
-    })
-        .then(resposta => resposta.json())
-        .then(resposta => {
-            console.log("SELECT DO BANCO",resposta)
-            var dados_filtrados = filtrar(resposta)
-            console.log("DADOS FILTRADOS",dados_filtrados)
-            atualizarTabela(dados_filtrados)
+        fetch(`/alertasgeral/puxarAlertasGeral/${variaveis}`, {
+            method: "GET",
         })
-        .catch(function (resposta) {
-            console.log(`Erro no catch: ${resposta}`);
-        });
+            .then(resposta => resposta.json())
+            .then(resposta => {
+                console.log("SELECT DO BANCO", resposta)
+                var dados_filtrados = filtrar(resposta)
+                console.log("DADOS FILTRADOS", dados_filtrados)
+                atualizarTabela(dados_filtrados)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+    function atualizarTabela(dados) {
+        console.log("Respota entrando na função:", dados)
+        for (let i = 0; i < dados.length; i++) {
+            console.log("1")
+            let data_inicio = new Date(dados[i].dataInicio);
+            data_inicio = data_inicio.toLocaleString("pt-BR", {
+                timeZone: "America/Sao_Paulo"
+            });
+
+            let data_termino;
+            if (dados[i].verificador == null) {
+    dados[i].verificador = "--------------------";
 }
 
-function atualizarTabela(dados) {
-    console.log("Respota entrando na função:", dados)
-    for (let i = 0; i < dados.length; i++) {
-        console.log("1")
-        let data_inicio = new Date(dados[i].dataInicio);
-        data_inicio = data_inicio.toLocaleString("pt-BR", {
-            timeZone: "America/Sao_Paulo"
-        });
+            if (dados[i].dataTermino) {
+                data_termino = new Date(dados[i].dataTermino).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+            } else {
+                data_termino = "----------";
+            }
 
-        let data_termino = dados[i].dataTermino
-            ? new Date(dados[i].dataTermino).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-            : "----------";
+            if (dados[i].dataVisualizacao) {
+                data_visualizacao = new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+            } else {
+                data_visualizacao = "----------";
+            }
 
-        data_visualizacao = dados[i].dataVisualizacao
-            ? new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" })
-            : "----------";
+            let statusCor;
+            if (dados[i].statusAlerta == "Verificado") {
+                statusCor = "rgb(0, 170, 40)";
+            } else {
+                statusCor = "#656464";
+            }
 
-        if (dados[i].verificador == null) dados[i].verificador = "--------------------";
+            let iconeOlho;
+            if (dados[i].statusAlerta == "Verificado") {
+                iconeOlho = "iconeOlhoVerde.png";
+            } else {
+                iconeOlho = "iconeOlhoCinza.png";
+            }
 
-        let statusCor = ((dados[i].statusAlerta) == "Verificado") ? "rgb(0, 170, 40)" : "#656464";
-        let iconeOlho = ((dados[i].statusAlerta) == "Verificado") ? "iconeOlhoVerde.png" : "iconeOlhoCinza.png";
-        let acaoVerificar = ((dados[i].statusAlerta) == "Verificado")
-            ? `<div class="icone-verificacao" title="Alerta verificado">
-                    <img src="../assets/imgs/${iconeOlho}" alt="visualização">
-               </div>`
-            : `<div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
-                    <img src="../assets/imgs/${iconeOlho}" alt="visualização">
-               </div>`;
+            let acaoVerificar;
+            if (dados[i].statusAlerta == "Verificado") {
+                acaoVerificar = `
+        <div class="icone-verificacao" title="Alerta verificado">
+            <img src="../assets/imgs/${iconeOlho}" alt="visualização">
+        </div>`;
+            } else {
+                acaoVerificar = `
+        <div class="icone-verificacao" title="Marcar como verificado" onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})">
+            <img src="../assets/imgs/${iconeOlho}" alt="visualização">
+        </div>`;
+            }
 
-        let classeAlerta = (dados[i].nomeAlerta == "Alerta") ? "icone-alerta" : "icone-atencao";
+            let classeAlerta;
+            if (dados[i].nomeAlerta == "Alerta") {
+                classeAlerta = "icone-alerta";
+            } else {
+                classeAlerta = "icone-atencao";
+            }
 
-        tabela_alertas.innerHTML += `
+            tabela_alertas.innerHTML += `
             <tr class="dados-tabela">
                 <td class="td-tipo-alerta"><span class="status-dot ${classeAlerta}"></span>${dados[i].nomeAlerta}</td>
                 <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
@@ -239,51 +268,51 @@ function atualizarTabela(dados) {
                 <td class="td-verificador-alerta">${dados[i].verificador}</td>
                 <td class="td-acoes-alerta">${acaoVerificar}</td>
             </tr>`;
+        }
     }
-}
 
-function marcarAlertaComoVerificado(idAlerta) {
-    var variaveis = puxarVariaveis();
-    var nomeVisualizador = variaveis.nomeUsuario;
+    function marcarAlertaComoVerificado(idAlerta) {
+        var variaveis = puxarVariaveis();
+        var nomeVisualizador = variaveis.nomeUsuario;
 
-    fetch(`/alertasgeral/marcarAlertaComoVerificado/${idAlerta}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ nomeVisualizador: nomeVisualizador }),
-    })
-        .then(resposta => resposta.json())
-        .then(resposta => {
-            console.log("Alerta Verificado com sucesso! ✅", resposta)
-            registrarLogAcao("Marcar alerta como verificado", `Alerta ID: ${idAlerta}, Verificador: ${nomeVisualizador}`);
-            puxarAlertasGeral()
+        fetch(`/alertasgeral/marcarAlertaComoVerificado/${idAlerta}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ nomeVisualizador: nomeVisualizador }),
         })
-        .catch(function (resposta) {
-            console.log("UPDATE ALERTA ❌")
-            console.log(`Erro no catch: ${resposta}`);
-        });
-}
-
-function filtrar(dados) {
-    var select = document.getElementById("filtro_maquinas").value
-    var dados_filtrados = []
-    if (select == "todas") {
-        console.log("Sai")
-        return dados
-    } else if (select == "alerta") {
-        for(let i = 0; i < dados.length; i++){
-            if (dados[i].nomeAlerta == "Alerta") {
-                dados_filtrados.push(dados[i])
-            }
-        }
-    } else if (select == "atencao") {
-        for(let i = 0; i < dados.length; i++){
-            if (dados[i].nomeAlerta == "Atenção") {
-                dados_filtrados.push(dados[i])
-            }
-        }
+            .then(resposta => resposta.json())
+            .then(resposta => {
+                console.log("Alerta Verificado com sucesso! ✅", resposta)
+                registrarLogAcao("Marcar alerta como verificado", `Alerta ID: ${idAlerta}, Verificador: ${nomeVisualizador}`);
+                puxarAlertasGeral()
+            })
+            .catch(function (resposta) {
+                console.log("UPDATE ALERTA ❌")
+                console.log(`Erro no catch: ${resposta}`);
+            });
     }
-    console.log("Tamanho dos dados filtrados:", dados_filtrados)
-    return dados_filtrados
-}
+
+    function filtrar(dados) {
+        var select = document.getElementById("filtro_maquinas").value
+        var dados_filtrados = []
+        if (select == "todas") {
+            console.log("Sai")
+            return dados
+        } else if (select == "alerta") {
+            for (let i = 0; i < dados.length; i++) {
+                if (dados[i].nomeAlerta == "Alerta") {
+                    dados_filtrados.push(dados[i])
+                }
+            }
+        } else if (select == "atencao") {
+            for (let i = 0; i < dados.length; i++) {
+                if (dados[i].nomeAlerta == "Atenção") {
+                    dados_filtrados.push(dados[i])
+                }
+            }
+        }
+        console.log("Tamanho dos dados filtrados:", dados_filtrados)
+        return dados_filtrados
+    }
 
 </script>
