@@ -11,34 +11,46 @@
     display: flex;
     flex-direction: column;
 }
-
-.info-maquina-box {
-    background-color: #fff;
-    height: 10%;
+.header {
     width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    gap: 15px;
+    margin-bottom: 12px;
+    margin-left: 7%;
+    justify-content: space-between;
     border-radius: 8px;
-    padding: 0 1vw;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
-    display: flex;
+    flex-wrap: wrap;
+    margin-top: 1%;
 }
 
-.info-maquina-box-left {
-    height: 100%;
-    width: 60%;
+.header a {
+    display: flex;
+    gap:  10px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.header a:hover {
+color: #9a1522;}
 
+#menu {
+    margin-top: -1%;
+}
+.header-esquerda {
     display: flex;
     align-items: center;
-    gap: 1vw;
+    font-weight: bold;
+    font-size: 1rem;
+    gap: 14px;
+
 }
 
-.info-maquina-box-right {
-    height: 100%;
-    width: 40%;
-
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
+.header-esquerda img {
+    width: 1.8%;
 }
 
 .icon-seta-redirect {
