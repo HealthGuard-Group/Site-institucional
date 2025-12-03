@@ -5,6 +5,52 @@ body {
   font-family: Arial, sans-serif;
   overflow-y: hidden;
 }
+ .header {
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    gap: 15px;
+    margin-bottom: 12px;
+    margin-left: 7%;
+    justify-content: space-between;
+    border-radius: 8px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    flex-wrap: wrap;
+    margin-top: 1%;
+}
+
+.header a {
+    display: flex;
+    gap:  10px;
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.header a:hover {
+color: #9a1522;}
+
+#menu {
+    margin-top: -1%;
+}
+.header-esquerda {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 1rem;
+    gap: 14px;
+
+}
+
+#bt-voltar {
+    width: 1.8%;
+    cursor: pointer;
+}
+
+.header-esquerda img {
+    width: 1.8%;
+}
 
 .main_bd_dash{
     margin-left: 7%;

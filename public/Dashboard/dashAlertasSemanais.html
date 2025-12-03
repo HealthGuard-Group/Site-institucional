@@ -16,7 +16,8 @@
 
 <body onload="validarSessao()">
     <!-- Começo do Menu -->
-    <div class="menu-lateral">
+    <div class="menu-lateral" id="menu"3
+    >
         <div class="pai-icones-superiores">
             <div id="logo">
                 <img src="../assets/imgs/HealthGuard_icone_BRANCO_fundo_transparente.png" alt="HealthGuard"
@@ -62,14 +63,24 @@
         </div>
     </div>
     <!-- Fim do Menu -->
+        <div class="header">
+        <div class="header-esquerda">
+            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+            <a href="alertasGerais.html">
+                <span id="nome_MaquinaDac ">Histórico de alertas</span>
+            </a>
+            <img src="../assets/imgs/botao_seta_preto.png" alt="">
+            <span id="nome_MaquinaDac">Alertas gerais da semana</span>
 
+            <section class="header_dash">
+                
+                <div class="header_semanaAtual">
+                    <p id="intervaloSemana"></p>
+                </div>
+            </section>
+        </div>
+    </div>
     <main class="main_bd_dash">
-        <section class="header_dash">
-            <h1>Alertas Gerais da Semana</h1>
-            <div class="header_semanaAtual">
-                <p id="intervaloSemana"></p>
-            </div>
-        </section>
 
         <section class="container_kpis_dash">
             <div class="kpi_dash">
@@ -151,6 +162,7 @@
 <script src="../js/menu-lateral.js"></script>
 
 <script>
+
 
     function formatarData(dia) {
         return dia.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" });
