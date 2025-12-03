@@ -79,40 +79,42 @@ function entrar() {
 
             resposta.json().then(json => {
 
+                sessionStorage.ID_LOG = json.idLogAcesso;
                 sessionStorage.ID_USUARIO = json.idUsuario;
                 sessionStorage.NOME_USUARIO = json.nomeUsuario;
                 sessionStorage.ID_PERMISSAO = json.idPermissoes;
                 sessionStorage.FK_UNIDADE = json.fkUnidadeDeAtendimento;
-
-              
-                fetch("/empresas/InserirLogAcesso", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        fkUsuario: sessionStorage.ID_USUARIO,
-                        fkUnidadeDeAtendimento: sessionStorage.FK_UNIDADE
-                    })
-                })
-                .then(res => res.json())
-                .then(data => {
-
-                    sessionStorage.ID_LOG_ACESSO = data.idLogAcesso;
-
-                   
-                    registrarLogAcao(
-                        "Login",
-                        "sucesso",
-                        sessionStorage.FK_UNIDADE,
-                        sessionStorage.ID_USUARIO
-                    );
-
                     mensagem.innerHTML = `Login realizado com sucesso!`;
+
+                 fetch("/usuarios/inseriracao", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            idUnidade: sessionStorage.FK_UNIDADE,
+            idUsuario: sessionStorage.ID_USUARIO,
+            idLogAcesso: sessionStorage.ID_LOG,
+            acao: 'Realizando Login',
+            statusAcao: 'sdawdwd'
+        }),
+    })
+        .then(function (resposta) {
+            console.log("resposta: ", resposta);
+            if (resposta.ok) {
+            } else {
+                throw "Não foi possível mandar os dados para o banco";
+            }
+        })
+        .catch(function (resposta) {
+            console.log(`#ERRO: ${resposta}`);
+            alert("Erro no catch");
+        });
 
                     setTimeout(() => {
                         window.location = "Dashboard/monitoramento.html";
                     }, 1500);
                 });
-            });
 
         } else {
 
@@ -122,8 +124,6 @@ function entrar() {
                 mensagem.innerHTML = `Email ou senha inválido!`;
             }, 1000);
 
-            
-            registrarLogAcao("Login", "falha", null, null);
 
             if (typeof finalizarAguardar === "function") {
                 resposta.text().then(texto => finalizarAguardar(texto));
@@ -133,20 +133,5 @@ function entrar() {
     .catch(erro => console.log("ERRO LOGIN:", erro));
 
     return false;
-}
-
-
-function registrarLogAcao(acao, statusAcao, fkUnidade, fkUsuario) {
-    fetch("/logAcoes/registrar", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-            fkUnidadeAtendimento: fkUnidade,
-            fkLogAcesso: sessionStorage.ID_LOG_ACESSO || null,
-            fkUsuario: fkUsuario,
-            acao: acao,
-            statusAcao: statusAcao
-        })
-    });
 }
 </script>

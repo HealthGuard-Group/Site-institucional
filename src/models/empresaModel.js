@@ -19,6 +19,7 @@ function buscarPorCnpj(cnpj) {
 }
 
 function InserirLogAcesso(fkUsuario,fkUnidadeDeAtendimento) {
+
   var instrucaoSql = `INSERT INTO LogAcesso (fkUnidadeDeAtendimento, fkUsuario) VALUES ('${fkUnidadeDeAtendimento}', '${fkUsuario}')`;
 
   return database.executar(instrucaoSql);
