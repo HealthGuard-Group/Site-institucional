@@ -2,7 +2,7 @@ var database = require("../database/config");
 
 function registrar(fkUnidade, fkLogAcesso, fkUsuario, acao, statusAcao) {
     var instrucao = `
-        INSERT INTO LogAcoes (fkUnidadeAtendimento, fkLogAceso, fkUsuario, acao, statusAcao)
+        INSERT INTO LogAcoes (fkUnidadeAtendimento, fkLogAcesso, fkUsuario, acao, statusAcao)
         VALUES (${fkUnidade}, ${fkLogAcesso}, ${fkUsuario}, '${acao}', '${statusAcao}');
     `;
     console.log("Executando SQL:\n", instrucao);
