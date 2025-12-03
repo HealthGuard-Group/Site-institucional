@@ -172,3 +172,34 @@ td {
 .icone-atencao {
     background-color: #ffc022;
 }
+
+.container_botao{
+    width: 90%;
+    height: 15%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+
+.redirect-chart{
+  width: 13vw;
+  height: 2vh;
+  cursor: pointer;
+  font-size: 0.8vw;
+  background-color: #1c2e42;
+  padding: 1.3% 1%;
+  border-radius: 6.5px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+.redirect-chart img{
+  width: 15%;
+  margin-left: 6%;
+}
+
+.redirect-chart:hover{
+  background-color: #103054;
+  transition: 0.2s;
+}

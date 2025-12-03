@@ -81,6 +81,10 @@
                     <option value="atencao">Atenção</option>
                 </select>
             </div>
+            <div class="container_botao">
+              <div class="redirect-chart">Exibir alertas semanais<img src="../assets/imgs/iconeBotaoAnaliseDashboards.png"
+                  alt=""></div>
+            </div>
 
             <div id="container-tabela">
                 <table id="tabela_alertas">
@@ -143,6 +147,10 @@
 </html>
 
 <script>
+    document.querySelector(".redirect-chart").addEventListener("click", () => {
+        window.location.href = "dashAlertasSemanais.html"
+      })
+
     div_nome_empresa.innerHTML = sessionStorage.NOME_UNIDADE
     var data_visualizacao;
 
