@@ -1,14 +1,14 @@
 var logAcoesModel = require("../models/logAcoesModel");
 
 function registrar(req, res) {
-    var fkUnidade = req.body.fkUnidadeAtendimento;
-    var fkLogAcesso = req.body.fkLogAcesso;
-    var fkUsuario = req.body.fkUsuario;
+    var fkUnidade = req.body.fkUnidadeAtendimento || null;
+    var fkLogAcesso = req.body.fkLogAcesso || null;
+    var fkUsuario = req.body.fkUsuario || null;
 
     var acao = req.body.acao;
     var statusAcao = req.body.statusAcao; 
 
-    if (!fkUnidade || !fkLogAcesso || !fkUsuario || !acao || !statusAcao) {
+    if (!acao || !statusAcao) {
         res.status(400).send("Campos obrigatórios não enviados");
         return;
     }
@@ -17,6 +17,7 @@ function registrar(req, res) {
         .then(() => res.status(200).send("Ação registrada"))
         .catch(erro => res.status(500).json(erro.sqlMessage));
 }
+
 
 function listar(req, res) {
     logAcoesModel.listar()
