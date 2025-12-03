@@ -40,6 +40,7 @@ color: #9a1522;}
     font-weight: bold;
     font-size: 1rem;
     gap: 14px;
+    width: 100%;
 
 }
 
@@ -56,19 +57,15 @@ color: #9a1522;}
     margin-left: 7%;
 }
 
-.header_dash{
-    display: flex;
-    width: 100%;
-    align-items: center;
-    padding: 20px;
+
+
+#nome_MaquinaDac{
+    width: 60%;
 }
 
-.header_dash h1{
-    font-size: 1.6em;
-}
 
 .header_semanaAtual{
-    width: 75%;
+    width: 100%;
    justify-content: flex-end;
    display: flex;
 }
