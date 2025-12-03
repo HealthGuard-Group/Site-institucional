@@ -753,7 +753,6 @@
           console.log(resposta);
 
           if (resposta == "") {
-            fetch(`/grafico/inativarMaquina/${idDac}`, { method: "PUT" });
             rede.innerHTML = `Máquina Inativa`
             ram.innerHTML = `Máquina Sem Dados`
             cpu.innerHTML = `Máquina Sem Dados`
