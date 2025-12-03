@@ -92,6 +92,8 @@
         <button class="botao-aplicar-filtros" onclick="aplicarFiltro()">
           Aplicar filtro
         </button>
+              <div class="redirect-chart">Exibir logs<img src="../assets/imgs/iconeBotaoAnaliseDashboards.png"
+                  alt=""></div>
       </div>
 
       <table class="tabela" id="tabela">
@@ -191,6 +193,11 @@
 
 <script>
   var logs = [];
+
+      document.querySelector(".redirect-chart").addEventListener("click", () => {
+        window.location.href = "logAcessos.html"
+      })
+
 
   function buscarDadosLogs() {
     var variaveis = puxarVariaveis()
