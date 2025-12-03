@@ -137,7 +137,6 @@ function entrar() {
 
 
 function registrarLogAcao(acao, statusAcao, fkUnidade, fkUsuario) {
-   var variaveis = puxarVariaveis()
     fetch("/logAcoes/registrar", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
