@@ -244,7 +244,8 @@
 
 
 
- function registrarLogAcao(acao, status) {
+ function registrarLogAcao(acao, statusAcao) {
+     var variaveis = puxarVariaveis()
   fetch("/logAcoes/registrar", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -253,7 +254,7 @@
       fkLogAcesso: null,
       fkUsuario: null,
       acao: acao,
-      statusAcao: status
+      statusAcao: statusAcao
     })
   });
 }
