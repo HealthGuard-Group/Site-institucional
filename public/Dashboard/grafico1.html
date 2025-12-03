@@ -344,9 +344,10 @@
             </select>
 
             <div class="config-alertas-status">
-              <span class="status-dot alerta-critico"></span> Alerta
-              <span class="status-dot alerta-grave"></span> Atenção
               <span class="status-dot ok"></span> OK
+              <span class="status-dot alerta-critico"></span> Alerta de Atenção
+              <span class="status-dot alerta-grave"></span> Alerta Grave
+              
             </div>
 
             <div class="metrica">
@@ -602,7 +603,12 @@
         })
         .then(resposta => {
           console.log(resposta)
+          if(resposta[0].mediaalertasdiarios == null){
+            mediaAlerta.innerHTML = `0`
+          }
+          else{
           mediaAlerta.innerHTML = `${resposta[0].mediaalertasdiarios}`
+          }
         })
         .catch(erro => console.error("Erro:", erro));
 
@@ -763,7 +769,7 @@
             cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
               ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
               disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
-            status_MaquinaDac.innerHTML = `<p style="color:color:#b30000">Status: Inativa</p>`
+            status_MaquinaDac.innerHTML = `<p style="color:b30000">Status: Inativa</p>`
           }
 
           if (resposta[0].dataCaptura) {
@@ -778,7 +784,7 @@
               ram.innerHTML = `Máquina Inativa`
               disco.innerHTML = `Máquina Inativa`
               cpu.innerHTML = `Máquina inativa`
-              tempoatvd.innerHTML = `<div style="color:color:#b30000">Máquina inativa</div>`
+              tempoatvd.innerHTML = `<div style="color:#b30000">Máquina inativa</div>`
               cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
               ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
               disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
