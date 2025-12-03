@@ -222,7 +222,7 @@
 
         <div class="header">
           <div class="header-esquerda">
-            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar" style="cursor: pointer;">
             <a href="monitoramento.html">
                 <span id="nome_MaquinaDac ">Monitoramento</span>
             </a>
@@ -769,7 +769,7 @@
             cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
               ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
               disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
-            status_MaquinaDac.innerHTML = `<p style="color:b30000">Status: Inativa</p>`
+            status_MaquinaDac.innerHTML = `<p style="color:grey">Status: Inativa</p>`
           }
 
           if (resposta[0].dataCaptura) {

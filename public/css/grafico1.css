@@ -65,6 +65,9 @@ body {
 .header-esquerda img {
     width: 1.8%;
 }
+.header a:hover {
+color: #b30000;
+}
 
 #btn_descricao {
   display: none;
