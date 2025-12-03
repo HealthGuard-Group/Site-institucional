@@ -48,13 +48,13 @@ function buscarDadosDisco(req, res) {
     }
 }
 
-function puxarDadosGraficoUsoDisco(req, res) {
+function buscarUltimasVariacoesUsoDisco(req, res) {
     var idDac = req.params.idDac;
     if (idDac == undefined) {
         res.status(400).send("Seu idDac está undefined!");
     } else {
 
-        analiseramModel.puxarDadosGraficoUsoDisco(idDac)
+        analisediscoModel.buscarUltimasVariacoesUsoDisco(idDac)
             .then(
                 function (resultado) {
                     res.json(resultado);
@@ -63,7 +63,7 @@ function puxarDadosGraficoUsoDisco(req, res) {
                 function (erro) {
                     console.log(erro);
                     console.log(
-                        "\nHouve um erro ao puxar a dados de USO DO DISCO! Erro: ",
+                        "\nHouve um erro ao puxar a VARIAÇÕES DE USO DO DISCO! Erro: ",
                         erro.sqlMessage
                     );
                     res.status(500).json(erro.sqlMessage);
@@ -148,6 +148,7 @@ function puxarDadosGraficoUsoDisco(req, res) {
 module.exports = {
     buscarnomemaquina,
     buscarDadosDisco,
+    buscarUltimasVariacoesUsoDisco
     // buscarmetricasrammaquina,
     // buscarmetricasrammaquinaunidade,
     // puxardadosgraficoRAM,

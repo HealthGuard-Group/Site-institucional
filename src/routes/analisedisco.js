@@ -15,6 +15,10 @@ router.get(`/puxarDadosGraficoUsoDisco/:idDac`, function (req, res) {
     analisediscoController.puxarDadosGraficoUsoDisco(req, res);
 });
 
+router.get(`/buscarUltimasVariacoesUsoDisco/:idDac`, function (req, res) {
+    analisediscoController.buscarUltimasVariacoesUsoDisco(req, res);
+});
+
 // router.get(`/buscarmetricasrammaquina/:idDac`, function (req, res) {
 //     analiseramController.buscarmetricasrammaquina(req, res);
 // });

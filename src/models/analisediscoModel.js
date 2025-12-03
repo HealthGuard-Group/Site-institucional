@@ -23,6 +23,20 @@ function buscarDadosDisco(idDac) {
     return database.executar(instrucaoSql);
 }
 
+function buscarUltimasVariacoesUsoDisco(idDac) {
+    var instrucaoSql = `SELECT 
+                            medidaCapturada, MAX(dataCaptura) AS ultimaDataCaptura
+                        FROM
+                            leitura
+                        WHERE
+                            fkDac = ${idDac} AND fkMedicoesDisponiveis = 10
+                        GROUP BY medidaCapturada
+                        ORDER BY ultimaDataCaptura ASC
+                        LIMIT 10;`;
+
+    return database.executar(instrucaoSql);
+}
+
 // function buscarmetricasrammaquina(idDac) {
 //     var instrucaoSql = `SELECT valorMinimo,valorMaximo,nomeNivel FROM MetricaAlerta WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = 6;`;
 
@@ -70,6 +84,7 @@ function buscarDadosDisco(idDac) {
 module.exports = {
     buscarnomemaquina,
     buscarDadosDisco,
+    buscarUltimasVariacoesUsoDisco,
     // buscarmetricasrammaquina,
     // buscarmetricasrammaquinaunidade,
     // puxardadosgraficoRAM,

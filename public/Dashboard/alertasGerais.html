@@ -77,8 +77,8 @@
                 </div>
                 <select name="" id="filtro_maquinas" class="select-filtro" onchange="puxarAlertasGeral()">
                     <option value="todas">Todos os alertas</option>
-                    <option value="alerta">Alertas Grave</option>
-                    <option value="atencao">Alertas atenção</option>
+                    <option value="alerta">Alerta</option>
+                    <option value="atencao">Atenção</option>
                 </select>
             </div>
 
@@ -186,8 +186,9 @@ function puxarAlertasGeral() {
     })
         .then(resposta => resposta.json())
         .then(resposta => {
-            console.log(resposta)
+            console.log("SELECT DO BANCO",resposta)
             var dados_filtrados = filtrar(resposta)
+            console.log("DADOS FILTRADOS",dados_filtrados)
             atualizarTabela(dados_filtrados)
         })
         .catch(function (resposta) {
@@ -198,7 +199,7 @@ function puxarAlertasGeral() {
 function atualizarTabela(dados) {
     console.log("Respota entrando na função:", dados)
     for (let i = 0; i < dados.length; i++) {
-
+        console.log("1")
         let data_inicio = new Date(dados[i].dataInicio);
         data_inicio = data_inicio.toLocaleString("pt-BR", {
             timeZone: "America/Sao_Paulo"
@@ -214,9 +215,9 @@ function atualizarTabela(dados) {
 
         if (dados[i].verificador == null) dados[i].verificador = "--------------------";
 
-        let statusCor = (dados[i].statusAlerta.toLowerCase() == "verificado") ? "rgb(0, 170, 40)" : "#656464";
-        let iconeOlho = (dados[i].statusAlerta.toLowerCase() == "verificado") ? "iconeOlhoVerde.png" : "iconeOlhoCinza.png";
-        let acaoVerificar = (dados[i].statusAlerta.toLowerCase() == "verificado")
+        let statusCor = ((dados[i].statusAlerta) == "Verificado") ? "rgb(0, 170, 40)" : "#656464";
+        let iconeOlho = ((dados[i].statusAlerta) == "Verificado") ? "iconeOlhoVerde.png" : "iconeOlhoCinza.png";
+        let acaoVerificar = ((dados[i].statusAlerta) == "Verificado")
             ? `<div class="icone-verificacao" title="Alerta verificado">
                     <img src="../assets/imgs/${iconeOlho}" alt="visualização">
                </div>`
@@ -224,7 +225,7 @@ function atualizarTabela(dados) {
                     <img src="../assets/imgs/${iconeOlho}" alt="visualização">
                </div>`;
 
-        let classeAlerta = (dados[i].nomeAlerta.toLowerCase() == "alerta") ? "icone-alerta" : "icone-atencao";
+        let classeAlerta = (dados[i].nomeAlerta == "Alerta") ? "icone-alerta" : "icone-atencao";
 
         tabela_alertas.innerHTML += `
             <tr class="dados-tabela">
@@ -266,6 +267,7 @@ function filtrar(dados) {
     var select = document.getElementById("filtro_maquinas").value
     var dados_filtrados = []
     if (select == "todas") {
+        console.log("Sai")
         return dados
     } else if (select == "alerta") {
         for(let i = 0; i < dados.length; i++){
@@ -280,6 +282,7 @@ function filtrar(dados) {
             }
         }
     }
+    console.log("Tamanho dos dados filtrados:", dados_filtrados)
     return dados_filtrados
 }
 

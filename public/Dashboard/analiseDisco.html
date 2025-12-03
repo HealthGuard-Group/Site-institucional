@@ -237,9 +237,12 @@
     var porcentagemDisponivelDisco;
     var graficoUsoDisco = null;
     var graficoUsoParticoes = null;
+    var graficoUltimasVariacoes = null;
     var dadosParticoes;
     var nomesParticoes = [];
     var percentuaisParticoes = [];
+    var variacoesUsoDisco = [];
+    var dataHoraVariacoesUsoDisco = [];
 
     function puxarNomeDaMaquina() {
         var idDac = sessionStorage.ID_DAC
@@ -261,6 +264,7 @@
 
     function atualizarDadosDisco() {
 
+        puxarVariacoesUsoDisco()
         // plotarGraficoUsoParticoes() // Inicializa quase assim que a página carrega
 
         var idDac = sessionStorage.ID_DAC
@@ -324,6 +328,13 @@
                     }
                     var capacidadeTotal = espacoDisponivel / (1 - porcentagemDisco / 100);
                     kpi_capacidade_total.innerHTML = Math.trunc(capacidadeTotal) + " GB";
+                }
+
+                // Atualizando gráfico de variações
+                if (!graficoUltimasVariacoes) {
+                    plotarGraficoVariacoesUsoDisco()
+                } else {
+                    atualizarGraficoVariacoesUsoDisco(dataHoraVariacoesUsoDisco, variacoesUsoDisco)
                 }
             })
             .catch(function (resposta) {
@@ -447,131 +458,167 @@
         graficoUsoParticoes.data.datasets[0].data = percentuaisParticoes;
         graficoUsoParticoes.update();
     }
-</script>
 
+    function puxarVariacoesUsoDisco() {
 
-<script>
-    const ctxLinha = document.getElementById('myChart-linha').getContext('2d');
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analisedisco/buscarUltimasVariacoesUsoDisco/${idDac}`, {
+            method: "GET",
+        })
+            .then(resposta => {
+                return resposta.json();
+            })
+            .then(resposta => {
+                console.log("VARIAÇÕES")
+                console.log(resposta)
 
-    // Dados reais
-    const labels = [
-        ['15/10/2025', '10:05:20'],
-        ['15/10/2025', '10:10:20'],
-        ['15/10/2025', '10:15:20'],
-        ['15/10/2025', '10:20:20'],
-        ['15/10/2025', '10:25:20'],
-        ['15/10/2025', '10:05:20'],
-        ['15/10/2025', '10:10:20'],
-        ['15/10/2025', '10:15:20'],
-        ['15/10/2025', '10:20:20'],
-        ['15/10/2025', '10:25:20'],
-    ];
-    const y = [20.5, 20, 21, 22, 20, 21, 20.3, 22, 21, 23];
+                variacoesUsoDisco = [];
+                dataHoraVariacoesUsoDisco = [];
 
-    // Transformar datas em índices simples
-    const x = y.map((_, i) => i);
+                // Armazenando DADOS=(data/hora + percentuais) das variações
+                for (let i = 0; i < resposta.length; i++) {
 
-    // Função simples de regressão
-    function regressaoLinear(x, y) {
-        const n = x.length;
-        const somaX = x.reduce((a, b) => a + b, 0);
-        const somaY = y.reduce((a, b) => a + b, 0);
-        const somaXY = x.reduce((s, xi, i) => s + xi * y[i], 0);
-        const somaX2 = x.reduce((s, xi) => s + xi * xi, 0);
+                    let dataUso = new Date(resposta[i].ultimaDataCaptura);
+                    dataUso = dataUso.toLocaleString("pt-BR", {
+                        timeZone: "America/Sao_Paulo"
+                    });
 
-        const a = (n * somaXY - somaX * somaY) / (n * somaX2 - somaX * somaX);
-        const b = (somaY - a * somaX) / n;
-        return { a, b };
+                    resposta[i].ultimaDataCaptura = dataUso
+
+                    resposta[i].ultimaDataCaptura = resposta[i].ultimaDataCaptura.replaceAll(" ", "");
+                    dataHoraVariacoesUsoDisco.push(resposta[i].ultimaDataCaptura.split(","));
+
+                    variacoesUsoDisco.push(resposta[i].medidaCapturada)
+                }
+                console.log(resposta)
+                console.log('DATAS:', dataHoraVariacoesUsoDisco)
+                console.log('PERCENTUAIS:', variacoesUsoDisco)
+            })
+            .catch(function (resposta) {
+                console.log(`Erro no catch: ${resposta}`);
+            });
     }
 
-    // Calcular a e b
-    const { a, b } = regressaoLinear(x, y);
+    function plotarGraficoVariacoesUsoDisco() {
 
-    // Criar linha de tendência
-    const yPrevisto = x.map(xi => a * xi + b);
+        const ctxLinha = document.getElementById('myChart-linha').getContext('2d');
 
-    // Estimar quando chegará a 100%
-    const xColapso = (100 - b) / a;
-    const dataColapsoTexto = "≈ ponto " + xColapso.toFixed(1);
+        // Dados reais
+        const labels = dataHoraVariacoesUsoDisco;
+        const y = variacoesUsoDisco;
 
-    const ultimaData = new Date("2025-10-15 10:25:20");
-    const minutosEntrePontos = 5;
+        // Transformar datas em índices simples
+        const x = y.map((_, i) => i);
 
-    const minutosAteColapso = xColapso * minutosEntrePontos;
+        // Função simples de regressão
+        function regressaoLinear(x, y) {
+            const n = x.length;
+            const somaX = x.reduce((a, b) => a + b, 0);
+            const somaY = y.reduce((a, b) => a + b, 0);
+            const somaXY = x.reduce((s, xi, i) => s + xi * y[i], 0);
+            const somaX2 = x.reduce((s, xi) => s + xi * xi, 0);
 
-    const dataColapsoReal = new Date(ultimaData.getTime() + minutosAteColapso * 60000);
+            const a = (n * somaXY - somaX * somaY) / (n * somaX2 - somaX * somaX);
+            const b = (somaY - a * somaX) / n;
+            return { a, b };
+        }
 
-    // Gráfico
-    new Chart(ctxLinha, {
-        type: 'line',
-        data: {
-            labels: labels,
-            datasets: [
-                {
-                    label: 'Percentual usado (real)',
-                    data: y,
-                    borderColor: 'rgba(27, 53, 89, 1)',
-                    backgroundColor: 'rgba(27, 53, 89, 1)',
-                    tension: 0.3,
-                    // fill: false,
-                    order: 1
-                },
-                {
-                    label: 'Tendência (regressão linear)',
-                    data: yPrevisto,
-                    borderColor: 'rgb(255, 0, 0)',
-                    backgroundColor: 'rgba(255, 0, 0, 0.3)',
-                    borderDash: [10, 6],
-                    tension: 0,
-                    // fill: true,
-                    order: 99
-                },
-            ]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'top',
-                    labels: {
-                        color: '#333'
-                    }
-                },
-                annotation: {
-                    annotations: {
-                        colapso: {
-                            type: 'line',
-                            borderColor: 'red',
-                            borderWidth: 2,
-                            scaleID: 'y',
-                            value: 100
-                        }
-                    }
-                },
-            },
-            scales: {
-                x: {
-                    title: {
-                        display: true,
-                        text: 'Horário da Medição',
-                        color: '#333'
-                    }
-                },
-                y: {
-                    title: {
-                        display: true,
-                        text: 'Percentual de Uso (%)',
-                        color: '#333'
+        // Calcular a e b
+        const { a, b } = regressaoLinear(x, y);
+
+        // Criar linha de tendência
+        const yPrevisto = x.map(xi => a * xi + b);
+
+        // Estimar quando chegará a 100%
+        const xColapso = (100 - b) / a;
+        const dataColapsoTexto = "≈ ponto " + xColapso.toFixed(1);
+
+        const ultimaData = new Date("2025-10-15 10:25:20");
+        const minutosEntrePontos = 5;
+
+        const minutosAteColapso = xColapso * minutosEntrePontos;
+
+        const dataColapsoReal = new Date(ultimaData.getTime() + minutosAteColapso * 60000);
+
+        // Gráfico
+        graficoUltimasVariacoes = new Chart(ctxLinha, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: 'Percentual usado (real)',
+                        data: y,
+                        borderColor: 'rgba(27, 53, 89, 1)',
+                        backgroundColor: 'rgba(27, 53, 89, 1)',
+                        tension: 0.3,
+                        // fill: false,
+                        order: 1
                     },
-                    // min: 0,     // mínimo
-                    // max: 100,   // máximo
-                    // ticks: {
-                    //     stepSize: 1 // opcional: espaçamento dos números
-                    // }
+                    {
+                        label: 'Tendência (regressão linear)',
+                        data: yPrevisto,
+                        borderColor: 'rgb(255, 0, 0)',
+                        backgroundColor: 'rgba(255, 0, 0, 0.3)',
+                        borderDash: [10, 6],
+                        tension: 0,
+                        // fill: true,
+                        order: 99
+                    },
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            color: '#333'
+                        }
+                    },
+                    annotation: {
+                        annotations: {
+                            colapso: {
+                                type: 'line',
+                                borderColor: 'red',
+                                borderWidth: 2,
+                                scaleID: 'y',
+                                value: 100
+                            }
+                        }
+                    },
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Horário da Medição',
+                            color: '#333'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Percentual de Uso (%)',
+                            color: '#333'
+                        },
+                        // min: 0,     // mínimo
+                        // max: 100,   // máximo
+                        // ticks: {
+                        //     stepSize: 1 // opcional: espaçamento dos números
+                        // }
+                    }
                 }
             }
-        }
-    });
+        });
+    }
+
+    function atualizarGraficoVariacoesUsoDisco(dataHoraVariacoesUsoDisco, variacoesUsoDisco) {
+        graficoUltimasVariacoes.data.labels = dataHoraVariacoesUsoDisco;
+        graficoUltimasVariacoes.data.datasets[0].data = variacoesUsoDisco;
+        graficoUltimasVariacoes.update();
+    }
+
 </script>
 
 

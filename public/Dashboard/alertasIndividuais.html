@@ -84,8 +84,8 @@
                     </div>
                     <select name="" id="filtro_maquinas" class="select-filtro" onchange="puxarAlertasIndividual()">
                         <option value="todas">Todos os alertas</option>
-                        <option value="alerta">Alertas Grave</option>
-                        <option value="atencao">Alertas atenção</option>
+                        <option value="alerta">Alerta</option>
+                        <option value="atencao">Atenção</option>
                     </select>
                 </div>
 
@@ -204,11 +204,11 @@
 
             if (dados[i].verificador == null) dados[i].verificador = "--------------------";
 
-            let statusCor = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'rgb(0, 170, 40)' : '#656464';
-            let iconeOlho = dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'iconeOlhoVerde.png' : 'iconeOlhoCinza.png';
-            let acaoOnclick = dados[i].statusAlerta.toLowerCase() == 'verificado' ? '' : `onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})"`;
+            let statusCor = dados[i].statusAlerta == 'Verificado' ? 'rgb(0, 170, 40)' : '#656464';
+            let iconeOlho = dados[i].statusAlerta == 'Verificado' ? 'iconeOlhoVerde.png' : 'iconeOlhoCinza.png';
+            let acaoOnclick = dados[i].statusAlerta == 'Verificado' ? '' : `onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})"`;
 
-            let iconeClasse = dados[i].nomeAlerta.toLowerCase() == 'alerta' ? 'icone-alerta' : 'icone-atencao';
+            let iconeClasse = dados[i].nomeAlerta == 'Alerta' ? 'icone-alerta' : 'icone-atencao';
 
             tabela_alertas.innerHTML += `
              <tr class="dados-tabela">
@@ -221,7 +221,7 @@
                 <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
                 <td class="td-verificador-alerta">${dados[i].verificador}</td>
                 <td class="td-acoes-alerta">
-                    <div class="icone-verificacao" title="${dados[i].statusAlerta.toLowerCase() == 'verificado' ? 'Alerta verificado' : 'Marcar como verificado'}" ${acaoOnclick}>
+                    <div class="icone-verificacao" title="${dados[i].statusAlerta == 'Verificado' ? 'Alerta verificado' : 'Marcar como verificado'}" ${acaoOnclick}>
                         <img src="../assets/imgs/${iconeOlho}" alt="visualização">
                     </div>
                 </td>
