@@ -63,22 +63,22 @@
 
     <div class="container">
         <div class="conteudo-principal">
-             <div class="header">
-        <div class="header-esquerda">
-            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
-            <a href="monitoramento.html">
-                <span id="nome_MaquinaDac ">Monitoramento</span>
-            </a>
-            <img src="../assets/imgs/botao_seta_preto.png" alt="">
-            <a href="grafico1.html">
-                <span id="nome_maquina"></span>
-                <span id="status_MaquinaDac"> Status: </span>
-            </a>
-            <img src="../assets/imgs/botao_seta_preto.png" alt="">
-            <span id="nome_MaquinaDac">Análise de Disco</span>
+            <div class="header">
+                <div class="header-esquerda">
+                    <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar">
+                    <a href="monitoramento.html">
+                        <span id="nome_MaquinaDac ">Monitoramento</span>
+                    </a>
+                    <img src="../assets/imgs/botao_seta_preto.png" alt="">
+                    <a href="grafico1.html">
+                        <span id="nome_maquina"></span>
+                        <span id="status_MaquinaDac"> Status: </span>
+                    </a>
+                    <img src="../assets/imgs/botao_seta_preto.png" alt="">
+                    <span id="nome_MaquinaDac">Análise de Disco</span>
 
-        </div>
-    </div>
+                </div>
+            </div>
 
             <div class="corpo">
                 <div class="box-kpis">
@@ -92,7 +92,7 @@
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text">
                                         Valor em porcentagem correspondente à quantidade de disco utilizada de acordo
-                                        com a capacidade total
+                                        com a capacidade total.
                                     </span>
                                 </span>
                             </div>
@@ -110,7 +110,7 @@
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text">
-                                        Quantidade de Gigabytes disponíveis do disco
+                                        Quantidade de Gigabytes disponíveis do disco.
                                     </span>
                                 </span>
                             </div>
@@ -147,7 +147,7 @@
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text tooltip-perto-da-borda">
-                                        Capacidade total de armazenamento do disco em Gibabytes
+                                        Capacidade total de armazenamento do disco em Gibabytes.
                                     </span>
                                 </span>
                             </div>
@@ -171,7 +171,7 @@
                                         <i class='bxr  bx-info-circle'></i>
                                         <span class="tooltip-text tooltip-perto-da-borda">
                                             Percentual de uso do disco em relação ao percentual de espaço disponível do
-                                            disco
+                                            disco.
                                         </span>
                                     </span>
                                 </div>
@@ -190,7 +190,7 @@
                                     <span class="tooltip">
                                         <i class='bxr  bx-info-circle'></i>
                                         <span class="tooltip-text tooltip-perto-da-borda">
-                                            Percentual de disco que está sendo utilizado em cada partição do disco
+                                            Percentual de disco que está sendo utilizado em cada partição do disco.
                                         </span>
                                     </span>
                                 </div>
@@ -204,15 +204,13 @@
                     <div class="box-grafico-unico-comprido">
                         <div class="top-grafico top-grafico-linha">
                             <div class="titulo-grafico titulo-grafico-linha">
-                                <b>Últimas variações e tendência do uso do disco</b>
+                                <b>Últimas variações do percentual de uso do disco</b>
                             </div>
                             <div class="icone-info-grafico icone-grafico-linha">
                                 <span class="tooltip">
                                     <i class='bxr  bx-info-circle'></i>
                                     <span class="tooltip-text tooltip-perto-da-borda">
-                                        Últimas 10 variações no percentual de uso do disco e tendência de uso baseado no
-                                        conceito de regressão linear simples, com a finalidade de prever de forma
-                                        aproximada as próximas variações
+                                        Últimas 10 variações no percentual de uso do disco, com a finalidade de entender o comportamento do disco e suas variações ao longo do tempo.
                                     </span>
                                 </span>
                             </div>
@@ -235,7 +233,7 @@
 
 <script>
 
-     fetch(`/grafico/exibirInfoDac/${sessionStorage.ID_DAC}`, {
+    fetch(`/grafico/exibirInfoDac/${sessionStorage.ID_DAC}`, {
         method: "GET",
     })
         .then(resposta => {
@@ -273,6 +271,12 @@
     var percentuaisParticoes = [];
     var variacoesUsoDisco = [];
     var dataHoraVariacoesUsoDisco = [];
+
+    // Métricas padrão
+    var atencao_inicio = 70;
+    var atencao_fim = 79;  
+    var alerta_inicio = 80;
+    var alerta_fim = 100;
 
     function puxarNomeDaMaquina() {
         var idDac = sessionStorage.ID_DAC
@@ -313,6 +317,15 @@
                 console.log("Atualizando Dados")
                 for (let i = 3; i >= 0; i--) {
                     if (resposta[i].fkMedicoesDisponiveis == 10) {
+
+                        if (resposta[i].medidaCapturada < atencao_inicio) {
+                            kpi_porcentagem_disco.style.color = 'green'
+                        } else if (resposta[i].medidaCapturada >= atencao_inicio && resposta[i].medidaCapturada < atencao_fim) {
+                            kpi_porcentagem_disco.style.color = '#f3be3a'
+                        } else if (resposta[i].medidaCapturada >= alerta_inicio) {
+                            kpi_porcentagem_disco.style.color = '#dc1717'
+                        }
+
                         kpi_porcentagem_disco.innerHTML = truncarDecimal(Number(resposta[i].medidaCapturada), 1) + "%"
                         porcentagemDisco = resposta[i].medidaCapturada
                         porcentagemDisponivelDisco = 100.0 - porcentagemDisco;
@@ -330,6 +343,7 @@
                         var espacoDisponivel = resposta[i].medidaCapturada
                     } else if (resposta[i].fkMedicoesDisponiveis == 15) {
                         if (resposta[i].medidaCapturada >= 1000) {
+                            kpi_iops.style.color = '#dc1717';
                             kpi_iops.innerHTML = truncarDecimal(Number(resposta[i].medidaCapturada / 1000), 1) + "K/s"
                         } else {
                             kpi_iops.innerHTML = Math.trunc(Number(resposta[i].medidaCapturada)) + "/s"
@@ -369,6 +383,38 @@
             })
             .catch(function (resposta) {
                 console.log(`Erro no catch: ${resposta}`);
+            });
+    }
+
+    function puxarmetricas() {
+        var idDac = sessionStorage.ID_DAC
+        fetch(`/analisedisco/puxarMetricas/${idDac}`, {
+            method: "GET",
+        })
+        .then(resposta => {
+            if (!resposta.ok) {
+                throw new Error('Erro na requisição');
+            }
+            return resposta.json();
+        })
+        .then(resposta => {
+                console.log('ENTRANDO NO PUXAR METRICAS')
+                if (resposta.length == 0) {
+                    kpi_porcentagem_disco.style.color = "#000"
+                } else {
+                    atencao_inicio = resposta[0].valorMinimo
+                    atencao_fim = resposta[0].valorMaximo
+
+                    alerta_inicio = resposta[1].valorMinimo
+                    alerta_fim = resposta[1].valorMaximo
+
+                    console.log("METRICAS:", atencao_inicio, atencao_fim, alerta_inicio, alerta_fim)
+                }
+
+
+            })
+            .catch(function (erro) {
+                console.log(`Erro no catch: ${erro}`);
             });
     }
 
@@ -533,44 +579,9 @@
 
         const ctxLinha = document.getElementById('myChart-linha').getContext('2d');
 
-        // Dados reais
         const labels = dataHoraVariacoesUsoDisco;
         const y = variacoesUsoDisco;
 
-        // Transformar datas em índices simples
-        const x = y.map((_, i) => i);
-
-        // Função simples de regressão
-        function regressaoLinear(x, y) {
-            const n = x.length;
-            const somaX = x.reduce((a, b) => a + b, 0);
-            const somaY = y.reduce((a, b) => a + b, 0);
-            const somaXY = x.reduce((s, xi, i) => s + xi * y[i], 0);
-            const somaX2 = x.reduce((s, xi) => s + xi * xi, 0);
-
-            const a = (n * somaXY - somaX * somaY) / (n * somaX2 - somaX * somaX);
-            const b = (somaY - a * somaX) / n;
-            return { a, b };
-        }
-
-        // Calcular a e b
-        const { a, b } = regressaoLinear(x, y);
-
-        // Criar linha de tendência
-        const yPrevisto = x.map(xi => a * xi + b);
-
-        // Estimar quando chegará a 100%
-        const xColapso = (100 - b) / a;
-        const dataColapsoTexto = "≈ ponto " + xColapso.toFixed(1);
-
-        const ultimaData = new Date("2025-10-15 10:25:20");
-        const minutosEntrePontos = 5;
-
-        const minutosAteColapso = xColapso * minutosEntrePontos;
-
-        const dataColapsoReal = new Date(ultimaData.getTime() + minutosAteColapso * 60000);
-
-        // Gráfico
         graficoUltimasVariacoes = new Chart(ctxLinha, {
             type: 'line',
             data: {
@@ -584,16 +595,6 @@
                         tension: 0.3,
                         // fill: false,
                         order: 1
-                    },
-                    {
-                        label: 'Tendência (regressão linear)',
-                        data: yPrevisto,
-                        borderColor: 'rgb(255, 0, 0)',
-                        backgroundColor: 'rgba(255, 0, 0, 0.3)',
-                        borderDash: [10, 6],
-                        tension: 0,
-                        // fill: true,
-                        order: 99
                     },
                 ]
             },

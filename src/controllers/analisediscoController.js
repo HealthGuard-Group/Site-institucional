@@ -48,6 +48,32 @@ function buscarDadosDisco(req, res) {
     }
 }
 
+function puxarMetricas(req, res) {
+    var fkDac = req.params.idDac
+
+    console.log(`Debug: Chegou no controller. Unidade: Dac: ${fkDac}`);
+    
+     if (fkDac == undefined) {
+        res.status(400).send("FK Dac está undefined!");
+    } else {
+        analisediscoModel.puxarMetricas(fkDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao realizar a busca do convite! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 function buscarUltimasVariacoesUsoDisco(req, res) {
     var idDac = req.params.idDac;
     if (idDac == undefined) {
@@ -148,7 +174,8 @@ function buscarUltimasVariacoesUsoDisco(req, res) {
 module.exports = {
     buscarnomemaquina,
     buscarDadosDisco,
-    buscarUltimasVariacoesUsoDisco
+    buscarUltimasVariacoesUsoDisco,
+    puxarMetricas,
     // buscarmetricasrammaquina,
     // buscarmetricasrammaquinaunidade,
     // puxardadosgraficoRAM,

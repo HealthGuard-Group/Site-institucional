@@ -11,6 +11,10 @@ router.get(`/buscarDadosDisco/:idDac`, function (req, res) {
     analisediscoController.buscarDadosDisco(req, res);
 });
 
+router.get(`/puxarMetricas/:idDac`, function (req, res) {
+    analisediscoController.puxarMetricas(req, res);
+});
+
 router.get(`/puxarDadosGraficoUsoDisco/:idDac`, function (req, res) {
     analisediscoController.puxarDadosGraficoUsoDisco(req, res);
 });

@@ -37,6 +37,13 @@ function buscarUltimasVariacoesUsoDisco(idDac) {
     return database.executar(instrucaoSql);
 }
 
+function puxarMetricas(fkDac) {
+    var instrucaoSql = `SELECT nomeNivel, valorMinimo, valorMaximo 
+                        FROM MetricaAlerta 
+                        WHERE fkMedicoesDisponiveis = 10 and fkDac = ${fkDac} AND nomeNivel IN ('Atenção', 'Alerta');`
+    return database.executar(instrucaoSql)
+}
+
 // function buscarmetricasrammaquina(idDac) {
 //     var instrucaoSql = `SELECT valorMinimo,valorMaximo,nomeNivel FROM MetricaAlerta WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis = 6;`;
 
@@ -85,6 +92,7 @@ module.exports = {
     buscarnomemaquina,
     buscarDadosDisco,
     buscarUltimasVariacoesUsoDisco,
+    puxarMetricas,
     // buscarmetricasrammaquina,
     // buscarmetricasrammaquinaunidade,
     // puxardadosgraficoRAM,
