@@ -10,7 +10,7 @@ function buscarDadosDisco(idDac) {
     var instrucaoSql = `SELECT 
                             *
                         FROM
-                            leitura
+                            Leitura
                         WHERE
                             fkDac = ${idDac}
                                 AND (fkMedicoesDisponiveis = 10
@@ -27,7 +27,7 @@ function buscarUltimasVariacoesUsoDisco(idDac) {
     var instrucaoSql = `SELECT 
                             medidaCapturada, MAX(dataCaptura) AS ultimaDataCaptura
                         FROM
-                            leitura
+                            Leitura
                         WHERE
                             fkDac = ${idDac} AND fkMedicoesDisponiveis = 10
                         GROUP BY medidaCapturada
