@@ -74,19 +74,21 @@
       </div>
 
       <div class="filtros">
-        <select class="filtro">
-          <option>Filtrar por</option>
-          <option>Data</option>
-          <option>Usuário</option>
-        </select>
 
-        <input type="text" placeholder="Usuário" class="campo-usuario">
+        Filtrar por funcionário:
+
+        <input type="text" placeholder="Ex: Roberto" class="campo-usuario" style="border: solid 1px rgb(92, 92, 92);">
+
+
+        <button class="botao-aplicar-filtros" onclick="aplicarFiltro()">
+          Aplicar filtro
+        </button>
       </div>
 
       <table class="tabela" id="tabela">
         <tr class="linha cabecalho">
           <td class="coluna">Data/Hora</td>
-          <td class="coluna">Usuário</td>
+          <td class="coluna">Nome funcionário</td>
           <td class="coluna">E-mail</td>
           <td class="coluna">Descrição</td>
           <td class="coluna">Resultado</td>
@@ -179,15 +181,17 @@
 </html>
 
 <script>
+  var logs = [];
+
   function buscarDadosLogs() {
     var variaveis = puxarVariaveis()
     console.log(variaveis)
     variaveis = variaveis.idUnidadeAtendimento
     console.log(variaveis)
     tabela.innerHTML = `
-        <tr class ="linha cabecalho">
+        <tr class ="linha cabecalho" style="height: 6vh;">
           <td class="coluna">Data/Hora</td>
-          <td class="coluna">Usuário</td>
+          <td class="coluna">Nome do funcionário</td>
           <td class="coluna">E-mail</td>
           <td class="coluna">Descrição</td>
           <td class="coluna">Resultado</td>
@@ -201,7 +205,8 @@
       })
       .then(resposta => {
         console.log(resposta)
-        atualizarTabela(resposta)
+        logs = resposta;
+        atualizarTabela(resposta);
       })
       .catch(function (resposta) {
         console.log(`Erro no catch: ${resposta}`);
@@ -253,6 +258,40 @@
     var data_formatada = new Date(data)
     data_formatada = data_formatada.toLocaleDateString("pt-BR", fuso)
     return data_formatada
+  }
+
+  function filtrar(dados) {
+    var nomeDigitado = document.querySelector(".campo-usuario").value
+    var dados_filtrados = []
+    for (let i = 0; i < dados.length; i++) {
+      if (formatarTextoParaComparacao(dados[i].nome).includes(formatarTextoParaComparacao(nomeDigitado))) {
+        dados_filtrados.push(dados[i])
+      }
+    }
+    console.log("Tamanho dos dados filtrados:", dados_filtrados)
+    return dados_filtrados
+  }
+
+  function formatarTextoParaComparacao(texto) {
+    var texto_formatado = "" + texto
+    texto_formatado = texto_formatado.toLowerCase()
+    texto_formatado = texto_formatado.replaceAll(" ", "")
+    return texto_formatado
+  }
+
+  function aplicarFiltro() {
+    var logsFiltrados = filtrar(logs);
+
+    tabela.innerHTML = `
+    <tr class ="linha cabecalho"  style="height: 6vh;">
+      <td class="coluna">Data/Hora</td>
+      <td class="coluna">Nome do funcionário</td>
+      <td class="coluna">E-mail</td>
+      <td class="coluna">Descrição</td>
+      <td class="coluna">Resultado</td>
+    </tr>`;
+
+    atualizarTabela(logsFiltrados);
   }
 
 

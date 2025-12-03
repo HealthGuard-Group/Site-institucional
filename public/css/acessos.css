@@ -56,8 +56,23 @@
     font-size: 1vw;
     border: none;
     padding-left: .7vw;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px,
-                rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+}
+
+.botao-aplicar-filtros {
+    background-color:  #1E2A38;
+    color: white;
+    border: none;
+    height: 60%;
+    width: 7vw;
+    border-radius: 1vh;
+    font-size: 0.9vw;
+    font-weight: 500;
+    /* margin-left: 4%; */
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.botao-aplicar-filtros:hover{
+    cursor: pointer;
 }
 
 
@@ -71,6 +86,7 @@
                 rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     display: flex;
     flex-direction: column;
+    font-size: 0.9rem;
 }
 
 
@@ -89,6 +105,7 @@
     width: 35%;
     font-size: 1.2vw;
     text-align: center;
+    font-size: 0.9rem;
 }
 
 
@@ -100,6 +117,7 @@
     border-bottom: 2px solid #edecec;
     font-weight: 400;
     text-align: center;
+    font-size: 0.9rem;
 }
 
 
