@@ -226,45 +226,96 @@
             });
     }
 
-    function atualizarTabela(dados) {
-        console.log("Respota entrando na função:", dados)
+  
+        function atualizarTabela(dados) {
+    console.log("Respota entrando na função:", dados);
 
-        for (let i = 0; i < dados.length; i++) {
+    for (let i = 0; i < dados.length; i++) {
 
-            let data_inicio = new Date(dados[i].dataInicio).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+       
+        let data_inicio = new Date(dados[i].dataInicio).toLocaleString("pt-BR", {
+            timeZone: "America/Sao_Paulo"
+        });
 
-            let data_termino = dados[i].dataTermino == null ? "----------" :
-                new Date(dados[i].dataTermino).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
-
-            data_visualizacao = dados[i].dataVisualizacao == null ? "----------" :
-                new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
-
-            if (dados[i].verificador == null) dados[i].verificador = "--------------------";
-
-            let statusCor = dados[i].statusAlerta == 'Verificado' ? 'rgb(0, 170, 40)' : '#656464';
-            let iconeOlho = dados[i].statusAlerta == 'Verificado' ? 'iconeOlhoVerde.png' : 'iconeOlhoCinza.png';
-            let acaoOnclick = dados[i].statusAlerta == 'Verificado' ? '' : `onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})"`;
-
-            let iconeClasse = dados[i].nomeAlerta == 'Alerta' ? 'icone-alerta' : 'icone-atencao';
-
-            tabela_alertas.innerHTML += `
-             <tr class="dados-tabela">
-                <td class="td-tipo-alerta"><span class="status-dot ${iconeClasse}"></span>${dados[i].nomeAlerta}</td>
-                <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
-                <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
-                <td class="td-data-inicio-alerta">${data_inicio}</td>
-                <td class="td-data-termino-alerta">${data_termino}</td>
-                <td class="td-status-alerta"><b style="color: ${statusCor};">${dados[i].statusAlerta}</b></td>
-                <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
-                <td class="td-verificador-alerta">${dados[i].verificador}</td>
-                <td class="td-acoes-alerta">
-                    <div class="icone-verificacao" title="${dados[i].statusAlerta == 'Verificado' ? 'Alerta verificado' : 'Marcar como verificado'}" ${acaoOnclick}>
-                        <img src="../assets/imgs/${iconeOlho}" alt="visualização">
-                    </div>
-                </td>
-            </tr>`;
+       
+        let data_termino;
+        if (dados[i].dataTermino == null) {
+            data_termino = "----------";
+        } else {
+            data_termino = new Date(dados[i].dataTermino).toLocaleString("pt-BR", {
+                timeZone: "America/Sao_Paulo"
+            });
         }
+
+        
+        if (dados[i].dataVisualizacao == null) {
+            data_visualizacao = "----------";
+        } else {
+            data_visualizacao = new Date(dados[i].dataVisualizacao).toLocaleString("pt-BR", {
+                timeZone: "America/Sao_Paulo"
+            });
+        }
+
+      
+        if (dados[i].verificador == null) {
+            dados[i].verificador = "--------------------";
+        }
+
+      
+        let statusCor;
+        if (dados[i].statusAlerta == "Verificado") {
+            statusCor = "rgb(0, 170, 40)";
+        } else {
+            statusCor = "#656464";
+        }
+
+        let iconeOlho;
+        if (dados[i].statusAlerta == "Verificado") {
+            iconeOlho = "iconeOlhoVerde.png";
+        } else {
+            iconeOlho = "iconeOlhoCinza.png";
+        }
+
+        let acaoOnclick;
+        if (dados[i].statusAlerta == "Verificado") {
+            acaoOnclick = "";
+        } else {
+            acaoOnclick = `onclick="marcarAlertaComoVerificado(${dados[i].idAlerta})"`;
+        }
+
+        let tituloIcone;
+        if (dados[i].statusAlerta == "Verificado") {
+            tituloIcone = "Alerta verificado";
+        } else {
+            tituloIcone = "Marcar como verificado";
+        }
+
+        let iconeClasse;
+        if (dados[i].nomeAlerta == "Alerta") {
+            iconeClasse = "icone-alerta";
+        } else {
+            iconeClasse = "icone-atencao";
+        }
+
+        tabela_alertas.innerHTML += `
+        <tr class="dados-tabela">
+            <td class="td-tipo-alerta"><span class="status-dot ${iconeClasse}"></span>${dados[i].nomeAlerta}</td>
+            <td class="td-monitoramento-alerta">${dados[i].monitoramento}</td>
+            <td class="td-nome-maquina">${dados[i].nomeMaquina}</td>
+            <td class="td-data-inicio-alerta">${data_inicio}</td>
+            <td class="td-data-termino-alerta">${data_termino}</td>
+            <td class="td-status-alerta"><b style="color: ${statusCor};">${dados[i].statusAlerta}</b></td>
+            <td class="td-data-verificacao-alerta">${data_visualizacao}</td>
+            <td class="td-verificador-alerta">${dados[i].verificador}</td>
+            <td class="td-acoes-alerta">
+                <div class="icone-verificacao" title="${tituloIcone}" ${acaoOnclick}>
+                    <img src="../assets/imgs/${iconeOlho}" alt="visualização">
+                </div>
+            </td>
+        </tr>`;
     }
+}
+
 
     function marcarAlertaComoVerificado(idAlerta) {
 
