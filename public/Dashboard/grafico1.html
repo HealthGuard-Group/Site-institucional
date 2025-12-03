@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" id="html_fonte">
 
 <head>
   <meta charset="UTF-8" />
@@ -66,9 +66,9 @@
           <div class="texto-erro oculto" id="texto_erro_selecao_servicos">Selecione ao menos um serviço
           </div>
           <div class="botoes-modal">
-            <button class="botao-modal btn-personalizar" onclick="adicionandoServicosPadrao()">Redefinir Métricas
+            <button class="botao-modal btn-personalizar" onclick="atualizandoServicosPadrao()">Redefinir Métricas
               Padrão</button>
-            <button class="botao-modal" onclick="adicionandoServicosPersonalizados()">Personalizar
+            <button class="botao-modal" onclick="atualizandoServicosPersonalizados()">Personalizar
               métricas</button>
           </div>
         </div>
@@ -222,16 +222,17 @@
 
         <div class="header">
           <div class="header-esquerda">
-            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar" style="cursor: pointer;">
+            <img onclick='history.back()' src="../assets/imgs/seta-esquerda.png" id="bt-voltar"
+              style="cursor: pointer;">
             <a href="monitoramento.html">
-                <span id="nome_MaquinaDac ">Monitoramento</span>
+              <span id="nome_MaquinaDac ">Monitoramento</span>
             </a>
-           <img src="../assets/imgs/botao_seta_preto.png" alt="">
+            <img src="../assets/imgs/botao_seta_preto.png" alt="">
 
             <span id="nome_MaquinaDac"></span>
             <span class="status alerta" id="status_MaquinaDac"></span>
           </div>
-          
+
         </div>
 
         <div onclick="excluir_maquina()" class="botao-excluir-maquina">
@@ -347,7 +348,7 @@
               <span class="status-dot ok"></span> OK
               <span class="status-dot alerta-critico"></span> Alerta de Atenção
               <span class="status-dot alerta-grave"></span> Alerta Grave
-              
+
             </div>
 
             <div class="metrica">
@@ -395,11 +396,10 @@
   <script>
     document.getElementById("botao_editar_maquina").addEventListener('click', () => {
       document.querySelector('.tela-escurecida').classList.remove('oculto')
+      document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
       document.getElementById("modal_atualizarmaquina").classList.remove('oculto')
       document.getElementById('html_fonte').style.overflowY = "hidden"
-      var nomeIndetificao = document.getElementById("nome_indetificao_maquina")
-      nomeIndetificao.style.border = '0.2vh solid #000'
-      nomeIndetificao.style.boxShadow = 'none'
+      puxarServicosPreSelecionados()
     })
 
     var idDac = sessionStorage.ID_DAC;
@@ -603,11 +603,11 @@
         })
         .then(resposta => {
           console.log(resposta)
-          if(resposta[0].mediaalertasdiarios == null){
+          if (resposta[0].mediaalertasdiarios == null) {
             mediaAlerta.innerHTML = `0`
           }
-          else{
-          mediaAlerta.innerHTML = `${resposta[0].mediaalertasdiarios}`
+          else {
+            mediaAlerta.innerHTML = `${resposta[0].mediaalertasdiarios}`
           }
         })
         .catch(erro => console.error("Erro:", erro));
@@ -767,8 +767,8 @@
             redeok.classList.remove("status-dot", "ok")
             redeok.classList.add("status-dot", "alerta-grave")
             cpu1.querySelector(".status-dot").className = "status-dot alerta-grave";
-              ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
-              disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
+            ram1.querySelector(".status-dot").className = "status-dot alerta-grave";
+            disco1.querySelector(".status-dot").className = "status-dot alerta-grave";
             status_MaquinaDac.innerHTML = `<p style="color:grey">Status: Inativa</p>`
           }
 
@@ -894,6 +894,7 @@
     var cty = document.getElementById("monitorChart").getContext("2d")
     var graficoAlerta = ""
     var graficoMonitoramento = ""
+    var metrica = ""
     var dadosGraficoAlerta = {
       CPU: {
         grave: [8, 10, 18, 24, 2, 3, 5],
@@ -1037,6 +1038,10 @@
     }
     function trocarMonitoramento() {
       var select = document.getElementById("componentSelect").value
+      if (graficoMonitoramento != "") {
+        graficoMonitoramento.destroy()
+        graficoMonitoramento == ""
+      }
       if (select == "CPU") {
         puxarDadosGraficoDash(1)
         puxarDadosGraficoDashAlerta(1)
@@ -1047,10 +1052,10 @@
         puxarDadosGraficoDash(10)
         puxarDadosGraficoDashAlerta(10)
       }
-      if (graficoMonitoramento != "") {
-        graficoMonitoramento.update()
-        graficoAlerta.update()
-      }
+      // if (graficoMonitoramento != "") {
+      //   graficoMonitoramento.update()
+      //   graficoAlerta.update()
+      // }
     }
 
     function trocarGraficos() {
@@ -1106,6 +1111,10 @@
       configuracaoBackgroundMonitoramento = {
         id: 'backgroundColorPlugin',
         beforeDraw: (chart) => {
+          if (!metrica) {
+            return
+          }
+          var configTamanho = metrica
           const { ctx, chartArea, scales } = chart
           if (!chartArea) return
           const { top, bottom, left, right } = chartArea
@@ -1114,13 +1123,13 @@
           ctx.save();
           // Valor ideal
           ctx.fillStyle = 'rgba(19, 155, 54, 0.7)'
-          ctx.fillRect(left, getY(metrica[0].valorMinimo), right - left, bottom - getY(metrica[0].valorMinimo))
+          ctx.fillRect(left, getY(configTamanho[0].valorMinimo), right - left, bottom - getY(configTamanho[0].valorMinimo))
           // Valor Atenção
           ctx.fillStyle = 'rgba(243, 190, 58, 0.8)'
-          ctx.fillRect(left, getY(metrica[0].valorMaximo), right - left, getY(metrica[0].valorMinimo) - getY(metrica[0].valorMaximo))
+          ctx.fillRect(left, getY(configTamanho[0].valorMaximo), right - left, getY(configTamanho[0].valorMinimo) - getY(configTamanho[0].valorMaximo))
           // Valor Alerta
           ctx.fillStyle = 'rgba(220, 23, 23, 0.7)'
-          ctx.fillRect(left, top, right - left, getY(metrica[1].valorMinimo) - top)
+          ctx.fillRect(left, top, right - left, getY(configTamanho[1].valorMinimo) - top)
           ctx.restore()
         }
       }
@@ -1141,18 +1150,14 @@
             dadosMonitoramento.push(resposta[i].medidaCapturada)
             dataMonitoramento.push(formatarData(resposta[i].dataCaptura))
           }
-          if (graficoMonitoramento == "") {
-            plotarGraficosDash()
-          } else {
-            graficoMonitoramento.update()
-          }
+          plotarGraficosDash()
         })
         .catch(function (resposta) {
           console.log(`Erro no catch: ${resposta}`);
         });
     }
 
-    function atualizarGraficoMonitoramento() {
+    async function atualizarGraficoMonitoramento() {
       var select = document.getElementById("componentSelect").value
       var idMonitoramento = 0;
       if (select == "CPU") {
@@ -1161,6 +1166,9 @@
         idMonitoramento = 6
       } else if (select == "Disco") {
         idMonitoramento = 10
+      }
+      if (graficoMonitoramento == "") {
+        return
       }
       fetch(`/grafico/atualizarDadosGraficoDashMonitoramento/${idDac}/${idMonitoramento}`, {
         method: "GET",
@@ -1231,6 +1239,360 @@
         .catch(function (resposta) {
           console.log(`Erro no catch: ${resposta}`);
         });
+    }
+
+    // Modal Editar Máquina
+    var passo_metrica_personalizada = 0
+    var idsMedicoesSelecionadas = []
+    var maquina_atualizar = {
+      servicos: ['', '', '', ''],
+      alertaAtencao: [["", ""], ["", ""], ["", ""]],
+      alerta: [["", ""], ["", ""], ["", ""]]
+    }
+    function fecharPop() {
+      document.querySelector(".tela-escurecida").classList.add("oculto")
+      var modal_atualizar_maquina = document.getElementById("modal_atualizarmaquina")
+      modal_atualizar_maquina.classList.add("oculto")
+      document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
+    }
+    function puxarServicosPreSelecionados() {
+      fetch(`/grafico/puxandoServicosSelecionados/${idDac}`, {
+        method: "GET",
+      })
+        .then(resposta => {
+          return resposta.json();
+        })
+        .then(resposta => {
+          idsMedicoesSelecionadas = []
+          var selectCPU = document.getElementById("uso_cpu_porcentagem")
+          var selectRAM = document.getElementById("uso_ram_porcentagem")
+          var selectDisco = document.getElementById("uso_disco_porcentagem")
+          var selectRede = document.getElementById("uso_rede")
+          for (let i = 0; i < resposta.length; i++) {
+            if (resposta[i].fkMedicoesDisponiveis == 1) {
+              selectCPU.checked = true
+            } else if (resposta[i].fkMedicoesDisponiveis == 6) {
+              selectRAM.checked = true
+            } else if (resposta[i].fkMedicoesDisponiveis == 10) {
+              selectDisco.checked = true
+            } else if (resposta[i].fkMedicoesDisponiveis == 11) {
+              selectRede.checked = true
+            }
+            idsMedicoesSelecionadas.push(resposta[i])
+          }
+          console.warn("Serviços escolhidos", resposta)
+        })
+        .catch(function (resposta) {
+          console.log(`Erro no catch: ${resposta}`);
+        });
+    }
+    function atualizandoServicosPadrao() {
+      console.log("Oi")
+      var validacaoServico = validacaoServicos()
+      if (!validacaoServicos()) {
+        return
+      }
+      atualizarServicosComMetricaPadrao()
+    }
+    function atualizandoServicosPersonalizados() {
+      if (!validacaoServicos()) {
+        return
+      }
+      document.getElementById("modal_atualizarmaquina").classList.add("oculto")
+      document.getElementById("modal_adicionarmaquina_config").classList.remove("oculto")
+      avancarPaginaAlertaPersonalizado()
+    }
+    function atualizarServicosComMetricaPadrao() {
+      // Exclui todos os monitoramentos
+      fetch("/grafico/deletandoServicos", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          idDac: idDac
+        })
+      })
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("Erro ao atualizar");
+          }
+          return res.json();
+        })
+        .then(data => {
+          console.log("Deletado com sucesso:", data);
+          salvandoAlerta(false)
+        })
+        .catch(err => {
+          console.log("Erro:", err);
+        })
+    }
+    function salvandoAlerta(personalizado) {
+      console.log("Entrei na função de Salvar alerta")
+      var fks = puxarVariaveis()
+      var idUnidadeAtendimento = fks.idUnidadeAtendimento
+      console.log("Pegue minhas variavéis para adicionar as máquinas:", maquina_atualizar, "idUnidade", idUnidadeAtendimento, "idDac", idDac)
+      fetch("/dashboard/inserirmaquinaservicos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          maquina_nova: maquina_atualizar,
+          idUnidadeAtendimento: idUnidadeAtendimento,
+          idDac: idDac
+        }),
+      })
+        .then(function (resposta) {
+          console.log("resposta: ", resposta);
+          console.warn("Máquina adicionadas")
+          if (personalizado) {
+            console.log("Entrei no personalizado")
+            fetch("/dashboard/inserirmaquinametricaspersonalizadas", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                maquina_nova: maquina_atualizar,
+                idUnidadeAtendimento: idUnidadeAtendimento,
+                idDac: idDac
+              }),
+            })
+              .then(function (resposta) {
+                console.log("resposta: ", resposta);
+              })
+              .catch(function (resposta) {
+                console.log(`#ERRO: ${resposta}`);
+                alert("Erro no catch");
+              });
+          }
+          fecharPop()
+          alert("Os monitoramento foram editados com sucesso!")
+        })
+        .catch(function (resposta) {
+          console.log(`#ERRO: ${resposta}`);
+          alert("Erro no catch");
+        });
+      document.getElementById("modal_codigofinal").classList.remove("oculto")
+      document.getElementById("modal_adicionarmaquina_config").classList.add("oculto")
+      document.getElementById("modal_adicionarmaquina").classList.add("oculto")
+    }
+    function validacaoServicos() {
+      var selectCPU = document.getElementById("uso_cpu_porcentagem").checked
+      var selectRAM = document.getElementById("uso_ram_porcentagem").checked
+      var selectDisco = document.getElementById("uso_disco_porcentagem").checked
+      var selectRede = document.getElementById("uso_rede").checked
+      var texto_erro = document.getElementById("texto_erro_selecao_servicos")
+      console.log("---------------------------------")
+      console.log(selectCPU)
+      console.log(selectRAM)
+      console.log(selectDisco)
+      console.log(selectRede)
+      console.log("---------------------------------")
+      if (!selectCPU && !selectRAM && !selectDisco && !selectRede) {
+        console.log("Entrei nada tá positivo")
+        texto_erro.classList.remove("oculto")
+        texto_erro.innerHTML = `<span style="color:red">Selecione ao menos um serviço</span>`
+        return false
+      }
+      maquina_atualizar.servicos = [selectCPU, selectRAM, selectDisco, selectRede]
+      texto_erro.classList.add("oculto")
+      return true
+    }
+    function validarnumero(input) {
+      if (input.value < 0) {
+        input.value = 0
+      } if (input.value > 100) {
+        input.value = 100
+      }
+    }
+    function parametrizarAlertasPersonalizado() {
+      // Validação
+      var min_atencao = Number(document.getElementById("valor_minimo_atencao").value)
+      var max_atencao = Number(document.getElementById("valor_maximo_atencao").value)
+      var min_alerta = Number(document.getElementById("valor_minimo_alerta").value)
+      var max_alerta = Number(document.getElementById("valor_maximo_alerta").value)
+      var texto_min_atencao = document.getElementById("texto_erro_minimo_atencao")
+      var texto_max_atencao = document.getElementById("texto_erro_maximo_atencao")
+      var texto_min_alerta = document.getElementById("texto_erro_minimo_alerta")
+      var texto_max_alerta = document.getElementById("texto_erro_maximo_alerta")
+      var input_metrica_padrao = document.getElementById("input_configuracao_padrao").checked
+      var ax_erro = false
+      if (!input_metrica_padrao) {
+        if (min_alerta == 0 && max_alerta == 0) {
+          texto_min_alerta.classList.remove("oculto")
+          texto_max_alerta.classList.remove("oculto")
+          texto_min_alerta.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+          texto_max_alerta.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+          ax_erro = true
+        } else if (min_alerta >= max_alerta) {
+          texto_min_alerta.classList.remove("oculto")
+          texto_max_alerta.classList.remove("oculto")
+          texto_min_alerta.innerHTML = `<span style="color: red;">Deve ser menor que o limite máximo</span>`
+          texto_max_alerta.innerHTML = `<span style="color: red;">Deve ser maior que o limite mínimo</span>`
+          ax_erro = true
+        } else if (min_alerta <= max_atencao) {
+          texto_min_alerta.classList.remove("oculto")
+          texto_max_alerta.classList.add("oculto")
+          texto_min_alerta.innerHTML = `<span style="color: red;">Deve ser maior que o limite da Atenção(${max_atencao}%)</span>`
+          ax_erro = true
+        }
+        else {
+          texto_min_alerta.classList.add("oculto")
+          texto_max_alerta.classList.add("oculto")
+        }
+        if (min_atencao == 0 && max_atencao == 0) {
+          texto_min_atencao.classList.remove("oculto")
+          texto_max_atencao.classList.remove("oculto")
+          texto_min_atencao.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+          texto_max_atencao.innerHTML = `<span style="color: red;">Preencha o campo</span>`
+        } else if (min_atencao >= max_atencao) {
+          texto_min_atencao.classList.remove("oculto")
+          texto_max_atencao.classList.remove("oculto")
+          texto_min_atencao.innerHTML = `<span style="color: red;">Deve ser menor que o limite máximo</span>`
+          texto_max_atencao.innerHTML = `<span style="color: red;">Deve ser maior que o limite mínimo</span>`
+        } else if (max_atencao >= min_alerta) {
+          texto_min_atencao.classList.add("oculto")
+          texto_max_atencao.classList.remove("oculto")
+          texto_max_atencao.innerHTML = `<span style="color: red;">Deve ser menor que o início do Alerta (${min_alerta}%)</span>`
+        } else {
+          texto_min_atencao.classList.add("oculto")
+          texto_max_atencao.classList.add("oculto")
+        }
+        if (ax_erro) {
+          return
+        }
+      }
+      // Fim Validação
+      console.log(passo_metrica_personalizada)
+      maquina_atualizar.alertaAtencao[passo_metrica_personalizada - 1][0] = min_atencao
+      maquina_atualizar.alertaAtencao[passo_metrica_personalizada - 1][1] = max_atencao
+      maquina_atualizar.alerta[passo_metrica_personalizada - 1][0] = min_alerta
+      maquina_atualizar.alerta[passo_metrica_personalizada - 1][1] = max_alerta
+      console.log("Passei da validação")
+      avancarPaginaAlertaPersonalizado()
+    }
+    function avancarPaginaAlertaPersonalizado() {
+      for (let i = 0; i < 3; i++) {
+        if (maquina_atualizar.servicos[passo_metrica_personalizada] == false) {
+          passo_metrica_personalizada++
+        } if (passo_metrica_personalizada >= 3) {
+          fetch("/grafico/deletandoServicos", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              idDac: idDac
+            })
+          })
+            .then(res => {
+              if (!res.ok) {
+                throw new Error("Erro ao atualizar");
+              }
+              return res.json();
+            })
+            .then(data => {
+              console.log("Deletado com sucesso:", data);
+              fecharPop()
+              salvandoAlerta(true)
+            })
+            .catch(err => {
+              console.log("Erro:", err);
+            })
+          break
+        }
+      }
+      var texto_metricas = ["Definição das métricas de uso de CPU(%):", "Definição das métricas de uso de RAM(%):", "Definição das métricas de uso de Disco(%):"]
+      parametro_a_configurar.innerHTML = texto_metricas[passo_metrica_personalizada]
+      valor_minimo_atencao.value = ""
+      valor_maximo_atencao.value = ""
+      valor_minimo_alerta.value = ""
+      valor_maximo_alerta.value = ""
+      input_configuracao_padrao.checked = false
+      valor_minimo_atencao.disabled = false
+      valor_maximo_atencao.disabled = false
+      valor_minimo_alerta.disabled = false
+      valor_maximo_alerta.disabled = false
+      passo_metrica_personalizada++
+    }
+    function puxarMetricasPadraoPersonalizado(input) {
+      var fks = puxarVariaveis()
+      var idUnidadeAtendimento = fks.idUnidadeAtendimento
+      var texto_min_atencao = document.getElementById("texto_erro_minimo_atencao")
+      var texto_max_atencao = document.getElementById("texto_erro_maximo_atencao")
+      var texto_min_alerta = document.getElementById("texto_erro_minimo_alerta")
+      var texto_max_alerta = document.getElementById("texto_erro_maximo_alerta")
+      var valor_input = input.checked
+      if (valor_input) {
+        texto_min_alerta.classList.add("oculto")
+        texto_max_alerta.classList.add("oculto")
+        texto_min_atencao.classList.add("oculto")
+        texto_max_atencao.classList.add("oculto")
+        valor_minimo_atencao.disabled = true
+        valor_maximo_atencao.disabled = true
+        valor_minimo_alerta.disabled = true
+        valor_maximo_alerta.disabled = true
+        fetch(`/dashboard/buscarMetricasPadrao/${fkUnidade}`, {
+          method: "GET",
+        })
+          .then(resposta => {
+            return resposta.json();
+          })
+          .then(resposta => {
+            console.warn(resposta)
+            if (passo_metrica_personalizada == 1) {
+              for (let i = 0; i < resposta.length; i++) {
+                if (resposta[i].fkMedicoesDisponiveis == 1) {
+                  if (resposta[i].nomeNivel == "Atenção") {
+                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                  } else {
+                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                  }
+                }
+              }
+            } if (passo_metrica_personalizada == 2) {
+              for (let i = 0; i < resposta.length; i++) {
+                if (resposta[i].fkMedicoesDisponiveis == 6) {
+                  if (resposta[i].nomeNivel == "Atenção") {
+                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                  } else {
+                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                  }
+                }
+              }
+            } if (passo_metrica_personalizada == 3) {
+              for (let i = 0; i < resposta.length; i++) {
+                if (resposta[i].fkMedicoesDisponiveis == 10) {
+                  if (resposta[i].nomeNivel == "Atenção") {
+                    valor_minimo_atencao.value = resposta[i].valorMinimo
+                    valor_maximo_atencao.value = resposta[i].valorMaximo
+                  } else {
+                    valor_minimo_alerta.value = resposta[i].valorMinimo
+                    valor_maximo_alerta.value = resposta[i].valorMaximo
+                  }
+                }
+              }
+            }
+          })
+          .catch(function (resposta) {
+            console.log(`Erro no catch: ${resposta}`);
+          });
+      } else {
+        valor_minimo_atencao.disabled = false
+        valor_maximo_atencao.disabled = false
+        valor_minimo_alerta.disabled = false
+        valor_maximo_alerta.disabled = false
+        valor_minimo_atencao.value = ""
+        valor_maximo_atencao.value = ""
+        valor_minimo_alerta.value = ""
+        valor_maximo_alerta.value = ""
+      }
     }
   </script>
 </body>

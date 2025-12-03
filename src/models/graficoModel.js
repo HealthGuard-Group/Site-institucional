@@ -344,7 +344,23 @@ function puxandoMetricaPadrao(idUnidade, idMonitoramento) {
     return database.executar(instrucaoSql);
 }
 
+function puxandoServicosSelecionados(idDac) {
+    var instrucaoSql = `
+    SELECT * FROM MedicoesSelecionadas WHERE fkDac = ${idDac} AND fkMedicoesDisponiveis in(1,6,10,11);
+    `
+    return database.executar(instrucaoSql);
+}
 
+async function deletandoServicos(idDac) {
+    var instrucaoSql = `
+    DELETE FROM MetricaAlerta WHERE fkDac = ${idDac};
+    `
+    var delete2 = `
+    DELETE FROM MedicoesSelecionadas WHERE fkDac = ${idDac};
+    `
+    await database.executar(instrucaoSql);
+    return database.executar(delete2)
+}
 
 module.exports = {
     exibirInfoDac,
@@ -377,5 +393,7 @@ module.exports = {
     metricadisco,
     puxarAlertasNaoVistos,
     puxandoMetricaPadraoDac,
-    puxandoMetricaPadrao
+    puxandoMetricaPadrao,
+    puxandoServicosSelecionados,
+    deletandoServicos
 };

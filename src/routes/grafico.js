@@ -127,4 +127,13 @@ router.get("/puxandoMetricaPadrao/:idUnidadeAtendimento/:idMonitoramento", funct
   graficoController.puxandoMetricaPadrao(req, res);
 });
 
+router.get("/puxandoServicosSelecionados/:idDac", function (req, res) {
+  graficoController.puxandoServicosSelecionados(req, res);
+});
+
+router.delete("/deletandoServicos", function (req, res) {
+  graficoController.deletandoServicos(req, res);
+});
+
+
 module.exports = router;

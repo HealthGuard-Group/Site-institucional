@@ -741,6 +741,54 @@ function puxandoMetricaPadrao(req, res) {
     }
 }
 
+function puxandoServicosSelecionados(req, res) {
+    var idDac = req.params.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.puxandoServicosSelecionados(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar serviços selecionados! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
+function deletandoServicos(req, res) {
+    var idDac = req.body.idDac;
+    if (idDac == undefined) {
+        res.status(400).send("Seu idDac está undefined!");
+    } else {
+
+        graficoModel.deletandoServicos(idDac)
+            .then(
+                function (resultado) {
+                    res.json(resultado);
+                }
+            ).catch(
+                function (erro) {
+                    console.log(erro);
+                    console.log(
+                        "\nHouve um erro ao puxar serviços selecionados! Erro: ",
+                        erro.sqlMessage
+                    );
+                    res.status(500).json(erro.sqlMessage);
+                }
+            );
+    }
+}
+
 
 
 module.exports = {
@@ -774,5 +822,7 @@ module.exports = {
     metricadisco,
     puxarAlertasNaoVistos,
     puxandoMetricaPadraoDac,
-    puxandoMetricaPadrao
+    puxandoMetricaPadrao,
+    puxandoServicosSelecionados,
+    deletandoServicos
 }

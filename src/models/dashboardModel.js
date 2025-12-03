@@ -36,7 +36,7 @@ function buscarcodigos(fkUnidade) {
                           dataExpiracao,
                           statusCodigoConfiguracaoMaquina AS status
                       FROM
-                          CodigoConfiguracaoMaquina`;
+                          CodigoConfiguracaoMaquina WHERE fkUnidadeDeAtendimento = ${fkUnidade}`;
 
   return database.executar(instrucaoSql);
 }
@@ -63,9 +63,9 @@ function inserirmaquinaservicos(maquina_nova, idUnidadeAtendimento, idDac) {
   } if (maquina_nova.servicos[1] == true) {
     instrucaoSql += `(${idUnidadeAtendimento},${idDac},6),(${idUnidadeAtendimento},${idDac},7),(${idUnidadeAtendimento},${idDac},8),(${idUnidadeAtendimento},${idDac},9),(${idUnidadeAtendimento},${idDac},17),`
   } if (maquina_nova.servicos[2] == true) {
-    instrucaoSql += `(${idUnidadeAtendimento},${idDac},10),`
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},10),(${idUnidadeAtendimento},${idDac},14),(${idUnidadeAtendimento},${idDac},15),(${idUnidadeAtendimento},${idDac},16),`
   } if (maquina_nova.servicos[3] == true) {
-    instrucaoSql += `(${idUnidadeAtendimento},${idDac},11),(${idUnidadeAtendimento},${idDac},14),(${idUnidadeAtendimento},${idDac},15),(${idUnidadeAtendimento},${idDac},16),`
+    instrucaoSql += `(${idUnidadeAtendimento},${idDac},11),`
   }
   instrucaoSql = instrucaoSql.slice(0, -1) + ";";
   console.log(instrucaoSql[instrucaoSql.length - 1])

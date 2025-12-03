@@ -234,7 +234,8 @@
                         <div class="caixa-codigo">
                             <div class="texto-codigo" id="div_codigo_gerado">A1B2C3D4E5F6G7H</div>
                             <div class="box-imagem-copy">
-                                <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copiar" onclick="copiartexto()">
+                                <img src="../assets/imgs/Icone Copiar.png" alt="" class="icon-copiar"
+                                    onclick="copiartexto()">
                             </div>
                         </div>
                     </div>
@@ -435,9 +436,9 @@
             </div>
         </div>
         <div class="pai-maquinas" id="div_maquinas">
-        <div class="maquina-box">
+            <div class="maquina-box">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina" >
+                    <div class="nome-maquina">
                         Maquina 3
                     </div>
                     <div class="texto-marcacao-maquina">
@@ -519,7 +520,7 @@
                 console.log(`Erro no catch: ${resposta}`);
             });
     }
-function atualizarMaquinas() {
+    function atualizarMaquinas() {
         fetch(`/dashboard/buscarMaquina/${fkUnidade}`, {
             method: "GET",
         })
@@ -535,15 +536,11 @@ function atualizarMaquinas() {
                         if (vetor_maquinas[i].statusDac == "Ativo") {
                             div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
-                    <div class="texto-status-maquina verde">
-                        Ok
-                    </div>
+                    <div class="texto-status-maquina verde">Ok</div>
                 </div>
                 <div class="div-imagem-status">
                     <img src="../assets/imgs/Icone ok.png" alt="Status" class="imagem-status">
@@ -553,9 +550,7 @@ function atualizarMaquinas() {
                         if (vetor_maquinas[i].statusDac == "Inativo") {
                             div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
@@ -568,18 +563,14 @@ function atualizarMaquinas() {
                 </div>
             </div>`
                         }
-                        if (vetor_maquinas[i].statusDac == "Alerta") {
+                        if (vetor_maquinas[i].statusDac.includes("Alerta")) {
                             div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
-                    <div class="texto-status-maquina vermelho">
-                        Alerta 
-                    </div>
+                    <div class="texto-status-maquina vermelho">${vetor_maquinas[i].statusDac}</div>
                 </div>
                 <div class="div-imagem-status">
                     <img src="../assets/imgs/Icone Alerta.png" alt="Status" class="imagem-status">
@@ -589,9 +580,7 @@ function atualizarMaquinas() {
                         if (vetor_maquinas[i].statusDac == "Em configuração") {
                             div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
@@ -610,18 +599,14 @@ function atualizarMaquinas() {
                 if (filtro == "alerta" || filtro == "ativas_alerta") {
                     div_maquinas.innerHTML = ``
                     for (let i = 0; i < vetor_maquinas.length; i++) {
-                        if (vetor_maquinas[i].statusDac == "Alerta") {
+                        if (vetor_maquinas[i].statusDac.includes("Alerta")) {
                             div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
-                    <div class="texto-status-maquina vermelho">
-                        Alerta 
-                    </div>
+                    <div class="texto-status-maquina vermelho">${vetor_maquinas[i].statusDac}</div>
                 </div>
                 <div class="div-imagem-status">
                     <img src="../assets/imgs/iconeAlerta.png" alt="Status" class="imagem-status">
@@ -637,9 +622,7 @@ function atualizarMaquinas() {
                             if (vetor_maquinas[i].statusDac == "Inativo") {
                                 div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
@@ -663,9 +646,7 @@ function atualizarMaquinas() {
                         if (vetor_maquinas[i].statusDac == "Ativo") {
                             div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
@@ -687,9 +668,7 @@ function atualizarMaquinas() {
                         if (vetor_maquinas[i].statusDac == "Em configuração") {
                             div_maquinas.innerHTML += `<div class="maquina-box" id="${vetor_maquinas[i].idDac}">
                 <div class="coluna-informacoes">
-                    <div class="nome-maquina">
-                        ${vetor_maquinas[i].nomeIdentificacao}
-                    </div>
+                    <div class="nome-maquina">${vetor_maquinas[i].nomeIdentificacao}</div>
                     <div class="texto-marcacao-maquina">
                         Status:
                     </div>
