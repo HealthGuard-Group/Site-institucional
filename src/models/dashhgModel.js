@@ -45,7 +45,7 @@ function chamados(){
     var instrucaoSql = `
     
     SELECT COUNT(CASE WHEN acao = 'Abrindo chamado' THEN 1 END) AS chamados
-    FROM logAcoes
+    FROM LogAcoes
     WHERE horarioDaAcao >= now() - interval 7 day;
     
     `
