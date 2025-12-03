@@ -21,9 +21,9 @@ function percentual(){
     count(distinct case 
         when acao = 'Realizando Login' then fkUsuario end) as quantidade_acessos
     from LogAcoes
-    where horarioDaAcao >= now() - interval 1 day 
+    where horarioDaAcao >= CURDATE()
     group by date(horarioDaAcao)
-    order by dia;`;
+    order by dia desc;`;
     return database.executar(totalMaquinasSql)
 }
 
