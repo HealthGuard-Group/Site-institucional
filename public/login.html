@@ -57,6 +57,10 @@ function entrar() {
         return false;
     } else {
         mensagem.innerHTML = ``;
+
+        if(emailVar == "healthguard@gmail.com" && senhaVar == "123456789"){
+            window.location = "Dashboard/dashboardHealthGuard.html"
+        }
     }
 
     mensagem.innerHTML = `Carregando...`;

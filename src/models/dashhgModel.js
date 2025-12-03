@@ -46,7 +46,7 @@ function chamados(){
     
     SELECT COUNT(CASE WHEN acao = 'Abrindo chamado' THEN 1 END) AS chamados
     FROM logAcoes
-    WHERE horarioDaAcao >= now() - interval 1 HOUR;
+    WHERE horarioDaAcao >= now() - interval 7 day;
     
     `
     return database.executar(instrucaoSql)
@@ -96,6 +96,8 @@ LEFT JOIN LogAcoes la
     ON la.fkUnidadeAtendimento = ua.idUnidadeDeAtendimento
 LEFT JOIN LogAcesso lu
     ON lu.fkUnidadeDeAtendimento = ua.idUnidadeDeAtendimento
+    AND MONTH(la.horarioDaAcao) = MONTH(NOW())
+	AND YEAR(la.horarioDaAcao) = YEAR(NOW())
 GROUP BY ua.idUnidadeDeAtendimento, ua.nomeFantasia
 ORDER BY Chamados DESC
 LIMIT 3;
